@@ -8,8 +8,9 @@
 ## 架构规则
 
 - **唯一 Schema**: 所有数据模型必须使用 `packages/core/pl_agent/core/schema.py` 中的规范定义。禁止在项目中定义重复的数据类型。
-- **适配器层**: 外部数据必须通过 `packages/adapters/` 中的适配器流入。核心引擎绝不依赖外部数据格式。
-- **禁止循环引用**: `core` → 无依赖，`adapters` → 仅依赖 `core`，`api` → 依赖 `core` + `nlu`。
+- **数据库**: 5 表规范化设计 (`docs/architecture/DATABASE_DESIGN.md`)，SERIAL PK + game_id UK
+- **适配器层**: 外部数据必须通过 `packages/adapters/` 中的适配器流入
+- **禁止循环引用**: `core` → 无依赖，`adapters` → 仅依赖 `core`，`api` → 依赖 `core`
 
 ## 代码组织
 
@@ -38,26 +39,42 @@
 
 | 类型 | 规范 | 示例 |
 |------|------|------|
-| Python 模块 | `snake_case` | `breeding_engine.py` |
-| Python 类 | `PascalCase` | `BreedingTreeBuilder` |
-| Python 函数 | `snake_case` | `build_tree()` |
+| Python 模块 | `snake_case` | `routes/query.py` |
+| Python 类 | `PascalCase` | `PostgresLoader` |
+| Python 函数 | `snake_case` | `load_all()` |
 | JSON 字段 | `snake_case` | `combi_rank` |
-| 测试文件 | `test_*.py` | `test_breeding_engine.py` |
-| 测试函数 | `test_功能描述` | `test_forward_breed_special_combination` |
+| 测试文件 | `test_*.py` | `test_api_smoke.py` |
+| 测试函数 | `test_功能描述` | `test_smart_query_name` |
 
 ## 修改代码前
 
 1. 先读 `docs/context/CONTEXT.md` 了解项目全貌
-2. 查看 `docs/architecture/` 下的架构文档
+2. 查看 `docs/architecture/DATABASE_DESIGN.md` 了解 5 表规范化设计
 3. 确认改动符合 `docs/architecture/PROJECT_STRUCTURE.md` 中的目录规范
-4. 新增数据字段 → 先改 `schema.py`，再改 adapter，最后改引擎逻辑
+4. 新增数据字段 → 先改 `schema.py`，再改 adapter/loader，最后改 routes/query.py
+5. 修改数据库 → 更新 `data/sql/002_normalize.sql` + `DATABASE_DESIGN.md`
 
 ## 数据流
 
 ```
 paldb.cc → adapters/paldb/scraper.py → parser.py → adapter.py → schema.Pal
                                                                       │
-                                                              core engine
+                                          ┌───────────────────────────┘
+                                          ▼
+                              adapters/postgres/adapter.py
+                              (4 表事务: pal + element + aliase + work)
+                                          │
+                                          ▼
+                                    PostgreSQL 16
+                              (5 表: pal/pal_element/
+                               work_suitability/pal_aliase/
+                               breeding_rule)
+                                          │
+                              adapters/postgres/loader.py
+                              (LOAD_ALL_SQL: 4 表 JOIN 拼装)
+                                          │
+                                          ▼
+                              api/routes/query.py (SQL 直连)
 ```
 
 任何新增数据源都走同样的 adapter 模式，不允许裸调外部 API 进入 core。

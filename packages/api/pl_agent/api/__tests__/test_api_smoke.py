@@ -31,7 +31,7 @@ assert name["data"]["type"] == "name_query", f"Name query failed: {name}"
 assert name["data"]["pal"]["cn_name"] == "阿努比斯"
 print(
     f"✅ Name query: {name['data']['pal']['cn_name']}, "
-    f"paths={name['data']['breeding_tree']['total_paths']}"
+    f"pairs={name['data']['total_pairs']}"
 )
 
 # 3. Suitability
@@ -40,19 +40,19 @@ assert suit["data"]["type"] == "suitability_query"
 print(f"✅ Suitability: {suit['data']['total']} candidates")
 
 # 4. Out of range
-oor = post("/api/query", {"input": "手工:6"})
+oor = post("/api/query", {"input": "手工:10"})
 assert oor["data"]["result_type"] == "out_of_range"
 print(f"✅ Out of range: max={oor['data']['max_available']}")
 
 # 5. Pal detail
 pal = get("/api/pal/anubis")
-assert pal["data"]["id"] == "anubis"
+assert pal["data"]["cn_name"] == "阿努比斯"
 print(f"✅ Pal detail: {pal['data']['cn_name']} rank={pal['data']['combi_rank']}")
 
-# 6. Breeding tree
+# 6. Breeding parents
 tree = get("/api/breeding/tree/anubis")
-assert "breeding_tree" in tree["data"]
-print(f"✅ Breeding tree: paths={tree['data']['breeding_tree']['total_paths']}")
+assert "parent_pairs" in tree["data"]
+print(f"✅ Breeding parents: pairs={tree['data']['total_pairs']}")
 
 # 7. Stats
 stats = get("/api/suitability/stats")

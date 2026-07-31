@@ -28,10 +28,19 @@ from pl_agent.core.errors import (
 from pl_agent.core.data_loader import DataLoader
 
 __all__ = [
-    "Pal", "WorkSuitability", "BreedingRules",
-    "Element", "WorkType",
-    "SpecialCombination", "SelfOnly", "Unbreedable",
+    "Pal",
+    "WorkSuitability",
+    "BreedingRules",
+    "Element",
+    "WorkType",
+    "SpecialCombination",
+    "SelfOnly",
+    "Unbreedable",
     "DataLoader",
-    "PlAgentError", "PalNotFoundError", "BreedingLoopError",
-    "DataIntegrityError", "ParseError", "AdapterError",
+    "PlAgentError",
+    "PalNotFoundError",
+    "BreedingLoopError",
+    "DataIntegrityError",
+    "ParseError",
+    "AdapterError",
 ]

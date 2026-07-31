@@ -1,6 +1,8 @@
-# 核心引擎需求文档
+# 核心引擎需求文档 (已归档)
 
-> 版本: v1.1 | 日期: 2026-07-31 | 状态: 已完成
+> 版本: v1.2 | 日期: 2026-08-04 | 状态: **已废弃 ⛔**
+
+> ⚠️ **本文档已归档。** v0.2 起核心引擎层 (breeding_engine, breeding_tree, suitability_query, path_optimizer, interfaces) 已全部移除。配种计算现由 `packages/api/pl_agent/api/routes/query.py` 中的 PostgreSQL SQL 直接完成。参考 `ARCHITECTURE.md` §4 了解当前实现。
 
 ---
 

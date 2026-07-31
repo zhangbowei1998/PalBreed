@@ -792,17 +792,11 @@ from pl_agent.core.schema import Pal, WorkSuitability, BreedingRules, Element, W
 | 增量更新 | 全量替换文件 | UPSERT 按需更新单条记录 |
 | 版本追溯 | 手动备份文件 | 时间戳 + 触发器自动记录 |
 
-### 12.2 架构原则: 热缓存 + 冷查询
+### 12.2 架构: PG 直连 + JSON 降级
 
-不是全量加载——而是让 PG 真正发挥作用：
-
-1. **热缓存（内存）**: 配种引擎需要的 4 个核心字段 — `id`, `combi_rank`, `is_wild`, `work_suitability`(12 列)
-   - BFS 反向搜索需要 O(n²) 次访问，必须 O(1) 内存查找
-   - 启动时从 PG 一次性提取到 `BreedingIndex` (~10KB)
-2. **冷查询（PG 直连）**: 展示/管理字段 — `image_url`, `wiki_url`, `spawn_locations`, `aliases`, 统计聚合
-   - 单次请求，PG 直查更合理
-   - 利用 SQL 能力：`WHERE handiwork >= 4 ORDER BY handiwork DESC`
-3. **引擎接口不变** — `core` 包不依赖数据库驱动，热缓存通过轻量 `PalRef` dataclass 提供
+1. **主路径**: API 启动时从 PG 全量加载 pals 到内存 (Parser 索引用)
+2. **配种查询**: SELECT 直接走 PG CROSS JOIN，利用 SQL 计算能力
+3. **降级**: PG 不可用时回退到 `DataLoader` → `pal_data.json`
 4. **JSON 兼容降级** — PG 不可用时回退到 JSON 全量加载
 
 ### 12.3 数据流
@@ -822,19 +816,16 @@ from pl_agent.core.schema import Pal, WorkSuitability, BreedingRules, Element, W
 └─────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────┐
-│  读取路径: 热缓存 (启动) + 冷查询 (运行时)                          │
+│  读取路径:                                                     │
 │                                                                   │
 │  启动时:                                                           │
-│    PostgresLoader.load_hot()                                      │
-│      SELECT id, combi_rank, is_wild, handiwork, ..., farming      │
-│      FROM pals                                                    │
-│      → BreedingIndex { by_id, by_rank, by_wild }  (~10KB)        │
+│    PG: SELECT * FROM pals → list[Pal] (Parser 索引)               │
 │                                                                   │
 │  运行时:                                                           │
-│    配种引擎 ──▶ BreedingIndex (内存 O(1))                          │
+│    配种查询 ──▶ PG: CROSS JOIN + WHERE round((a+b)/2)=$rank     │
 │    API 详情 ──▶ PG: SELECT * FROM pals WHERE id = $1              │
 │    统计面板 ──▶ PG: SELECT MAX(handiwork), AVG(...) FROM pals     │
-│    候选筛选 ──▶ PG: SELECT id, cn_name FROM pals                  │
+│    属性筛选 ──▶ PG: SELECT id, cn_name FROM pals                  │
 │                WHERE handiwork >= 4 ORDER BY handiwork DESC       │
 │                                                                   │
 │  PG 不可用时: DataLoader.load(pal_data.json) → 全量内存降级         │

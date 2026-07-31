@@ -1,4 +1,4 @@
-"""PostgresWriter — write Pal entities to PostgreSQL."""
+"""PostgresWriter - write Pal entities to normalized PostgreSQL (5 tables)."""
 
 from __future__ import annotations
 
@@ -12,60 +12,51 @@ from .config import PostgresConfig
 
 logger = logging.getLogger(__name__)
 
-# UPSERT template: all 27 columns
+# -- multi-table UPSERT --
+
 UPSERT_PAL = """
-INSERT INTO pals (
-    id, number, cn_name, en_name, combi_rank, elements, rarity, is_wild,
-    handiwork, kindling, watering, planting,
-    generating_electricity, gathering, lumbering, mining,
-    cooling, medicine, transporting, farming,
-    aliases, image_url, wiki_url, spawn_locations,
-    data_source, incomplete
-) VALUES (
-    $1, $2, $3, $4, $5, $6, $7, $8,
-    $9, $10, $11, $12, $13, $14, $15, $16,
-    $17, $18, $19, $20,
-    $21, $22, $23, $24,
-    $25, $26
-)
-ON CONFLICT (id) DO UPDATE SET
-    number = EXCLUDED.number,
+INSERT INTO pal (game_id, zukan_index, cn_name, en_name,
+                 combi_rank, rarity, is_wild, image_url, wiki_url)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+ON CONFLICT (game_id) DO UPDATE SET
+    zukan_index = EXCLUDED.zukan_index,
     cn_name = EXCLUDED.cn_name,
     en_name = EXCLUDED.en_name,
     combi_rank = EXCLUDED.combi_rank,
-    elements = EXCLUDED.elements,
     rarity = EXCLUDED.rarity,
     is_wild = EXCLUDED.is_wild,
-    handiwork = EXCLUDED.handiwork,
-    kindling = EXCLUDED.kindling,
-    watering = EXCLUDED.watering,
-    planting = EXCLUDED.planting,
-    generating_electricity = EXCLUDED.generating_electricity,
-    gathering = EXCLUDED.gathering,
-    lumbering = EXCLUDED.lumbering,
-    mining = EXCLUDED.mining,
-    cooling = EXCLUDED.cooling,
-    medicine = EXCLUDED.medicine,
-    transporting = EXCLUDED.transporting,
-    farming = EXCLUDED.farming,
-    aliases = EXCLUDED.aliases,
     image_url = EXCLUDED.image_url,
-    wiki_url = EXCLUDED.wiki_url,
-    spawn_locations = EXCLUDED.spawn_locations,
-    data_source = EXCLUDED.data_source,
-    incomplete = EXCLUDED.incomplete
+    wiki_url = EXCLUDED.wiki_url
+RETURNING id
+""".strip()
+
+DELETE_ELEMENTS = "DELETE FROM pal_element WHERE pal_id = $1"
+INSERT_ELEMENT = (
+    "INSERT INTO pal_element (pal_id, element_type) "
+    "VALUES ($1, $2) ON CONFLICT DO NOTHING"
+)
+
+DELETE_ALIASES = "DELETE FROM pal_aliase WHERE pal_id = $1"
+INSERT_ALIAS = (
+    "INSERT INTO pal_aliase (pal_id, alias, source) "
+    "VALUES ($1, $2, 'community') ON CONFLICT DO NOTHING"
+)
+
+UPSERT_WORK = """
+INSERT INTO work_suitability (pal_id, work_type, level)
+VALUES ($1, $2, $3)
+ON CONFLICT (pal_id, work_type) DO UPDATE SET level = EXCLUDED.level
 """.strip()
 
 
 class PostgresWriter:
-    """批量写入 Pal 到 PostgreSQL."""
+    """Write Pal entities to PostgreSQL (4 tables per pal)."""
 
     def __init__(self, config: PostgresConfig | None = None):
         self.config = config or PostgresConfig.from_env()
         self._pool: asyncpg.Pool | None = None
 
     async def connect(self) -> None:
-        """建立连接池."""
         if self._pool is None:
             self._pool = await asyncpg.create_pool(
                 dsn=self.config.dsn,
@@ -80,74 +71,64 @@ class PostgresWriter:
             )
 
     async def close(self) -> None:
-        """关闭连接池."""
         if self._pool:
             await self._pool.close()
             self._pool = None
 
-    async def upsert_pal(self, pal: Pal) -> None:
-        """单条 UPSERT."""
+    async def upsert_pal(self, pal: Pal) -> int:
+        """Upsert single Pal into 4 tables. Returns pal.id (SERIAL)."""
         await self._ensure_pool()
         ws = pal.work_suitability
-        import json
 
-        async with self._pool.acquire() as conn:
-            await conn.execute(
-                UPSERT_PAL,
-                pal.id,
-                pal.number,
-                pal.cn_name,
-                pal.en_name,
-                pal.combi_rank,
-                json.dumps([e.value for e in pal.elements]),
-                pal.rarity,
-                pal.is_wild,
-                ws.handiwork,
-                ws.kindling,
-                ws.watering,
-                ws.planting,
-                ws.generating_electricity,
-                ws.gathering,
-                ws.lumbering,
-                ws.mining,
-                ws.cooling,
-                ws.medicine,
-                ws.transporting,
-                ws.farming,
-                json.dumps(pal.aliases),
-                pal.image_url,
-                pal.wiki_url,
-                json.dumps(pal.spawn_locations),
-                pal._source or "paldb.cc",
-                pal._incomplete,
-            )
-
-    async def upsert_all(self, pals: list[Pal]) -> int:
-        """批量 UPSERT.
-
-        Returns:
-            写入的条数.
-        """
-        await self._ensure_pool()
-        count = 0
         async with self._pool.acquire() as conn:
             async with conn.transaction():
-                for pal in pals:
-                    await self.upsert_pal(pal)
-                    count += 1
+                # 1. pal main table -> returns SERIAL id
+                row = await conn.fetchrow(
+                    UPSERT_PAL,
+                    pal.id,  # game_id
+                    pal.number,
+                    pal.cn_name,
+                    pal.en_name,
+                    pal.combi_rank,
+                    pal.rarity,
+                    pal.is_wild,
+                    pal.image_url,
+                    pal.wiki_url,
+                )
+                pal_db_id = row["id"]
+
+                # 2. pal_element - delete old, insert new
+                await conn.execute(DELETE_ELEMENTS, pal_db_id)
+                for e in pal.elements:
+                    await conn.execute(INSERT_ELEMENT, pal_db_id, e.value)
+
+                # 3. pal_aliase - delete old, insert new
+                await conn.execute(DELETE_ALIASES, pal_db_id)
+                for alias in pal.aliases:
+                    await conn.execute(INSERT_ALIAS, pal_db_id, alias)
+
+                # 4. work_suitability - upsert non-zero work types
+                for work_type, level in ws.non_zero().items():
+                    await conn.execute(UPSERT_WORK, pal_db_id, work_type, level)
+
+        return pal_db_id
+
+    async def upsert_all(self, pals: list[Pal]) -> int:
+        """Batch upsert all pals."""
+        await self._ensure_pool()
+        count = 0
+        for pal in pals:
+            await self.upsert_pal(pal)
+            count += 1
         logger.info("upserted %d pals to PostgreSQL", count)
         return count
 
     async def count(self) -> int:
-        """查询已存储的帕鲁数量."""
+        """Count stored pals."""
         await self._ensure_pool()
         async with self._pool.acquire() as conn:
-            row = await conn.fetchrow("SELECT count(*) FROM pals")
+            row = await conn.fetchrow("SELECT count(*) FROM pal")
             return row[0] if row else 0
-
-    # ------------------------------------------------------------------
-    # helpers
-    # ------------------------------------------------------------------
 
     async def _ensure_pool(self) -> None:
         if self._pool is None:

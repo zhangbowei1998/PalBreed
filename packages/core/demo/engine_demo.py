@@ -1,12 +1,21 @@
+# ⚠️ DEPRECATED — 引擎层已移除 (v0.2), 此 demo 依赖已删除的模块
+# 如需验证配种功能, 启动 API 后调用 POST /api/query {"input": "阿努比斯"}
 """Quick demo of the breeding engine with built-in test data."""
 
-from pl_agent.core.schema import Pal, WorkSuitability, BreedingRules, Element
-from pl_agent.core.breeding_engine import BreedingEngine
-from pl_agent.core.breeding_tree import BreedingTreeBuilder
-from pl_agent.core.suitability_query import SuitabilityQuery
-from pl_agent.core.path_optimizer import PathOptimizer
+# from pl_agent.core.schema import Pal, WorkSuitability, BreedingRules, Element
+# from pl_agent.core.breeding_engine import BreedingEngine
+# from pl_agent.core.breeding_tree import BreedingTreeBuilder
+# from pl_agent.core.suitability_query import SuitabilityQuery
+# from pl_agent.core.path_optimizer import PathOptimizer
+if __name__ == "__main__":
+    print(
+        "⚠️ 引擎层已移除。请使用 API 测试配种: make serve && python packages/api/pl_agent/api/__tests__/test_api_smoke.py"
+    )
+    import sys
 
-pals = [
+    sys.exit(1)
+
+pals_demo = [
     Pal(
         id="Lamball",
         number=1,

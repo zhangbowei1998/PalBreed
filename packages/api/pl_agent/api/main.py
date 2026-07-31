@@ -32,10 +32,9 @@ async def lifespan(application: FastAPI):
         from adapters.postgres.loader import PostgresLoader
 
         pg_loader = PostgresLoader()
-        index = await pg_loader.load_hot()
-        all_pals = index.pals
+        all_pals = await pg_loader.load_all()
         application.state.pg_loader = pg_loader
-        print(f"✅ PG hot cache: {len(all_pals)} pals")
+        print(f"✅ PG: {len(all_pals)} pals")
     except Exception as e:
         print(f"⚠ PG unavailable ({e}), JSON fallback...")
         from pl_agent.core.data_loader import DataLoader
@@ -69,7 +68,6 @@ app.include_router(router)
 async def health(request: Request):
     parser = getattr(request.app.state, "parser", None)
     return {"status": "ok", "pals_loaded": len(parser._all_pals) if parser else 0}
-    return {"status": "ok", "pals_loaded": len(engine.all_pals)}
 
 
 # ── demo data (PG + JSON 都不可用时的最终兜底) ───────────────────

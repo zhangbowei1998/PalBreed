@@ -1,4 +1,6 @@
-"""Tests for breeding engine core."""
+# ⚠️ DEPRECATED — 引擎层已移除 (v0.2), 测试依赖已删除的模块
+# 配种逻辑现由 PostgreSQL SQL 实现 (packages/api/pl_agent/api/routes/query.py)
+"""Tests for breeding engine core — DEPRECATED."""
 
 import pytest
 
@@ -9,10 +11,13 @@ from pl_agent.core.schema import (
     SpecialCombination,
     WorkSuitability,
 )
-from pl_agent.core.breeding_engine import BreedingEngine
-from pl_agent.core.breeding_tree import BreedingTreeBuilder
-from pl_agent.core.suitability_query import SuitabilityQuery
-from pl_agent.core.path_optimizer import PathOptimizer
+
+# from pl_agent.core.breeding_engine import BreedingEngine
+# from pl_agent.core.breeding_tree import BreedingTreeBuilder
+# from pl_agent.core.suitability_query import SuitabilityQuery
+# from pl_agent.core.path_optimizer import PathOptimizer
+
+pytest.skip("引擎层已移除 — 配种逻辑现由 PostgreSQL SQL 实现", allow_module_level=True)
 
 # ── Test fixtures ──────────────────────────────────────────────────
 

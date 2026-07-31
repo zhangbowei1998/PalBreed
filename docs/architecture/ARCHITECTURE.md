@@ -1,6 +1,6 @@
 # 幻兽帕鲁配种 Agent — 架构设计文档
 
-> 版本: v1.1 | 日期: 2026-07-31
+> 版本: v2.0 | 日期: 2026-08-04
 
 ---
 
@@ -9,7 +9,7 @@
 1. [项目概述](#1-项目概述)
 2. [系统全景架构](#2-系统全景架构)
 3. [数据层 — 数据获取与维护](#3-数据层--数据获取与维护)
-4. [核心引擎层](#4-核心引擎层)
+4. [核心引擎层 (已移除)](#4-核心引擎层-已移除)
 5. [用户交互层](#5-用户交互层)
 6. [技术栈选型](#6-技术栈选型)
 7. [项目目录结构](#7-项目目录结构)
@@ -23,22 +23,22 @@
 
 ### 1.1 项目定位
 
-一个智能化的幻兽帕鲁配种助手 Agent，用户通过**文字或语音**描述想要的目标帕鲁，系统返回**从基础帕鲁开始的完整配种树**。
+一个智能化的幻兽帕鲁配种助手 Agent，用户输入帕鲁名或"工种:等级"，系统通过 PostgreSQL SQL 直接计算 CombiRank 配种公式，返回所有可能的父母组合。
 
 ### 1.2 核心功能
 
 | 编号 | 功能 | 描述 |
 |------|------|------|
-| F1 | **名称直查** | 输入帕鲁名 → 返回配种树 |
-| F2 | **属性反向查** | 输入"手工10级" → 列出候选帕鲁 → 用户选择 → 返回配种树 |
-| F3 | **语音输入** | 支持语音描述需求 |
-| F4 | **配种树输出** | 从野外可捕获的基础帕鲁开始，逐层展示配种路径 |
-| F5 | **多路径择优** | 多条配种路径时，按步数最少 > 父代最易获得排序 |
+| F1 | **名称直查** | 输入帕鲁名 → 返回所有父母组合 |
+| F2 | **属性反向查** | 输入"手工10级" → 列出候选帕鲁 → 用户选择 → 返回父母组合 |
+| F3 | **语音输入** | 支持语音描述需求 (规划中) |
+| F4 | **一级父母对** | 返回目标帕鲁的所有可配种父母组合，点击继续查询 |
+| F5 | **统计面板** | 12 种工作适应性全帕鲁排名 |
 
 ### 1.3 非功能需求
 
-- 配种树深度默认 ≤ 5 层
-- 单次查询响应时间 < 2 秒
+- 配种查询通过 SQL CROSS JOIN 一次性完成
+- 单次查询响应时间 < 500ms
 - 数据可更新（支持手动/半自动导入新版本数据）
 - 支持中文自然语言输入
 
@@ -58,78 +58,36 @@
 │   ┌──────────────────────────────────────┐                   │
 │   │         NLU 意图解析层                │                   │
 │   │  语音→文本 | 实体提取 | 意图分类       │                   │
-│   │  输入: "我要手工10级的帕鲁"            │                   │
-│   │  输出: {intent:"suitability_query",   │                   │
-│   │          work_type:"handiwork",       │                   │
-│   │          level:10}                    │                   │
 │   └──────────────┬───────────────────────┘                   │
 │                  │                                           │
 │   ┌──────────────▼───────────────────────────────────────┐   │
-│   │                  核心引擎层                            │   │
-│   │  ┌────────────┐ ┌──────────┐ ┌──────────────────┐   │   │
-│   │  │ 属性查询器   │ │ 配种引擎  │ │ 配种树构建器      │   │   │
-│   │  │ → 按工种查询 │ │ → 正向计算│ │ → BFS 反向搜索    │   │   │
-│   │  │ → 等级筛选  │ │ → 反向查询│ │ → 递归展开        │   │   │
-│   │  │ → 候选排序  │ │ → 特殊规则│ │ → 去重+择优       │   │   │
-│   │  └─────┬──────┘ └────┬─────┘ └────────┬─────────┘   │   │
-│   │        │             │               │               │   │
-│   │        └─────────────┼───────────────┘               │   │
-│   │                      │                               │   │
-│   │         ┌────────────▼────────────┐                  │   │
-│   │         │      数据访问层 (DAL)     │                  │   │
-│   │         │  统一数据查询接口          │                  │   │
-│   │         └────────────┬────────────┘                  │   │
-│   └──────────────────────┼────────────────────────────────┘   │
-│                          │                                    │
-│   ┌──────────────────────▼────────────────────────────────┐   │
-│   │                    数据存储层                           │   │
+│   │               FastAPI 应用层 (API)                     │   │
+│   │  ┌──────────┐  ┌──────────┐  ┌──────────────────┐   │   │
+│   │  │ Parser   │  │ Routes   │  │ Formatter        │   │   │
+│   │  │ 意图解析  │  │ SQL 配种  │  │ 响应格式化        │   │   │
+│   │  │ 实体提取  │  │ 属性筛选  │  │ 文本/JSON        │   │   │
+│   │  └──────────┘  └────┬─────┘  └──────────────────┘   │   │
+│   │                     │                                 │   │
+│   │              ┌──────┴──────┐                          │   │
+│   │              │ asyncpg      │                          │   │
+│   │              └──────┬──────┘                          │   │
+│   └─────────────────────┼─────────────────────────────────┘   │
+│                         │                                    │
+│   ┌─────────────────────▼─────────────────────────────────┐   │
+│   │                   数据存储层                            │   │
 │   │                                                        │   │
 │   │  ┌──────────────────────────────────────────┐          │   │
-│   │  │           PostgreSQL (主存储)              │          │   │
-│   │  │  ┌──────────┐  ┌───────────────┐         │          │   │
-│   │  │  │ pals 表   │  │ breeding_rules│         │          │   │
-│   │  │  └──────────┘  └───────────────┘         │          │   │
-│   │  └──────────────────┬───────────────────────┘          │   │
-│   │                     │                                   │   │
-│   │         ┌───────────┴───────────┐                      │   │
-│   │         ▼                       ▼                      │   │
-│   │  ┌──────────────┐     ┌──────────────────┐             │   │
-│   │  │ 热缓存 (内存)  │     │ 冷查询 (PG 直连)   │             │   │
-│   │  │ combi_rank   │     │ 详情/统计/管理     │             │   │
-│   │  │ work_suit    │     │ 模糊搜索           │             │   │
-│   │  │ id/is_wild   │     │ 数据分析           │             │   │
-│   │  └──────────────┘     └──────────────────┘             │   │
-│   │        ▲                                               │   │
-│   │        └── 仅配种引擎使用的 4 个字段 (~2KB)              │   │
-│   │            反向搜索 O(n²) 必须 O(1) 内存访问             │   │
+│   │  │           PostgreSQL 16                   │          │   │
+│   │  │  ┌──────────┐  ┌──────────────────────┐   │          │   │
+│   │  │  │ pals 表   │  │ 配种 SQL (CROSS JOIN)│   │          │   │
+│   │  │  └──────────┘  └──────────────────────┘   │          │   │
+│   │  └──────────────────────────────────────────┘          │   │
 │   └───────────────────────────────────────────────────────┘   │
-│                                                                 │
+│                                                                │
 │   ┌───────────────────────────────────────────────────────┐   │
 │   │              数据获取与维护通道 (离线)                    │   │
-│   │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  │   │
-│   │  │ paldb.cc     │  │ 游戏文件解包   │  │ 手动补充     │  │   │
-│   │  │ HTML 爬虫     │  │ FModel 导出   │  │ 新帕鲁数据    │  │   │
-│   │  └──────┬──────┘  └──────┬───────┘  └──────┬──────┘  │   │
-│   │         │                │                  │          │   │
-│   │         └────────────────┼──────────────────┘          │   │
-│   │                          ▼                             │   │
-│   │               ┌──────────────────┐                     │   │
-│   │               │  PalDBAdapter    │                     │   │
-│   │               │  scraper→parser  │                     │   │
-│   │               │  →adapter→save   │                     │   │
-│   │               └────────┬─────────┘                     │   │
-│   │                        │                               │   │
-│   │            ┌───────────┴───────────┐                   │   │
-│   │            ▼                       ▼                   │   │
-│   │   ┌──────────────┐        ┌──────────────┐            │   │
-│   │   │ pal_data.json │        │ PostgreSQL    │            │   │
-│   │   │ (兼容保留)     │        │ (主存储)       │            │   │
-│   │   └──────────────┘        └──────────────┘            │   │
+│   │  paldb.cc → scraper → parser → adapter → PostgreSQL    │   │
 │   └───────────────────────────────────────────────────────┘   │
-│                          │                                    │
-│                          ▼                                    │
-│                   paldb.cc 网站                                │
-│               (外部数据源, v1.0.2)                              │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -298,193 +256,62 @@ class PalDBScraper:
            └──────────────┘
 ```
 
-### 3.3 数据存储方案
+### 3.3 PostgreSQL 存储方案
 
-#### 分层架构: 热缓存 + 冷查询
-
-不是全量加载到内存——而是**按需分层**，让 PG 真正发挥作用：
+#### 启动加载 + 运行时 SQL
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      PostgreSQL                             │
-│  所有数据 (pals 表 + breeding_rules 表)                       │
+│                      PostgreSQL 16                          │
+│   5 表: pal(288) + pal_element(375)                        │
+│   + work_suitability(3456) + pal_aliase + breeding_rule    │
 └────────────┬────────────────────────────┬───────────────────┘
              │                            │
-    启动时提取 4 个字段              运行时按需查询
-    (~500 行 × 5 字段)               (详情/统计/搜索)
+    启动时全量加载                 运行时 SQL 查询
+    (Parser 索引用)               (配种/属性/详情)
              │                            │
              ▼                            ▼
    ┌─────────────────┐          ┌─────────────────┐
-   │  热缓存 (内存)    │          │  PG 直查 (冷路径) │
-   │                 │          │                 │
-   │  id             │          │  image_url      │
-   │  combi_rank     │◀─ 配种  │  wiki_url       │
-   │  is_wild        │  引擎   │  spawn_locations│
-   │  work_suitability│  专用  │  aliases        │
-   │                 │          │  统计聚合        │
+   │  API 内存 pals   │          │  SQL 直连        │
+   │  (Parser 映射)   │          │                 │
+   │                 │          │  配种 CROSS JOIN │
+   │  cn_name → Pal  │          │  属性 WHERE 筛选 │
+   │                 │          │  详情 SELECT     │
    └─────────────────┘          └─────────────────┘
-   每次查找 ~50ns               每次查询 ~1-5ms
-   用于: BFS 反向搜索            用于: 详情展示/管理面板
+                                 每查询 ~10-50ms
 ```
 
-| 层级 | 存什么 | 为什么 |
-|------|--------|--------|
-| **热缓存** | `id`, `combi_rank`, `is_wild`, `work_suitability`(12 字段) | BFS 反向搜索需要 O(n²) 次访问，必须 O(1) 内存 |
-| **PG 冷查询** | `image_url`, `wiki_url`, `spawn_locations`, `aliases`, 统计 | 单次请求，走 PG 更合理；利用 SQL 聚合能力 |
+> 配种计算完全由 PostgreSQL SQL 完成，API 层只做参数绑定和结果解析。
+> 属性筛选走参数化 JOIN (无 SQL 注入)，统计用 GROUP BY 替代 12 路 UNION ALL。
 
-#### 为什么这样分层？
+#### 兼容降级
 
-- **全量加载到内存** → PG 变成 JSON 文件的替代品，没意义。你说得对。
-- **全部走 PG 查询** → BFS 配种树 200,000 次查找 × 1ms = 200 秒，不可用。
-- **热缓存 + 冷查询** → 配种核心字段内存 O(1)，展示字段 PG 按需取。**PG 真正被用起来了。**
-
-#### 兼容降级: JSON 文件
-
-```
-data/
-├── processed/
-│   ├── pal_data.json          # PG 不可用时的全量降级
-│   └── pal_meta.json
-└── sql/
-    └── 001_create_pals.sql    # DDL 迁移脚本
-```
-
-PG 不可用时，自动回退到 JSON 全量加载（当前行为）。
+PG 不可用时，自动回退到 JSON 全量加载 + Python 内存遍历。
 
 ---
 
-## 4. 核心引擎层
+## 4. 核心引擎层 (已移除)
 
-### 4.1 模块总览
+> v0.2: 引擎层已删除。配种计算由 API 路由中的 PostgreSQL SQL 直接完成。核心包 (`core`) 仅保留数据模型 (`schema.py`) 和 JSON 降级加载 (`data_loader.py`)。
 
-```
-core/
-├── suitability_query.py   # 属性反向查询器
-├── breeding_engine.py     # 配种计算引擎
-├── breeding_tree.py       # 配种树构建器
-└── path_optimizer.py      # 配种路径择优器
-```
+### 配种公式 (两步 SQL)
 
-### 4.2 属性反向查询器 (`suitability_query.py`)
+```sql
+-- Step 0: 查特殊规则
+SELECT br.rule_type, br.parent_a_id, br.parent_b_id
+FROM breeding_rule br JOIN pal p ON br.child_id = p.id
+WHERE p.game_id = $target_game_id;
 
-```
-输入: {work_type: "handiwork", min_level: 10}
-  ↓
-1. 遍历 pal_data.json 中所有 Pal
-2. 筛选 work_suitability[handiwork] >= 10
-3. 按等级降序排列
-4. 返回候选列表
-
-输出: [
-  {pal: Pal, match_level: 10, match_type: "handiwork"},
-  ...
-]
+-- Step 1: CombiRank 公式 (无特殊规则时)
+SELECT a.cn_name AS parent_a, b.cn_name AS parent_b
+FROM pal a, pal b
+WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $target_rank
+  AND a.game_id != $target_game_id AND b.game_id != $target_game_id
+  AND a.id <= b.id
 ```
 
-**中文语义映射**（通过 `zh_mapping.json`）：
-
-```
-"手工10级"     → {work_type: "handiwork", level: 10}
-"生火5级"      → {work_type: "kindling", level: 5}
-"采矿最高的"    → {work_type: "mining", level: "max"}
-"既能手工又能搬运" → [{work_type: "handiwork"}, {work_type: "transporting"}]
-```
-
-### 4.3 配种计算引擎 (`breeding_engine.py`)
-
-#### 4.3.1 正向计算：父母 → 子代
-
-```
-function forward_breed(parent_a: Pal, parent_b: Pal) -> Pal:
-    1. 查 special_combinations 特殊规则表
-       if 命中 → 直接返回固定子代
-    2. 查 self_only 表
-       if 父母相同且是传说 → 返回自身
-    3. 标准计算:
-       child_rank = round((parent_a.combi_rank + parent_b.combi_rank) / 2)
-       child = 按 CombiRank 排序后最接近 child_rank 的 Pal
-    4. return child
-```
-
-#### 4.3.2 反向计算：子代 → 所有可能父母对
-
-```
-function reverse_breed(child: Pal) -> list[(Pal, Pal)]:
-    1. 查特殊规则表
-       if child 在 special_combinations 中 → 返回固定父母对
-    2. 查 self_only 表
-       if child 是传说 → 返回 [(child, child)]
-    3. 查 unbreedable 表
-       if child 不可配种 → 返回空
-    4. 标准反向计算:
-       - 找到 CombiRank 刚好在 child 前后的两个 Pal (prev, next)
-       - 确定父母 CombiRank 总和区间
-       - 枚举所有 CombiRank 组合满足区间的父母对
-       - 返回列表 (可能有很多对)
-```
-
-### 4.4 配种树构建器 (`breeding_tree.py`)
-
-```
-function build_breeding_tree(target: Pal, max_depth: int = 5) -> BreedingTree:
-
-    定义基础帕鲁: is_wild == true 的 Pal (野外可直接捕获)
-
-    算法: BFS + 递归展开
-
-    tree = {
-        target: {
-            父母对1: {
-                父: { ...递归... },
-                母: { ...递归... }
-            },
-            父母对2: { ... },
-            ...
-        }
-    }
-
-    终止条件:
-      1. 当前 Pal 是基础帕鲁 (is_wild == true)
-      2. 已达到最大深度 max_depth
-      3. 当前 Pal 不可配种 (在 unbreedable 列表中)
-      4. 检测到循环依赖 (visited 集合)
-
-    去重:
-      - 同一 Pal 在树中出现多次 → 保留深度最浅的路径
-      - 合并重复子树
-```
-
-#### 配种树数据结构：
-
-```
-BreedingTree:
-  ├── target: Pal           # 目标帕鲁
-  ├── paths: BreedingPath[] # 所有可能的配种路径
-  └── best_path: BreedingPath # 最优路径
-
-BreedingPath:
-  ├── steps: BreedingStep[] # 配种步骤列表 (从基础帕鲁开始)
-  ├── total_steps: number   # 总步骤数
-  ├── difficulty: number    # 难度评分 (越低越好)
-  └── leaf_pals: Pal[]      # 需要从野外捕获的基础帕鲁列表
-
-BreedingStep:
-  ├── parent_a: Pal | BreedingPath  # 父代或子树
-  ├── parent_b: Pal | BreedingPath  # 母代或子树
-  ├── child: Pal                     # 产出子代
-  └── method: "wild" | "breed"      # 获取方式
-```
-
-### 4.5 路径择优器 (`path_optimizer.py`)
-
-排序策略（优先级从高到低）：
-
-```
-1. 步数最少 (total_steps 升序)
-2. 基础帕鲁总数最少 (leaf_pals 数量升序)
-3. 基础帕鲁平均稀有度最低 (越常见越好)
-4. 不含传说/Boss帕鲁优先
-```
+两步流程: 先 breeding_rule 守卫 (unbreedable/same_species/fixed_pair)，再 CROSS JOIN。
+返回一级父母组合，点击继续查询。无递归 BFS。
 
 ---
 
@@ -508,60 +335,30 @@ BreedingStep:
           │                │                 │
           ▼                ▼                 ▼
    ┌──────────────────────────────────────────────────┐
-   │              实体提取 + 消歧                        │
-   │  提取: pal_name / work_type / level              │
-   │  消歧: 候选列表 → 用户选择 OR 自动推荐最优           │
-   └──────────────────────┬───────────────────────────┘
-                          │
-                          ▼
-                   ┌──────────────┐
-                   │  核心引擎调用  │
-                   └──────────────┘
+   │              Parser 实体提取                       │
+   │  name_query → SQL 配种 (CROSS JOIN)              │
+   │  suit_query → SQL 属性筛选 (WHERE)               │
+   └──────────────────────────────────────────────────┘
 ```
 
-### 5.2 语音输入流程
+### 5.2 语音输入流程 (规划中)
 
 ```
-用户语音 ──▶ ASR 语音识别 ──▶ 文本 ──▶ NLU 意图解析 ──▶ 核心引擎
-              │
-              ├── Web Speech API (浏览器端, MVP)
-              ├── Whisper 本地模型 (进阶)
-              └── 讯飞/阿里云 ASR (生产环境)
+用户语音 ──▶ ASR 语音识别 ──▶ 文本 ──▶ Parser 意图解析 ──▶ SQL 查询
 ```
 
 ### 5.3 输出格式
 
-#### 文本输出示例：
+#### 父母对查询示例：
 
 ```
-🎯 目标帕鲁: 阿努比斯 (#139)
-   工作适应性: 手工作业 Lv6 | 采矿 Lv6 | 搬运 Lv4
+🎯 目标帕鲁: 墨罗娜
+   手工作业 Lv8
 
-📋 最优配种路径 (2步):
-
-   🌿 第一步: 野外捕获
-      棉悠悠 + 捣蛋猫 = 疾旋鼬
-
-   🥚 第二步: 配种
-      疾旋鼬 + 烽歌龙 = 🎯 阿努比斯
-
-   📝 备选方案:
-   方案2: 棉悠悠 + 夜幕魔蝠 → 霹雳犬 → 霹雳犬 + 烽歌龙 → 阿努比斯 (3步)
-   方案3: ...
-```
-
-#### 配种树可视化输出（进阶）：
-
-```
-         🌿棉悠悠(野生)  🌿捣蛋猫(野生)
-              │              │
-              └──────┬───────┘
-                     │
-                  🥚疾旋鼬          🌿烽歌龙(野生)
-                     │                │
-                     └───────┬────────┘
-                             │
-                         🎯阿努比斯
+🥚 父母组合 (22 对):
+   1. 织夜鹿 + 燎火舞伶
+   2. 霹雳犬 + 遁地鼠
+   ...
 ```
 
 ---
@@ -571,11 +368,11 @@ BreedingStep:
 | 层级 | 技术 | 理由 |
 |------|------|------|
 | **语言** | Python 3.10+ | 数据处理 + AI 生态成熟 |
-| **数据存储** | PostgreSQL 16 (主) + JSON 降级 | 热缓存(配种字段) + PG 冷查询(详情/统计) |
+| **数据存储** | PostgreSQL 16 (主) + JSON 降级 | SQL CROSS JOIN 配种计算 |
 | **数据爬虫** | httpx + BeautifulSoup4 | 异步 HTTP + HTML 解析 |
 | **Web 框架** | FastAPI | 高性能 REST API，自动生成文档 |
-| **前端 UI** | React / Vue 3 | 交互式配种树可视化 |
-| **树形可视化** | D3.js / ECharts Tree | 配种树图形展示 |
+| **前端 UI** | React / Vue 3 | 交互式配种结果展示 |
+| **可视化** | N/A | 已简化为父母对列表 |
 | **语音识别** | Web Speech API / Whisper | 浏览器端免费 / 本地高精度 |
 | **NLU** | 规则引擎 + LLM (可选) | MVP 用正则规则，进阶接大模型 |
 | **部署** | Docker | 一键部署，环境一致 |
@@ -583,7 +380,7 @@ BreedingStep:
 ### 6.1 为什么选择 Python？
 
 - 数据爬取：`httpx` + `BeautifulSoup` 是最成熟的方案
-- 算法实现：配种树（图搜索）用 Python 写最灵活
+- SQL 能力：`asyncpg` + FastAPI 无缝集成 PostgreSQL
 - 已有参考代码：`PalWorldPlugin` 的配种算法就是 Python
 - AI 集成：后续接 LLM 做自然语言理解，Python 生态最完善
 
@@ -599,17 +396,11 @@ pl-agent/
 │   └── decisions/               #   设计决策记录 (ADR)
 │
 ├── packages/                    # 📦 monorepo 包
-│   ├── core/                    # 🧠 配种算法引擎
-│   │   ├── demo/                #   快速验证脚本
+│   ├── core/                    # 📐 数据模型
 │   │   └── pl_agent/core/
 │   │       ├── schema.py        #   ★ canonical models
 │   │       ├── errors.py        #   领域异常
-│   │       ├── interfaces.py    #   ABCs / Protocols
-│   │       ├── breeding_engine.py
-│   │       ├── breeding_tree.py
-│   │       ├── suitability_query.py
-│   │       ├── path_optimizer.py
-│   │       ├── data_loader.py   #   JSON 加载器
+│   │       ├── data_loader.py   #   JSON 降级加载
 │   │       └── __tests__/
 │   │
 │   ├── adapters/                # 🔌 外部数据适配
@@ -653,187 +444,121 @@ pl-agent/
 
 ## 8. 关键数据流
 
-### 8.1 启动时数据加载: 热缓存 + 冷查询
+### 8.1 启动时数据加载
 
 ```
 API 启动 (main.py lifespan):
   │
-  ├── 1. 从 PG 提取配种热字段 → 内存索引
-  │      SELECT id, combi_rank, is_wild,
-  │             handiwork, kindling, ..., farming
-  │      FROM pals
-  │      → BreedingIndex {
-  │          by_id: dict[str, PalRef],       # O(1) 查找
-  │          by_rank: list[PalRef],           # CombiRank 排序
-  │          by_wild: list[PalRef],           # 野外帕鲁
-  │        }
-  │      (~500 行 × 5 字段, ~10KB 内存)
+  ├── 1. 连接 PostgreSQL → 加载 pals 到内存 (Parser 索引用)
   │
-  ├── 2. 冷数据留在 PG
-  │      image_url, wiki_url, spawn_locations, aliases
-  │      → 按需通过 get_pal_detail(id) 异步查询
+  ├── 2. PG 不可用时降级
+  │      DataLoader.load(pal_data.json) → 全量内存
   │
-  └── 3. PG 不可用时降级
-         DataLoader.load(pal_data.json) → 全量内存 (当前行为)
+  └── 3. 创建 QueryParser (中文名 → Pal 映射)
 ```
-
-> **为什么不全量加载？** 全量加载让 PG 沦为 JSON 替代品。只缓存配种计算必需的 4 个字段，其余走 PG 按需查询，PG 才真正有价值。
 
 ### 8.2 用户查询"手工10级帕鲁"的完整流程
 
 ```
-时间线 →
-
 用户: "我要一个手工10级的帕鲁"
   │
   ▼
-[语音识别] (如果是语音)
-  │
-  ▼
-[NLU 意图解析]
+[Parser 意图解析]
   ├── 意图分类: suitability_query
   ├── 实体提取: work_type=handiwork, level=10
   └── 置信度: 0.95
   │
   ▼
-[属性反向查询器]
-  ├── 查询内存索引 (启动时已加载全部 Pal)
-  ├── 筛选 work_suitability.handiwork >= 10
-  ├── 结果: [
-  │     {pal: "阿努比斯", handiwork: 6},  ← 1.0版本最高手工就6级!
-  │     {pal: "唤夜兽", handiwork: 5},
-  │     ...
-  │   ]
-  └── 注: 如果等级超出实际范围, 返回"最高等级为X"的提示
+[SQL 属性筛选]
+  ├── SELECT cn_name, handiwork FROM pals
+  │    WHERE handiwork >= 10
+  │    ORDER BY handiwork DESC
+  ├── 结果可能为空 → 返回"最高等级为X"提示
+  └── 返回候选列表
   │
   ▼
-[返回候选列表] → 用户看到:
-  "手工≥10级的帕鲁不存在, 手工最高为Lv6。
-   以下是手工Lv6的帕鲁:
-   1. 阿努比斯 (手工6, 采矿6, 搬运4)
-   2. ...
-   请输入编号选择, 或输入帕鲁名"
+用户选择: "阿努比斯"
   │
   ▼
-用户选择: "1" 或 "阿努比斯"
+[SQL 配种查询]
+  ├── SELECT a.cn_name, b.cn_name
+  │    FROM pals a, pals b
+  │    WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $rank
+  │      AND a.id != $id AND b.id != $id AND a.id <= b.id
+  └── 返回所有父母对 (一级)
   │
   ▼
-[配种树构建器]
-  ├── target = Anubis (combi_rank=480)
-  ├── BFS 反向搜索
-  ├── 递归展开到基础帕鲁
-  ├── 去重 + 择优
-  └── 生成 BreedingTree
-  │
-  ▼
-[返回结果] → 用户看到配种树
+[返回结果] → 用户看到父母组合列表，点击继续查询
 ```
 
 ### 8.3 数据更新流程
 
 ```
-[检测到 paldb.cc 有新版本]
-  或
-[游戏大更新后手动触发]
+[检测到 paldb.cc 有新版本] 或 [游戏大更新后手动触发]
   │
   ▼
 [运行 PalDBAdapter.build_and_save()]
-  │
   ├── 1. 爬取 paldb.cc 全部页面
-  ├── 2. 解析 HTML → dict
-  ├── 3. 转为 schema.Pal
-  ├── 4. 数据校验 (Validator)
-  └── 5. 持久化
-       ├── → pal_data.json  (兼容保留)
-       └── → PostgreSQL     (UPSERT 到 pals 表)
+  ├── 2. 解析 HTML → Pal
+  ├── 3. 数据校验
+  └── 4. 持久化 → PostgreSQL (UPSERT)
   │
   ▼
 [重启 API 服务]
   → lifespan 重新加载 PostgreSQL → 内存
-```
-  ▼
-[运行 scripts/build_data.py]
-  ├── 1. 爬取 paldb.cc 所有帕鲁页面
-  ├── 2. 解析 HTML → Pal 实体列表
-  ├── 3. 对比旧数据 (diff_checker.py)
-  │      ├── 新增帕鲁: +15 个
-  │      ├── CombiRank 变化: 3 个
-  │      └── 工作适应性变化: 5 个
-  ├── 4. 校验数据完整性 (validator.py)
-  └── 5. 输出新版本 pal_data.json
-  │
-  ▼
-[更新 breeding_rules.json] (手动维护特殊规则)
-  │
-  ▼
-[运行测试] → 确保配种计算正确
-  │
-  ▼
-[部署新数据]
 ```
 
 ---
 
 ## 9. 开发路线图
 
-### Phase 1: 数据基础 (Week 1)
+### Phase 1: 数据基础 ✅
 
 ```
-□ 搭建项目骨架 (目录结构)
-□ 编写 paldb.cc 爬虫脚本
-□ 初次爬取全部帕鲁数据 (204 个)
-□ 手工整理特殊配种规则
-□ 校验数据完整性
-□ 生成首批 pal_data.json + breeding_rules.json
+✅ 搭建项目骨架 (目录结构)
+✅ 编写 paldb.cc 爬虫脚本
+✅ 初次爬取全部帕鲁数据 (288 个)
+✅ 手工整理特殊配种规则
+✅ 校验数据完整性
+✅ 生成 pal_data.json + PostgreSQL 导入
 ```
 
-### Phase 2: 核心引擎 (Week 2-3)
+### Phase 2: API + PostgreSQL ✅
 
 ```
-□ 实现数据加载器 (data_loader.py)
-□ 实现属性反向查询器 (suitability_query.py)
-□ 实现配种计算引擎 (breeding_engine.py)
-   □ 正向计算 (父母→子代)
-   □ 反向计算 (子代→父母对)
-   □ 特殊规则处理
-□ 实现配种树构建器 (breeding_tree.py)
-   □ BFS 反向搜索
-   □ 递归展开
-   □ 去重
-□ 实现路径择优器 (path_optimizer.py)
-□ 编写单元测试
+✅ FastAPI 服务 (routes/query.py)
+✅ PostgreSQL 存储 + Docker Compose
+✅ SQL CROSS JOIN 配种查询
+✅ SQL 属性筛选
+✅ Parser 意图解析
+✅ 单元测试 (63 passed)
 ```
 
-### Phase 3: NLU + API (Week 4)
-
-```
-□ 实现规则式 NLU (正则 + 关键词匹配)
-□ 实现 FastAPI 接口
-   □ POST /api/query/name       (名称查询)
-   □ POST /api/query/suitability (属性查询)
-   □ GET  /api/pal/:id/breeding-tree (配种树)
-□ API 文档自动生成 (Swagger)
-```
-
-### Phase 4: 前端 UI (Week 5-6)
+### Phase 3: 前端 UI (当前)
 
 ```
 □ React/Vue 项目初始化
-□ 搜索输入组件 (支持打字)
-□ 候选列表组件
-□ 配种树可视化组件 (D3.js/ECharts)
-□ 语音输入集成 (Web Speech API)
+□ 搜索输入组件
+□ 父母对列表组件
+□ 逐层查询交互
 ```
 
-### Phase 5: 增强 + 部署 (Week 7+)
+### Phase 4: NLU 增强
 
 ```
-□ LLM 增强 NLU (可选接入大模型做意图理解)
-□ 语音识别优化 (Whisper 本地部署)
+□ LLM 增强 NLU (可选)
+□ 语音识别集成
+```
+
+### Phase 5: 部署 + CI
+
+```
 □ Docker 容器化
-□ CI/CD 自动测试
+□ CI/CD
 □ 数据自动更新检测
 ```
+
+---
 
 ---
 
@@ -844,10 +569,9 @@ API 启动 (main.py lifespan):
 | paldb.cc 改版导致爬虫失效 | 🔴 高 | 爬虫层独立封装，解析规则配置化；备选游戏文件解包方案 |
 | 游戏更新后 CombiRank 大幅调整 | 🟡 中 | 数据版本化管理；diff 对比工具；保留历史版本 |
 | 特殊配种规则遗漏 | 🟡 中 | 参考 paldb.cc 的 Breed Tree 结果交叉验证 |
-| 配种树过深影响性能 | 🟢 低 | BFS + 缓存中间结果；限制最大深度 |
 | 中文语音识别准确率 | 🟡 中 | MVP 用文本输入；语音降级为辅助功能 |
-| "手工10级"实际不存在 (当前最高6级) | 🟡 中 | 返回实际最高等级 + "接近"的帕鲁推荐 |
+| "手工10级"实际不存在 | 🟡 中 | 返回实际最高等级 + fallback |
 
 ---
 
-> 📌 **下一步建议**：确认架构后，开始 Phase 1 — 编写 paldb.cc 数据爬虫脚本，跑通第一条数据链路。
+> 📌 下一步: 前端 UI 开发 (`packages/web/`)

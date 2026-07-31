@@ -12,13 +12,14 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional
 
-
 # =============================================================================
 # Enums
 # =============================================================================
 
+
 class Element(Enum):
     """帕鲁属性"""
+
     FIRE = "Fire"
     WATER = "Water"
     GRASS = "Grass"
@@ -32,6 +33,7 @@ class Element(Enum):
 
 class WorkType(Enum):
     """工作适应性类型 — 12 种"""
+
     HANDIWORK = "handiwork"
     KINDLING = "kindling"
     WATERING = "watering"
@@ -50,12 +52,14 @@ class WorkType(Enum):
 # Canonical Data Models
 # =============================================================================
 
+
 @dataclass
 class WorkSuitability:
     """工作适应性 — 每个工种等级 0-10, 0 表示无此适应性.
 
     JSON 序列化时只输出非零值, 反序列化时缺失字段视为 0.
     """
+
     handiwork: int = 0
     kindling: int = 0
     watering: int = 0
@@ -79,8 +83,7 @@ class WorkSuitability:
 
     def non_zero(self) -> dict[str, int]:
         """返回非零工种字典 (用于 JSON 序列化)"""
-        return {k: v for k, v in self.__dict__.items()
-                if isinstance(v, int) and v > 0}
+        return {k: v for k, v in self.__dict__.items() if isinstance(v, int) and v > 0}
 
     def to_dict(self) -> dict[str, int]:
         """序列化 — 只输出有值的工种"""
@@ -112,6 +115,7 @@ class Pal:
         wiki_url:     Wiki 页面 URL.
         spawn_locations: 主要出没区域.
     """
+
     id: str
     number: int
     cn_name: str
@@ -156,14 +160,10 @@ class Pal:
     def from_dict(cls, d: dict) -> "Pal":
         """从字典反序列化."""
         elements = [
-            e if isinstance(e, Element) else Element(e)
-            for e in d.get("elements", [])
+            e if isinstance(e, Element) else Element(e) for e in d.get("elements", [])
         ]
         ws_raw = d.get("work_suitability", {})
-        ws = (
-            WorkSuitability.from_dict(ws_raw)
-            if isinstance(ws_raw, dict) else ws_raw
-        )
+        ws = WorkSuitability.from_dict(ws_raw) if isinstance(ws_raw, dict) else ws_raw
         return cls(
             id=d["id"],
             number=d["number"],
@@ -185,9 +185,11 @@ class Pal:
 # Breeding Rules
 # =============================================================================
 
+
 @dataclass
 class SpecialCombination:
     """特殊配种组合 — 固定父母 → 固定子代."""
+
     parent_a: str
     parent_b: str
     child: str
@@ -197,6 +199,7 @@ class SpecialCombination:
 @dataclass
 class SelfOnly:
     """仅同类繁殖的帕鲁."""
+
     pal_id: str
     note: str = ""
 
@@ -204,6 +207,7 @@ class SelfOnly:
 @dataclass
 class Unbreedable:
     """不可配种的帕鲁."""
+
     pal_id: str
     note: str = ""
 
@@ -211,6 +215,7 @@ class Unbreedable:
 @dataclass
 class MutationRule:
     """突变规则 (1.0 新机制)."""
+
     parent_a: str
     parent_b: str
     child: str
@@ -220,6 +225,7 @@ class MutationRule:
 @dataclass
 class BreedingRules:
     """配种规则集合."""
+
     game_version: str
     last_updated: str
     special_combinations: list[SpecialCombination] = field(default_factory=list)
@@ -233,22 +239,26 @@ class BreedingRules:
             "game_version": self.game_version,
             "last_updated": self.last_updated,
             "special_combinations": [
-                {"parent_a": s.parent_a, "parent_b": s.parent_b,
-                 "child": s.child, "note": s.note}
+                {
+                    "parent_a": s.parent_a,
+                    "parent_b": s.parent_b,
+                    "child": s.child,
+                    "note": s.note,
+                }
                 for s in self.special_combinations
             ],
-            "self_only": [
-                {"pal_id": s.pal_id, "note": s.note}
-                for s in self.self_only
-            ],
+            "self_only": [{"pal_id": s.pal_id, "note": s.note} for s in self.self_only],
             "unbreedable": [
-                {"pal_id": u.pal_id, "note": u.note}
-                for u in self.unbreedable
+                {"pal_id": u.pal_id, "note": u.note} for u in self.unbreedable
             ],
             "breeding_excluded": self.breeding_excluded,
             "mutations": [
-                {"parent_a": m.parent_a, "parent_b": m.parent_b,
-                 "child": m.child, "note": m.note}
+                {
+                    "parent_a": m.parent_a,
+                    "parent_b": m.parent_b,
+                    "child": m.child,
+                    "note": m.note,
+                }
                 for m in self.mutations
             ],
         }
@@ -259,15 +269,12 @@ class BreedingRules:
             game_version=d["game_version"],
             last_updated=d["last_updated"],
             special_combinations=[
-                SpecialCombination(**s)
-                for s in d.get("special_combinations", [])
+                SpecialCombination(**s) for s in d.get("special_combinations", [])
             ],
             self_only=[SelfOnly(**s) for s in d.get("self_only", [])],
             unbreedable=[Unbreedable(**u) for u in d.get("unbreedable", [])],
             breeding_excluded=d.get("breeding_excluded", []),
-            mutations=[
-                MutationRule(**m) for m in d.get("mutations", [])
-            ],
+            mutations=[MutationRule(**m) for m in d.get("mutations", [])],
         )
 
 
@@ -275,12 +282,47 @@ class BreedingRules:
 # Dataset Metadata
 # =============================================================================
 
+
 @dataclass
 class DatasetMeta:
     """数据集元信息."""
+
     game_version: str = ""
     generated_at: str = ""
     total_pals: int = 0
     wild_pals: int = 0
     field_completeness: float = 1.0
     source: str = ""
+
+
+# =============================================================================
+# Database Row Types (for PostgreSQL adapter)
+# =============================================================================
+
+
+@dataclass
+class PalRow:
+    """pal 表一行 — 不含子表数据 (elements/aliases/work_suitability 单独 JOIN)."""
+
+    id: int
+    game_id: str
+    zukan_index: int
+    cn_name: str
+    en_name: str
+    combi_rank: int
+    rarity: int
+    is_wild: bool
+    image_url: Optional[str] = None
+    wiki_url: Optional[str] = None
+
+
+@dataclass
+class BreedingRuleRow:
+    """breeding_rule 表一行."""
+
+    id: int
+    child_id: int
+    parent_a_id: Optional[int] = None
+    parent_b_id: Optional[int] = None
+    rule_type: str = ""
+    description: Optional[str] = None

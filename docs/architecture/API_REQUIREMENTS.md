@@ -1,6 +1,6 @@
 # API 服务需求文档
 
-> 版本: v1.1 | 日期: 2026-07-31 | 状态: 已实现
+> 版本: v2.0 | 日期: 2026-08-04 | 状态: 重构完成 — 引擎层已移除，SQL 直连
 
 ---
 
@@ -12,7 +12,7 @@
 4. [智能查询路由](#4-智能查询路由)
 5. [响应模型](#5-响应模型)
 6. [错误处理](#6-错误处理)
-7. [与核心引擎的集成](#7-与核心引擎的集成)
+7. [配种查询实现](#7-配种查询实现)
 8. [前端对接契约](#8-前端对接契约)
 9. [验收标准](#9-验收标准)
 
@@ -22,10 +22,10 @@
 
 ### 1.1 定位
 
-API 层是核心引擎与用户之间的**薄网关**。它不实现业务逻辑，只做三件事：
+API 层是所有业务逻辑的**承载者**。路由直接通过 PostgreSQL SQL 实现配种查询和属性筛选：
 
 1. 接收 HTTP 请求
-2. 路由到核心引擎
+2. 执行 PostgreSQL SQL 查询
 3. 格式化响应
 
 ### 1.2 与 NLU 的关系
@@ -45,7 +45,7 @@ v0.2 (未来):   用户 ──▶ NLU ──▶ API ──▶ 引擎
 | 异步 | 内置 async/await |
 | 文档 | 自动生成 Swagger (`/docs`) |
 | CORS | 全开（开发阶段） |
-| 数据加载 | 热缓存 (PG→配种核心字段 ~10KB 内存) + 冷查询 (PG 直查详情/统计)；PG 不可用时 JSON 降级 |
+| 数据加载 | PG 全量加载 pals (Parser 索引) + SQL 直查；PG 不可用时 JSON 降级 |
 
 ---
 
@@ -53,7 +53,7 @@ v0.2 (未来):   用户 ──▶ NLU ──▶ API ──▶ 引擎
 
 1. **一个智能入口**：用户不需要选择端点，一个端点自动判断查询类型
 2. **精确也有，快捷也有**：结构化查询（`工种:等级`）和名称直查（`帕鲁名`）用同一输入框
-3. **分步返回**：属性查询先返候选列表，用户选完再返配种树
+3. **一级父母对**：配种查询返回目标帕鲁的所有父母组合，用户点击父代继续查询
 4. **前端友好**：响应包含前端可直接渲染的文本 + 结构化数据
 5. **中文原生**：工种接受中英文，帕鲁名接受中英别名
 
@@ -67,7 +67,7 @@ v0.2 (未来):   用户 ──▶ NLU ──▶ API ──▶ 引擎
 |------|------|------|
 | `POST` | `/api/query` | 🔑 智能查询（唯一主要入口） |
 | `GET` | `/api/pal/{pal_id}` | 帕鲁详情 |
-| `GET` | `/api/breeding/tree/{pal_id}` | 直接获取配种树（跳过查询） |
+| `GET` | `/api/breeding/tree/{pal_id}` | 获取父母对列表 (一级) |
 | `GET` | `/api/suitability/stats` | 全工种统计 |
 | `GET` | `/health` | 健康检查 |
 
@@ -128,7 +128,7 @@ API 解析 input 字段, 按优先级判断:
    → 无候选: 返回 404 + 搜索提示
 ```
 
-#### 响应 — 名称直查（直接返回配种树）
+#### 响应 — 名称直查（返回父母对列表）
 
 ```json
 {
@@ -142,38 +142,16 @@ API 解析 input 字段, 按优先级判断:
     "combi_rank": 480,
     "work_suitability": {"handiwork": 6, "mining": 6, "transporting": 4}
   },
-  "breeding_tree": {
-    "total_paths": 5,
-    "max_depth": 3,
-    "best_path": {
-      "total_steps": 2,
-      "leaf_pals": [
-        {"id": "Lamball", "cn_name": "棉悠悠"},
-        {"id": "Cattiva", "cn_name": "捣蛋猫"}
-      ],
-      "steps": [
-        {
-          "parent_a": {"id": "Lamball", "cn_name": "棉悠悠"},
-          "parent_b": {"id": "Cattiva", "cn_name": "捣蛋猫"},
-          "child": {"id": "Fenglope_Lux", "cn_name": "雷隐鹿"},
-          "method": "breed"
-        },
-        {
-          "parent_a": {"id": "Fenglope_Lux", "cn_name": "雷隐鹿"},
-          "parent_b": {"id": "Fenglope", "cn_name": "烽歌龙"},
-          "child": {"id": "Anubis", "cn_name": "阿努比斯"},
-          "method": "breed"
-        }
-      ],
-      "display_text": "🌿 野外捕获: 棉悠悠 + 捣蛋猫\n🥚 配种: 棉悠悠+捣蛋猫 = 雷隐鹿\n🥚 配种: 雷隐鹿+烽歌龙 = 🎯 阿努比斯"
-    },
-    "alternative_paths": 4,
-    "all_paths_url": "/api/breeding/tree/Anubis?all=true"
-  }
+  "parent_pairs": [
+    {"parent_a": "棉悠悠", "parent_b": "捣蛋猫", "child_rank": 480},
+    {"parent_a": "雷隐鹿", "parent_b": "烽歌龙", "child_rank": 480}
+  ],
+  "total_pairs": 5,
+  "display_text": "🥚 父母组合 (5 对):\n  1. 棉悠悠 + 捣蛋猫\n  ..."
 }
 ```
 
-> 注: 以上配种路径为示例, 非真实游戏数据。实际结果以爬取的 pal_data.json 计算为准。
+> 注: 以上数据为示例, 非真实游戏数据。
 
 #### 响应 — 属性查询（先返候选列表）
 
@@ -232,13 +210,9 @@ GET /api/pal/Anubis
 }
 ```
 
-### 3.4 GET `/api/breeding/tree/{pal_id}` — 直接获取配种树
+### 3.4 GET `/api/breeding/tree/{pal_id}` — 获取父母对
 
-```
-GET /api/breeding/tree/Anubis?max_depth=3
-```
-
-返回结构与 `POST /api/query` 中的 `breeding_tree` 一致。
+返回目标帕鲁的所有可配种父母组合 (ParentPair 列表)，由 SQL CROSS JOIN 计算得出。
 
 ### 3.5 GET `/api/suitability/stats` — 全工种统计
 
@@ -266,7 +240,7 @@ GET /api/breeding/tree/Anubis?max_depth=3
          │ 否
          ▼
 ┌──────────────────┐
-│ 2. 中文名/英文名/ │── 是 ──▶ name_query → 直接构建配种树
+│ 2. 中文名/英文名/ │── 是 ──▶ name_query → SQL 配种查询
 │    别名精确匹配？  │
 └────────┬─────────┘
          │ 否
@@ -402,56 +376,46 @@ GET /api/breeding/tree/Anubis?max_depth=3
   "data": {
     "type": "name_query",
     "pal": { "id": "Frostallion", "cn_name": "唤冬兽" },
-    "breeding_tree": {
-      "total_paths": 0,
-      "message": "唤冬兽仅可通过同类繁殖 (Frostallion + Frostallion) 或被野外捕获"
-    }
+    "parent_pairs": [],
+    "total_pairs": 0,
+    "message": "唤冬兽仅可通过同类繁殖或野外捕获"
   }
 }
 ```
 
 ---
 
-## 7. 与核心引擎的集成
+## 7. 配种查询实现
 
 ### 7.1 启动时初始化
 
 ```python
-# 优先从 PostgreSQL 加载热缓存
+# 优先从 PostgreSQL 加载 pals
 try:
-    index = await PostgresLoader.load_hot()
-    # → BreedingIndex { by_id, by_rank, by_wild } (~10KB)
+    async with pool.acquire() as conn:
+        rows = await conn.fetch("SELECT * FROM pals")
+        pals = [parse_pal_row(row) for row in rows]
 except Exception:
-    # PG 不可用: JSON 降级 (全量加载, 兼容当前行为)
-    loader = DataLoader()
-    loader.load("data/processed/pal_data.json")
-    index = loader  # 兼容旧接口
+    # PG 不可用: JSON 降级
+    pals = DataLoader().load("data/processed/pal_data.json")
 
-engine = BreedingEngine(index=index, rules=breeding_rules)
-builder = BreedingTreeBuilder(engine, max_depth=5)
-suitability = SuitabilityQuery(index)
-optimizer = PathOptimizer(engine)
+# 创建 Parser 索引
+parser = QueryParser(pals)
 ```
-
-> **为什么只缓存配种核心字段？** BFS 反向搜索需 O(n²) 次 CombiRank 查找，内存 O(1) 保证性能。详情 (`image_url` 等) 按需从 PG 查询。
-
-四个全局单例，整个应用生命周期复用。
 
 ### 7.2 请求处理管线
 
 ```
 POST /api/query  {"input": "手工:6"}
   │
-  ├── 1. 输入解析 (API 层)
+  ├── 1. 输入解析 (Parser)
   │      "手工:6" → {type: "suitability", work_type: "handiwork", level: 6}
   │
-  ├── 2. 调用引擎 (API 层)
-  │      suitability.query("handiwork", 6)
+  ├── 2. SQL 属性筛选
+  │      SELECT cn_name FROM pals WHERE handiwork >= 6 ORDER BY handiwork DESC
   │
-  ├── 3. 格式化响应 (API 层)
-  │      候选列表 + hint
-  │
-  └── 4. 返回
+  ├── 3. 格式化响应
+  └── 4. 返回候选列表
 ```
 
 ```
@@ -459,22 +423,23 @@ POST /api/query  {"input": "阿努比斯"}
   │
   ├── 1. 名称匹配 → Pal
   │
-  ├── 2. builder.build(anubis_pal)
+  ├── 2. 执行 SQL 配种查询 (CROSS JOIN)
   │
-  ├── 3. optimizer.optimize(tree)
-  │
-  ├── 4. 生成 display_text (API 层, 树→自然语言)
-  │
-  └── 5. 返回完整配种树
+  ├── 3. 格式化响应
+  └── 4. 返回父母对列表
 ```
 
-### 7.3 API 不侵入引擎
+### 7.3 配种 SQL
 
-引擎依然是纯算法，API 负责：
-- 输入解析（"手工:6" → work_type + level）
-- 名称模糊匹配（"阿奴比斯" → "阿努比斯"）
-- 响应格式化（树 → JSON + display_text）
-- 候选列表的"选完再查"流程
+```python
+BREED_PARENTS_SQL = """
+    SELECT a.cn_name AS parent_a, b.cn_name AS parent_b
+    FROM pals a, pals b
+    WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $1
+      AND a.id != $2 AND b.id != $2
+      AND a.id <= b.id
+"""
+```
 
 ---
 
@@ -492,12 +457,13 @@ POST /api/query  {"input": "阿努比斯"}
 ```
 用户输入 ──▶ POST /api/query
                │
-               ├── type: "name_query" ──▶ 直接渲染配种树
+               ├── type: "name_query" ──▶ 渲染父母对列表
                │
                ├── type: "suitability_query",
                │    result_type: "candidates"
                │    ──▶ 渲染候选列表
                │        用户点击某个帕鲁 ──▶ POST /api/query {"input": "阿努比斯"}
+               │                             ──▶ 渲染该帕鲁的父母对
                │
                └── type: "suitability_query",
                     result_type: "out_of_range"
@@ -509,26 +475,19 @@ POST /api/query  {"input": "阿努比斯"}
 API 返回的 `display_text` 由以下规则生成:
 
 ```
-1. 列出所有叶子帕鲁 (去重):
-   "🌿 野外捕获: {帕鲁1}, {帕鲁2}, ..."
-
-2. 按配种步骤逐行:
-   "🥚 配种: {父A} + {父B} = {子代}"
-   步骤按 BFS 顺序 (从叶子到根)
-
-3. 最后一行:
-   "🎯 {目标帕鲁}"
-
-4. 如果 best_path 为 None:
-   "该帕鲁无法通过配种获得，请直接在野外捕获或通过特殊方式获取"
-```
+父母对格式:
+  "🥚 父母组合 ({count} 对):
+   1. {parent_a} + {parent_b}
+   2. {parent_a} + {parent_b}
+   ..."
 
 示例:
 
 ```
-🌿 野外捕获: 棉悠悠, 捣蛋猫, 烽歌龙
-🥚 配种: 棉悠悠 + 捣蛋猫 = 雷隐鹿
-🥚 配种: 雷隐鹿 + 烽歌龙 = 🎯 阿努比斯
+🥚 父母组合 (22 对):
+  1. 织夜鹿 + 燎火舞伶
+  2. 霹雳犬 + 遁地鼠
+  ...
 ```
 
 ---
@@ -537,7 +496,7 @@ API 返回的 `display_text` 由以下规则生成:
 
 ### 9.1 名称直查
 
-- [x] `POST /api/query {"input": "阿努比斯"}` 返回完整配种树
+- [x] `POST /api/query {"input": "阿努比斯"}` 返回所有父母对
 - [x] `POST /api/query {"input": "Anubis"}` 返回相同结果
 - [x] `POST /api/query {"input": "anubis"}`（大小写）也能匹配
 - [x] `POST /api/query {"input": "不存在的帕鲁"}` 返回 404 + 建议

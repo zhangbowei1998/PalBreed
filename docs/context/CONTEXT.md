@@ -6,7 +6,7 @@
 
 ## 一句话描述
 
-一个智能化的**幻兽帕鲁（Palworld）配种助手 Agent**。用户用文字/语音描述目标帕鲁（如"手工10级的帕鲁"），系统返回从野外基础帕鲁开始的**完整配种树**。
+一个智能化的**幻兽帕鲁（Palworld）配种助手 Agent**。用户输入帕鲁名或"工种:等级"，系统通过 PostgreSQL SQL 直接计算 CombiRank 配种公式，返回所有可能的父母组合。
 
 ---
 
@@ -15,9 +15,9 @@
 | 术语 | 含义 |
 |------|------|
 | **CombiRank** | 官方繁殖力值，配种计算唯一核心参数。子代 = 父母 CombiRank 平均值取最近 |
-| **基础帕鲁** | `is_wild=true` 的帕鲁，野外可直接捕获，配种树的叶子节点 |
-| **配种树** | 从基础帕鲁到目标帕鲁的完整配种链路，BFS 反向搜索 + 递归展开 |
-| **工作适应性** | 12 种工作类型（手工、生火、采矿...），用户可按此反向查帕鲁 |
+| **基础帕鲁** | `is_wild=true` 的帕鲁，野外可直接捕获 |
+| **配种公式** | SQL: `round((a.combi_rank + b.combi_rank) / 2) = child.combi_rank` |
+| **查询方式** | PostgreSQL 5 表规范化，CROSS JOIN + breeding_rule 守卫查询 |
 
 ---
 
@@ -31,27 +31,22 @@ pl-agent/
 │   ├── architecture/     ← 架构与需求文档
 │   │   ├── API_REQUIREMENTS.md
 │   │   ├── ARCHITECTURE.md
-│   │   ├── CORE_ENGINE_REQUIREMENTS.md
+│   │   ├── CORE_ENGINE_REQUIREMENTS.md (已归档)
 │   │   ├── DATA_LAYER_REQUIREMENTS.md
+│   │   ├── DATABASE_DESIGN.md
+│   │   ├── MIGRATION_PLAN.md
 │   │   └── PROJECT_STRUCTURE.md
 │   ├── context/          ← AI 接手上下文
 │   │   └── CONTEXT.md
 │   └── decisions/        ← 设计决策记录
 │
 ├── packages/
-│   ├── core/             ← 🧠 配种算法引擎 (Python)
-│   │   ├── demo/         ←    快速验证脚本
+│   ├── core/             ← 📐 数据模型 (Python)
 │   │   └── pl_agent/core/
-│   │       ├── __init__.py
 │   │       ├── schema.py           ← ★ canonical models
 │   │       ├── errors.py           ← domain exceptions
-│   │       ├── interfaces.py       ← ABCs / Protocols
-│   │       ├── breeding_engine.py  ← CombiRank 配种计算
-│   │       ├── breeding_tree.py    ← BFS 配种树构建
-│   │       ├── suitability_query.py← 工作适应性查询
-│   │       ├── path_optimizer.py   ← 路径择优
-│   │       ├── data_loader.py      ← JSON 数据加载
-│   │       └── __tests__/          ← 单元测试 (12)
+│   │       ├── data_loader.py      ← JSON 降级加载
+│   │       └── __tests__/          ← 数据模型测试
 │   ├── adapters/         ← 🔌 外部数据适配
 │   │   └── adapters/
 │   │       ├── base.py             ← Adapter 抽象
@@ -65,22 +60,23 @@ pl-agent/
 │   │       │   ├── adapter.py      ← Pal → PG 写入
 │   │       │   └── loader.py       ← PG → 内存加载
 │   │       └── gamefile/           ← 游戏文件 (预留)
-│   ├── api/              ← 🌐 FastAPI 服务
+│   ├── api/              ← 🌐 FastAPI + 业务逻辑
 │   │   └── pl_agent/api/
-│   │       ├── __init__.py         ← QueryRequest 模型
 │   │       ├── main.py             ← FastAPI 入口 + lifespan
 │   │       ├── parser.py           ← 输入解析 (NAME/SUITABILITY/FUZZY)
 │   │       ├── formatter.py        ← 响应格式化
 │   │       ├── routes/
-│   │       │   └── query.py        ← 所有 API 路由
-│   │       └── __tests__/          ← API 冒烟测试
+│   │       │   └── query.py        ← 路由 + SQL 配种查询
+│   │       └── __tests__/          ← API 测试
 │   ├── nlu/              ← 💬 意图解析 (v0.2)
 │   └── web/              ← 🖥️ 前端 UI (v0.3)
 │
 ├── data/                 ← 📊 数据文件
 │   ├── raw/
 │   ├── processed/
-│   ├── sql/              ←   PostgreSQL 迁移脚本
+│   ├── sql/              ←   PostgreSQL DDL/迁移
+│   │   ├── 001_create_pals.sql   ← 旧宽表 (已被 002 替代)
+│   │   └── 002_normalize.sql    ← 5 表规范化 ⭐
 │   └── archive/
 ├── tests/                ← 🧪 集成/冒烟测试
 │   └── smoke/
@@ -95,18 +91,15 @@ pl-agent/
 ## 数据流
 
 ```
-v0.1 (当前):  paldb.cc → scraper → parser → adapter → pal_data.json → DataLoader → Engine
-
-v0.2 (计划):  paldb.cc → scraper → parser → adapter → PostgreSQL
+v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 表)
                                                          │
-                                          ┌──────────────┴──────────────┐
-                                          ▼                             ▼
-                                    热缓存 (启动)                   冷查询 (运行时)
-                                    id/combi_rank                 详情/统计/搜索
-                                    is_wild/work_suit              PG 直连
-                                          │
-                                          ▼
-                                       Engine (BFS 配种树)
+                                          ┌──────────────┴──────────────────┐
+                                          ▼                                 ▼
+                                    API 启动加载                        API 运行时
+                                    LOAD_ALL_SQL                      配种 SQL (CROSS JOIN)
+                                    (4 表 JOIN 拼装 Pal)              + breeding_rule 守卫
+                                                                      属性筛选 (参数化 JOIN)
+                                                                      统计 (GROUP BY)
 ```
 
 ## 数据来源
@@ -132,18 +125,14 @@ v0.2 (计划):  paldb.cc → scraper → parser → adapter → PostgreSQL
 | 阶段 | 状态 | 产出 |
 |------|:---:|------|
 | 架构设计 | ✅ | `docs/architecture/*` |
-| Schema 定义 | ✅ | `schema.py` — Pal, WorkSuitability, Element, WorkType, BreedingRules |
-| 错误处理 | ✅ | `errors.py` — 6 种领域异常 |
-| 组件接口 | ✅ | `interfaces.py` — 5 个 Protocol |
-| 数据层 | ✅ | scraper → parser → adapter → validator |
-| 核心引擎 | ✅ | breeding_engine + breeding_tree + suitability_query + path_optimizer |
-| 数据加载器 | ✅ | `data_loader.py` — JSON 多索引加载 |
-| PostgreSQL 存储 | 📝 | `adapters/postgres/` — 方案已定，待实现 |
-| API 服务 | ✅ | FastAPI — 8 端点, lifespan 启动, CORS |
-| 单元测试 | ✅ | 23 pytest (12 引擎 + 5 数据 + 6 冒烟) |
-| Makefile | ✅ | make serve / test / scrape / demo / lint / format |
-| NLU 模块 | ⏭️ | 跳过 v0.1, 直接用结构化输入 |
-| 前端 UI | ⬜ | `packages/web/` — v0.3 计划 |
+| Schema 定义 | ✅ | `schema.py` — Pal, WorkSuitability, PalRow, BreedingRuleRow |
+| 数据层 | ✅ | scraper → parser → adapter → PostgreSQL (5 表) + JSON 降级 |
+| API 服务 | ✅ | FastAPI — SQL 直连, 参数化查询, 8 端点 |
+| 数据库规范化 | ✅ | 5 表 (pal/pal_element/work_suitability/pal_aliase/breeding_rule) |
+| 测试 | ✅ | 8 冒烟测试全部通过 |
+| Makefile | ✅ | make serve / test / scrape / demo |
+| NLU 模块 | ⏭️ | 跳过, 结构化输入 |
+| 前端 UI | ⬜ | `packages/web/` |
 
 ## API 端点一览
 
@@ -152,13 +141,13 @@ v0.2 (计划):  paldb.cc → scraper → parser → adapter → PostgreSQL
 | `/health` | GET | 健康检查, 返回 pals_loaded |
 | `/api/query` | POST | **智能查询** — 自动判断输入类型 |
 | `/api/pal/{id}` | GET | 帕鲁详情 |
-| `/api/breeding/tree/{id}` | GET | 配种树 (可选 `?all=true&max_depth=5`) |
+| `/api/breeding/tree/{id}` | GET | 父母对列表 (一级) |
 | `/api/suitability/stats` | GET | 全工种统计 |
 
 **启动**: `make serve` → http://localhost:8000
 
 **输入示例**:
-- `{"input": "阿努比斯"}` → 配种树查询
+- `{"input": "阿努比斯"}` → 父母对列表
 - `{"input": "手工:4"}` → 工作适应性筛选
 - `{"input": "手工:6"}` → 超范围自动回退展示最优
 
@@ -166,11 +155,9 @@ v0.2 (计划):  paldb.cc → scraper → parser → adapter → PostgreSQL
 
 | 优先级 | 任务 | 位置 |
 |:---:|------|------|
-| 1 | PostgreSQL 存储迁移 | `packages/adapters/adapters/postgres/` |
-| 2 | 从 paldb.cc 抓取完整数据 | `make scrape` |
-| 3 | 编写 API 集成测试 | `packages/api/pl_agent/api/__tests__/` |
-| 4 | NLU 模块（模糊匹配增强） | `packages/nlu/` |
-| 5 | 前端 UI | `packages/web/` |
+| 1 | 前端 UI | `packages/web/` |
+| 2 | NLU 模块 | `packages/nlu/` |
+| 3 | 特殊配种规则 (SQL 版) | `routes/query.py` |
 
 详细设计见 `docs/architecture/` 下各需求文档。
 
@@ -180,37 +167,40 @@ v0.2 (计划):  paldb.cc → scraper → parser → adapter → PostgreSQL
 
 - **后端**: Python 3.10+ / FastAPI
 - **前端**: TypeScript / React 18 / Vite
-- **数据库**: PostgreSQL 16 + asyncpg (v0.2 迁移目标)
-- **数据**: JSON 文件 (当前) → PostgreSQL (计划)
+- **数据库**: PostgreSQL 16 + asyncpg (配种查询走 SQL CROSS JOIN)
 - **语音**: Web Speech API (MVP) → Whisper (进阶)
 - **NLU**: 规则引擎 (MVP) → LLM (进阶)
 
 ---
 
-## 关键算法参考
+## 配种算法
 
-- **配种公式**: `child_rank = round((a.combi_rank + b.combi_rank) / 2)`，取最接近 CombiRank 的帕鲁
-- **特殊规则**: 传说帕鲁同类繁殖、部分亚种固定父母组合、Boss 帕鲁不可配种
-- **配种树**: BFS 反向搜索，visited 防循环，max_depth=5，按步数择优
+```sql
+-- Step 0: 查特殊规则 (unbreedable/same_species/fixed_pair)
+SELECT br.rule_type, br.parent_a_id, br.parent_b_id
+FROM breeding_rule br JOIN pal p ON br.child_id = p.id
+WHERE p.game_id = $target_game_id;
 
-参考项目: [azmiao/PalWorldPlugin](https://github.com/azmiao/PalWorldPlugin) (Python 配种算法，但数据已过期)
+-- Step 1: CombiRank 公式 (无特殊规则时)
+SELECT a.cn_name, b.cn_name, a.combi_rank, b.combi_rank
+FROM pal a, pal b
+WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $target_rank
+  AND a.game_id != $target_game_id AND b.game_id != $target_game_id
+  AND a.id <= b.id;
+```
+
+两步流程: 先查 breeding_rule 守卫 (unbreedable 直接返回空)，再走 CROSS JOIN。
+返回一级父母对，点击继续查。无递归 BFS。
 
 ---
 
-## 命名空间包架构 (重要!)
+## 架构要点
 
-`pl_agent` 是跨多包的 **PEP 420 命名空间包**。`core` 和 `api` 各自通过 `pkgutil.extend_path` 贡献子包:
-
-```
-packages/core/pl_agent/__init__.py   →  pkgutil.extend_path
-packages/api/pl_agent/__init__.py    →  pkgutil.extend_path
-```
-
-- `import pl_agent` → 合并两个路径
-- `from pl_agent.core.schema import Pal` → 来自 core
-- `from pl_agent.api.main import app` → 来自 api
-
-所有包的 `pl_agent/__init__.py` 必须保持 `extend_path` 模板。不要在顶层 `__init__.py` 中放业务代码。
+- **core 包**: 纯数据模型，含 PalRow/BreedingRuleRow DB 行类型，无业务逻辑
+- **api 包**: 所有业务逻辑在路由中直接 SQL，两步配种查询 (守卫 + CROSS JOIN)
+- **数据库**: 5 表规范化 (pal/pal_element/work_suitability/pal_aliase/breeding_rule)
+- **属性筛选**: 参数化 JOIN work_suitability，消除 SQL 注入
+- **PG 降级**: 无 PG 时回退到 JSON 文件 + Python 内存遍历
 
 ---
 
@@ -222,13 +212,13 @@ packages/api/pl_agent/__init__.py    →  pkgutil.extend_path
 | 目录怎么组织的 | `docs/architecture/PROJECT_STRUCTURE.md` |
 | 🔑 数据模型规范 (Schema) | `packages/core/pl_agent/core/schema.py` |
 | 🔑 数据层详细需求 | `docs/architecture/DATA_LAYER_REQUIREMENTS.md` |
-| �️ PostgreSQL 存储方案 | `docs/decisions/002-postgres-storage.md` |
+| 🗄️ 数据库设计 (ERD/DDL) | `docs/architecture/DATABASE_DESIGN.md` |
 | 🔌 外部数据如何接入 | `packages/adapters/base.py` + `docs/architecture/DATA_LAYER_REQUIREMENTS.md` |
-| 🔑 核心引擎需求 | `docs/architecture/CORE_ENGINE_REQUIREMENTS.md` |
 | 🌐 API 服务需求 | `docs/architecture/API_REQUIREMENTS.md` |
+| ⚙️ 配种逻辑实现 | `packages/api/pl_agent/api/routes/query.py` (SQL) |
 | ❗ 业务异常定义 | `packages/core/pl_agent/core/errors.py` |
-| 🔧 引擎组件接口 | `packages/core/pl_agent/core/interfaces.py` |
-| 配种算法怎么算 | `docs/architecture/CORE_ENGINE_REQUIREMENTS.md` §3 |
 | API 有哪些接口 | `docs/architecture/API_REQUIREMENTS.md` §3 |
 | AI 行为指引 | `.github/copilot-instructions.md` |
+| 数据库 DDL | `data/sql/002_normalize.sql` |
+| 迁移计划 | `docs/architecture/MIGRATION_PLAN.md` |
 | 初始需求 | `init.md` |
