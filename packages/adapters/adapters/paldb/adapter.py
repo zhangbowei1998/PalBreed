@@ -92,10 +92,10 @@ class PalDBAdapter(PalDataSourceAdapter):
         return pals
 
     async def build_and_save(self) -> list[Pal]:
-        """完整构建流程: 抓取 → 解析 → 校验 → 保存 JSON."""
+        """完整构建流程: 抓取 → 解析 → 校验 → 保存 JSON + PostgreSQL."""
         pals = await self.fetch_all()
 
-        # save pal_data.json
+        # 1. save pal_data.json (兼容保留)
         output_data = {p.id: p.to_dict() for p in pals}
         output_path = self.output_dir / "pal_data.json"
         output_path.write_text(
@@ -103,6 +103,19 @@ class PalDBAdapter(PalDataSourceAdapter):
             encoding="utf-8",
         )
         logger.info("saved %d pals to %s", len(pals), output_path)
+
+        # 2. save to PostgreSQL (主存储)
+        try:
+            from adapters.postgres.adapter import PostgresWriter
+
+            pg = PostgresWriter()
+            await pg.connect()
+            await pg.upsert_all(pals)
+            pg_count = await pg.count()
+            await pg.close()
+            logger.info("saved %d pals to PostgreSQL", pg_count)
+        except Exception as e:
+            logger.warning("PostgreSQL save skipped (%s), JSON only", e)
 
         # save metadata
         meta = await self.fetch_meta()

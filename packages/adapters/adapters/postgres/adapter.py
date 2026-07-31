@@ -72,8 +72,12 @@ class PostgresWriter:
                 min_size=1,
                 max_size=4,
             )
-            logger.info("connected to PostgreSQL: %s:%d/%s",
-                        self.config.host, self.config.port, self.config.database)
+            logger.info(
+                "connected to PostgreSQL: %s:%d/%s",
+                self.config.host,
+                self.config.port,
+                self.config.database,
+            )
 
     async def close(self) -> None:
         """关闭连接池."""
@@ -97,10 +101,18 @@ class PostgresWriter:
                 [e.value for e in pal.elements],
                 pal.rarity,
                 pal.is_wild,
-                ws.handiwork, ws.kindling, ws.watering, ws.planting,
-                ws.generating_electricity, ws.gathering,
-                ws.lumbering, ws.mining,
-                ws.cooling, ws.medicine, ws.transporting, ws.farming,
+                ws.handiwork,
+                ws.kindling,
+                ws.watering,
+                ws.planting,
+                ws.generating_electricity,
+                ws.gathering,
+                ws.lumbering,
+                ws.mining,
+                ws.cooling,
+                ws.medicine,
+                ws.transporting,
+                ws.farming,
                 pal.aliases,
                 pal.image_url,
                 pal.wiki_url,

@@ -23,9 +23,10 @@ class BreedingIndex:
     只包含配种计算必需的字段: id, combi_rank, is_wild, work_suitability.
     展示字段 (image_url, wiki_url 等) 保留 PG 按需查询.
     """
+
     pals: list[Pal] = field(default_factory=list)
     by_id: dict[str, Pal] = field(default_factory=dict)
-    by_rank: list[Pal] = field(default_factory=list)          # 按 CombiRank 排序
+    by_rank: list[Pal] = field(default_factory=list)  # 按 CombiRank 排序
 
     def __len__(self) -> int:
         return len(self.pals)
@@ -66,7 +67,9 @@ class PostgresLoader:
     async def connect(self) -> None:
         if self._pool is None:
             self._pool = await asyncpg.create_pool(
-                dsn=self.config.dsn, min_size=1, max_size=4,
+                dsn=self.config.dsn,
+                min_size=1,
+                max_size=4,
             )
 
     async def close(self) -> None:
@@ -104,6 +107,7 @@ class PostgresLoader:
             )
             # elements: JSONB → list[str] → list[Element]
             from pl_agent.core.schema import Element
+
             elements_raw = r["elements"] or []
             elements = []
             for e in elements_raw:
@@ -165,22 +169,38 @@ class PostgresLoader:
         await self._ensure_pool()
         # 白名单校验列名防止 SQL 注入
         valid = {
-            "handiwork", "kindling", "watering", "planting",
-            "generating_electricity", "gathering", "lumbering", "mining",
-            "cooling", "medicine", "transporting", "farming",
+            "handiwork",
+            "kindling",
+            "watering",
+            "planting",
+            "generating_electricity",
+            "gathering",
+            "lumbering",
+            "mining",
+            "cooling",
+            "medicine",
+            "transporting",
+            "farming",
         }
         if work_type not in valid:
             return []
 
         sql = (
-            f'SELECT id, cn_name, number, {work_type} AS lv '
-            f'FROM pals WHERE {work_type} >= $1 '
-            f'ORDER BY {work_type} DESC LIMIT $2'
+            f"SELECT id, cn_name, number, {work_type} AS lv "
+            f"FROM pals WHERE {work_type} >= $1 "
+            f"ORDER BY {work_type} DESC LIMIT $2"
         )
         async with self._pool.acquire() as conn:
             rows = await conn.fetch(sql, min_level, limit)
-        return [{"id": r["id"], "cn_name": r["cn_name"],
-                 "number": r["number"], "level": r["lv"]} for r in rows]
+        return [
+            {
+                "id": r["id"],
+                "cn_name": r["cn_name"],
+                "number": r["number"],
+                "level": r["lv"],
+            }
+            for r in rows
+        ]
 
     # ── helpers ────────────────────────────────────────────────
 
