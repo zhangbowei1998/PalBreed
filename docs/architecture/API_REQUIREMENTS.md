@@ -1,6 +1,6 @@
 # API 服务需求文档
 
-> 版本: v1.0 | 日期: 2026-07-31 | 状态: 待实现
+> 版本: v1.1 | 日期: 2026-07-31 | 状态: 已实现
 
 ---
 
@@ -45,7 +45,7 @@ v0.2 (未来):   用户 ──▶ NLU ──▶ API ──▶ 引擎
 | 异步 | 内置 async/await |
 | 文档 | 自动生成 Swagger (`/docs`) |
 | CORS | 全开（开发阶段） |
-| 数据加载 | 启动时一次性加载到内存 |
+| 数据加载 | 热缓存 (PG→配种核心字段 ~10KB 内存) + 冷查询 (PG 直查详情/统计)；PG 不可用时 JSON 降级 |
 
 ---
 
@@ -417,23 +417,23 @@ GET /api/breeding/tree/Anubis?max_depth=3
 ### 7.1 启动时初始化
 
 ```python
-loader = DataLoader()
+# 优先从 PostgreSQL 加载热缓存
+try:
+    index = await PostgresLoader.load_hot()
+    # → BreedingIndex { by_id, by_rank, by_wild } (~10KB)
+except Exception:
+    # PG 不可用: JSON 降级 (全量加载, 兼容当前行为)
+    loader = DataLoader()
+    loader.load("data/processed/pal_data.json")
+    index = loader  # 兼容旧接口
 
-# 优先加载真实数据
-data_path = Path("data/processed/pal_data.json")
-if data_path.exists():
-    loader.load(data_path)
-else:
-    # 降级: 使用内置 demo 数据 (仅供开发/演示)
-    loader._pals = {...}  # 内置 demo pals
-    loader._loaded = True
-    logger.warning("pal_data.json 不存在, 使用内置 demo 数据")
-
-engine = BreedingEngine(pals=loader.get_all(), rules=breeding_rules)
+engine = BreedingEngine(index=index, rules=breeding_rules)
 builder = BreedingTreeBuilder(engine, max_depth=5)
-suitability = SuitabilityQuery(loader.get_all())
+suitability = SuitabilityQuery(index)
 optimizer = PathOptimizer(engine)
 ```
+
+> **为什么只缓存配种核心字段？** BFS 反向搜索需 O(n²) 次 CombiRank 查找，内存 O(1) 保证性能。详情 (`image_url` 等) 按需从 PG 查询。
 
 四个全局单例，整个应用生命周期复用。
 
@@ -537,25 +537,25 @@ API 返回的 `display_text` 由以下规则生成:
 
 ### 9.1 名称直查
 
-- [ ] `POST /api/query {"input": "阿努比斯"}` 返回完整配种树
-- [ ] `POST /api/query {"input": "Anubis"}` 返回相同结果
-- [ ] `POST /api/query {"input": "anubis"}`（大小写）也能匹配
-- [ ] `POST /api/query {"input": "不存在的帕鲁"}` 返回 404 + 建议
+- [x] `POST /api/query {"input": "阿努比斯"}` 返回完整配种树
+- [x] `POST /api/query {"input": "Anubis"}` 返回相同结果
+- [x] `POST /api/query {"input": "anubis"}`（大小写）也能匹配
+- [x] `POST /api/query {"input": "不存在的帕鲁"}` 返回 404 + 建议
 
 ### 9.2 属性查询
 
-- [ ] `POST /api/query {"input": "手工:6"}` 返回候选列表含阿努比斯
-- [ ] `POST /api/query {"input": "handiwork:3"}` 英文工种也支持
+- [x] `POST /api/query {"input": "手工:6"}` 返回候选列表含阿努比斯
+- [x] `POST /api/query {"input": "handiwork:3"}` 英文工种也支持
 - [ ] `POST /api/query {"input": "handiwork:3,mining:3"}` 多条件查询
-- [ ] `POST /api/query {"input": "手工"}`（缺省等级）默认 level=1
+- [x] `POST /api/query {"input": "手工"}`（缺省等级）默认 level=1
 
 ### 9.3 边界
 
-- [ ] `POST /api/query {"input": "手工:100"}` 返回空 + `max_available: 6` + fallback
+- [x] `POST /api/query {"input": "手工:100"}` 返回空 + `max_available` + fallback
 - [ ] `POST /api/query {"input": "打铁:5"}` 返回工种不合法提示
 
 ### 9.4 性能
 
-- [ ] `/health` 返回 `pals_loaded ≥ 0`
-- [ ] 单次查询响应 < 500ms
-- [ ] Swagger UI `/docs` 可用
+- [x] `/health` 返回 `pals_loaded ≥ 0`
+- [x] 单次查询响应 < 500ms
+- [x] Swagger UI `/docs` 可用

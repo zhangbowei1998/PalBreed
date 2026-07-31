@@ -1,6 +1,6 @@
 # 幻兽帕鲁配种 Agent — 架构设计文档
 
-> 版本: v1.0 | 日期: 2026-07-31
+> 版本: v1.1 | 日期: 2026-07-31
 
 ---
 
@@ -83,14 +83,25 @@
 │                          │                                    │
 │   ┌──────────────────────▼────────────────────────────────┐   │
 │   │                    数据存储层                           │   │
-│   │  ┌──────────────────┐  ┌─────────────────────────┐    │   │
-│   │  │   pal_data.json   │  │  breeding_rules.json    │    │   │
-│   │  │   (帕鲁核心属性)    │  │  (特殊配种规则)          │    │   │
-│   │  └──────────────────┘  └─────────────────────────┘    │   │
-│   │  ┌──────────────────┐  ┌─────────────────────────┐    │   │
-│   │  │  wild_pals.json   │  │  zh_mapping.json        │    │   │
-│   │  │  (野外捕获列表)    │  │  (中文别名/昵称映射)     │    │   │
-│   │  └──────────────────┘  └─────────────────────────┘    │   │
+│   │                                                        │   │
+│   │  ┌──────────────────────────────────────────┐          │   │
+│   │  │           PostgreSQL (主存储)              │          │   │
+│   │  │  ┌──────────┐  ┌───────────────┐         │          │   │
+│   │  │  │ pals 表   │  │ breeding_rules│         │          │   │
+│   │  │  └──────────┘  └───────────────┘         │          │   │
+│   │  └──────────────────┬───────────────────────┘          │   │
+│   │                     │                                   │   │
+│   │         ┌───────────┴───────────┐                      │   │
+│   │         ▼                       ▼                      │   │
+│   │  ┌──────────────┐     ┌──────────────────┐             │   │
+│   │  │ 热缓存 (内存)  │     │ 冷查询 (PG 直连)   │             │   │
+│   │  │ combi_rank   │     │ 详情/统计/管理     │             │   │
+│   │  │ work_suit    │     │ 模糊搜索           │             │   │
+│   │  │ id/is_wild   │     │ 数据分析           │             │   │
+│   │  └──────────────┘     └──────────────────┘             │   │
+│   │        ▲                                               │   │
+│   │        └── 仅配种引擎使用的 4 个字段 (~2KB)              │   │
+│   │            反向搜索 O(n²) 必须 O(1) 内存访问             │   │
 │   └───────────────────────────────────────────────────────┘   │
 │                                                                 │
 │   ┌───────────────────────────────────────────────────────┐   │
@@ -103,9 +114,17 @@
 │   │         └────────────────┼──────────────────┘          │   │
 │   │                          ▼                             │   │
 │   │               ┌──────────────────┐                     │   │
-│   │               │  数据构建脚本      │                     │   │
-│   │               │  build_data.py    │                     │   │
-│   │               └──────────────────┘                     │   │
+│   │               │  PalDBAdapter    │                     │   │
+│   │               │  scraper→parser  │                     │   │
+│   │               │  →adapter→save   │                     │   │
+│   │               └────────┬─────────┘                     │   │
+│   │                        │                               │   │
+│   │            ┌───────────┴───────────┐                   │   │
+│   │            ▼                       ▼                   │   │
+│   │   ┌──────────────┐        ┌──────────────┐            │   │
+│   │   │ pal_data.json │        │ PostgreSQL    │            │   │
+│   │   │ (兼容保留)     │        │ (主存储)       │            │   │
+│   │   └──────────────┘        └──────────────┘            │   │
 │   └───────────────────────────────────────────────────────┘   │
 │                          │                                    │
 │                          ▼                                    │
@@ -279,60 +298,58 @@ class PalDBScraper:
            └──────────────┘
 ```
 
-### 3.3 数据文件规格
+### 3.3 数据存储方案
+
+#### 分层架构: 热缓存 + 冷查询
+
+不是全量加载到内存——而是**按需分层**，让 PG 真正发挥作用：
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      PostgreSQL                             │
+│  所有数据 (pals 表 + breeding_rules 表)                       │
+└────────────┬────────────────────────────┬───────────────────┘
+             │                            │
+    启动时提取 4 个字段              运行时按需查询
+    (~500 行 × 5 字段)               (详情/统计/搜索)
+             │                            │
+             ▼                            ▼
+   ┌─────────────────┐          ┌─────────────────┐
+   │  热缓存 (内存)    │          │  PG 直查 (冷路径) │
+   │                 │          │                 │
+   │  id             │          │  image_url      │
+   │  combi_rank     │◀─ 配种  │  wiki_url       │
+   │  is_wild        │  引擎   │  spawn_locations│
+   │  work_suitability│  专用  │  aliases        │
+   │                 │          │  统计聚合        │
+   └─────────────────┘          └─────────────────┘
+   每次查找 ~50ns               每次查询 ~1-5ms
+   用于: BFS 反向搜索            用于: 详情展示/管理面板
+```
+
+| 层级 | 存什么 | 为什么 |
+|------|--------|--------|
+| **热缓存** | `id`, `combi_rank`, `is_wild`, `work_suitability`(12 字段) | BFS 反向搜索需要 O(n²) 次访问，必须 O(1) 内存 |
+| **PG 冷查询** | `image_url`, `wiki_url`, `spawn_locations`, `aliases`, 统计 | 单次请求，走 PG 更合理；利用 SQL 聚合能力 |
+
+#### 为什么这样分层？
+
+- **全量加载到内存** → PG 变成 JSON 文件的替代品，没意义。你说得对。
+- **全部走 PG 查询** → BFS 配种树 200,000 次查找 × 1ms = 200 秒，不可用。
+- **热缓存 + 冷查询** → 配种核心字段内存 O(1)，展示字段 PG 按需取。**PG 真正被用起来了。**
+
+#### 兼容降级: JSON 文件
 
 ```
 data/
-├── pal_data.json          # 核心帕鲁数据 (手动/爬虫生成)
-│   [{
-│     "id": "Anubis",
-│     "number": 139,
-│     "cn_name": "阿努比斯",
-│     "en_name": "Anubis",
-│     "aliases": ["狗头", "埃及狗"],
-│     "combi_rank": 480,
-│     "elements": ["Earth"],
-│     "work_suitability": {
-│       "handiwork": 6,
-│       "mining": 6,
-│       "transporting": 4
-│     },
-│     "is_wild": true,
-│     "rarity": 10,
-│     "image_url": "https://cdn.paldb.cc/..."
-│   }, ...]
-│
-├── breeding_rules.json    # 特殊配种规则
-│   {
-│     "special_combinations": [
-│       {
-│         "parent_a": "Relaxaurus",
-│         "parent_b": "Sparkit",
-│         "child": "Relaxaurus Lux"
-│       }, ...
-│     ],
-│     "self_only": ["Frostallion", "Jetragon", "Paladius", "Necromus"],
-│     "unbreedable": ["Boss_XXX", "Tower_YYY", ...]
-│   }
-│
-├── wild_pals.json         # 基础帕鲁 (野外可捕获)
-│   ["Lamball", "Cattiva", "Chikipi", ...]
-│
-└── zh_mapping.json        # 中文语义映射 (别名/口语化表达)
-│   {
-│     "work_types": {
-│       "手工": "handiwork", "手工作业": "handiwork",
-│       "烧火": "kindling", "生火": "kindling", "点火": "kindling",
-│       "浇水": "watering", "灌溉": "watering",
-│       ...
-│     },
-│     "pal_nicknames": {
-│       "棉悠悠": ["棉棉", "悠悠"],
-│       "阿努比斯": ["狗头", "埃及狗", "阿努"],
-│       ...
-│     }
-│   }
+├── processed/
+│   ├── pal_data.json          # PG 不可用时的全量降级
+│   └── pal_meta.json
+└── sql/
+    └── 001_create_pals.sql    # DDL 迁移脚本
 ```
+
+PG 不可用时，自动回退到 JSON 全量加载（当前行为）。
 
 ---
 
@@ -554,7 +571,7 @@ BreedingStep:
 | 层级 | 技术 | 理由 |
 |------|------|------|
 | **语言** | Python 3.10+ | 数据处理 + AI 生态成熟 |
-| **数据存储** | JSON 文件 → SQLite | 数据量 < 500 条，JSON 足够；后期可升级 SQLite |
+| **数据存储** | PostgreSQL 16 (主) + JSON 降级 | 热缓存(配种字段) + PG 冷查询(详情/统计) |
 | **数据爬虫** | httpx + BeautifulSoup4 | 异步 HTTP + HTML 解析 |
 | **Web 框架** | FastAPI | 高性能 REST API，自动生成文档 |
 | **前端 UI** | React / Vue 3 | 交互式配种树可视化 |
@@ -576,72 +593,93 @@ BreedingStep:
 
 ```
 pl-agent/
-├── ARCHITECTURE.md              # 本架构文档
-├── init.md                      # 初始需求
-├── README.md                    # 项目说明
+├── docs/                        # 📖 文档
+│   ├── architecture/            #   架构与需求文档
+│   ├── context/                 #   AI 接手上下文
+│   └── decisions/               #   设计决策记录 (ADR)
 │
-├── data/                        # 📦 数据文件 (静态)
-│   ├── pal_data.json            #   帕鲁核心数据
-│   ├── breeding_rules.json      #   特殊配种规则
-│   ├── wild_pals.json           #   基础帕鲁列表
-│   └── zh_mapping.json          #   中文语义映射
+├── packages/                    # 📦 monorepo 包
+│   ├── core/                    # 🧠 配种算法引擎
+│   │   ├── demo/                #   快速验证脚本
+│   │   └── pl_agent/core/
+│   │       ├── schema.py        #   ★ canonical models
+│   │       ├── errors.py        #   领域异常
+│   │       ├── interfaces.py    #   ABCs / Protocols
+│   │       ├── breeding_engine.py
+│   │       ├── breeding_tree.py
+│   │       ├── suitability_query.py
+│   │       ├── path_optimizer.py
+│   │       ├── data_loader.py   #   JSON 加载器
+│   │       └── __tests__/
+│   │
+│   ├── adapters/                # 🔌 外部数据适配
+│   │   └── adapters/
+│   │       ├── base.py          #   Adapter 抽象借口
+│   │       ├── validator.py     #   数据校验
+│   │       ├── paldb/           #   paldb.cc 适配器
+│   │       │   ├── scraper.py
+│   │       │   ├── parser.py
+│   │       │   ├── adapter.py
+│   │       │   └── __tests__/
+│   │       └── postgres/        #   PostgreSQL 适配器 (v0.2)
+│   │           ├── adapter.py   #   Pal → PG 批量写入
+│   │           └── loader.py    #   PG → list[Pal] 加载
+│   │
+│   ├── api/                     # 🌐 FastAPI 服务
+│   │   └── pl_agent/api/
+│   │       ├── main.py          #   入口 + lifespan
+│   │       ├── parser.py        #   输入解析
+│   │       ├── formatter.py     #   响应格式化
+│   │       ├── routes/query.py  #   路由
+│   │       └── __tests__/
+│   │
+│   ├── nlu/                     # 💬 意图解析 (v0.2)
+│   └── web/                     # 🖥️ 前端 UI (v0.3)
 │
-├── scripts/                     # 🔧 数据获取脚本 (离线运行)
-│   ├── build_data.py            #   数据构建主脚本
-│   ├── scraper_paldb.py         #   paldb.cc HTML 爬虫
-│   ├── parser_html.py           #   HTML 解析器
-│   ├── validator.py             #   数据校验器
-│   └── diff_checker.py          #   新旧数据对比
-│
-├── core/                        # 🧠 核心引擎
-│   ├── __init__.py
-│   ├── models.py                #   数据模型 (Pal, BreedingRule 等)
-│   ├── data_loader.py           #   数据加载器 (JSON → 内存)
-│   ├── suitability_query.py     #   属性反向查询器
-│   ├── breeding_engine.py       #   配种计算引擎
-│   ├── breeding_tree.py         #   配种树构建器
-│   └── path_optimizer.py        #   路径择优器
-│
-├── nlu/                         # 💬 自然语言理解
-│   ├── __init__.py
-│   ├── intent_classifier.py     #   意图分类 (规则 + LLM)
-│   ├── entity_extractor.py      #   实体提取 (帕鲁名/工种/等级)
-│   └── disambiguator.py         #   消歧处理
-│
-├── api/                         # 🌐 Web API 服务
-│   ├── __init__.py
-│   ├── main.py                  #   FastAPI 入口
-│   ├── routes/
-│   │   ├── breeding.py          #   /api/breeding 配种相关接口
-│   │   └── query.py             #   /api/query 查询相关接口
-│   └── schemas.py               #   API 请求/响应模型
-│
-├── web/                         # 🖥️ 前端 UI (可选)
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── SearchBox.tsx    #   搜索输入框
-│   │   │   ├── PalCard.tsx      #   帕鲁信息卡片
-│   │   │   ├── BreedingTree.tsx #   配种树可视化
-│   │   │   └── CandidateList.tsx#   候选帕鲁列表
-│   │   └── App.tsx
-│   └── package.json
+├── data/                        # 📊 数据文件
+│   ├── raw/                     #   爬虫原始 HTML
+│   ├── processed/               #   构建产物 (JSON)
+│   └── sql/                     #   PostgreSQL 迁移脚本
 │
 ├── tests/                       # 🧪 测试
-│   ├── test_breeding_engine.py
-│   ├── test_breeding_tree.py
-│   ├── test_suitability.py
-│   └── test_nlu.py
+│   └── smoke/                   #   冒烟测试 (6 场景)
 │
-├── requirements.txt             # Python 依赖
-├── Dockerfile                   # Docker 部署
-└── docker-compose.yml           # 一键部署
+├── pyproject.toml               # uv workspace 配置
+├── Makefile                     # 常用命令
+└── README.md
 ```
 
 ---
 
 ## 8. 关键数据流
 
-### 8.1 用户查询"手工10级帕鲁"的完整流程
+### 8.1 启动时数据加载: 热缓存 + 冷查询
+
+```
+API 启动 (main.py lifespan):
+  │
+  ├── 1. 从 PG 提取配种热字段 → 内存索引
+  │      SELECT id, combi_rank, is_wild,
+  │             handiwork, kindling, ..., farming
+  │      FROM pals
+  │      → BreedingIndex {
+  │          by_id: dict[str, PalRef],       # O(1) 查找
+  │          by_rank: list[PalRef],           # CombiRank 排序
+  │          by_wild: list[PalRef],           # 野外帕鲁
+  │        }
+  │      (~500 行 × 5 字段, ~10KB 内存)
+  │
+  ├── 2. 冷数据留在 PG
+  │      image_url, wiki_url, spawn_locations, aliases
+  │      → 按需通过 get_pal_detail(id) 异步查询
+  │
+  └── 3. PG 不可用时降级
+         DataLoader.load(pal_data.json) → 全量内存 (当前行为)
+```
+
+> **为什么不全量加载？** 全量加载让 PG 沦为 JSON 替代品。只缓存配种计算必需的 4 个字段，其余走 PG 按需查询，PG 才真正有价值。
+
+### 8.2 用户查询"手工10级帕鲁"的完整流程
 
 ```
 时间线 →
@@ -659,7 +697,7 @@ pl-agent/
   │
   ▼
 [属性反向查询器]
-  ├── 查询 pal_data.json
+  ├── 查询内存索引 (启动时已加载全部 Pal)
   ├── 筛选 work_suitability.handiwork >= 10
   ├── 结果: [
   │     {pal: "阿努比斯", handiwork: 6},  ← 1.0版本最高手工就6级!
@@ -691,13 +729,28 @@ pl-agent/
 [返回结果] → 用户看到配种树
 ```
 
-### 8.2 数据更新流程
+### 8.3 数据更新流程
 
 ```
 [检测到 paldb.cc 有新版本]
   或
 [游戏大更新后手动触发]
   │
+  ▼
+[运行 PalDBAdapter.build_and_save()]
+  │
+  ├── 1. 爬取 paldb.cc 全部页面
+  ├── 2. 解析 HTML → dict
+  ├── 3. 转为 schema.Pal
+  ├── 4. 数据校验 (Validator)
+  └── 5. 持久化
+       ├── → pal_data.json  (兼容保留)
+       └── → PostgreSQL     (UPSERT 到 pals 表)
+  │
+  ▼
+[重启 API 服务]
+  → lifespan 重新加载 PostgreSQL → 内存
+```
   ▼
 [运行 scripts/build_data.py]
   ├── 1. 爬取 paldb.cc 所有帕鲁页面

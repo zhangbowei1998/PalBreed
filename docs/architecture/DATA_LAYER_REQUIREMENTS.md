@@ -1,6 +1,6 @@
 # 数据层需求文档
 
-> 版本: v1.0 | 日期: 2026-07-31 | 状态: 待实现
+> 版本: v1.1 | 日期: 2026-07-31 | 状态: 设计完成
 
 ---
 
@@ -16,6 +16,8 @@
 8. [数据版本管理](#8-数据版本管理)
 9. [边界与特殊情况](#9-边界与特殊情况)
 10. [验收标准](#10-验收标准)
+11. [接口契约 — 适配器层](#11-接口契约--适配器层)
+12. [PostgreSQL 存储方案](#12-postgresql-存储方案)
 
 ---
 
@@ -770,3 +772,202 @@ class PalDataSourceAdapter(ABC):
 ```python
 from pl_agent.core.schema import Pal, WorkSuitability, BreedingRules, Element, WorkType
 ```
+
+---
+
+## 12. PostgreSQL 存储方案
+
+> 状态: 📝 方案已定，待实现 | 目标版本: v0.2
+
+### 12.1 动机
+
+当前数据以 JSON 文件 (`data/processed/pal_data.json`) 存储，适合原型阶段。但随着项目发展，有以下痛点：
+
+| 痛点 | JSON 现状 | PostgreSQL 解决 |
+|------|----------|----------------|
+| 查询能力 | 只能在内存中遍历 | SQL 直接查，支持 WHERE / ORDER BY / JOIN |
+| 并发写入 | 无锁，手动处理 | ACID 事务保证一致性 |
+| 数据分析 | 需要写 Python 脚本 | SQL 聚合 / Grafana 直连 |
+| 数据共享 | 拷贝 JSON 文件 | 多服务连接同一数据库 |
+| 增量更新 | 全量替换文件 | UPSERT 按需更新单条记录 |
+| 版本追溯 | 手动备份文件 | 时间戳 + 触发器自动记录 |
+
+### 12.2 架构原则: 热缓存 + 冷查询
+
+不是全量加载——而是让 PG 真正发挥作用：
+
+1. **热缓存（内存）**: 配种引擎需要的 4 个核心字段 — `id`, `combi_rank`, `is_wild`, `work_suitability`(12 列)
+   - BFS 反向搜索需要 O(n²) 次访问，必须 O(1) 内存查找
+   - 启动时从 PG 一次性提取到 `BreedingIndex` (~10KB)
+2. **冷查询（PG 直连）**: 展示/管理字段 — `image_url`, `wiki_url`, `spawn_locations`, `aliases`, 统计聚合
+   - 单次请求，PG 直查更合理
+   - 利用 SQL 能力：`WHERE handiwork >= 4 ORDER BY handiwork DESC`
+3. **引擎接口不变** — `core` 包不依赖数据库驱动，热缓存通过轻量 `PalRef` dataclass 提供
+4. **JSON 兼容降级** — PG 不可用时回退到 JSON 全量加载
+
+### 12.3 数据流
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  写入路径 (离线，一次性操作)                                       │
+│                                                                   │
+│  paldb.cc → scraper → parser → PalDBAdapter                      │
+│                                    │                              │
+│                                    ├─→ pal_data.json (保留兼容)   │
+│                                    └─→ PostgresAdapter           │
+│                                         │                        │
+│                                         └─→ PostgreSQL           │
+│                                              pals 表              │
+│                                              breeding_rules 表    │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│  读取路径: 热缓存 (启动) + 冷查询 (运行时)                          │
+│                                                                   │
+│  启动时:                                                           │
+│    PostgresLoader.load_hot()                                      │
+│      SELECT id, combi_rank, is_wild, handiwork, ..., farming      │
+│      FROM pals                                                    │
+│      → BreedingIndex { by_id, by_rank, by_wild }  (~10KB)        │
+│                                                                   │
+│  运行时:                                                           │
+│    配种引擎 ──▶ BreedingIndex (内存 O(1))                          │
+│    API 详情 ──▶ PG: SELECT * FROM pals WHERE id = $1              │
+│    统计面板 ──▶ PG: SELECT MAX(handiwork), AVG(...) FROM pals     │
+│    候选筛选 ──▶ PG: SELECT id, cn_name FROM pals                  │
+│                WHERE handiwork >= 4 ORDER BY handiwork DESC       │
+│                                                                   │
+│  PG 不可用时: DataLoader.load(pal_data.json) → 全量内存降级         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 12.4 数据库 Schema
+
+#### pals 表
+
+```sql
+CREATE TABLE pals (
+    -- ▲ 热字段 (启动时提取到内存索引)
+    id            TEXT PRIMARY KEY,              -- "Anubis"
+    combi_rank    INTEGER NOT NULL,               -- 480
+    is_wild       BOOLEAN NOT NULL DEFAULT FALSE, -- true
+    handiwork               INTEGER NOT NULL DEFAULT 0,
+    kindling                INTEGER NOT NULL DEFAULT 0,
+    watering                INTEGER NOT NULL DEFAULT 0,
+    planting                INTEGER NOT NULL DEFAULT 0,
+    generating_electricity  INTEGER NOT NULL DEFAULT 0,
+    gathering               INTEGER NOT NULL DEFAULT 0,
+    lumbering               INTEGER NOT NULL DEFAULT 0,
+    mining                  INTEGER NOT NULL DEFAULT 0,
+    cooling                 INTEGER NOT NULL DEFAULT 0,
+    medicine                INTEGER NOT NULL DEFAULT 0,
+    transporting            INTEGER NOT NULL DEFAULT 0,
+    farming                 INTEGER NOT NULL DEFAULT 0,
+
+    -- ▼ 冷字段 (运行时按需从 PG 查询)
+    number        INTEGER NOT NULL,               -- 139
+    cn_name       TEXT NOT NULL,                  -- "阿努比斯"
+    en_name       TEXT NOT NULL,                  -- "Anubis"
+    elements      JSONB NOT NULL DEFAULT '[]',    -- ["Earth"]
+    rarity        INTEGER NOT NULL DEFAULT 1,     -- 10
+    aliases       JSONB NOT NULL DEFAULT '[]',
+    image_url     TEXT,
+    wiki_url      TEXT,
+    spawn_locations JSONB NOT NULL DEFAULT '[]',
+    medicine                INTEGER NOT NULL DEFAULT 0,
+    transporting            INTEGER NOT NULL DEFAULT 0,
+    farming                 INTEGER NOT NULL DEFAULT 0,
+
+    -- 元数据
+    aliases         JSONB NOT NULL DEFAULT '[]',
+    image_url       TEXT,
+    wiki_url        TEXT,
+    spawn_locations JSONB NOT NULL DEFAULT '[]',
+    data_source     TEXT NOT NULL DEFAULT 'paldb.cc',
+    incomplete      BOOLEAN NOT NULL DEFAULT FALSE,
+
+    -- 时间戳
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 核心索引
+CREATE INDEX idx_pals_combi_rank ON pals(combi_rank);
+CREATE INDEX idx_pals_is_wild ON pals(is_wild);
+CREATE INDEX idx_pals_number ON pals(number);
+CREATE INDEX idx_pals_cn_name ON pals(cn_name);
+
+-- 工作适应性索引 (支持 WHERE handiwork >= 4)
+CREATE INDEX idx_pals_handiwork ON pals(handiwork DESC);
+CREATE INDEX idx_pals_mining ON pals(mining DESC);
+```
+
+#### breeding_rules 表
+
+```sql
+CREATE TABLE breeding_rules (
+    id            SERIAL PRIMARY KEY,
+    game_version  TEXT NOT NULL,
+    rule_type     TEXT NOT NULL,     -- special_combination | self_only | unbreedable
+    parent_a      TEXT,              -- (special_combination)
+    parent_b      TEXT,
+    child         TEXT,
+    pal_id        TEXT,              -- (self_only / unbreedable)
+    note          TEXT,
+    created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+```
+
+### 12.5 设计决策: 工作适应性用 12 列而非 JSONB
+
+| 方案 | 优点 | 缺点 |
+|------|------|------|
+| 12 独立列 | SQL 直接 `WHERE handiwork >= 4`；类型安全；可建索引 | 列多，ALTER TABLE 加字段 |
+| 单个 JSONB | 灵活，与 Python dataclass 一致 | 查询需 `WHERE (ws->>'handiwork')::int >= 4`，啰嗦 | 
+
+**决策**: 用 12 独立列。工种类别固定（12 种），不频繁变化。加载时映射回 `WorkSuitability` dataclass。
+
+### 12.6 新增文件清单
+
+```
+data/sql/
+├── 001_create_pals.sql          ← DDL 迁移脚本
+└── 002_seed_data.sql            ← 种子数据 (可选)
+
+packages/adapters/adapters/postgres/
+├── __init__.py
+├── config.py                    ← DB 连接配置 (DATABASE_URL)
+├── adapter.py                   ← PostgresWriter: Pal → PG 批量写入
+└── loader.py                    ← PostgresLoader: PG → list[Pal]
+```
+
+### 12.7 新增依赖
+
+```toml
+# packages/adapters/pyproject.toml
+dependencies = [
+    "httpx>=0.27",
+    "beautifulsoup4>=4.12",
+    "pl-agent-core",
+    "asyncpg>=0.30",       # ← 新增
+]
+```
+
+### 12.8 实现步骤
+
+| 步骤 | 内容 | 预计改动 |
+|:---:|------|------|
+| 1 | 创建 `data/sql/001_create_pals.sql` | DDL 迁移脚本 |
+| 2 | 实现 `PostgresWriter` | 批量 UPSERT |
+| 3 | 实现 `PostgresLoader` | 全量 SELECT → list[Pal] |
+| 4 | 更新 `main.py` lifespan | PG 优先, JSON 降级 |
+| 5 | 更新依赖配置 | `pyproject.toml` + `uv sync` |
+| 6 | 测试 + 文档更新 | 确保 JSON 降级可用 |
+
+### 12.9 验收标准
+
+- [ ] `make scrape` 后数据同时写入 JSON 和 PostgreSQL
+- [ ] API 启动时从 PG 加载数据 (< 500ms)
+- [ ] PG 不可用时自动降级到 JSON 文件，服务正常启动
+- [ ] `SELECT * FROM pals WHERE handiwork >= 4` 返回正确结果
+- [ ] 所有 23 个已有测试仍然通过 (不依赖 PG)

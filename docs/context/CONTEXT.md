@@ -61,6 +61,9 @@ pl-agent/
 │   │       │   ├── parser.py       ← HTML 解析
 │   │       │   ├── adapter.py      ← 数据适配
 │   │       │   └── __tests__/      ← 解析器测试 (5)
+│   │       ├── postgres/           ← PostgreSQL 适配器
+│   │       │   ├── adapter.py      ← Pal → PG 写入
+│   │       │   └── loader.py       ← PG → 内存加载
 │   │       └── gamefile/           ← 游戏文件 (预留)
 │   ├── api/              ← 🌐 FastAPI 服务
 │   │   └── pl_agent/api/
@@ -77,6 +80,7 @@ pl-agent/
 ├── data/                 ← 📊 数据文件
 │   ├── raw/
 │   ├── processed/
+│   ├── sql/              ←   PostgreSQL 迁移脚本
 │   └── archive/
 ├── tests/                ← 🧪 集成/冒烟测试
 │   └── smoke/
@@ -87,6 +91,23 @@ pl-agent/
 ```
 
 ---
+
+## 数据流
+
+```
+v0.1 (当前):  paldb.cc → scraper → parser → adapter → pal_data.json → DataLoader → Engine
+
+v0.2 (计划):  paldb.cc → scraper → parser → adapter → PostgreSQL
+                                                         │
+                                          ┌──────────────┴──────────────┐
+                                          ▼                             ▼
+                                    热缓存 (启动)                   冷查询 (运行时)
+                                    id/combi_rank                 详情/统计/搜索
+                                    is_wild/work_suit              PG 直连
+                                          │
+                                          ▼
+                                       Engine (BFS 配种树)
+```
 
 ## 数据来源
 
@@ -117,6 +138,7 @@ pl-agent/
 | 数据层 | ✅ | scraper → parser → adapter → validator |
 | 核心引擎 | ✅ | breeding_engine + breeding_tree + suitability_query + path_optimizer |
 | 数据加载器 | ✅ | `data_loader.py` — JSON 多索引加载 |
+| PostgreSQL 存储 | 📝 | `adapters/postgres/` — 方案已定，待实现 |
 | API 服务 | ✅ | FastAPI — 8 端点, lifespan 启动, CORS |
 | 单元测试 | ✅ | 23 pytest (12 引擎 + 5 数据 + 6 冒烟) |
 | Makefile | ✅ | make serve / test / scrape / demo / lint / format |
@@ -144,10 +166,11 @@ pl-agent/
 
 | 优先级 | 任务 | 位置 |
 |:---:|------|------|
-| 1 | 从 paldb.cc 抓取完整数据 | `make scrape` |
-| 2 | 编写 API 集成测试 | `packages/api/pl_agent/api/__tests__/` |
-| 3 | NLU 模块（模糊匹配增强） | `packages/nlu/` |
-| 4 | 前端 UI | `packages/web/` |
+| 1 | PostgreSQL 存储迁移 | `packages/adapters/adapters/postgres/` |
+| 2 | 从 paldb.cc 抓取完整数据 | `make scrape` |
+| 3 | 编写 API 集成测试 | `packages/api/pl_agent/api/__tests__/` |
+| 4 | NLU 模块（模糊匹配增强） | `packages/nlu/` |
+| 5 | 前端 UI | `packages/web/` |
 
 详细设计见 `docs/architecture/` 下各需求文档。
 
@@ -157,7 +180,8 @@ pl-agent/
 
 - **后端**: Python 3.10+ / FastAPI
 - **前端**: TypeScript / React 18 / Vite
-- **数据**: JSON 文件 (数据量 < 500 条)
+- **数据库**: PostgreSQL 16 + asyncpg (v0.2 迁移目标)
+- **数据**: JSON 文件 (当前) → PostgreSQL (计划)
 - **语音**: Web Speech API (MVP) → Whisper (进阶)
 - **NLU**: 规则引擎 (MVP) → LLM (进阶)
 
@@ -198,7 +222,8 @@ packages/api/pl_agent/__init__.py    →  pkgutil.extend_path
 | 目录怎么组织的 | `docs/architecture/PROJECT_STRUCTURE.md` |
 | 🔑 数据模型规范 (Schema) | `packages/core/pl_agent/core/schema.py` |
 | 🔑 数据层详细需求 | `docs/architecture/DATA_LAYER_REQUIREMENTS.md` |
-| 🔌 外部数据如何接入 | `packages/adapters/base.py` + `docs/architecture/DATA_LAYER_REQUIREMENTS.md` §11 |
+| �️ PostgreSQL 存储方案 | `docs/decisions/002-postgres-storage.md` |
+| 🔌 外部数据如何接入 | `packages/adapters/base.py` + `docs/architecture/DATA_LAYER_REQUIREMENTS.md` |
 | 🔑 核心引擎需求 | `docs/architecture/CORE_ENGINE_REQUIREMENTS.md` |
 | 🌐 API 服务需求 | `docs/architecture/API_REQUIREMENTS.md` |
 | ❗ 业务异常定义 | `packages/core/pl_agent/core/errors.py` |
