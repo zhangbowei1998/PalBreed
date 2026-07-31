@@ -140,8 +140,8 @@ class TestDataLoaderQuery:
 # ── ensure_loaded ─────────────────────────────────────────────────
 
 
-def test_ensure_loaded_raises_if_not_loaded():
-    loader = DataLoader()
+def test_ensure_loaded_raises_if_not_loaded(tmp_path):
+    loader = DataLoader(data_dir=str(tmp_path))
     with pytest.raises(FileNotFoundError):
         loader.get_by_id("any")
 
