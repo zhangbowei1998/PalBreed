@@ -1,6 +1,6 @@
-.PHONY: install test test-unit test-smoke test-all lint clean scrape demo help
+.PHONY: install test test-unit test-smoke test-all lint clean scrape demo serve help
 
-PYTHONPATH := packages/core:packages/adapters:packages
+PYTHONPATH := packages/core:packages/adapters:packages/api:packages
 export PYTHONPATH
 
 install:
@@ -18,11 +18,17 @@ test-smoke:
 test-all:
 	uv run pytest packages/adapters/adapters/paldb/__tests__/ packages/core/pl_agent/core/__tests__/ tests/smoke/ -v
 
+test-api:
+	uv run pytest packages/api/pl_agent/api/__tests__/ -v
+
 scrape:
 	uv run python packages/adapters/adapters/paldb/demo/run_scraper.py
 
 demo:
 	uv run python packages/core/demo/engine_demo.py
+
+serve:
+	uv run uvicorn pl_agent.api.main:app --reload --port 8000
 
 lint:
 	uv run ruff check packages/
@@ -47,8 +53,10 @@ help:
 	@echo "  make test-unit    仅单元测试"
 	@echo "  make test-smoke   仅冒烟测试"
 	@echo "  make test-all     全部测试"
+	@echo "  make test-api     API 集成测试"
 	@echo "  make scrape       从 paldb.cc 抓取数据"
 	@echo "  make demo         引擎功能演示"
+	@echo "  make serve        启动 API 服务"
 	@echo "  make lint         代码检查"
 	@echo "  make format       自动格式化"
 	@echo "  make clean        清理缓存"

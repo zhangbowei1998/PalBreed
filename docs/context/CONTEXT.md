@@ -29,25 +29,60 @@ pl-agent/
 │   └── copilot-instructions.md
 ├── docs/
 │   ├── architecture/     ← 架构与需求文档
+│   │   ├── API_REQUIREMENTS.md
+│   │   ├── ARCHITECTURE.md
+│   │   ├── CORE_ENGINE_REQUIREMENTS.md
+│   │   ├── DATA_LAYER_REQUIREMENTS.md
+│   │   └── PROJECT_STRUCTURE.md
 │   ├── context/          ← AI 接手上下文
+│   │   └── CONTEXT.md
 │   └── decisions/        ← 设计决策记录
 │
 ├── packages/
 │   ├── core/             ← 🧠 配种算法引擎 (Python)
 │   │   ├── demo/         ←    快速验证脚本
 │   │   └── pl_agent/core/
-│   │       ├── schema.py      ← ★ canonical models
-│   │       ├── errors.py      ← domain exceptions
-│   │       ├── interfaces.py  ← ABCs
-│   │       └── __tests__/     ← 单元测试
+│   │       ├── __init__.py
+│   │       ├── schema.py           ← ★ canonical models
+│   │       ├── errors.py           ← domain exceptions
+│   │       ├── interfaces.py       ← ABCs / Protocols
+│   │       ├── breeding_engine.py  ← CombiRank 配种计算
+│   │       ├── breeding_tree.py    ← BFS 配种树构建
+│   │       ├── suitability_query.py← 工作适应性查询
+│   │       ├── path_optimizer.py   ← 路径择优
+│   │       ├── data_loader.py      ← JSON 数据加载
+│   │       └── __tests__/          ← 单元测试 (12)
 │   ├── adapters/         ← 🔌 外部数据适配
+│   │   └── adapters/
+│   │       ├── base.py             ← Adapter 抽象
+│   │       ├── validator.py        ← 数据校验
+│   │       ├── paldb/              ← paldb.cc 适配器
+│   │       │   ├── scraper.py      ← HTML 爬虫
+│   │       │   ├── parser.py       ← HTML 解析
+│   │       │   ├── adapter.py      ← 数据适配
+│   │       │   └── __tests__/      ← 解析器测试 (5)
+│   │       └── gamefile/           ← 游戏文件 (预留)
 │   ├── api/              ← 🌐 FastAPI 服务
-│   ├── nlu/              ← 💬 意图解析
-│   └── web/              ← 🖥️ 前端 UI
+│   │   └── pl_agent/api/
+│   │       ├── __init__.py         ← QueryRequest 模型
+│   │       ├── main.py             ← FastAPI 入口 + lifespan
+│   │       ├── parser.py           ← 输入解析 (NAME/SUITABILITY/FUZZY)
+│   │       ├── formatter.py        ← 响应格式化
+│   │       ├── routes/
+│   │       │   └── query.py        ← 所有 API 路由
+│   │       └── __tests__/          ← API 冒烟测试
+│   ├── nlu/              ← 💬 意图解析 (v0.2)
+│   └── web/              ← 🖥️ 前端 UI (v0.3)
 │
 ├── data/                 ← 📊 数据文件
+│   ├── raw/
+│   ├── processed/
+│   └── archive/
 ├── tests/                ← 🧪 集成/冒烟测试
-├── init.md
+│   └── smoke/
+│       └── test_breeding_smoke.py  ← 6 端到端场景
+├── Makefile              ← 常用命令 (make serve/test/scrape...)
+├── pyproject.toml        ← uv workspace monorepo
 └── README.md
 ```
 
@@ -76,35 +111,45 @@ pl-agent/
 | 阶段 | 状态 | 产出 |
 |------|:---:|------|
 | 架构设计 | ✅ | `docs/architecture/*` |
-| Schema 定义 | ✅ | `packages/core/pl_agent/core/schema.py` |
-| 错误处理 | ✅ | `packages/core/pl_agent/core/errors.py` |
-| 组件接口 | ✅ | `packages/core/pl_agent/core/interfaces.py` |
-| pip 管理 | ✅ | uv workspace |
-| **数据层** | ✅ | scraper + parser + adapter + validator |
-| **核心引擎** | ✅ | breeding_engine + breeding_tree + suitability_query + path_optimizer |
-| 单元测试 | ✅ | 12 引擎 + 5 数据层 = 17 passed |
-| 冒烟测试 | ✅ | 6 端到端场景全部通过 |
-| 数据加载器 | ✅ | `data_loader.py` |
-| Makefile | ✅ | 常用命令快捷操作 |
-| NLU 模块 | ⬜ | `packages/nlu/` |
-| API 服务 | ⬜ | `packages/api/` |
-| 前端 UI | ⬜ | `packages/web/` |
+| Schema 定义 | ✅ | `schema.py` — Pal, WorkSuitability, Element, WorkType, BreedingRules |
+| 错误处理 | ✅ | `errors.py` — 6 种领域异常 |
+| 组件接口 | ✅ | `interfaces.py` — 5 个 Protocol |
+| 数据层 | ✅ | scraper → parser → adapter → validator |
+| 核心引擎 | ✅ | breeding_engine + breeding_tree + suitability_query + path_optimizer |
+| 数据加载器 | ✅ | `data_loader.py` — JSON 多索引加载 |
+| API 服务 | ✅ | FastAPI — 8 端点, lifespan 启动, CORS |
+| 单元测试 | ✅ | 23 pytest (12 引擎 + 5 数据 + 6 冒烟) |
+| Makefile | ✅ | make serve / test / scrape / demo / lint / format |
+| NLU 模块 | ⏭️ | 跳过 v0.1, 直接用结构化输入 |
+| 前端 UI | ⬜ | `packages/web/` — v0.3 计划 |
 
----
+## API 端点一览
 
-## 下一步该做什么
+| 端点 | 方法 | 说明 |
+|------|:---:|------|
+| `/health` | GET | 健康检查, 返回 pals_loaded |
+| `/api/query` | POST | **智能查询** — 自动判断输入类型 |
+| `/api/pal/{id}` | GET | 帕鲁详情 |
+| `/api/breeding/tree/{id}` | GET | 配种树 (可选 `?all=true&max_depth=5`) |
+| `/api/suitability/stats` | GET | 全工种统计 |
 
-按优先级:
+**启动**: `make serve` → http://localhost:8000
 
-1. **实现配种引擎** — `packages/core/pl_agent/core/breeding_engine.py` (正向/反向 CombiRank 计算)
-2. **实现配种树构建** — `packages/core/pl_agent/core/breeding_tree.py` (BFS 递归展开)
-3. **实现属性查询** — `packages/core/pl_agent/core/suitability_query.py`
-4. **实现路径择优** — `packages/core/pl_agent/core/path_optimizer.py`
-5. **实现 NLU 模块** — `packages/nlu/`
-6. **搭建 API 服务** — `packages/api/`
-7. **前端 UI** — `packages/web/`
+**输入示例**:
+- `{"input": "阿努比斯"}` → 配种树查询
+- `{"input": "手工:4"}` → 工作适应性筛选
+- `{"input": "手工:6"}` → 超范围自动回退展示最优
 
-详细设计见 `docs/architecture/CORE_ENGINE_REQUIREMENTS.md`
+## 下一步
+
+| 优先级 | 任务 | 位置 |
+|:---:|------|------|
+| 1 | 从 paldb.cc 抓取完整数据 | `make scrape` |
+| 2 | 编写 API 集成测试 | `packages/api/pl_agent/api/__tests__/` |
+| 3 | NLU 模块（模糊匹配增强） | `packages/nlu/` |
+| 4 | 前端 UI | `packages/web/` |
+
+详细设计见 `docs/architecture/` 下各需求文档。
 
 ---
 
@@ -128,6 +173,23 @@ pl-agent/
 
 ---
 
+## 命名空间包架构 (重要!)
+
+`pl_agent` 是跨多包的 **PEP 420 命名空间包**。`core` 和 `api` 各自通过 `pkgutil.extend_path` 贡献子包:
+
+```
+packages/core/pl_agent/__init__.py   →  pkgutil.extend_path
+packages/api/pl_agent/__init__.py    →  pkgutil.extend_path
+```
+
+- `import pl_agent` → 合并两个路径
+- `from pl_agent.core.schema import Pal` → 来自 core
+- `from pl_agent.api.main import app` → 来自 api
+
+所有包的 `pl_agent/__init__.py` 必须保持 `extend_path` 模板。不要在顶层 `__init__.py` 中放业务代码。
+
+---
+
 ## 文件快速索引
 
 | 想看什么 | 去哪个文件 |
@@ -138,9 +200,10 @@ pl-agent/
 | 🔑 数据层详细需求 | `docs/architecture/DATA_LAYER_REQUIREMENTS.md` |
 | 🔌 外部数据如何接入 | `packages/adapters/base.py` + `docs/architecture/DATA_LAYER_REQUIREMENTS.md` §11 |
 | 🔑 核心引擎需求 | `docs/architecture/CORE_ENGINE_REQUIREMENTS.md` |
+| 🌐 API 服务需求 | `docs/architecture/API_REQUIREMENTS.md` |
 | ❗ 业务异常定义 | `packages/core/pl_agent/core/errors.py` |
 | 🔧 引擎组件接口 | `packages/core/pl_agent/core/interfaces.py` |
 | 配种算法怎么算 | `docs/architecture/CORE_ENGINE_REQUIREMENTS.md` §3 |
-| API 有哪些接口 | `docs/architecture/ARCHITECTURE.md` §5 |
+| API 有哪些接口 | `docs/architecture/API_REQUIREMENTS.md` §3 |
 | AI 行为指引 | `.github/copilot-instructions.md` |
 | 初始需求 | `init.md` |

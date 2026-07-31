@@ -3,20 +3,21 @@ name = "pl-agent"
 version = "0.1.0"
 description = "幻兽帕鲁配种 Agent — monorepo workspace"
 requires-python = ">=3.10"
-dependencies = ["pl-agent-core", "pl-agent-adapters"]
+dependencies = ["pl-agent-core", "pl-agent-adapters", "pl-agent-api"]
 
 [tool.uv.sources]
 pl-agent-core = { workspace = true }
 pl-agent-adapters = { workspace = true }
+pl-agent-api = { workspace = true }
 
 [tool.uv.workspace]
-members = ["packages/core", "packages/adapters"]
+members = ["packages/core", "packages/adapters", "packages/api"]
 
 [dependency-groups]
 dev = ["pytest>=8"]
 
 [tool.pytest.ini_options]
-pythonpath = ["packages/core", "packages/adapters", "packages"]
+pythonpath = ["packages/core", "packages/adapters", "packages/api", "packages"]
 testpaths = [
     "packages/core/pl_agent/core/__tests__",
     "packages/adapters/adapters/paldb/__tests__",
