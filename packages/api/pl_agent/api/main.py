@@ -21,74 +21,39 @@ app.add_middleware(
 
 @asynccontextmanager
 async def lifespan(application: FastAPI):
-    """启动加载引擎 (PG 热缓存优先, JSON 降级), 关闭清理."""
-    from pl_agent.core.breeding_engine import BreedingEngine
-    from pl_agent.core.breeding_tree import BreedingTreeBuilder
-    from pl_agent.core.path_optimizer import PathOptimizer
-    from pl_agent.core.schema import BreedingRules
-    from pl_agent.core.suitability_query import SuitabilityQuery
-
+    """启动加载数据 (PG 优先, JSON 降级)."""
     from .parser import QueryParser
 
     all_pals: list = []
-    pg_loader = None  # PostgresLoader | None (lazy import)
+    pg_loader = None
 
-    # ── 1. 尝试 PostgreSQL 热缓存 ──────────────────────────────
+    # ── 1. PostgreSQL ────────────────────────────────────────
     try:
         from adapters.postgres.loader import PostgresLoader
 
         pg_loader = PostgresLoader()
         index = await pg_loader.load_hot()
         all_pals = index.pals
-        application.state.pg_loader = pg_loader  # 供冷查询使用
-        print(
-            f"✅ PG hot cache: {len(all_pals)} pals (~{len(all_pals) * 20 // 1024} KB)"
-        )
+        application.state.pg_loader = pg_loader
+        print(f"✅ PG hot cache: {len(all_pals)} pals")
     except Exception as e:
-        print(f"⚠ PG unavailable ({e}), falling back to JSON...")
-
-        # ── 2. JSON 降级 ──────────────────────────────────────
+        print(f"⚠ PG unavailable ({e}), JSON fallback...")
         from pl_agent.core.data_loader import DataLoader
 
         loader = DataLoader()
         data_path = Path("data/processed/pal_data.json")
-
         if data_path.exists():
             loader.load(data_path)
             all_pals = loader.get_all()
-            print(f"✅ JSON fallback: {len(all_pals)} pals from {data_path}")
+            print(f"✅ JSON: {len(all_pals)} pals")
         else:
-            # ── 3. demo 兜底 ───────────────────────────────────
-            from pl_agent.core.schema import Element, Pal, WorkSuitability
-
             all_pals = _demo_pals()
-            print(f"✅ Demo fallback: {len(all_pals)} pals (no PG, no JSON)")
+            print(f"✅ Demo: {len(all_pals)} pals")
 
-    # ── 4. 配种规则 ───────────────────────────────────────────
-    rules_path = Path("data/processed/breeding_rules.json")
-    if rules_path.exists():
-        import json
-
-        rules = BreedingRules.from_dict(json.loads(rules_path.read_text("utf-8")))
-    else:
-        rules = BreedingRules(game_version="v1.0.2", last_updated="2026-07-31")
-
-    # ── 5. 构建引擎 ───────────────────────────────────────────
-    application.state.engine = BreedingEngine(pals=all_pals, rules=rules)
-    application.state.builder = BreedingTreeBuilder(
-        application.state.engine, max_depth=5
-    )
-    application.state.suitability = SuitabilityQuery(all_pals)
-    application.state.optimizer = PathOptimizer(application.state.engine)
+    # ── 2. 输入解析器 ────────────────────────────────────────
     application.state.parser = QueryParser(all_pals)
-
-    print(
-        f"🚀 API ready: {len(all_pals)} pals, "
-        f"engine={type(application.state.engine).__name__}"
-    )
+    print(f"🚀 API ready: {len(all_pals)} pals")
     yield
-
-    # ── 6. 清理 ───────────────────────────────────────────────
     if pg_loader:
         await pg_loader.close()
 
@@ -102,7 +67,8 @@ app.include_router(router)
 
 @app.get("/health")
 async def health(request: Request):
-    engine = request.app.state.engine
+    parser = getattr(request.app.state, "parser", None)
+    return {"status": "ok", "pals_loaded": len(parser._all_pals) if parser else 0}
     return {"status": "ok", "pals_loaded": len(engine.all_pals)}
 
 

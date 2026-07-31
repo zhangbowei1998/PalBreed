@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-from pl_agent.core.breeding_tree import BreedingPath, BreedingTree
-from pl_agent.core.schema import Pal, WorkType
-from pl_agent.core.suitability_query import LevelStats
+from pl_agent.core.schema import Pal
 
 
 def format_pal_summary(pal: Pal) -> dict:
