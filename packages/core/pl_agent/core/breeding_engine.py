@@ -53,6 +53,16 @@ class BreedingEngine:
         for p in self._pals_by_rank:
             self._rank_to_pals.setdefault(p.combi_rank, []).append(p)
 
+        # 预计算: 排除不可配种帕鲁后的列表 (避免每次 _enumerate 重新排序)
+        self._eligible_pals = [
+            p for p in self._pals_by_rank if p.id not in self._excluded_ids
+        ]
+        self._eligible_ranks = [p.combi_rank for p in self._eligible_pals]
+        # rank → index 快速查找
+        self._eligible_rank_to_idx: dict[int, int] = {}
+        for i, p in enumerate(self._eligible_pals):
+            self._eligible_rank_to_idx[p.combi_rank] = i
+
     # ------------------------------------------------------------------
     # forward: parents → child
     # ------------------------------------------------------------------
@@ -187,56 +197,48 @@ class BreedingEngine:
         prev_pal: Pal,
         next_pal: Pal,
     ) -> list[tuple[Pal, Pal]]:
-        """枚举所有可能的父母对."""
+        """枚举所有可能的父母对 (预计算索引, O(k²) where k << n)."""
         result: list[tuple[Pal, Pal]] = []
 
         prev_sum = child.combi_rank + prev_pal.combi_rank
         next_sum = child.combi_rank + next_pal.combi_rank
 
-        # 计算索引顺序判断开闭区间
-        # 按 CombiRank 排序的索引
-        rank_sorted = sorted(
-            [p for p in self._pals_by_rank if p.id not in self._excluded_ids],
-            key=lambda p: p.combi_rank,
-        )
-        child_idx = rank_sorted.index(child) if child in rank_sorted else -1
-        prev_idx = rank_sorted.index(prev_pal) if prev_pal in rank_sorted else -1
-        next_idx = rank_sorted.index(next_pal) if next_pal in rank_sorted else -1
+        # 使用预计算索引 (避免每次重新排序)
+        eligible = self._eligible_pals
+        ranks = self._eligible_ranks
+        child_idx = self._eligible_rank_to_idx.get(child.combi_rank, -1)
+        prev_idx = self._eligible_rank_to_idx.get(prev_pal.combi_rank, -1)
+        next_idx = self._eligible_rank_to_idx.get(next_pal.combi_rank, -1)
 
         prev_equal = prev_idx >= child_idx
         next_equal = next_idx >= child_idx
 
-        # 提取 CombiRank 值列表 (用于组合, 允许同值配对)
-        rank_values = [p.combi_rank for p in rank_sorted]
-
-        eligible_rank_pairs = set()
-        for r1, r2 in itertools.combinations_with_replacement(rank_values, 2):
-            rank_sum = r1 + r2
-            # 区间检查
-            low_ok = rank_sum >= prev_sum if prev_equal else rank_sum > prev_sum
-            high_ok = rank_sum <= next_sum if next_equal else rank_sum < next_sum
-            if not (low_ok and high_ok):
-                continue
-            if round(rank_sum / 2) != child.combi_rank:
-                continue
-            eligible_rank_pairs.add((min(r1, r2), max(r1, r2)))
+        # 只枚举总和在 [prev_sum, next_sum] 范围内的 rank 对
+        eligible_rank_pairs: set[tuple[int, int]] = set()
+        for i, r1 in enumerate(ranks):
+            for j in range(i, len(ranks)):
+                r2 = ranks[j]
+                rank_sum = r1 + r2
+                low_ok = rank_sum >= prev_sum if prev_equal else rank_sum > prev_sum
+                high_ok = rank_sum <= next_sum if next_equal else rank_sum < next_sum
+                if not (low_ok and high_ok):
+                    continue
+                if round(rank_sum / 2) != child.combi_rank:
+                    continue
+                eligible_rank_pairs.add((min(r1, r2), max(r1, r2)))
 
         # 构建 Pal 对
         for r1, r2 in eligible_rank_pairs:
-            pals_r1 = [p for p in rank_sorted if p.combi_rank == r1]
-            pals_r2 = [p for p in rank_sorted if p.combi_rank == r2]
+            pals_r1 = [p for p in eligible if p.combi_rank == r1]
+            pals_r2 = [p for p in eligible if p.combi_rank == r2]
             for p1 in pals_r1:
                 for p2 in pals_r2:
-                    # 排除子代与自身的配对 (循环)
                     if p1.id == child.id and p2.id == child.id:
                         continue
                     result.append((p1, p2))
 
-        # 如果无任何有效配对，返回自身配对
         if not result:
             result.append((child, child))
-
-        return result
 
         return result
 

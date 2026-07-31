@@ -89,98 +89,60 @@ class BreedingTreeBuilder:
         self.max_depth = max_depth
 
     def build(self, target: Pal) -> BreedingTree:
-        """构建目标帕鲁的完整配种树."""
-        tree = BreedingTree(target=target)
+        """构建目标帕鲁的配种方案 — 只计算一级父母组合.
 
-        # 目标本身就是基础帕鲁 → 单节点
-        if target.is_wild:
-            path = BreedingPath(
-                leaf_pals=[target],
-                total_steps=0,
-                avg_rarity=float(target.rarity),
-            )
-            tree.paths = [path]
-            tree.best_path = path
-            tree.total_paths = 1
-            tree.max_depth_reached = 0
+        返回所有可能的 (父A, 父B) 对, 不递归展开父代的来源。
+        用户可点击任一父代继续查询。
+        """
+        tree = BreedingTree(target=target)
+        tree.max_depth_reached = 1
+
+        parent_pairs = self._engine.reverse_breed(target)
+
+        # 过滤: 排除自身配对 + excluded
+        filtered: list[tuple[Pal, Pal]] = []
+        for a, b in parent_pairs:
+            if a.id == target.id and b.id == target.id:
+                continue
+            if self._engine.is_excluded(a.id) or self._engine.is_excluded(b.id):
+                continue
+            filtered.append((a, b))
+
+        if not filtered:
+            # 无可配种路径 — 返回空树
             return tree
 
-        # step 1 + 2: BFS 构建 parent_map
-        parent_map: dict[str, list[tuple[Pal, Pal]]] = {}
-        visited: set[str] = set()
-        queue: deque[tuple[Pal, int]] = deque([(target, 0)])
-        max_depth_seen = 0
+        paths: list[BreedingPath] = []
+        for a, b in filtered:
+            leaf_pals: list[Pal] = []
+            if a.is_wild:
+                leaf_pals.append(a)
+            if b.is_wild:
+                leaf_pals.append(b)
+            step = BreedingStep(parent_a=a, parent_b=b, child=target, method="breed")
+            path = BreedingPath(
+                steps=[step],
+                leaf_pals=leaf_pals if leaf_pals else [a, b],
+                total_steps=1,
+                avg_rarity=(a.rarity + b.rarity) / 2,
+            )
+            paths.append(path)
 
-        while queue:
-            current, depth = queue.popleft()
-            max_depth_seen = max(max_depth_seen, depth)
+        # 去重
+        seen = set()
+        unique: list[BreedingPath] = []
+        for p in paths:
+            h = self._path_hash(p)
+            if h not in seen:
+                seen.add(h)
+                unique.append(p)
 
-            if current.id in visited:
-                continue
-            visited.add(current.id)
-
-            # 终止条件
-            if current.is_wild:
-                continue
-            if depth >= self.max_depth:
-                logger.debug("max_depth reached for %s at depth %d", current.id, depth)
-                continue
-            if self._engine.is_unbreedable(current.id):
-                continue
-            if self._engine.is_excluded(current.id):
-                continue
-
-            # 获取父母对
-            try:
-                parent_pairs = self._engine.reverse_breed(current)
-            except Exception:
-                logger.exception("reverse_breed failed for %s", current.id)
-                continue
-
-            if not parent_pairs:
-                continue
-
-            # 过滤: 去掉包含自身的对 + 排除 excluded
-            filtered: list[tuple[Pal, Pal]] = []
-            for a, b in parent_pairs:
-                if a.id == current.id and b.id == current.id:
-                    continue
-                if self._engine.is_excluded(a.id) or self._engine.is_excluded(b.id):
-                    continue
-                filtered.append((a, b))
-
-            if filtered:
-                parent_map[current.id] = filtered
-            else:
-                parent_map[current.id] = []
-
-            # 将父母加入队列
-            for a, b in filtered:
-                if a.id not in visited:
-                    queue.append((a, depth + 1))
-                if b.id not in visited:
-                    queue.append((b, depth + 1))
-
-        tree.max_depth_reached = max_depth_seen
-
-        # step 3: 递归回溯构建路径
-        if target.id in parent_map:
-            raw_paths = self._backtrack(target.id, parent_map, visited_path=[])
-            # 去重
-            seen_hashes = set()
-            unique_paths: list[BreedingPath] = []
-            for rp in raw_paths:
-                h = self._path_hash(rp)
-                if h not in seen_hashes:
-                    seen_hashes.add(h)
-                    unique_paths.append(rp)
-            tree.paths = unique_paths
-            tree.total_paths = len(unique_paths)
-
+        tree.paths = unique
+        tree.total_paths = len(unique)
         return tree
 
     # ------------------------------------------------------------------
-    # backtracking
+    # backtracking (deprecated: kept for reference, unused in v0.2)
     # ------------------------------------------------------------------
 
     def _backtrack(
@@ -198,8 +160,8 @@ class BreedingTreeBuilder:
         if pal_id in visited_path:
             raise BreedingLoopError(visited_path + [pal_id])
 
-        # 叶子: 基础帕鲁或不可配种
-        if pal.is_wild or pal_id not in parent_map:
+        # 叶子: 不在 parent_map 中 (无父母或已到终端)
+        if pal_id not in parent_map:
             return [
                 BreedingPath(
                     leaf_pals=[pal],
@@ -282,6 +244,6 @@ class BreedingTreeBuilder:
 
     @staticmethod
     def _path_hash(path: BreedingPath) -> int:
-        """计算路径哈希 (用于去重)."""
-        ids = tuple(s.child.id for s in path.steps)
+        """计算路径哈希 (用于去重) — 基于每步的父母对."""
+        ids = tuple(tuple(sorted([s.parent_a.id, s.parent_b.id])) for s in path.steps)
         return hash(ids)

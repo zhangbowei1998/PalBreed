@@ -1,4 +1,5 @@
 """Re-parse cached HTML and save to PG (standalone for clean import)."""
+
 import json, asyncio, sys
 from pathlib import Path
 
@@ -51,8 +52,10 @@ for p in sorted_pals[:5]:
 # Save JSON
 data = {p.id: p.to_dict() for p in unique}
 Path("data/processed/pal_data.json").write_text(
-    json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+)
 print("JSON saved")
+
 
 # Save PG
 async def go():
@@ -65,5 +68,6 @@ async def go():
     c = await w.count()
     print(f"PG: {c} rows after upsert")
     await w.close()
+
 
 asyncio.run(go())
