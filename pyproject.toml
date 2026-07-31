@@ -14,10 +14,11 @@ pl-agent-api = { workspace = true }
 members = ["packages/core", "packages/adapters", "packages/api"]
 
 [dependency-groups]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "pytest-asyncio>=0.25"]
 
 [tool.pytest.ini_options]
 pythonpath = ["packages/core", "packages/adapters", "packages/api", "packages"]
+asyncio_mode = "auto"
 testpaths = [
     "packages/core/pl_agent/core/__tests__",
     "packages/adapters/adapters/paldb/__tests__",

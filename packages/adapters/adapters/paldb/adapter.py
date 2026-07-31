@@ -69,7 +69,9 @@ class PalDBAdapter(PalDataSourceAdapter):
 
         logger.info(
             "scrape done: %d/%d pages fetched, %d failed",
-            success, len(pal_list), len(failed),
+            success,
+            len(pal_list),
+            len(failed),
         )
 
         # step 3: parse all HTML
@@ -122,24 +124,31 @@ class PalDBAdapter(PalDataSourceAdapter):
         meta.total_pals = len(pals)
         if meta.generated_at == "":
             from datetime import datetime, timezone
+
             meta.generated_at = datetime.now(timezone.utc).isoformat()
 
         meta_path = self.output_dir / "pal_meta.json"
         meta_path.write_text(
-            json.dumps({
-                "game_version": meta.game_version,
-                "generated_at": meta.generated_at,
-                "total_pals": meta.total_pals,
-                "wild_pals": meta.wild_pals,
-                "field_completeness": meta.field_completeness,
-                "source": meta.source,
-            }, ensure_ascii=False, indent=2),
+            json.dumps(
+                {
+                    "game_version": meta.game_version,
+                    "generated_at": meta.generated_at,
+                    "total_pals": meta.total_pals,
+                    "wild_pals": meta.wild_pals,
+                    "field_completeness": meta.field_completeness,
+                    "source": meta.source,
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
             encoding="utf-8",
         )
 
         return pals
 
-    def load_from_json(self, path: str | Path = "data/processed/pal_data.json") -> list[Pal]:
+    def load_from_json(
+        self, path: str | Path = "data/processed/pal_data.json"
+    ) -> list[Pal]:
         """从已构建的 JSON 文件加载 Pal 列表 (运行时使用)."""
         path = Path(path)
         raw = json.loads(path.read_text(encoding="utf-8"))
@@ -196,6 +205,7 @@ class PalDBAdapter(PalDataSourceAdapter):
 # BreedingRules adapter (manual rules file → schema)
 # ============================================================================
 
+
 class BreedingRulesFileAdapter(BreedingRulesAdapter):
     """从本地 JSON 文件加载配种规则."""
 
@@ -214,5 +224,3 @@ class BreedingRulesFileAdapter(BreedingRulesAdapter):
             )
         raw = json.loads(self.rules_path.read_text(encoding="utf-8"))
         return BreedingRules.from_dict(raw)
-
-        )
