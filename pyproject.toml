@@ -1,0 +1,16 @@
+[project]
+name = "pl-agent"
+version = "0.1.0"
+description = "幻兽帕鲁配种 Agent — monorepo workspace"
+requires-python = ">=3.10"
+dependencies = ["pl-agent-core", "pl-agent-adapters"]
+
+[tool.uv.sources]
+pl-agent-core = { workspace = true }
+pl-agent-adapters = { workspace = true }
+
+[tool.uv.workspace]
+members = ["packages/core", "packages/adapters"]
+
+[dependency-groups]
+dev = ["pytest>=8"]

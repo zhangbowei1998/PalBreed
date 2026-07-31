@@ -1,0 +1,1 @@
+# paldb.cc adapter
