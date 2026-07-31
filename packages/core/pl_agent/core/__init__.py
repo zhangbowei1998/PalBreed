@@ -32,6 +32,15 @@ from pl_agent.core.errors import (
     PlAgentError,
 )
 from pl_agent.core.data_loader import DataLoader
+from pl_agent.core.breeding_engine import BreedingEngine
+from pl_agent.core.breeding_tree import (
+    BreedingPath,
+    BreedingStep,
+    BreedingTree,
+    BreedingTreeBuilder,
+)
+from pl_agent.core.suitability_query import LevelStats, SuitabilityQuery
+from pl_agent.core.path_optimizer import PathOptimizer
 
 __all__ = [
     # schema
@@ -54,4 +63,13 @@ __all__ = [
     "AdapterError",
     # data
     "DataLoader",
+    # engine
+    "BreedingEngine",
+    "BreedingTreeBuilder",
+    "BreedingTree",
+    "BreedingPath",
+    "BreedingStep",
+    "SuitabilityQuery",
+    "LevelStats",
+    "PathOptimizer",
 ]

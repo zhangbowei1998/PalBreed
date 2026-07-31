@@ -79,13 +79,13 @@ pl-agent/
 | Schema 定义 | ✅ | `packages/core/pl_agent/core/schema.py` |
 | 错误处理 | ✅ | `packages/core/pl_agent/core/errors.py` |
 | 组件接口 | ✅ | `packages/core/pl_agent/core/interfaces.py` |
-| pip 管理 | ✅ | uv workspace (`pyproject.toml`) |
-| **数据层** | ✅ | **完成！** scraper + parser + adapter + validator |
-| 单元测试 | ✅ | 5 个 parser 测试通过 |
-| 数据加载器 | ✅ | `packages/core/pl_agent/core/data_loader.py` |
-| 配种引擎 | ⬜ | `packages/core/pl_agent/core/breeding_engine.py` |
-| 配种树构建 | ⬜ | `packages/core/pl_agent/core/breeding_tree.py` |
-| 属性查询 | ⬜ | `packages/core/pl_agent/core/suitability_query.py` |
+| pip 管理 | ✅ | uv workspace |
+| **数据层** | ✅ | scraper + parser + adapter + validator |
+| **核心引擎** | ✅ | breeding_engine + breeding_tree + suitability_query + path_optimizer |
+| 单元测试 | ✅ | 12 引擎 + 5 数据层 = 17 passed |
+| 冒烟测试 | ✅ | 6 端到端场景全部通过 |
+| 数据加载器 | ✅ | `data_loader.py` |
+| Makefile | ✅ | 常用命令快捷操作 |
 | NLU 模块 | ⬜ | `packages/nlu/` |
 | API 服务 | ⬜ | `packages/api/` |
 | 前端 UI | ⬜ | `packages/web/` |
@@ -96,14 +96,15 @@ pl-agent/
 
 按优先级:
 
-1. **完成 paldb.cc 爬虫** — `packages/adapters/paldb/scraper.py` + `parser.py`，获取首批帕鲁数据
-2. **跑通数据管线** — paldb.cc → adapter → `schema.Pal` → `data/processed/pal_data.json`
-3. **实现配种引擎** — `packages/core/pl_agent/core/breeding_engine.py` (正向/反向计算)
-4. **实现配种树构建** — `packages/core/pl_agent/core/breeding_tree.py` (BFS 递归展开)
-5. **实现属性查询** — `packages/core/pl_agent/core/suitability_query.py`
-6. **实现 NLU 模块** — `packages/nlu/`
-7. **搭建 API 服务** — `packages/api/`
-8. **前端 UI** — `packages/web/`
+1. **实现配种引擎** — `packages/core/pl_agent/core/breeding_engine.py` (正向/反向 CombiRank 计算)
+2. **实现配种树构建** — `packages/core/pl_agent/core/breeding_tree.py` (BFS 递归展开)
+3. **实现属性查询** — `packages/core/pl_agent/core/suitability_query.py`
+4. **实现路径择优** — `packages/core/pl_agent/core/path_optimizer.py`
+5. **实现 NLU 模块** — `packages/nlu/`
+6. **搭建 API 服务** — `packages/api/`
+7. **前端 UI** — `packages/web/`
+
+详细设计见 `docs/architecture/CORE_ENGINE_REQUIREMENTS.md`
 
 ---
 
@@ -136,9 +137,10 @@ pl-agent/
 | 🔑 数据模型规范 (Schema) | `packages/core/pl_agent/core/schema.py` |
 | 🔑 数据层详细需求 | `docs/architecture/DATA_LAYER_REQUIREMENTS.md` |
 | 🔌 外部数据如何接入 | `packages/adapters/base.py` + `docs/architecture/DATA_LAYER_REQUIREMENTS.md` §11 |
+| 🔑 核心引擎需求 | `docs/architecture/CORE_ENGINE_REQUIREMENTS.md` |
 | ❗ 业务异常定义 | `packages/core/pl_agent/core/errors.py` |
 | 🔧 引擎组件接口 | `packages/core/pl_agent/core/interfaces.py` |
-| 配种算法怎么算 | `docs/architecture/ARCHITECTURE.md` §4 |
+| 配种算法怎么算 | `docs/architecture/CORE_ENGINE_REQUIREMENTS.md` §3 |
 | API 有哪些接口 | `docs/architecture/ARCHITECTURE.md` §5 |
 | AI 行为指引 | `.github/copilot-instructions.md` |
 | 初始需求 | `init.md` |

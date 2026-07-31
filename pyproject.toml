@@ -14,3 +14,11 @@ members = ["packages/core", "packages/adapters"]
 
 [dependency-groups]
 dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+pythonpath = ["packages/core", "packages/adapters", "packages"]
+testpaths = [
+    "packages/core/pl_agent/core/__tests__",
+    "packages/adapters/adapters/paldb/__tests__",
+    "tests",
+]
