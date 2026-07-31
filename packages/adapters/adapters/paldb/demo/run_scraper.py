@@ -36,19 +36,15 @@ async def main():
     pal_list = await scraper.fetch_pal_list()
     logger.info("Found %d pals", len(pal_list))
     for p in pal_list[:5]:
-        logger.info("  %s → %s", p["internal_id"], p.get("cn_name", "?"))
+        logger.info("  %s → /cn/%s", p["internal_id"], p["url_name"])
 
-    # Step 2+ (uncomment to run full pipeline):
+    # Step 2+: run full pipeline (uncomment to download + parse + save)
     # logger.info("Downloading %d pages...", len(pal_list))
     # success, failed = await scraper.fetch_all(pal_list)
     # logger.info("Downloaded: %d ok, %d failed", success, len(failed))
     #
-    # parser = adapter._parser
-    # parsed = parser.parse_all(adapter.raw_dir, pal_list)
-    # logger.info("Parsed: %d pals", len(parsed))
-    #
     # pals = await adapter.build_and_save()
-    # logger.info("Saved %d pals to disk", len(pals))
+    # logger.info("Saved %d pals to JSON + PostgreSQL", len(pals))
 
 
 if __name__ == "__main__":

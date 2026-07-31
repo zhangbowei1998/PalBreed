@@ -1,0 +1,6019 @@
+{
+  "Alpaca": {
+    "id": "Alpaca",
+    "number": 20,
+    "cn_name": "美露帕",
+    "en_name": "Alpaca",
+    "combi_rank": 2720,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "farming": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "AmaterasuWolf": {
+    "id": "AmaterasuWolf",
+    "number": 111,
+    "cn_name": "苍焰狼",
+    "en_name": "AmaterasuWolf",
+    "combi_rank": 1670,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "kindling": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "AmaterasuWolf_Dark": {
+    "id": "AmaterasuWolf_Dark",
+    "number": 111,
+    "cn_name": "幽焰狼",
+    "en_name": "AmaterasuWolf_Dark",
+    "combi_rank": 800,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "kindling": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Anubis": {
+    "id": "Anubis",
+    "number": 139,
+    "cn_name": "阿努比斯",
+    "en_name": "Anubis",
+    "combi_rank": 480,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 10,
+    "work_suitability": {
+      "handiwork": 6,
+      "mining": 6,
+      "transporting": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BadCatgirl": {
+    "id": "BadCatgirl",
+    "number": 143,
+    "cn_name": "妮瞅莎",
+    "en_name": "BadCatgirl",
+    "combi_rank": 1250,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 4,
+      "gathering": 4,
+      "lumbering": 2,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Baphomet": {
+    "id": "Baphomet",
+    "number": 91,
+    "cn_name": "炎魔羊",
+    "en_name": "Baphomet",
+    "combi_rank": 1470,
+    "elements": [
+      "Fire",
+      "Dark"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 2,
+      "kindling": 3,
+      "mining": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Baphomet_Dark": {
+    "id": "Baphomet_Dark",
+    "number": 91,
+    "cn_name": "暗魔羊",
+    "en_name": "Baphomet_Dark",
+    "combi_rank": 1310,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 3,
+      "mining": 4,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Bastet": {
+    "id": "Bastet",
+    "number": 27,
+    "cn_name": "喵丝特",
+    "en_name": "Bastet",
+    "combi_rank": 3040,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "gathering": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Bastet_Ice": {
+    "id": "Bastet_Ice",
+    "number": 27,
+    "cn_name": "冰丝特",
+    "en_name": "Bastet_Ice",
+    "combi_rank": 2750,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "cooling": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BerryGoat": {
+    "id": "BerryGoat",
+    "number": 34,
+    "cn_name": "灌木羊",
+    "en_name": "BerryGoat",
+    "combi_rank": 2610,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "planting": 2,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BerryGoat_Dark": {
+    "id": "BerryGoat_Dark",
+    "number": 34,
+    "cn_name": "郁木羊",
+    "en_name": "BerryGoat_Dark",
+    "combi_rank": 1940,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "planting": 2,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BirdDragon": {
+    "id": "BirdDragon",
+    "number": 64,
+    "cn_name": "烽歌龙",
+    "en_name": "BirdDragon",
+    "combi_rank": 1650,
+    "elements": [
+      "Fire",
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "kindling": 2,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BirdDragon_Ice": {
+    "id": "BirdDragon_Ice",
+    "number": 64,
+    "cn_name": "霜歌龙",
+    "en_name": "BirdDragon_Ice",
+    "combi_rank": 1430,
+    "elements": [
+      "Ice",
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "cooling": 2,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlackCentaur": {
+    "id": "BlackCentaur",
+    "number": 199,
+    "cn_name": "混沌骑士",
+    "en_name": "BlackCentaur",
+    "combi_rank": 190,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 20,
+    "work_suitability": {
+      "lumbering": 6,
+      "mining": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlackGriffon": {
+    "id": "BlackGriffon",
+    "number": 189,
+    "cn_name": "异构格里芬",
+    "en_name": "BlackGriffon",
+    "combi_rank": 550,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 10,
+    "work_suitability": {
+      "gathering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlackMetalDragon": {
+    "id": "BlackMetalDragon",
+    "number": 158,
+    "cn_name": "魔渊龙",
+    "en_name": "BlackMetalDragon",
+    "combi_rank": 490,
+    "elements": [
+      "Dragon",
+      "Dark"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "handiwork": 3,
+      "mining": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlackPuppy": {
+    "id": "BlackPuppy",
+    "number": 149,
+    "cn_name": "墨丸",
+    "en_name": "BlackPuppy",
+    "combi_rank": 1760,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "gathering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlackPuppy_Ice": {
+    "id": "BlackPuppy_Ice",
+    "number": 149,
+    "cn_name": "冬丸",
+    "en_name": "BlackPuppy_Ice",
+    "combi_rank": 1610,
+    "elements": [
+      "Dark",
+      "Ice"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "gathering": 2,
+      "cooling": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlueDragon": {
+    "id": "BlueDragon",
+    "number": 41,
+    "cn_name": "碧海龙",
+    "en_name": "BlueDragon",
+    "combi_rank": 1830,
+    "elements": [
+      "Water",
+      "Dragon"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "watering": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlueDragon_Ice": {
+    "id": "BlueDragon_Ice",
+    "number": 41,
+    "cn_name": "碧月龙",
+    "en_name": "BlueDragon_Ice",
+    "combi_rank": 1220,
+    "elements": [
+      "Ice",
+      "Dragon"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "cooling": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BluePlatypus": {
+    "id": "BluePlatypus",
+    "number": 5,
+    "cn_name": "冲浪鸭",
+    "en_name": "BluePlatypus",
+    "combi_rank": 2980,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "watering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BluePlatypus_Fire": {
+    "id": "BluePlatypus_Fire",
+    "number": 5,
+    "cn_name": "热浪鸭",
+    "en_name": "BluePlatypus_Fire",
+    "combi_rank": 2300,
+    "elements": [
+      "Water",
+      "Fire"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 1,
+      "kindling": 2,
+      "watering": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlueSkyDragon": {
+    "id": "BlueSkyDragon",
+    "number": 192,
+    "cn_name": "霄龙",
+    "en_name": "BlueSkyDragon",
+    "combi_rank": 40,
+    "elements": [
+      "Dragon",
+      "Water"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "watering": 8,
+      "gathering": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlueThunderHorse": {
+    "id": "BlueThunderHorse",
+    "number": 161,
+    "cn_name": "驭雷马",
+    "en_name": "BlueThunderHorse",
+    "combi_rank": 420,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "generating_electricity": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BlueberryFairy": {
+    "id": "BlueberryFairy",
+    "number": 147,
+    "cn_name": "梅莉姆",
+    "en_name": "BlueberryFairy",
+    "combi_rank": 1390,
+    "elements": [
+      "Grass",
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 1,
+      "planting": 3,
+      "gathering": 2,
+      "medicine": 3,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Boar": {
+    "id": "Boar",
+    "number": 28,
+    "cn_name": "草莽猪",
+    "en_name": "Boar",
+    "combi_rank": 2880,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "mining": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "BrownRabbit": {
+    "id": "BrownRabbit",
+    "number": 165,
+    "cn_name": "詹兔曼",
+    "en_name": "BrownRabbit",
+    "combi_rank": 1680,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 3,
+      "gathering": 4,
+      "mining": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CactusDoll": {
+    "id": "CactusDoll",
+    "number": 100,
+    "cn_name": "球抱苞",
+    "en_name": "CactusDoll",
+    "combi_rank": 2420,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "planting": 3,
+      "gathering": 3,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CactusDoll_Dark": {
+    "id": "CactusDoll_Dark",
+    "number": 100,
+    "cn_name": "妖抱苞",
+    "en_name": "CactusDoll_Dark",
+    "combi_rank": 1580,
+    "elements": [
+      "Dark",
+      "Grass"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "planting": 3,
+      "gathering": 3,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CandleGhost": {
+    "id": "CandleGhost",
+    "number": 135,
+    "cn_name": "恐炬灵",
+    "en_name": "CandleGhost",
+    "combi_rank": 980,
+    "elements": [
+      "Dark",
+      "Fire"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 3,
+      "kindling": 3,
+      "gathering": 2,
+      "mining": 3,
+      "farming": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CaptainPenguin": {
+    "id": "CaptainPenguin",
+    "number": 18,
+    "cn_name": "企丸王",
+    "en_name": "CaptainPenguin",
+    "combi_rank": 2070,
+    "elements": [
+      "Water",
+      "Ice"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 2,
+      "watering": 2,
+      "mining": 3,
+      "cooling": 2,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CaptainPenguin_Black": {
+    "id": "CaptainPenguin_Black",
+    "number": 18,
+    "cn_name": "闪丸王",
+    "en_name": "CaptainPenguin_Black",
+    "combi_rank": 1850,
+    "elements": [
+      "Water",
+      "Neutral"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 2,
+      "watering": 2,
+      "generating_electricity": 3,
+      "mining": 3,
+      "transporting": 3
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Carbunclo": {
+    "id": "Carbunclo",
+    "number": 4,
+    "cn_name": "翠叶鼠",
+    "en_name": "Carbunclo",
+    "combi_rank": 3020,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "planting": 1,
+      "gathering": 1,
+      "lumbering": 1,
+      "medicine": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CatBat": {
+    "id": "CatBat",
+    "number": 52,
+    "cn_name": "猫蝠怪",
+    "en_name": "CatBat",
+    "combi_rank": 2340,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "gathering": 2,
+      "mining": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CatMage": {
+    "id": "CatMage",
+    "number": 79,
+    "cn_name": "暗巫猫",
+    "en_name": "CatMage",
+    "combi_rank": 2040,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 3,
+      "medicine": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CatMage_Fire": {
+    "id": "CatMage_Fire",
+    "number": 79,
+    "cn_name": "炽巫猫",
+    "en_name": "CatMage_Fire",
+    "combi_rank": 1800,
+    "elements": [
+      "Dark",
+      "Fire"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 3,
+      "kindling": 3,
+      "medicine": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CatVampire": {
+    "id": "CatVampire",
+    "number": 65,
+    "cn_name": "夜幕魔蝠",
+    "en_name": "CatVampire",
+    "combi_rank": 1570,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "medicine": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ChickenPal": {
+    "id": "ChickenPal",
+    "number": 3,
+    "cn_name": "皮皮鸡",
+    "en_name": "ChickenPal",
+    "combi_rank": 3080,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "gathering": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ClioneTwins": {
+    "id": "ClioneTwins",
+    "number": 47,
+    "cn_name": "莉欧·莉涅",
+    "en_name": "ClioneTwins",
+    "combi_rank": 2520,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 2,
+      "watering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CloverFairy": {
+    "id": "CloverFairy",
+    "number": 14,
+    "cn_name": "幸叶茸",
+    "en_name": "CloverFairy",
+    "combi_rank": 2970,
+    "elements": [
+      "Grass",
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "planting": 1,
+      "gathering": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ClownRabbit": {
+    "id": "ClownRabbit",
+    "number": 176,
+    "cn_name": "拉比耶尔",
+    "en_name": "ClownRabbit",
+    "combi_rank": 520,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 5,
+      "kindling": 7,
+      "medicine": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ColorfulBird": {
+    "id": "ColorfulBird",
+    "number": 53,
+    "cn_name": "炸蛋鸟",
+    "en_name": "ColorfulBird",
+    "combi_rank": 2730,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "gathering": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CowPal": {
+    "id": "CowPal",
+    "number": 40,
+    "cn_name": "波霸牛",
+    "en_name": "CowPal",
+    "combi_rank": 2800,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "farming": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CubeTurtle": {
+    "id": "CubeTurtle",
+    "number": 142,
+    "cn_name": "重岩龟",
+    "en_name": "CubeTurtle",
+    "combi_rank": 790,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "mining": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CubeTurtle_Neutral": {
+    "id": "CubeTurtle_Neutral",
+    "number": 142,
+    "cn_name": "净岩龟",
+    "en_name": "CubeTurtle_Neutral",
+    "combi_rank": 200,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "mining": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CuteButterfly": {
+    "id": "CuteButterfly",
+    "number": 61,
+    "cn_name": "幻悦蝶",
+    "en_name": "CuteButterfly",
+    "combi_rank": 2620,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "planting": 2,
+      "gathering": 2,
+      "medicine": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CuteFox": {
+    "id": "CuteFox",
+    "number": 6,
+    "cn_name": "玉藻狐",
+    "en_name": "CuteFox",
+    "combi_rank": 3060,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "gathering": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "CuteMole": {
+    "id": "CuteMole",
+    "number": 31,
+    "cn_name": "遁地鼠",
+    "en_name": "CuteMole",
+    "combi_rank": 2790,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "mining": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DandelionGirl": {
+    "id": "DandelionGirl",
+    "number": 164,
+    "cn_name": "蒲蒲飞芽",
+    "en_name": "DandelionGirl",
+    "combi_rank": 2000,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "planting": 2,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DarkAlien": {
+    "id": "DarkAlien",
+    "number": 145,
+    "cn_name": "杰诺贝达",
+    "en_name": "DarkAlien",
+    "combi_rank": 1820,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "lumbering": 3,
+      "transporting": 2
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DarkCrow": {
+    "id": "DarkCrow",
+    "number": 57,
+    "cn_name": "黑鸦隐士",
+    "en_name": "DarkCrow",
+    "combi_rank": 2370,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "lumbering": 2,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DarkFlameFox": {
+    "id": "DarkFlameFox",
+    "number": 115,
+    "cn_name": "紫狐娇",
+    "en_name": "DarkFlameFox",
+    "combi_rank": 1010,
+    "elements": [
+      "Dark",
+      "Fire"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 5,
+      "kindling": 4,
+      "medicine": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DarkMechaDragon": {
+    "id": "DarkMechaDragon",
+    "number": 196,
+    "cn_name": "杰诺多兰",
+    "en_name": "DarkMechaDragon",
+    "combi_rank": 400,
+    "elements": [
+      "Dark",
+      "Dragon"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "gathering": 2
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DarkScorpion": {
+    "id": "DarkScorpion",
+    "number": 99,
+    "cn_name": "冥铠蝎",
+    "en_name": "DarkScorpion",
+    "combi_rank": 1120,
+    "elements": [
+      "Dark",
+      "Earth"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "lumbering": 3,
+      "mining": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DarkScorpion_Ground": {
+    "id": "DarkScorpion_Ground",
+    "number": 99,
+    "cn_name": "金铠蝎",
+    "en_name": "DarkScorpion_Ground",
+    "combi_rank": 640,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 10,
+    "work_suitability": {
+      "lumbering": 3,
+      "mining": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Deer": {
+    "id": "Deer",
+    "number": 32,
+    "cn_name": "紫霞鹿",
+    "en_name": "Deer",
+    "combi_rank": 2710,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "lumbering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Deer_Ground": {
+    "id": "Deer_Ground",
+    "number": 32,
+    "cn_name": "祇岳鹿",
+    "en_name": "Deer_Ground",
+    "combi_rank": 2580,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "lumbering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DomeArmorDragon": {
+    "id": "DomeArmorDragon",
+    "number": 184,
+    "cn_name": "磐甲龙",
+    "en_name": "DomeArmorDragon",
+    "combi_rank": 30,
+    "elements": [
+      "Dragon",
+      "Earth"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "mining": 8
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DreamDemon": {
+    "id": "DreamDemon",
+    "number": 22,
+    "cn_name": "寐魔",
+    "en_name": "DreamDemon",
+    "combi_rank": 2910,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "gathering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "DrillGame": {
+    "id": "DrillGame",
+    "number": 107,
+    "cn_name": "碎岩龟",
+    "en_name": "DrillGame",
+    "combi_rank": 1550,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "mining": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Eagle": {
+    "id": "Eagle",
+    "number": 49,
+    "cn_name": "天擒鸟",
+    "en_name": "Eagle",
+    "combi_rank": 2570,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "gathering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ElecCat": {
+    "id": "ElecCat",
+    "number": 42,
+    "cn_name": "伏特喵",
+    "en_name": "ElecCat",
+    "combi_rank": 3010,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "generating_electricity": 1,
+      "transporting": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ElecLizard": {
+    "id": "ElecLizard",
+    "number": 167,
+    "cn_name": "电懒懒",
+    "en_name": "ElecLizard",
+    "combi_rank": 1750,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "generating_electricity": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ElecPanda": {
+    "id": "ElecPanda",
+    "number": 185,
+    "cn_name": "暴电熊",
+    "en_name": "ElecPanda",
+    "combi_rank": 1020,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 4,
+      "generating_electricity": 5,
+      "lumbering": 3,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ElecPomeranian": {
+    "id": "ElecPomeranian",
+    "number": 62,
+    "cn_name": "电汪汪",
+    "en_name": "ElecPomeranian",
+    "combi_rank": 2360,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "generating_electricity": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ElecSnail": {
+    "id": "ElecSnail",
+    "number": 163,
+    "cn_name": "电涡蜗",
+    "en_name": "ElecSnail",
+    "combi_rank": 1780,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "generating_electricity": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ElecSnail_Ground": {
+    "id": "ElecSnail_Ground",
+    "number": 163,
+    "cn_name": "金涡蜗",
+    "en_name": "ElecSnail_Ground",
+    "combi_rank": 1500,
+    "elements": [
+      "Neutral",
+      "Earth"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "generating_electricity": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FairyDragon": {
+    "id": "FairyDragon",
+    "number": 63,
+    "cn_name": "精灵龙",
+    "en_name": "FairyDragon",
+    "combi_rank": 2280,
+    "elements": [
+      "Dragon"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "lumbering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FairyDragon_Water": {
+    "id": "FairyDragon_Water",
+    "number": 63,
+    "cn_name": "水灵龙",
+    "en_name": "FairyDragon_Water",
+    "combi_rank": 1640,
+    "elements": [
+      "Dragon",
+      "Water"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "watering": 4,
+      "lumbering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FeatherOstrich": {
+    "id": "FeatherOstrich",
+    "number": 123,
+    "cn_name": "战冠雀",
+    "en_name": "FeatherOstrich",
+    "combi_rank": 2210,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "gathering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FengyunDeeper": {
+    "id": "FengyunDeeper",
+    "number": 83,
+    "cn_name": "云海鹿",
+    "en_name": "FengyunDeeper",
+    "combi_rank": 1960,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "lumbering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FengyunDeeper_Electric": {
+    "id": "FengyunDeeper_Electric",
+    "number": 83,
+    "cn_name": "雷隐鹿",
+    "en_name": "FengyunDeeper_Electric",
+    "combi_rank": 900,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "generating_electricity": 5,
+      "lumbering": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FireKirin": {
+    "id": "FireKirin",
+    "number": 93,
+    "cn_name": "火麒麟",
+    "en_name": "FireKirin",
+    "combi_rank": 1980,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "kindling": 4,
+      "lumbering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FireKirin_Dark": {
+    "id": "FireKirin_Dark",
+    "number": 93,
+    "cn_name": "邪麒麟",
+    "en_name": "FireKirin_Dark",
+    "combi_rank": 1870,
+    "elements": [
+      "Fire",
+      "Dark"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "kindling": 4,
+      "lumbering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlameBambi": {
+    "id": "FlameBambi",
+    "number": 26,
+    "cn_name": "燎火鹿",
+    "en_name": "FlameBambi",
+    "combi_rank": 2870,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "kindling": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlameBuffalo": {
+    "id": "FlameBuffalo",
+    "number": 58,
+    "cn_name": "炽焰牛",
+    "en_name": "FlameBuffalo",
+    "combi_rank": 2320,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "kindling": 3,
+      "lumbering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlowerDinosaur": {
+    "id": "FlowerDinosaur",
+    "number": 84,
+    "cn_name": "花冠龙",
+    "en_name": "FlowerDinosaur",
+    "combi_rank": 2100,
+    "elements": [
+      "Grass",
+      "Dragon"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "planting": 3,
+      "lumbering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlowerDinosaur_Electric": {
+    "id": "FlowerDinosaur_Electric",
+    "number": 84,
+    "cn_name": "雷冠龙",
+    "en_name": "FlowerDinosaur_Electric",
+    "combi_rank": 1890,
+    "elements": [
+      "Neutral",
+      "Dragon"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "generating_electricity": 3,
+      "lumbering": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlowerDoll": {
+    "id": "FlowerDoll",
+    "number": 89,
+    "cn_name": "花丽娜",
+    "en_name": "FlowerDoll",
+    "combi_rank": 1720,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 3,
+      "planting": 4,
+      "gathering": 3,
+      "medicine": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlowerDoll_Fire": {
+    "id": "FlowerDoll_Fire",
+    "number": 89,
+    "cn_name": "樱丽娜",
+    "en_name": "FlowerDoll_Fire",
+    "combi_rank": 820,
+    "elements": [
+      "Grass",
+      "Fire"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "handiwork": 3,
+      "kindling": 4,
+      "gathering": 3,
+      "medicine": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlowerPrince": {
+    "id": "FlowerPrince",
+    "number": 194,
+    "cn_name": "夜蔓爵",
+    "en_name": "FlowerPrince",
+    "combi_rank": 60,
+    "elements": [
+      "Grass",
+      "Dark"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 6,
+      "planting": 8,
+      "gathering": 5,
+      "medicine": 6,
+      "transporting": 3
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlowerRabbit": {
+    "id": "FlowerRabbit",
+    "number": 77,
+    "cn_name": "波娜兔",
+    "en_name": "FlowerRabbit",
+    "combi_rank": 2660,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 2,
+      "planting": 2,
+      "gathering": 2,
+      "medicine": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FluffyBird": {
+    "id": "FluffyBird",
+    "number": 59,
+    "cn_name": "雪绵啾",
+    "en_name": "FluffyBird",
+    "combi_rank": 2480,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "cooling": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlyingManta": {
+    "id": "FlyingManta",
+    "number": 7,
+    "cn_name": "鲁米儿",
+    "en_name": "FlyingManta",
+    "combi_rank": 2740,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "watering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FlyingManta_Thunder": {
+    "id": "FlyingManta_Thunder",
+    "number": 7,
+    "cn_name": "雷米儿",
+    "en_name": "FlyingManta_Thunder",
+    "combi_rank": 2380,
+    "elements": [
+      "Water",
+      "Neutral"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "watering": 1,
+      "generating_electricity": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FoxExorcist": {
+    "id": "FoxExorcist",
+    "number": 174,
+    "cn_name": "昭炎狐",
+    "en_name": "FoxExorcist",
+    "combi_rank": 390,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 6,
+      "kindling": 7,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FoxMage": {
+    "id": "FoxMage",
+    "number": 78,
+    "cn_name": "焰巫狐",
+    "en_name": "FoxMage",
+    "combi_rank": 2080,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 3,
+      "kindling": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "FoxMage_Dark": {
+    "id": "FoxMage_Dark",
+    "number": 78,
+    "cn_name": "幽巫狐",
+    "en_name": "FoxMage_Dark",
+    "combi_rank": 1490,
+    "elements": [
+      "Fire",
+      "Dark"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 4,
+      "kindling": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Ganesha": {
+    "id": "Ganesha",
+    "number": 11,
+    "cn_name": "壶小象",
+    "en_name": "Ganesha",
+    "combi_rank": 3070,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "watering": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Garm": {
+    "id": "Garm",
+    "number": 33,
+    "cn_name": "猎狼",
+    "en_name": "Garm",
+    "combi_rank": 2680,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "gathering": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GhostAnglerfish": {
+    "id": "GhostAnglerfish",
+    "number": 97,
+    "cn_name": "冥灯鱼",
+    "en_name": "GhostAnglerfish",
+    "combi_rank": 880,
+    "elements": [
+      "Dark",
+      "Water"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "watering": 5,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GhostAnglerfish_Fire": {
+    "id": "GhostAnglerfish_Fire",
+    "number": 97,
+    "cn_name": "炙灯鱼",
+    "en_name": "GhostAnglerfish_Fire",
+    "combi_rank": 720,
+    "elements": [
+      "Fire",
+      "Water"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "kindling": 5,
+      "watering": 5,
+      "transporting": 2
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GhostBeast": {
+    "id": "GhostBeast",
+    "number": 117,
+    "cn_name": "噬魂兽",
+    "en_name": "GhostBeast",
+    "combi_rank": 1710,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "gathering": 4,
+      "mining": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GhostBlackCat": {
+    "id": "GhostBlackCat",
+    "number": 50,
+    "cn_name": "念影喵",
+    "en_name": "GhostBlackCat",
+    "combi_rank": 2250,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 2,
+      "lumbering": 1,
+      "medicine": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GhostDragon": {
+    "id": "GhostDragon",
+    "number": 171,
+    "cn_name": "灵曦龙",
+    "en_name": "GhostDragon",
+    "combi_rank": 300,
+    "elements": [
+      "Dragon",
+      "Dark"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "transporting": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GhostDragon_Fire": {
+    "id": "GhostDragon_Fire",
+    "number": 171,
+    "cn_name": "狱熙龙",
+    "en_name": "GhostDragon_Fire",
+    "combi_rank": 140,
+    "elements": [
+      "Dragon",
+      "Fire"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "kindling": 6,
+      "transporting": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GhostRabbit": {
+    "id": "GhostRabbit",
+    "number": 148,
+    "cn_name": "魅爱莉",
+    "en_name": "GhostRabbit",
+    "combi_rank": 1230,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GhostRabbit_Grass": {
+    "id": "GhostRabbit_Grass",
+    "number": 148,
+    "cn_name": "碧艾莉",
+    "en_name": "GhostRabbit_Grass",
+    "combi_rank": 1320,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 4,
+      "planting": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GoldenHorse": {
+    "id": "GoldenHorse",
+    "number": 154,
+    "cn_name": "金驰兽",
+    "en_name": "GoldenHorse",
+    "combi_rank": 730,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "gathering": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Gorilla": {
+    "id": "Gorilla",
+    "number": 74,
+    "cn_name": "铁拳猿",
+    "en_name": "Gorilla",
+    "combi_rank": 2140,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 2,
+      "lumbering": 3,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Gorilla_Ground": {
+    "id": "Gorilla_Ground",
+    "number": 74,
+    "cn_name": "石掌猿",
+    "en_name": "Gorilla_Ground",
+    "combi_rank": 1880,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 2,
+      "mining": 3,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrassGolem": {
+    "id": "GrassGolem",
+    "number": 138,
+    "cn_name": "双心岩傀",
+    "en_name": "GrassGolem",
+    "combi_rank": 510,
+    "elements": [
+      "Earth",
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "planting": 3,
+      "gathering": 3,
+      "lumbering": 5,
+      "mining": 6,
+      "transporting": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrassGolem_Dark": {
+    "id": "GrassGolem_Dark",
+    "number": 138,
+    "cn_name": "咒心岩傀",
+    "en_name": "GrassGolem_Dark",
+    "combi_rank": 250,
+    "elements": [
+      "Earth",
+      "Dark"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "planting": 3,
+      "gathering": 3,
+      "lumbering": 5,
+      "mining": 6,
+      "transporting": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrassMammoth": {
+    "id": "GrassMammoth",
+    "number": 87,
+    "cn_name": "森猛犸",
+    "en_name": "GrassMammoth",
+    "combi_rank": 1340,
+    "elements": [
+      "Grass",
+      "Earth"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "planting": 4,
+      "lumbering": 4,
+      "mining": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrassMammoth_Ice": {
+    "id": "GrassMammoth_Ice",
+    "number": 87,
+    "cn_name": "雪猛犸",
+    "en_name": "GrassMammoth_Ice",
+    "combi_rank": 1070,
+    "elements": [
+      "Ice",
+      "Earth"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "lumbering": 5,
+      "mining": 4,
+      "cooling": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrassMinotaur": {
+    "id": "GrassMinotaur",
+    "number": 81,
+    "cn_name": "密林陶洛斯",
+    "en_name": "GrassMinotaur",
+    "combi_rank": 2020,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "planting": 3,
+      "gathering": 2,
+      "lumbering": 3,
+      "mining": 2,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrassMinotaur_Ice": {
+    "id": "GrassMinotaur_Ice",
+    "number": 81,
+    "cn_name": "冰峰陶洛斯",
+    "en_name": "GrassMinotaur_Ice",
+    "combi_rank": 440,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "lumbering": 3,
+      "mining": 3,
+      "cooling": 5,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrassPanda": {
+    "id": "GrassPanda",
+    "number": 102,
+    "cn_name": "叶胖达",
+    "en_name": "GrassPanda",
+    "combi_rank": 2060,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 2,
+      "planting": 3,
+      "lumbering": 4,
+      "transporting": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrassPanda_Electric": {
+    "id": "GrassPanda_Electric",
+    "number": 102,
+    "cn_name": "雷胖达",
+    "en_name": "GrassPanda_Electric",
+    "combi_rank": 1440,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 3,
+      "generating_electricity": 4,
+      "lumbering": 4,
+      "transporting": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrassRabbitMan": {
+    "id": "GrassRabbitMan",
+    "number": 152,
+    "cn_name": "踏春兔",
+    "en_name": "GrassRabbitMan",
+    "combi_rank": 1160,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 5,
+      "planting": 4,
+      "gathering": 5,
+      "lumbering": 3,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GrimGirl": {
+    "id": "GrimGirl",
+    "number": 153,
+    "cn_name": "幽恋娜",
+    "en_name": "GrimGirl",
+    "combi_rank": 780,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 6,
+      "lumbering": 3,
+      "medicine": 5,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "GuardianDog": {
+    "id": "GuardianDog",
+    "number": 127,
+    "cn_name": "八云犬",
+    "en_name": "GuardianDog",
+    "combi_rank": 2230,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "gathering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "HadesBird": {
+    "id": "HadesBird",
+    "number": 80,
+    "cn_name": "雷冥鸟",
+    "en_name": "HadesBird",
+    "combi_rank": 1130,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "transporting": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "HadesBird_Electric": {
+    "id": "HadesBird_Electric",
+    "number": 80,
+    "cn_name": "雷鸣鸟",
+    "en_name": "HadesBird_Electric",
+    "combi_rank": 960,
+    "elements": [
+      "Dark",
+      "Neutral"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "generating_electricity": 4,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "HawkBird": {
+    "id": "HawkBird",
+    "number": 51,
+    "cn_name": "疾风隼",
+    "en_name": "HawkBird",
+    "combi_rank": 2560,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "gathering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Hedgehog": {
+    "id": "Hedgehog",
+    "number": 15,
+    "cn_name": "电棘鼠",
+    "en_name": "Hedgehog",
+    "combi_rank": 3030,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "generating_electricity": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Hedgehog_Ice": {
+    "id": "Hedgehog_Ice",
+    "number": 15,
+    "cn_name": "冰刺鼠",
+    "en_name": "Hedgehog_Ice",
+    "combi_rank": 2850,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "cooling": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "HerculesBeetle": {
+    "id": "HerculesBeetle",
+    "number": 113,
+    "cn_name": "铠格力斯",
+    "en_name": "HerculesBeetle",
+    "combi_rank": 1280,
+    "elements": [
+      "Earth",
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 3,
+      "planting": 3,
+      "lumbering": 4,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "HerculesBeetle_Ground": {
+    "id": "HerculesBeetle_Ground",
+    "number": 113,
+    "cn_name": "格鲁力斯",
+    "en_name": "HerculesBeetle_Ground",
+    "combi_rank": 630,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "handiwork": 2,
+      "mining": 5,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "HoodGhost": {
+    "id": "HoodGhost",
+    "number": 166,
+    "cn_name": "兜兜灵",
+    "en_name": "HoodGhost",
+    "combi_rank": 1770,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Horus": {
+    "id": "Horus",
+    "number": 188,
+    "cn_name": "荷鲁斯",
+    "en_name": "Horus",
+    "combi_rank": 500,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "kindling": 6,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Horus_Water": {
+    "id": "Horus_Water",
+    "number": 188,
+    "cn_name": "伊西斯",
+    "en_name": "Horus_Water",
+    "combi_rank": 450,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "watering": 6,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceCrocodile": {
+    "id": "IceCrocodile",
+    "number": 86,
+    "cn_name": "肚肚鳄",
+    "en_name": "IceCrocodile",
+    "combi_rank": 2130,
+    "elements": [
+      "Ice",
+      "Water"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "watering": 2,
+      "cooling": 3,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceDeer": {
+    "id": "IceDeer",
+    "number": 101,
+    "cn_name": "严冬鹿",
+    "en_name": "IceDeer",
+    "combi_rank": 1930,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "lumbering": 3,
+      "cooling": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceFox": {
+    "id": "IceFox",
+    "number": 95,
+    "cn_name": "吹雪狐",
+    "en_name": "IceFox",
+    "combi_rank": 1970,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "cooling": 4,
+      "farming": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceHorse": {
+    "id": "IceHorse",
+    "number": 200,
+    "cn_name": "唤冬兽",
+    "en_name": "IceHorse",
+    "combi_rank": 150,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 20,
+    "work_suitability": {
+      "cooling": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceHorse_Dark": {
+    "id": "IceHorse_Dark",
+    "number": 200,
+    "cn_name": "唤夜兽",
+    "en_name": "IceHorse_Dark",
+    "combi_rank": 110,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 20,
+    "work_suitability": {
+      "gathering": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceNarwhal": {
+    "id": "IceNarwhal",
+    "number": 151,
+    "cn_name": "凉晶鲸",
+    "en_name": "IceNarwhal",
+    "combi_rank": 710,
+    "elements": [
+      "Ice",
+      "Water"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "watering": 5,
+      "cooling": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceNarwhal_Fire": {
+    "id": "IceNarwhal_Fire",
+    "number": 151,
+    "cn_name": "桃晶鲸",
+    "en_name": "IceNarwhal_Fire",
+    "combi_rank": 370,
+    "elements": [
+      "Ice",
+      "Fire"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "kindling": 5,
+      "cooling": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceSeal": {
+    "id": "IceSeal",
+    "number": 72,
+    "cn_name": "香草豹冰",
+    "en_name": "IceSeal",
+    "combi_rank": 1660,
+    "elements": [
+      "Ice",
+      "Water"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "watering": 3,
+      "cooling": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceSeal_Ground": {
+    "id": "IceSeal_Ground",
+    "number": 72,
+    "cn_name": "巧克力豹冰",
+    "en_name": "IceSeal_Ground",
+    "combi_rank": 1100,
+    "elements": [
+      "Ice",
+      "Earth"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "mining": 4,
+      "cooling": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "IceWitch": {
+    "id": "IceWitch",
+    "number": 119,
+    "cn_name": "冰姬灵",
+    "en_name": "IceWitch",
+    "combi_rank": 1260,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 5,
+      "cooling": 5,
+      "medicine": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "JellyfishFairy": {
+    "id": "JellyfishFairy",
+    "number": 45,
+    "cn_name": "海月仙",
+    "en_name": "JellyfishFairy",
+    "combi_rank": 2650,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 1,
+      "watering": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "JellyfishGhost": {
+    "id": "JellyfishGhost",
+    "number": 46,
+    "cn_name": "海月灵",
+    "en_name": "JellyfishGhost",
+    "combi_rank": 2590,
+    "elements": [
+      "Water",
+      "Dark"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 1,
+      "watering": 2,
+      "medicine": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "JetDragon": {
+    "id": "JetDragon",
+    "number": 202,
+    "cn_name": "空涡龙",
+    "en_name": "JetDragon",
+    "combi_rank": 70,
+    "elements": [
+      "Dragon"
+    ],
+    "rarity": 20,
+    "work_suitability": {
+      "gathering": 8
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KabukiMan": {
+    "id": "KabukiMan",
+    "number": 183,
+    "cn_name": "燎火舞伶",
+    "en_name": "KabukiMan",
+    "combi_rank": 290,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 6,
+      "kindling": 8,
+      "gathering": 5,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Kelpie": {
+    "id": "Kelpie",
+    "number": 43,
+    "cn_name": "水灵儿",
+    "en_name": "Kelpie",
+    "combi_rank": 2810,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "watering": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Kelpie_Fire": {
+    "id": "Kelpie_Fire",
+    "number": 43,
+    "cn_name": "火灵儿",
+    "en_name": "Kelpie_Fire",
+    "combi_rank": 2470,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "kindling": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KendoFrog": {
+    "id": "KendoFrog",
+    "number": 9,
+    "cn_name": "武道蛙",
+    "en_name": "KendoFrog",
+    "combi_rank": 2600,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 1,
+      "watering": 1,
+      "gathering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KendoFrog_Dark": {
+    "id": "KendoFrog_Dark",
+    "number": 9,
+    "cn_name": "极道蛙",
+    "en_name": "KendoFrog_Dark",
+    "combi_rank": 1860,
+    "elements": [
+      "Water",
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 2,
+      "watering": 1,
+      "gathering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KingAlpaca": {
+    "id": "KingAlpaca",
+    "number": 21,
+    "cn_name": "君王美露帕",
+    "en_name": "KingAlpaca",
+    "combi_rank": 2220,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "gathering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KingAlpaca_Ice": {
+    "id": "KingAlpaca_Ice",
+    "number": 21,
+    "cn_name": "冰帝美露帕",
+    "en_name": "KingAlpaca_Ice",
+    "combi_rank": 1530,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "gathering": 2,
+      "cooling": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KingBahamut": {
+    "id": "KingBahamut",
+    "number": 137,
+    "cn_name": "焰煌",
+    "en_name": "KingBahamut",
+    "combi_rank": 410,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "kindling": 6,
+      "mining": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KingBahamut_Dragon": {
+    "id": "KingBahamut_Dragon",
+    "number": 137,
+    "cn_name": "殁殃",
+    "en_name": "KingBahamut_Dragon",
+    "combi_rank": 100,
+    "elements": [
+      "Dragon",
+      "Fire"
+    ],
+    "rarity": 10,
+    "work_suitability": {
+      "kindling": 6,
+      "mining": 7
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KingSunfish": {
+    "id": "KingSunfish",
+    "number": 169,
+    "cn_name": "曼波王",
+    "en_name": "KingSunfish",
+    "combi_rank": 1370,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "watering": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KingSunfish_Thunder": {
+    "id": "KingSunfish_Thunder",
+    "number": 169,
+    "cn_name": "曼波皇",
+    "en_name": "KingSunfish_Thunder",
+    "combi_rank": 1000,
+    "elements": [
+      "Water",
+      "Neutral"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "watering": 4,
+      "generating_electricity": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "KingWhale": {
+    "id": "KingWhale",
+    "number": 203,
+    "cn_name": "奥沧鲸",
+    "en_name": "KingWhale",
+    "combi_rank": 20,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 10,
+    "work_suitability": {},
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Kirin": {
+    "id": "Kirin",
+    "number": 54,
+    "cn_name": "雷角马",
+    "en_name": "Kirin",
+    "combi_rank": 2270,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "generating_electricity": 3,
+      "lumbering": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Kirin_Ice": {
+    "id": "Kirin_Ice",
+    "number": 54,
+    "cn_name": "凌角马",
+    "en_name": "Kirin_Ice",
+    "combi_rank": 540,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "lumbering": 3,
+      "cooling": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Kitsunebi": {
+    "id": "Kitsunebi",
+    "number": 29,
+    "cn_name": "火绒狐",
+    "en_name": "Kitsunebi",
+    "combi_rank": 2990,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "kindling": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Kitsunebi_Ice": {
+    "id": "Kitsunebi_Ice",
+    "number": 29,
+    "cn_name": "雪绒狐",
+    "en_name": "Kitsunebi_Ice",
+    "combi_rank": 2500,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "cooling": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LanternButler": {
+    "id": "LanternButler",
+    "number": 180,
+    "cn_name": "妖焰灯",
+    "en_name": "LanternButler",
+    "combi_rank": 890,
+    "elements": [
+      "Dark",
+      "Fire"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 4,
+      "kindling": 4,
+      "medicine": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LavaGirl": {
+    "id": "LavaGirl",
+    "number": 25,
+    "cn_name": "融焰娘",
+    "en_name": "LavaGirl",
+    "combi_rank": 2700,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "kindling": 1,
+      "transporting": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LazyCatfish": {
+    "id": "LazyCatfish",
+    "number": 109,
+    "cn_name": "趴趴鲶",
+    "en_name": "LazyCatfish",
+    "combi_rank": 2290,
+    "elements": [
+      "Earth",
+      "Water"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "watering": 2,
+      "mining": 2,
+      "transporting": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LazyCatfish_Gold": {
+    "id": "LazyCatfish_Gold",
+    "number": 109,
+    "cn_name": "梆梆鲶",
+    "en_name": "LazyCatfish_Gold",
+    "combi_rank": 1620,
+    "elements": [
+      "Earth",
+      "Water"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "watering": 2,
+      "mining": 2,
+      "transporting": 1,
+      "farming": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LazyDragon": {
+    "id": "LazyDragon",
+    "number": 94,
+    "cn_name": "佩克龙",
+    "en_name": "LazyDragon",
+    "combi_rank": 1090,
+    "elements": [
+      "Dragon",
+      "Water"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "watering": 3,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LazyDragon_Electric": {
+    "id": "LazyDragon_Electric",
+    "number": 94,
+    "cn_name": "派克龙",
+    "en_name": "LazyDragon_Electric",
+    "combi_rank": 770,
+    "elements": [
+      "Dragon",
+      "Neutral"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "generating_electricity": 4,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LeafMomonga": {
+    "id": "LeafMomonga",
+    "number": 10,
+    "cn_name": "达鼠泥",
+    "en_name": "LeafMomonga",
+    "combi_rank": 2630,
+    "elements": [
+      "Grass",
+      "Neutral"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "planting": 1,
+      "gathering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LeafPrincess": {
+    "id": "LeafPrincess",
+    "number": 125,
+    "cn_name": "春彩娘",
+    "en_name": "LeafPrincess",
+    "combi_rank": 1990,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 3,
+      "planting": 3,
+      "gathering": 2,
+      "medicine": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LegendDeer": {
+    "id": "LegendDeer",
+    "number": 197,
+    "cn_name": "默世鹿",
+    "en_name": "LegendDeer",
+    "combi_rank": 90,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 10,
+    "work_suitability": {
+      "gathering": 7,
+      "lumbering": 7
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LilyQueen": {
+    "id": "LilyQueen",
+    "number": 186,
+    "cn_name": "百合女王",
+    "en_name": "LilyQueen",
+    "combi_rank": 240,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "handiwork": 5,
+      "planting": 7,
+      "gathering": 6,
+      "medicine": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LilyQueen_Dark": {
+    "id": "LilyQueen_Dark",
+    "number": 186,
+    "cn_name": "黑月女王",
+    "en_name": "LilyQueen_Dark",
+    "combi_rank": 220,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 10,
+    "work_suitability": {
+      "handiwork": 5,
+      "gathering": 6,
+      "medicine": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LittleBriarRose": {
+    "id": "LittleBriarRose",
+    "number": 60,
+    "cn_name": "荊棘魔仙",
+    "en_name": "LittleBriarRose",
+    "combi_rank": 2690,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 2,
+      "planting": 2,
+      "gathering": 2,
+      "medicine": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LizardMan": {
+    "id": "LizardMan",
+    "number": 73,
+    "cn_name": "朋克蜥",
+    "en_name": "LizardMan",
+    "combi_rank": 2670,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 2,
+      "gathering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LizardMan_Fire": {
+    "id": "LizardMan_Fire",
+    "number": 73,
+    "cn_name": "热血蜥",
+    "en_name": "LizardMan_Fire",
+    "combi_rank": 2640,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 2,
+      "kindling": 2,
+      "gathering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LongCat": {
+    "id": "LongCat",
+    "number": 162,
+    "cn_name": "喵璐璐",
+    "en_name": "LongCat",
+    "combi_rank": 1900,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "gathering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "LotusDragon": {
+    "id": "LotusDragon",
+    "number": 175,
+    "cn_name": "沁莲龙",
+    "en_name": "LotusDragon",
+    "combi_rank": 230,
+    "elements": [
+      "Grass",
+      "Water"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "watering": 5,
+      "planting": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Manticore": {
+    "id": "Manticore",
+    "number": 112,
+    "cn_name": "狱焰王",
+    "en_name": "Manticore",
+    "combi_rank": 1360,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "kindling": 5,
+      "lumbering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Manticore_Dark": {
+    "id": "Manticore_Dark",
+    "number": 112,
+    "cn_name": "狱阎王",
+    "en_name": "Manticore_Dark",
+    "combi_rank": 1270,
+    "elements": [
+      "Fire",
+      "Dark"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "kindling": 5,
+      "lumbering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MimicDog": {
+    "id": "MimicDog",
+    "number": 144,
+    "cn_name": "旺财",
+    "en_name": "MimicDog",
+    "combi_rank": 1740,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "gathering": 1,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Monkey": {
+    "id": "Monkey",
+    "number": 23,
+    "cn_name": "新叶猿",
+    "en_name": "Monkey",
+    "combi_rank": 2900,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "planting": 1,
+      "gathering": 1,
+      "lumbering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Monkey_Fire": {
+    "id": "Monkey_Fire",
+    "number": 23,
+    "cn_name": "秋叶猿",
+    "en_name": "Monkey_Fire",
+    "combi_rank": 2830,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 1,
+      "kindling": 1,
+      "lumbering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MonochromeQueen": {
+    "id": "MonochromeQueen",
+    "number": 182,
+    "cn_name": "墨罗娜",
+    "en_name": "MonochromeQueen",
+    "combi_rank": 280,
+    "elements": [
+      "Dark",
+      "Neutral"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 8,
+      "gathering": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MoonChild": {
+    "id": "MoonChild",
+    "number": 181,
+    "cn_name": "缀夜星",
+    "en_name": "MoonChild",
+    "combi_rank": 1180,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 6,
+      "medicine": 6,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MoonQueen": {
+    "id": "MoonQueen",
+    "number": 190,
+    "cn_name": "辉月伊",
+    "en_name": "MoonQueen",
+    "combi_rank": 360,
+    "elements": [
+      "Dark",
+      "Neutral"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "handiwork": 7,
+      "medicine": 6,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MopBaby": {
+    "id": "MopBaby",
+    "number": 35,
+    "cn_name": "毛掸儿",
+    "en_name": "MopBaby",
+    "combi_rank": 2840,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "gathering": 1,
+      "cooling": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MopKing": {
+    "id": "MopKing",
+    "number": 36,
+    "cn_name": "毛老爹",
+    "en_name": "MopKing",
+    "combi_rank": 2150,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "gathering": 2,
+      "cooling": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Mothman": {
+    "id": "Mothman",
+    "number": 193,
+    "cn_name": "暮尘蛾",
+    "en_name": "Mothman",
+    "combi_rank": 80,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 6,
+      "planting": 6,
+      "gathering": 4,
+      "medicine": 8,
+      "transporting": 2
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MummyPal": {
+    "id": "MummyPal",
+    "number": 120,
+    "cn_name": "缚乃伊",
+    "en_name": "MummyPal",
+    "combi_rank": 1170,
+    "elements": [
+      "Dark",
+      "Earth"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 5,
+      "medicine": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MushroomDragon": {
+    "id": "MushroomDragon",
+    "number": 118,
+    "cn_name": "菇咚",
+    "en_name": "MushroomDragon",
+    "combi_rank": 1520,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 2,
+      "planting": 3,
+      "gathering": 3,
+      "lumbering": 2,
+      "farming": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MushroomDragon_Dark": {
+    "id": "MushroomDragon_Dark",
+    "number": 118,
+    "cn_name": "菇波",
+    "en_name": "MushroomDragon_Dark",
+    "combi_rank": 1450,
+    "elements": [
+      "Grass",
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 3,
+      "planting": 3,
+      "gathering": 3,
+      "lumbering": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MushroomLady": {
+    "id": "MushroomLady",
+    "number": 179,
+    "cn_name": "红菇娘",
+    "en_name": "MushroomLady",
+    "combi_rank": 760,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 4,
+      "planting": 6,
+      "gathering": 4,
+      "medicine": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Mutant": {
+    "id": "Mutant",
+    "number": 82,
+    "cn_name": "秘斯媞雅",
+    "en_name": "Mutant",
+    "combi_rank": 2010,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 4,
+      "gathering": 2,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "MysteryMask": {
+    "id": "MysteryMask",
+    "number": 150,
+    "cn_name": "面惧",
+    "en_name": "MysteryMask",
+    "combi_rank": 1140,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "gathering": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "NaughtyCat": {
+    "id": "NaughtyCat",
+    "number": 70,
+    "cn_name": "笑魇猫",
+    "en_name": "NaughtyCat",
+    "combi_rank": 2120,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "gathering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "NegativeKoala": {
+    "id": "NegativeKoala",
+    "number": 16,
+    "cn_name": "瞅什魔",
+    "en_name": "NegativeKoala",
+    "combi_rank": 3000,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "mining": 1,
+      "transporting": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "NegativeOctopus": {
+    "id": "NegativeOctopus",
+    "number": 30,
+    "cn_name": "勾魂鱿",
+    "en_name": "NegativeOctopus",
+    "combi_rank": 2770,
+    "elements": [
+      "Dark",
+      "Water"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "watering": 1,
+      "gathering": 1,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "NegativeOctopus_Neutral": {
+    "id": "NegativeOctopus_Neutral",
+    "number": 30,
+    "cn_name": "蚀魂鱿",
+    "en_name": "NegativeOctopus_Neutral",
+    "combi_rank": 2540,
+    "elements": [
+      "Neutral",
+      "Water"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "watering": 1,
+      "gathering": 1,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "NightBlueHorse": {
+    "id": "NightBlueHorse",
+    "number": 130,
+    "cn_name": "夜冥驹",
+    "en_name": "NightBlueHorse",
+    "combi_rank": 1150,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "gathering": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "NightBlueHorse_Neutral": {
+    "id": "NightBlueHorse_Neutral",
+    "number": 130,
+    "cn_name": "日耀驹",
+    "en_name": "NightBlueHorse_Neutral",
+    "combi_rank": 430,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "gathering": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "NightFox": {
+    "id": "NightFox",
+    "number": 24,
+    "cn_name": "露娜蒂",
+    "en_name": "NightFox",
+    "combi_rank": 2920,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "gathering": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "NightLady": {
+    "id": "NightLady",
+    "number": 195,
+    "cn_name": "贝菈诺娃",
+    "en_name": "NightLady",
+    "combi_rank": 620,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 20,
+    "work_suitability": {
+      "handiwork": 5,
+      "medicine": 5,
+      "transporting": 4
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "NightLady_Dark": {
+    "id": "NightLady_Dark",
+    "number": 195,
+    "cn_name": "贝菈露洁",
+    "en_name": "NightLady_Dark",
+    "combi_rank": 130,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 20,
+    "work_suitability": {
+      "handiwork": 6,
+      "medicine": 7,
+      "transporting": 4
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "OctopusGirl": {
+    "id": "OctopusGirl",
+    "number": 48,
+    "cn_name": "墨沫姬",
+    "en_name": "OctopusGirl",
+    "combi_rank": 2530,
+    "elements": [
+      "Water",
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 2,
+      "watering": 2,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "OctopusGirl_Neutral": {
+    "id": "OctopusGirl_Neutral",
+    "number": 48,
+    "cn_name": "梦沫姬",
+    "en_name": "OctopusGirl_Neutral",
+    "combi_rank": 1630,
+    "elements": [
+      "Water",
+      "Neutral"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 2,
+      "watering": 2,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "OniGhostGirl": {
+    "id": "OniGhostGirl",
+    "number": 168,
+    "cn_name": "吓丝妮",
+    "en_name": "OniGhostGirl",
+    "combi_rank": 1540,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 3,
+      "medicine": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "PandaGirl": {
+    "id": "PandaGirl",
+    "number": 90,
+    "cn_name": "莉芳",
+    "en_name": "PandaGirl",
+    "combi_rank": 1410,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 3,
+      "planting": 3,
+      "gathering": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Penguin": {
+    "id": "Penguin",
+    "number": 17,
+    "cn_name": "企丸丸",
+    "en_name": "Penguin",
+    "combi_rank": 2960,
+    "elements": [
+      "Water",
+      "Ice"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "watering": 1,
+      "cooling": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Penguin_Electric": {
+    "id": "Penguin_Electric",
+    "number": 17,
+    "cn_name": "闪丸丸",
+    "en_name": "Penguin_Electric",
+    "combi_rank": 2490,
+    "elements": [
+      "Water",
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 1,
+      "watering": 1,
+      "generating_electricity": 2,
+      "transporting": 1
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "PinkCat": {
+    "id": "PinkCat",
+    "number": 2,
+    "cn_name": "捣蛋猫",
+    "en_name": "PinkCat",
+    "combi_rank": 2760,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "gathering": 1,
+      "mining": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "PinkLizard": {
+    "id": "PinkLizard",
+    "number": 69,
+    "cn_name": "博爱蜥",
+    "en_name": "PinkLizard",
+    "combi_rank": 2090,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 3,
+      "mining": 2,
+      "medicine": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "PinkRabbit": {
+    "id": "PinkRabbit",
+    "number": 44,
+    "cn_name": "姬小兔",
+    "en_name": "PinkRabbit",
+    "combi_rank": 2860,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "gathering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "PinkRabbit_Grass": {
+    "id": "PinkRabbit_Grass",
+    "number": 44,
+    "cn_name": "艾小兔",
+    "en_name": "PinkRabbit_Grass",
+    "combi_rank": 2460,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 2,
+      "planting": 2,
+      "gathering": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "PlantSlime": {
+    "id": "PlantSlime",
+    "number": 12,
+    "cn_name": "叶泥泥",
+    "en_name": "PlantSlime",
+    "combi_rank": 2950,
+    "elements": [
+      "Grass",
+      "Earth"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "planting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Plesiosaur": {
+    "id": "Plesiosaur",
+    "number": 110,
+    "cn_name": "梁叶龙",
+    "en_name": "Plesiosaur",
+    "combi_rank": 1030,
+    "elements": [
+      "Grass",
+      "Earth"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "planting": 5,
+      "gathering": 5,
+      "mining": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "PoseidonOrca": {
+    "id": "PoseidonOrca",
+    "number": 201,
+    "cn_name": "海皇鲸",
+    "en_name": "PoseidonOrca",
+    "combi_rank": 160,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 20,
+    "work_suitability": {
+      "watering": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "PurpleSpider": {
+    "id": "PurpleSpider",
+    "number": 71,
+    "cn_name": "桃蛛娘",
+    "en_name": "PurpleSpider",
+    "combi_rank": 1730,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 3,
+      "gathering": 3,
+      "medicine": 2,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "QueenBee": {
+    "id": "QueenBee",
+    "number": 68,
+    "cn_name": "女皇蜂",
+    "en_name": "QueenBee",
+    "combi_rank": 1790,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 4,
+      "planting": 4,
+      "gathering": 4,
+      "lumbering": 3,
+      "medicine": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "RaijinDaughter": {
+    "id": "RaijinDaughter",
+    "number": 92,
+    "cn_name": "雷鸣童子",
+    "en_name": "RaijinDaughter",
+    "combi_rank": 2400,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 2,
+      "generating_electricity": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "RaijinDaughter_Water": {
+    "id": "RaijinDaughter_Water",
+    "number": 92,
+    "cn_name": "天阴童子",
+    "en_name": "RaijinDaughter_Water",
+    "combi_rank": 1910,
+    "elements": [
+      "Dark",
+      "Neutral"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 1,
+      "generating_electricity": 1,
+      "medicine": 1,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "RedArmorBird": {
+    "id": "RedArmorBird",
+    "number": 104,
+    "cn_name": "燧火鸟",
+    "en_name": "RedArmorBird",
+    "combi_rank": 1050,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "kindling": 4,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "RedFlowerBird": {
+    "id": "RedFlowerBird",
+    "number": 173,
+    "cn_name": "大红呱",
+    "en_name": "RedFlowerBird",
+    "combi_rank": 1350,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "planting": 5,
+      "gathering": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "RobinHood": {
+    "id": "RobinHood",
+    "number": 76,
+    "cn_name": "羽箭射手",
+    "en_name": "RobinHood",
+    "combi_rank": 2260,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 3,
+      "planting": 2,
+      "gathering": 3,
+      "lumbering": 2,
+      "medicine": 1,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "RobinHood_Ground": {
+    "id": "RobinHood_Ground",
+    "number": 76,
+    "cn_name": "山岳射手",
+    "en_name": "RobinHood_Ground",
+    "combi_rank": 2050,
+    "elements": [
+      "Grass",
+      "Earth"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 3,
+      "gathering": 3,
+      "lumbering": 2,
+      "medicine": 2,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "RockBeast": {
+    "id": "RockBeast",
+    "number": 131,
+    "cn_name": "磐峰兽",
+    "en_name": "RockBeast",
+    "combi_rank": 1110,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "mining": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "RockBeast_Ice": {
+    "id": "RockBeast_Ice",
+    "number": 131,
+    "cn_name": "寒峰兽",
+    "en_name": "RockBeast_Ice",
+    "combi_rank": 460,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "mining": 5,
+      "cooling": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Ronin": {
+    "id": "Ronin",
+    "number": 85,
+    "cn_name": "浪刃武士",
+    "en_name": "Ronin",
+    "combi_rank": 1560,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 2,
+      "kindling": 2,
+      "gathering": 1,
+      "lumbering": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Ronin_Dark": {
+    "id": "Ronin_Dark",
+    "number": 85,
+    "cn_name": "鬼刃武士",
+    "en_name": "Ronin_Dark",
+    "combi_rank": 840,
+    "elements": [
+      "Fire",
+      "Dark"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 2,
+      "kindling": 2,
+      "gathering": 1,
+      "lumbering": 5,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SaintCentaur": {
+    "id": "SaintCentaur",
+    "number": 198,
+    "cn_name": "圣光骑士",
+    "en_name": "SaintCentaur",
+    "combi_rank": 180,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 20,
+    "work_suitability": {
+      "lumbering": 6,
+      "mining": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SakuraSaurus": {
+    "id": "SakuraSaurus",
+    "number": 108,
+    "cn_name": "连理龙",
+    "en_name": "SakuraSaurus",
+    "combi_rank": 1380,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "planting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SakuraSaurus_Water": {
+    "id": "SakuraSaurus_Water",
+    "number": 108,
+    "cn_name": "海誓龙",
+    "en_name": "SakuraSaurus_Water",
+    "combi_rank": 1080,
+    "elements": [
+      "Grass",
+      "Water"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "watering": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SamuraiDog": {
+    "id": "SamuraiDog",
+    "number": 13,
+    "cn_name": "宗铭丸",
+    "en_name": "SamuraiDog",
+    "combi_rank": 2930,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "gathering": 1,
+      "lumbering": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ScorpionMan": {
+    "id": "ScorpionMan",
+    "number": 141,
+    "cn_name": "蛊刺妖",
+    "en_name": "ScorpionMan",
+    "combi_rank": 1510,
+    "elements": [
+      "Dark",
+      "Earth"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "gathering": 2,
+      "lumbering": 4,
+      "medicine": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ScorpionMan_Electric": {
+    "id": "ScorpionMan_Electric",
+    "number": 141,
+    "cn_name": "电针妖",
+    "en_name": "ScorpionMan_Electric",
+    "combi_rank": 850,
+    "elements": [
+      "Neutral",
+      "Earth"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "generating_electricity": 3,
+      "gathering": 2,
+      "lumbering": 4,
+      "medicine": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Sekhmet": {
+    "id": "Sekhmet",
+    "number": 140,
+    "cn_name": "塞赫麦特",
+    "en_name": "Sekhmet",
+    "combi_rank": 870,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 6,
+      "mining": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Serpent": {
+    "id": "Serpent",
+    "number": 75,
+    "cn_name": "滑水蛇",
+    "en_name": "Serpent",
+    "combi_rank": 2440,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "watering": 3,
+      "farming": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Serpent_Ground": {
+    "id": "Serpent_Ground",
+    "number": 75,
+    "cn_name": "流沙蛇",
+    "en_name": "Serpent_Ground",
+    "combi_rank": 1840,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "gathering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SharkKid": {
+    "id": "SharkKid",
+    "number": 55,
+    "cn_name": "鲨小子",
+    "en_name": "SharkKid",
+    "combi_rank": 2550,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 2,
+      "watering": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SharkKid_Fire": {
+    "id": "SharkKid_Fire",
+    "number": 55,
+    "cn_name": "红小鲨",
+    "en_name": "SharkKid_Fire",
+    "combi_rank": 2430,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 2,
+      "kindling": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SheepBall": {
+    "id": "SheepBall",
+    "number": 1,
+    "cn_name": "棉悠悠",
+    "en_name": "SheepBall",
+    "combi_rank": 3050,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "transporting": 1,
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SifuDog": {
+    "id": "SifuDog",
+    "number": 155,
+    "cn_name": "汪宗师",
+    "en_name": "SifuDog",
+    "combi_rank": 1460,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 4,
+      "gathering": 3,
+      "lumbering": 3,
+      "medicine": 2,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SkyDragon": {
+    "id": "SkyDragon",
+    "number": 124,
+    "cn_name": "天羽龙",
+    "en_name": "SkyDragon",
+    "combi_rank": 1210,
+    "elements": [
+      "Dragon"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 2,
+      "gathering": 3,
+      "mining": 4,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SkyDragon_Grass": {
+    "id": "SkyDragon_Grass",
+    "number": 124,
+    "cn_name": "翠羽龙",
+    "en_name": "SkyDragon_Grass",
+    "combi_rank": 1300,
+    "elements": [
+      "Dragon",
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 2,
+      "planting": 5,
+      "gathering": 4,
+      "mining": 3,
+      "transporting": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SleeveRabbit": {
+    "id": "SleeveRabbit",
+    "number": 170,
+    "cn_name": "兔绣袖",
+    "en_name": "SleeveRabbit",
+    "combi_rank": 810,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 6,
+      "gathering": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SmallArmadillo": {
+    "id": "SmallArmadillo",
+    "number": 126,
+    "cn_name": "球犰",
+    "en_name": "SmallArmadillo",
+    "combi_rank": 2310,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "mining": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SmallYeti": {
+    "id": "SmallYeti",
+    "number": 133,
+    "cn_name": "雪墩墩",
+    "en_name": "SmallYeti",
+    "combi_rank": 2390,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 2,
+      "mining": 3,
+      "cooling": 3,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SnakeGirl": {
+    "id": "SnakeGirl",
+    "number": 178,
+    "cn_name": "梅杜娜",
+    "en_name": "SnakeGirl",
+    "combi_rank": 970,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "handiwork": 6,
+      "gathering": 6,
+      "medicine": 5,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SnowPeafowl": {
+    "id": "SnowPeafowl",
+    "number": 114,
+    "cn_name": "白真雪雀",
+    "en_name": "SnowPeafowl",
+    "combi_rank": 860,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "gathering": 2,
+      "cooling": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SnowTigerBeastman": {
+    "id": "SnowTigerBeastman",
+    "number": 191,
+    "cn_name": "霜牙王",
+    "en_name": "SnowTigerBeastman",
+    "combi_rank": 50,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "lumbering": 6,
+      "mining": 5,
+      "cooling": 8
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SoldierBee": {
+    "id": "SoldierBee",
+    "number": 67,
+    "cn_name": "骑士蜂",
+    "en_name": "SoldierBee",
+    "combi_rank": 2350,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "handiwork": 2,
+      "planting": 2,
+      "gathering": 3,
+      "lumbering": 2,
+      "medicine": 2,
+      "transporting": 2,
+      "farming": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "StuffedShark": {
+    "id": "StuffedShark",
+    "number": 88,
+    "cn_name": "布偶鲨",
+    "en_name": "StuffedShark",
+    "combi_rank": 2450,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "watering": 2,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "StuffedShark_Fire": {
+    "id": "StuffedShark_Fire",
+    "number": 88,
+    "cn_name": "粉粉布偶鲨",
+    "en_name": "StuffedShark_Fire",
+    "combi_rank": 2240,
+    "elements": [
+      "Water",
+      "Fire"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "kindling": 2,
+      "watering": 2,
+      "transporting": 1
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SumoDog": {
+    "id": "SumoDog",
+    "number": 156,
+    "cn_name": "力士獒",
+    "en_name": "SumoDog",
+    "combi_rank": 1190,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "mining": 4,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Suzaku": {
+    "id": "Suzaku",
+    "number": 122,
+    "cn_name": "朱雀",
+    "en_name": "Suzaku",
+    "combi_rank": 1200,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "kindling": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Suzaku_Water": {
+    "id": "Suzaku_Water",
+    "number": 122,
+    "cn_name": "清雀",
+    "en_name": "Suzaku_Water",
+    "combi_rank": 740,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "watering": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SweetsSheep": {
+    "id": "SweetsSheep",
+    "number": 39,
+    "cn_name": "棉花糖",
+    "en_name": "SweetsSheep",
+    "combi_rank": 2820,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SweetsSheep_Ground": {
+    "id": "SweetsSheep_Ground",
+    "number": 39,
+    "cn_name": "可可棉花糖",
+    "en_name": "SweetsSheep_Ground",
+    "combi_rank": 2030,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "farming": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SwordCutlassfish": {
+    "id": "SwordCutlassfish",
+    "number": 128,
+    "cn_name": "鞘刀鱼",
+    "en_name": "SwordCutlassfish",
+    "combi_rank": 1420,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "watering": 4,
+      "gathering": 1,
+      "lumbering": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "SwordCutlassfish_Fire": {
+    "id": "SwordCutlassfish_Fire",
+    "number": 128,
+    "cn_name": "炼刃鱼",
+    "en_name": "SwordCutlassfish_Fire",
+    "combi_rank": 1590,
+    "elements": [
+      "Water",
+      "Fire"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "kindling": 3,
+      "watering": 2,
+      "gathering": 2,
+      "lumbering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "TentacleTurtle": {
+    "id": "TentacleTurtle",
+    "number": 37,
+    "cn_name": "盔盔仔",
+    "en_name": "TentacleTurtle",
+    "combi_rank": 2410,
+    "elements": [
+      "Water"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "watering": 2,
+      "mining": 1,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "TentacleTurtle_Ground": {
+    "id": "TentacleTurtle_Ground",
+    "number": 37,
+    "cn_name": "金盔仔",
+    "en_name": "TentacleTurtle_Ground",
+    "combi_rank": 1330,
+    "elements": [
+      "Water",
+      "Earth"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "watering": 2,
+      "mining": 3,
+      "transporting": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ThiefBird": {
+    "id": "ThiefBird",
+    "number": 177,
+    "cn_name": "盗影鸦",
+    "en_name": "ThiefBird",
+    "combi_rank": 530,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "gathering": 5,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ThunderBird": {
+    "id": "ThunderBird",
+    "number": 96,
+    "cn_name": "迅雷鸟",
+    "en_name": "ThunderBird",
+    "combi_rank": 1690,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "generating_electricity": 4,
+      "gathering": 2,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ThunderBird_Ice": {
+    "id": "ThunderBird_Ice",
+    "number": 96,
+    "cn_name": "疾霜鸟",
+    "en_name": "ThunderBird_Ice",
+    "combi_rank": 580,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "gathering": 2,
+      "cooling": 5,
+      "transporting": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ThunderDog": {
+    "id": "ThunderDog",
+    "number": 98,
+    "cn_name": "霹雳犬",
+    "en_name": "ThunderDog",
+    "combi_rank": 1920,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "generating_electricity": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ThunderDog_Ice": {
+    "id": "ThunderDog_Ice",
+    "number": 98,
+    "cn_name": "凛光犬",
+    "en_name": "ThunderDog_Ice",
+    "combi_rank": 1600,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "cooling": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ThunderDragonMan": {
+    "id": "ThunderDragonMan",
+    "number": 187,
+    "cn_name": "波鲁杰克斯",
+    "en_name": "ThunderDragonMan",
+    "combi_rank": 120,
+    "elements": [
+      "Dragon",
+      "Neutral"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "handiwork": 3,
+      "generating_electricity": 8,
+      "transporting": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "ThunderFluffyBird": {
+    "id": "ThunderFluffyBird",
+    "number": 172,
+    "cn_name": "雷云鹫",
+    "en_name": "ThunderFluffyBird",
+    "combi_rank": 1400,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "generating_electricity": 6,
+      "gathering": 3,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "TropicalOstrich": {
+    "id": "TropicalOstrich",
+    "number": 106,
+    "cn_name": "咕咕桑葩",
+    "en_name": "TropicalOstrich",
+    "combi_rank": 1240,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "planting": 4,
+      "gathering": 4,
+      "mining": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Umihebi": {
+    "id": "Umihebi",
+    "number": 121,
+    "cn_name": "覆海龙",
+    "en_name": "Umihebi",
+    "combi_rank": 590,
+    "elements": [
+      "Dragon",
+      "Water"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "watering": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Umihebi_Fire": {
+    "id": "Umihebi_Fire",
+    "number": 121,
+    "cn_name": "腾炎龙",
+    "en_name": "Umihebi_Fire",
+    "combi_rank": 170,
+    "elements": [
+      "Dragon",
+      "Fire"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "kindling": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "VenusFlytrap": {
+    "id": "VenusFlytrap",
+    "number": 136,
+    "cn_name": "颚莉丝",
+    "en_name": "VenusFlytrap",
+    "combi_rank": 1700,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "handiwork": 4,
+      "planting": 6,
+      "gathering": 4,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "VioletFairy": {
+    "id": "VioletFairy",
+    "number": 66,
+    "cn_name": "薇莉塔",
+    "en_name": "VioletFairy",
+    "combi_rank": 1480,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 3,
+      "planting": 3,
+      "gathering": 3,
+      "medicine": 3,
+      "transporting": 2,
+      "farming": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "VolcanicMonster": {
+    "id": "VolcanicMonster",
+    "number": 129,
+    "cn_name": "熔岩兽",
+    "en_name": "VolcanicMonster",
+    "combi_rank": 1060,
+    "elements": [
+      "Fire",
+      "Earth"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "kindling": 5,
+      "mining": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "VolcanicMonster_Ice": {
+    "id": "VolcanicMonster_Ice",
+    "number": 129,
+    "cn_name": "寒霜兽",
+    "en_name": "VolcanicMonster_Ice",
+    "combi_rank": 600,
+    "elements": [
+      "Ice",
+      "Earth"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "mining": 5,
+      "cooling": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "VolcanoDragon": {
+    "id": "VolcanoDragon",
+    "number": 105,
+    "cn_name": "流焰龙",
+    "en_name": "VolcanoDragon",
+    "combi_rank": 750,
+    "elements": [
+      "Fire",
+      "Earth"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "kindling": 5,
+      "mining": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "VolcanoDragon_Ice": {
+    "id": "VolcanoDragon_Ice",
+    "number": 105,
+    "cn_name": "川霜龙",
+    "en_name": "VolcanoDragon_Ice",
+    "combi_rank": 380,
+    "elements": [
+      "Ice",
+      "Earth"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "mining": 5,
+      "cooling": 5
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WeaselDragon": {
+    "id": "WeaselDragon",
+    "number": 103,
+    "cn_name": "疾旋鼬",
+    "en_name": "WeaselDragon",
+    "combi_rank": 2330,
+    "elements": [
+      "Ice",
+      "Dragon"
+    ],
+    "rarity": 4,
+    "work_suitability": {
+      "gathering": 1,
+      "cooling": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WeaselDragon_Fire": {
+    "id": "WeaselDragon_Fire",
+    "number": 103,
+    "cn_name": "桃旋鼬",
+    "en_name": "WeaselDragon_Fire",
+    "combi_rank": 1950,
+    "elements": [
+      "Fire",
+      "Dragon"
+    ],
+    "rarity": 5,
+    "work_suitability": {
+      "kindling": 4,
+      "gathering": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Werewolf": {
+    "id": "Werewolf",
+    "number": 56,
+    "cn_name": "月镰魔",
+    "en_name": "Werewolf",
+    "combi_rank": 2110,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Werewolf_Ice": {
+    "id": "Werewolf_Ice",
+    "number": 56,
+    "cn_name": "霜镰魔",
+    "en_name": "Werewolf_Ice",
+    "combi_rank": 1290,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 3,
+    "work_suitability": {
+      "handiwork": 4,
+      "cooling": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WhiteAlienDragon": {
+    "id": "WhiteAlienDragon",
+    "number": 146,
+    "cn_name": "杰诺路达",
+    "en_name": "WhiteAlienDragon",
+    "combi_rank": 990,
+    "elements": [
+      "Dragon"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "mining": 4
+    },
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WhiteDeer": {
+    "id": "WhiteDeer",
+    "number": 157,
+    "cn_name": "净世鹿",
+    "en_name": "WhiteDeer",
+    "combi_rank": 570,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 6,
+    "work_suitability": {
+      "gathering": 4,
+      "lumbering": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WhiteDeer_Dark": {
+    "id": "WhiteDeer_Dark",
+    "number": 157,
+    "cn_name": "织夜鹿",
+    "en_name": "WhiteDeer_Dark",
+    "combi_rank": 270,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "gathering": 4,
+      "lumbering": 8
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WhiteMoth": {
+    "id": "WhiteMoth",
+    "number": 116,
+    "cn_name": "绸笠蛾",
+    "en_name": "WhiteMoth",
+    "combi_rank": 1810,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "cooling": 3,
+      "medicine": 3,
+      "farming": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WhiteMoth_Neutral": {
+    "id": "WhiteMoth_Neutral",
+    "number": 116,
+    "cn_name": "绢笠蛾",
+    "en_name": "WhiteMoth_Neutral",
+    "combi_rank": 650,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "medicine": 3,
+      "farming": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WhiteShieldDragon": {
+    "id": "WhiteShieldDragon",
+    "number": 160,
+    "cn_name": "艾基鲁迦",
+    "en_name": "WhiteShieldDragon",
+    "combi_rank": 560,
+    "elements": [
+      "Dragon"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "lumbering": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WhiteTiger": {
+    "id": "WhiteTiger",
+    "number": 132,
+    "cn_name": "冰棘兽",
+    "en_name": "WhiteTiger",
+    "combi_rank": 1040,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 3,
+      "lumbering": 4,
+      "cooling": 4,
+      "transporting": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WhiteTiger_Ground": {
+    "id": "WhiteTiger_Ground",
+    "number": 132,
+    "cn_name": "金棘兽",
+    "en_name": "WhiteTiger_Ground",
+    "combi_rank": 470,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 2,
+      "lumbering": 6,
+      "mining": 5,
+      "transporting": 4
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WindChimes": {
+    "id": "WindChimes",
+    "number": 38,
+    "cn_name": "吊缚灵",
+    "en_name": "WindChimes",
+    "combi_rank": 2780,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "handiwork": 1,
+      "gathering": 1,
+      "transporting": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WindChimes_Ice": {
+    "id": "WindChimes_Ice",
+    "number": 38,
+    "cn_name": "冰缚灵",
+    "en_name": "WindChimes_Ice",
+    "combi_rank": 2510,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 2,
+    "work_suitability": {
+      "handiwork": 3,
+      "gathering": 2,
+      "cooling": 2,
+      "transporting": 3
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WingGolem": {
+    "id": "WingGolem",
+    "number": 159,
+    "cn_name": "泰锋",
+    "en_name": "WingGolem",
+    "combi_rank": 260,
+    "elements": [
+      "Earth"
+    ],
+    "rarity": 9,
+    "work_suitability": {
+      "gathering": 4,
+      "mining": 7,
+      "transporting": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WingGolem_Fire": {
+    "id": "WingGolem_Fire",
+    "number": 159,
+    "cn_name": "丹烽",
+    "en_name": "WingGolem_Fire",
+    "combi_rank": 210,
+    "elements": [
+      "Fire"
+    ],
+    "rarity": 10,
+    "work_suitability": {
+      "kindling": 5,
+      "mining": 7,
+      "transporting": 7
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WizardOwl": {
+    "id": "WizardOwl",
+    "number": 19,
+    "cn_name": "啼卡尔",
+    "en_name": "WizardOwl",
+    "combi_rank": 2940,
+    "elements": [
+      "Dark"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "gathering": 1
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WoolFox": {
+    "id": "WoolFox",
+    "number": 8,
+    "cn_name": "米露菲",
+    "en_name": "WoolFox",
+    "combi_rank": 2890,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 1,
+    "work_suitability": {
+      "gathering": 1,
+      "farming": 2
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "WorldTreeDragon": {
+    "id": "WorldTreeDragon",
+    "number": 204,
+    "cn_name": "枯星龙",
+    "en_name": "WorldTreeDragon",
+    "combi_rank": 10,
+    "elements": [
+      "Neutral"
+    ],
+    "rarity": 10,
+    "work_suitability": {},
+    "is_wild": false,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Yeti": {
+    "id": "Yeti",
+    "number": 134,
+    "cn_name": "白绒雪怪",
+    "en_name": "Yeti",
+    "combi_rank": 830,
+    "elements": [
+      "Ice"
+    ],
+    "rarity": 7,
+    "work_suitability": {
+      "handiwork": 3,
+      "lumbering": 5,
+      "cooling": 5,
+      "transporting": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  },
+  "Yeti_Grass": {
+    "id": "Yeti_Grass",
+    "number": 134,
+    "cn_name": "绿苔绒怪",
+    "en_name": "Yeti_Grass",
+    "combi_rank": 610,
+    "elements": [
+      "Grass"
+    ],
+    "rarity": 8,
+    "work_suitability": {
+      "handiwork": 3,
+      "planting": 3,
+      "lumbering": 5,
+      "transporting": 6
+    },
+    "is_wild": true,
+    "aliases": [],
+    "image_url": "https://cdn.paldb.cc/image/Pal/Texture/UI/InGame/T_icon_palwork_00.webp",
+    "wiki_url": null,
+    "spawn_locations": []
+  }
+}

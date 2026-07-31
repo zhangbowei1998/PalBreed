@@ -89,6 +89,7 @@ class PostgresWriter:
         """单条 UPSERT."""
         await self._ensure_pool()
         ws = pal.work_suitability
+        import json
 
         async with self._pool.acquire() as conn:
             await conn.execute(
@@ -98,7 +99,7 @@ class PostgresWriter:
                 pal.cn_name,
                 pal.en_name,
                 pal.combi_rank,
-                [e.value for e in pal.elements],
+                json.dumps([e.value for e in pal.elements]),
                 pal.rarity,
                 pal.is_wild,
                 ws.handiwork,
@@ -113,10 +114,10 @@ class PostgresWriter:
                 ws.medicine,
                 ws.transporting,
                 ws.farming,
-                pal.aliases,
+                json.dumps(pal.aliases),
                 pal.image_url,
                 pal.wiki_url,
-                pal.spawn_locations,
+                json.dumps(pal.spawn_locations),
                 pal._source or "paldb.cc",
                 pal._incomplete,
             )

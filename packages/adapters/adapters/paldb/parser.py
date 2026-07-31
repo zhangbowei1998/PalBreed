@@ -208,7 +208,7 @@ class PalDBParser:
         """{工种} Lv{等级} — 遍历 12 种工种匹配"""
         result: dict[str, int] = {}
         for cn_keyword, field_name in self.WORK_KEYWORDS.items():
-            m = re.search(rf"{cn_keyword}\s+Lv(\d+)", text)
+            m = re.search(rf"{cn_keyword}\s*Lv\s*(\d+)", text)
             if m:
                 result[field_name] = int(m.group(1))
         return result

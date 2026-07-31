@@ -36,9 +36,7 @@ class PalDBScraper:
     TIMEOUT = 30.0
 
     # user-agent identifying this project politely
-    USER_AGENT = (
-        "PlAgent/1.0 (pal-breeding-agent; +https://github.com/pl-agent)"
-    )
+    USER_AGENT = "PlAgent/1.0 (pal-breeding-agent; +https://github.com/pl-agent)"
 
     def __init__(self, output_dir: str | Path = "data/raw/pages"):
         self.output_dir = Path(output_dir)
@@ -51,49 +49,50 @@ class PalDBScraper:
     # ------------------------------------------------------------------
 
     async def fetch_pal_list(self) -> list[dict[str, str | int]]:
-        """从 Breed 页面 Multi-pal Breeder 区域提取帕鲁列表.
+        """从 /cn/Pals 页面提取帕鲁列表.
+
+        利用 pal 图标文件名 (T_xxx_icon_normal) 识别帕鲁条目,
+        从父 <a> 标签的 href 获取 paldb.cc URL 名称.
 
         Returns:
-            [{"internal_id": "SheepBall", "cn_name": "棉悠悠", "number": 1}, ...]
+            [{"url_name": "Lamball", "internal_id": "SheepBall"}, ...]
         """
-        url = f"{self.BREED_URL}?child=Lamball"
+        url = f"{self.BASE_URL}/Pals"
         async with self._build_client() as client:
-            html = await self._fetch_url(client, url, "pal list")
+            resp = await client.get(url, follow_redirects=True, timeout=self.TIMEOUT)
+            resp.raise_for_status()
+            html = resp.text
 
         soup = BeautifulSoup(html, "html.parser")
         pals: list[dict[str, str | int]] = []
-
-        # the Multi-pal Breeder section contains images like
-        # <a href="/cn/SheepBall"><img ... alt="棉悠悠"/></a>
-        # each image's parent <a> tag wraps the pal link
-        for a_tag in soup.select("a[href^='/cn/']"):
-            href = a_tag.get("href", "")
-            img = a_tag.find("img")
-            alt_text = (img.get("alt", "") if img else "").strip()
-            if not alt_text:
-                continue
-            # extract internal_id from href: /cn/SheepBall → SheepBall
-            internal_id = href.rsplit("/", 1)[-1].strip()
-            if not internal_id:
-                continue
-            # extract number from image filename pattern: T_xxx_icon_normal
-            # the paldb page has numbers inline; we'll get them from detail pages
-            pals.append({
-                "internal_id": internal_id,
-                "cn_name": alt_text,
-            })
-
-        # deduplicate by internal_id
         seen: set[str] = set()
-        unique: list[dict[str, str | int]] = []
-        for p in pals:
-            pid = str(p["internal_id"])
-            if pid not in seen:
-                seen.add(pid)
-                unique.append(p)
 
-        logger.info("fetched %d unique pals from Breed page", len(unique))
-        return unique
+        for img in soup.find_all("img"):
+            src = img.get("src", "")
+            # pal icons: T_SheepBall_icon_normal.webp
+            # skip work type icons: T_icon_palwork_*
+            if "_icon_normal" not in src or "T_icon_palwork" in src:
+                continue
+            match = re.search(r"T_(\w+?)_icon_normal", src)
+            if not match:
+                continue
+            internal_id = match.group(1)
+
+            # get URL name from parent <a> tag
+            parent_a = img.find_parent("a")
+            href = parent_a.get("href", "") if parent_a else ""
+            url_name = href.rsplit("/", 1)[-1].strip()
+            if not url_name:
+                continue
+
+            if url_name in seen:
+                continue
+            seen.add(url_name)
+
+            pals.append({"url_name": url_name, "internal_id": internal_id})
+
+        logger.info("fetched %d unique pals from /cn/Pals page", len(pals))
+        return pals
 
     # ------------------------------------------------------------------
     # Step 2: batch fetch all detail pages
@@ -105,10 +104,10 @@ class PalDBScraper:
         """批量抓取所有帕鲁页面.
 
         Args:
-            pal_list: 帕鲁列表. 为 None 时自动从 Breed 页获取.
+            pal_list: [{"url_name": "Lamball", "internal_id": "SheepBall"}, ...]
 
         Returns:
-            (成功数, 失败 internal_id 列表).
+            (成功数, 失败 url_name 列表).
         """
         if pal_list is None:
             pal_list = await self.fetch_pal_list()
@@ -117,41 +116,52 @@ class PalDBScraper:
         self._sem = asyncio.Semaphore(self.CONCURRENCY)
 
         async with self._build_client() as client:
-            tasks = [
-                self._fetch_with_semaphore(client, str(p["internal_id"]))
-                for p in pal_list
-            ]
+            tasks = [self._fetch_with_semaphore(client, p) for p in pal_list]
             results = await asyncio.gather(*tasks)
 
         success = sum(1 for r in results if r)
         logger.info(
             "batch fetch complete: %d/%d succeeded, %d failed",
-            success, len(pal_list), len(self._failed),
+            success,
+            len(pal_list),
+            len(self._failed),
         )
         return success, list(self._failed)
 
     async def _fetch_with_semaphore(
-        self, client: httpx.AsyncClient, internal_id: str,
+        self,
+        client: httpx.AsyncClient,
+        pal: dict[str, str | int],
     ) -> bool:
         async with self._sem:  # type: ignore[union-attr]
             await asyncio.sleep(1.0)  # polite delay
-            return await self.fetch_page(internal_id, client)
+            return await self.fetch_page(
+                str(pal["url_name"]),  # for URL
+                str(pal.get("internal_id", pal["url_name"])),  # for filename
+                client,
+            )
 
     async def fetch_page(
-        self, internal_id: str, client: httpx.AsyncClient,
+        self,
+        url_name: str,
+        internal_id: str,
+        client: httpx.AsyncClient,
     ) -> bool:
         """抓取单个帕鲁页面, 保存 HTML. 返回 True 成功 / False 失败."""
-        url = f"{self.BASE_URL}/{internal_id}"
+        url = f"{self.BASE_URL}/{url_name}"
         for attempt in range(1, self.MAX_RETRIES + 1):
             try:
                 resp = await client.get(
-                    url, follow_redirects=True, timeout=self.TIMEOUT,
+                    url,
+                    follow_redirects=True,
+                    timeout=self.TIMEOUT,
                 )
 
                 # check for ad redirect
                 if self._is_ad_redirect(resp):
                     logger.debug(
-                        "ad redirect detected for %s, retrying", internal_id,
+                        "ad redirect detected for %s, retrying",
+                        internal_id,
                     )
                     await asyncio.sleep(1.0)
                     continue
@@ -177,8 +187,11 @@ class PalDBScraper:
                 delay = self._retry_delay(attempt)
                 logger.warning(
                     "fetch %s HTTP %d attempt %d/%d, retrying in %.1fs",
-                    internal_id, e.response.status_code,
-                    attempt, self.MAX_RETRIES, delay,
+                    internal_id,
+                    e.response.status_code,
+                    attempt,
+                    self.MAX_RETRIES,
+                    delay,
                 )
                 if attempt < self.MAX_RETRIES:
                     await asyncio.sleep(delay)
@@ -186,14 +199,20 @@ class PalDBScraper:
                 delay = self._retry_delay(attempt)
                 logger.warning(
                     "fetch %s attempt %d/%d failed: %s, retrying in %.1fs",
-                    internal_id, attempt, self.MAX_RETRIES, e, delay,
+                    internal_id,
+                    attempt,
+                    self.MAX_RETRIES,
+                    e,
+                    delay,
                 )
                 if attempt < self.MAX_RETRIES:
                     await asyncio.sleep(delay)
 
         self._failed.append(internal_id)
         logger.error(
-            "fetch %s FAILED after %d attempts", internal_id, self.MAX_RETRIES,
+            "fetch %s FAILED after %d attempts",
+            internal_id,
+            self.MAX_RETRIES,
         )
         return False
 
@@ -209,6 +228,7 @@ class PalDBScraper:
         """Check if the response redirected to an advertising domain."""
         try:
             from urllib.parse import urlparse
+
             host = urlparse(str(resp.url)).hostname or ""
             return any(ad in host for ad in _AD_DOMAINS)
         except Exception:
