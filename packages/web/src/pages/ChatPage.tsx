@@ -84,7 +84,7 @@ export function ChatPage() {
           <div className="brand">
             <span className="brand-emoji" aria-hidden="true">🦤</span>
             <div className="brand-text">
-              <h1>帕鲁配种助手</h1>
+              <h1>帕鲁AI助手</h1>
               <p>AI 会思考、调用配种工具，再给你精确答案。</p>
             </div>
           </div>

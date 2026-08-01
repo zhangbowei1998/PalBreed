@@ -175,6 +175,25 @@ body,
   font-size: 13px;
 }
 
+/* ── 行内帕鲁（加粗 + 头像） ── */
+.inline-pal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  color: #111111;
+  vertical-align: middle;
+}
+
+.inline-pal-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 1px solid #e2e2e2;
+  object-fit: cover;
+  background: #f5f5f5;
+}
+
 .breed-tree {
   padding: 10px 12px;
   border: 1px solid var(--line);

@@ -151,3 +151,26 @@ export async function getPalProfile(palId: string): Promise<PalProfile> {
   const body = (await res.json()) as Envelope<PalProfile>;
   return body.data;
 }
+
+/** 按中文名/英文名/ID/别名解析帕鲁 profile（含图片），供内联头像展示。 */
+export async function resolvePalByName(name: string): Promise<PalProfile | null> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+  let res: Response;
+  try {
+    res = await fetch(`${apiBaseUrl}/api/pal/resolve/${encodeURIComponent(name)}`, {
+      signal: controller.signal,
+    });
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+  if (!res.ok) return null;
+  try {
+    const body = (await res.json()) as Envelope<PalProfile>;
+    return body.data ?? null;
+  } catch {
+    return null;
+  }
+}

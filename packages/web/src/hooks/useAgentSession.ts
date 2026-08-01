@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { action, chat, getPalProfile } from "../services/agentClient";
+import { action, chat, getPalProfile, resolvePalByName } from "../services/agentClient";
 import type { AgentAction, AgentData, AgentTraceInfo, ChatMessage, PalProfile } from "../types";
 
 /** 会话 ID 按用户维度存储，避免不同用户共用 localStorage key 造成串扰。 */
@@ -97,6 +97,51 @@ export function useAgentSession(userKey: string) {
     }
   }
 
+  /** 从回复文本提取 **帕鲁名**，加载其 profile 用于内联头像展示。 */
+  async function prefetchPalProfilesFromText(texts: string[]) {
+    const names = new Set<string>();
+    for (const text of texts) {
+      const matches = text.match(/\*\*([^*]+)\*\*/g) ?? [];
+      for (const m of matches) {
+        const name = m.replace(/\*\*/g, "").trim();
+        // 去掉可能附带的标点/编号前缀后缀
+        const clean = name.replace(/^[·\-*.\s]+/, "").replace(/[：:。，,）)\]　\s]+$/, "");
+        if (clean) names.add(clean);
+      }
+    }
+    if (names.size === 0) return;
+
+    // 已在 palProfiles 中的（按 cn_name/en_name/id 命中）跳过
+    const known = new Set<string>();
+    for (const p of Object.values(palProfiles)) {
+      known.add(p.cn_name);
+      known.add(p.en_name);
+      known.add(p.id);
+    }
+    const missing = [...names].filter((n) => !known.has(n));
+    if (missing.length === 0) return;
+
+    const entries = await Promise.all(
+      missing.map(async (name) => {
+        try {
+          const profile = await resolvePalByName(name);
+          return profile ? [profile.id, profile] as const : null;
+        } catch {
+          return null;
+        }
+      }),
+    );
+
+    const next: Record<string, PalProfile> = {};
+    for (const item of entries) {
+      if (!item) continue;
+      next[item[0]] = item[1];
+    }
+    if (Object.keys(next).length > 0) {
+      setPalProfiles((prev) => ({ ...prev, ...next }));
+    }
+  }
+
   async function sendMessage(input: string) {
     if (!input.trim()) return;
     const userMsg: ChatMessage = {
@@ -115,6 +160,7 @@ export function useAgentSession(userKey: string) {
       setActions(data.actions);
       setStateSnapshot(data.state_snapshot);
       void prefetchPalProfiles(data.state_snapshot);
+      void prefetchPalProfilesFromText(data.messages.map((m) => m.content));
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -137,6 +183,7 @@ export function useAgentSession(userKey: string) {
       setActions(data.actions);
       setStateSnapshot(data.state_snapshot);
       void prefetchPalProfiles(data.state_snapshot);
+      void prefetchPalProfilesFromText(data.messages.map((m) => m.content));
       return data;
     } catch (err) {
       setError((err as Error).message);

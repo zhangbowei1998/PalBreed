@@ -13,6 +13,54 @@ type Props = {
   onSelectPair: (action: AgentAction) => Promise<void>;
 };
 
+/** 在 palProfiles 中按中文名/英文名/id 查找帕鲁 profile。 */
+function findProfileByName(
+  name: string,
+  palProfiles: Record<string, PalProfile>,
+): PalProfile | undefined {
+  const direct = palProfiles[name];
+  if (direct) return direct;
+  const key = name.trim();
+  for (const p of Object.values(palProfiles)) {
+    if (p.cn_name === key || p.en_name === key || p.id === key) {
+      return p;
+    }
+  }
+  return undefined;
+}
+
+/**
+ * 渲染行内 markdown：把 **帕鲁名** 渲染为加粗，若命中帕鲁 profile
+ * 则内联展示头像 + 加粗名，更直观。
+ */
+function renderInline(
+  text: string,
+  palProfiles: Record<string, PalProfile>,
+): React.ReactNode[] {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (!part.startsWith("**") || !part.endsWith("**")) {
+      return <span key={i}>{part}</span>;
+    }
+    const name = part.slice(2, -2).trim();
+    const profile = findProfileByName(name, palProfiles);
+    if (profile?.image_url) {
+      return (
+        <strong key={i} className="inline-pal">
+          <img
+            className="inline-pal-avatar"
+            src={profile.image_url}
+            alt=""
+            aria-hidden="true"
+          />
+          <span>{profile.cn_name}</span>
+        </strong>
+      );
+    }
+    return <strong key={i}>{name}</strong>;
+  });
+}
+
 function renderAssistantContent(
   content: string,
   palNameToId: Record<string, string>,
@@ -36,14 +84,14 @@ function renderAssistantContent(
           const displayName = profile?.cn_name ?? rawName;
           return (
             <p key={idx}>
-              {displayName} 的父母候选：
+              {renderInline(`${displayName} 的父母候选：`, palProfiles)}
             </p>
           );
         }
         if (!pairMatch) {
           return (
             <p key={idx}>
-              {line}
+              {renderInline(line, palProfiles)}
             </p>
           );
         }

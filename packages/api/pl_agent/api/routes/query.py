@@ -85,6 +85,20 @@ async def smart_query(request: Request):
     return format_error("PAL_NOT_FOUND", f"未找到帕鲁: '{body.input}'")
 
 
+@router.get("/pal/resolve/{name}")
+async def resolve_pal_by_name(request: Request, name: str):
+    """按中文名/英文名/ID/别名解析帕鲁 profile（含图片），供前端内联展示头像。"""
+    parser: QueryParser = request.app.state.parser
+    pal = parser._match_exact(name)
+    if pal is None:
+        from ..formatter import format_error
+
+        return format_error("PAL_NOT_FOUND", f"未找到帕鲁: '{name}'")
+    from ..formatter import format_pal_summary, format_success
+
+    return format_success(format_pal_summary(pal))
+
+
 @router.get("/pal/{pal_id}")
 async def get_pal(request: Request, pal_id: str):
     parser: QueryParser = request.app.state.parser
