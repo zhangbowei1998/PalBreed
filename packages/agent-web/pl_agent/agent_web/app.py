@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response, StreamingResponse
 from pydantic import BaseModel, Field
 
 from pl_agent.agent.auth import make_user_store
@@ -124,6 +124,32 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(monitoring_router)
+
+
+@app.get("/agent/pal-image/{pal_id}")
+async def pal_image_proxy(pal_id: str):
+    """帕鲁头像代理：从 paldb CDN 拉取图片返回（同源，规避 CORS，
+    供前端配种树导出图片时读取像素）。"""
+    import httpx as _httpx
+
+    url = (
+        "https://cdn.paldb.cc/image/Pal/Texture/PalIcon/Normal/"
+        f"T_{pal_id}_icon_normal.webp"
+    )
+    try:
+        async with _httpx.AsyncClient(timeout=10) as client:
+            resp = await client.get(url)
+    except Exception:  # noqa: BLE001
+        raise HTTPException(status_code=502, detail="图片代理失败")
+    if resp.status_code >= 400:
+        raise HTTPException(status_code=404, detail="帕鲁图片不存在")
+    media_type = resp.headers.get("content-type", "image/webp")
+    return Response(
+        content=resp.content,
+        media_type=media_type,
+        headers={"Cache-Control": "public, max-age=86400"},
+    )
+
 
 
 @app.get("/health")

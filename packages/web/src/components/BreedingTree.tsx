@@ -152,17 +152,53 @@ export function BreedingTree({ targetPal, selectedPairs, palNameToId, palProfile
     }
   }
 
+  /** 把 CDN 头像换成同源代理返回的 dataURL，供 html-to-image 无 CORS 渲染。 */
+  async function embedImages(node: HTMLElement): Promise<() => void> {
+    const imgs = Array.from(node.querySelectorAll<HTMLImageElement>("img"));
+    const tasks = imgs
+      .filter((img) => (img.getAttribute("src") ?? "").includes("cdn.paldb.cc"))
+      .map(async (img) => {
+        const src = img.getAttribute("src") ?? "";
+        const match = src.match(/\/T_([^/]+?)_icon_normal\.webp$/);
+        if (!match) return;
+        try {
+          const res = await fetch(`/agent/pal-image/${match[1]}`);
+          if (!res.ok) return;
+          const blob = await res.blob();
+          const dataUrl = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(String(reader.result));
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+          const original = src;
+          img.setAttribute("src", dataUrl);
+          img.setAttribute("data-original-src", original);
+        } catch {
+          // 保持原样
+        }
+      });
+    await Promise.all(tasks);
+    return () => {
+      imgs.forEach((img) => {
+        const original = img.getAttribute("data-original-src");
+        if (original) {
+          img.setAttribute("src", original);
+          img.removeAttribute("data-original-src");
+        }
+      });
+    };
+  }
+
   async function copyImage() {
     const node = treeRef.current;
     if (!node) return;
+    const restore = await embedImages(node);
     try {
-      // CDN 帕鲁头像不支持 CORS，导出时排除 <img>，保证图片必然可生成；
-      // 文字节点 + 连线 + 白底在微信里依然清晰可读。
       const dataUrl = await toPng(node, {
         pixelRatio: 2,
         backgroundColor: "#ffffff",
         cacheBust: true,
-        filter: (el) => el.tagName !== "IMG",
       });
       const blob = await (await fetch(dataUrl)).blob();
       // 优先用 ClipboardItem 复制图片到剪贴板
@@ -185,6 +221,8 @@ export function BreedingTree({ targetPal, selectedPairs, palNameToId, palProfile
       message.success("图片已下载（浏览器不支持直接复制图片）");
     } catch {
       message.error("生成图片失败");
+    } finally {
+      restore();
     }
   }
 
