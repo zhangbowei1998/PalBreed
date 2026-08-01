@@ -1,7 +1,7 @@
 # ============================================================
 # GitHub Actions — 自动部署到阿里云 ECS
 # 触发: push 到 main / 手动触发
-# 流程: SSH → rsync 同步代码 → 生成 .env → docker compose up -d --build
+# 流程: 检测变更 → rsync 同步 → 生成 .env → 只重建变更的服务（其他不动）
 # 前置: 见 docs/architecture/ALIYUN_DEPLOY.md 第 11 节
 # ============================================================
 name: Deploy to Aliyun ECS
@@ -25,6 +25,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 0. 检测哪些服务的代码变更了（精准重建的依据）
+      - name: Detect changed services
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            api:
+              - 'packages/core/**'
+              - 'packages/adapters/**'
+              - 'packages/api/**'
+              - 'scripts/seed_docker.py'
+              - 'scripts/docker-requirements-api.txt'
+              - 'data/processed/**'
+              - 'docker/api.Dockerfile'
+            agent_web:
+              - 'packages/core/**'
+              - 'packages/agent/**'
+              - 'packages/agent-web/**'
+              - 'scripts/docker-requirements-agent-web.txt'
+              - 'docker/agent-web.Dockerfile'
+            web:
+              - 'packages/web/**'
+              - 'docker/web.Dockerfile'
+              - 'docker/nginx.conf'
+            infra:
+              - 'docker-compose.yml'
+              - '.env.example'
+              - 'pyproject.toml'
+              - 'data/sql/**'
+
       # 1. 服务器准备：建目录 + 确保 rsync 已安装
       - name: Prepare remote server
         uses: appleboy/ssh-action@v1.0.3
@@ -44,7 +74,7 @@ jobs:
               fi
             fi
 
-      # 2. 原生 rsync 增量同步（runner 自带 rsync，不依赖第三方 action 拉 Docker 镜像）
+      # 2. 原生 rsync 增量同步代码（始终全量同步，但部署只看变更服务）
       - name: Sync code via rsync
         env:
           SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
@@ -62,8 +92,8 @@ jobs:
             -e "ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new -o BatchMode=yes" \
             ./ "$USER@$HOST:/opt/pl-agent/"
 
-      # 3. 从 GitHub Secrets 生成 .env，然后重建所有服务
-      - name: Write .env and rebuild
+      # 3. 生成 .env（始终重写，保证密钥最新）
+      - name: Write .env
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -74,13 +104,37 @@ jobs:
           script: |
             set -e
             cd /opt/pl-agent
-            # .env 由 CI 生成，永远不进入仓库
             printf 'LLM_API_KEY=%s\n' "$LLM_API_KEY" > .env
             printf 'LLM_PROVIDER=deepseek\n' >> .env
             printf 'LLM_BASE_URL=https://api.deepseek.com\n' >> .env
             printf 'LLM_MODEL=deepseek-chat\n' >> .env
             printf 'AUTH_SECRET=%s\n' "$AUTH_SECRET" >> .env
-            # 重建并启动所有服务（web 前端也会在服务器上重新构建）
-            docker compose up -d --build
-            echo "---- 容器状态 ----"
-            docker compose ps
+
+      # 4. 只构建并重启【变更的服务】，其他服务保持运行不动
+      - name: Build & restart changed services only
+        env:
+          SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          HOST: ${{ secrets.SERVER_HOST }}
+          USER: ${{ secrets.SERVER_USER }}
+          API_CHANGED: ${{ steps.changes.outputs.api }}
+          AGENT_CHANGED: ${{ steps.changes.outputs.agent_web }}
+          WEB_CHANGED: ${{ steps.changes.outputs.web }}
+          INFRA_CHANGED: ${{ steps.changes.outputs.infra }}
+        run: |
+          set -e
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          # 计算本次需要部署的服务
+          SERVICES=""
+          [ "$API_CHANGED" = "true" ] && SERVICES="$SERVICES api"
+          [ "$AGENT_CHANGED" = "true" ] && SERVICES="$SERVICES agent-web"
+          [ "$WEB_CHANGED" = "true" ] && SERVICES="$SERVICES web"
+          # infra 变更（compose/根配置）或未检测到具体服务（如手动触发）→ 全量部署
+          if [ "$INFRA_CHANGED" = "true" ] || [ -z "$SERVICES" ]; then
+            SERVICES="api agent-web web"
+          fi
+          echo "==> 本次部署服务: $SERVICES"
+          echo "==> 未变更的服务保持运行，不会重启"
+          ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new -o BatchMode=yes "$USER@$HOST" \
+            "cd /opt/pl-agent && docker compose build $SERVICES && docker compose up -d $SERVICES && echo '---- 容器状态 ----' && docker compose ps"
