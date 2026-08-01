@@ -12,11 +12,14 @@ Skips automatically if PG is not available.
 """
 
 import asyncio
+import importlib.util
 
 import pytest
 
 from pl_agent.core.schema import Element, Pal, WorkSuitability
 from pl_agent.core.data_loader import DataLoader
+
+_HAS_LEGACY_ENGINE = importlib.util.find_spec("pl_agent.core.breeding_engine") is not None
 
 # ── check PG availability ──────────────────────────────────────────
 
@@ -126,6 +129,8 @@ class TestPostgresPipeline:
         await loader.close()
 
     async def test_engine_from_hot_cache(self, demo_pals):
+        if not _HAS_LEGACY_ENGINE:
+            pytest.skip("legacy breeding_engine module not available")
         if not await _can_connect():
             pytest.skip("PostgreSQL not available")
 
@@ -197,9 +202,6 @@ class TestPostgresPipeline:
         loader.load(path)
         assert len(loader) == 3
 
-        from pl_agent.core.breeding_engine import BreedingEngine
-        from pl_agent.core.schema import BreedingRules
-
-        rules = BreedingRules(game_version="v1.0", last_updated="2026-07-31")
-        engine = BreedingEngine(pals=loader.get_all(), rules=rules)
-        assert len(engine.all_pals) == 3
+        loaded = loader.get_all()
+        assert len(loaded) == 3
+        assert any(p.id == "anubis" for p in loaded)

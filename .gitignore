@@ -11,6 +11,9 @@ uv.lock
 # Build
 dist/
 *.whl
+node_modules/
+*.tsbuildinfo
+.npm-cache/
 
 # IDE
 .vscode/

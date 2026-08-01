@@ -65,6 +65,9 @@ make serve
 # 启动 agent-service
 make serve-agent-service
 
+# 启动 web 前端
+make serve-web
+
 # 仅跑 agent-service 测试
 make test-agent-service
 
@@ -73,6 +76,9 @@ make test-contract-agent-service
 
 # 根项目全量测试（含 agent-service）
 make test-all
+
+# 仅做 web 构建校验
+make test-web
 ```
 
 ## 项目结构

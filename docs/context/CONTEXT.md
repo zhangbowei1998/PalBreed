@@ -134,7 +134,7 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 | 测试 | ✅ | ORM 单测 7/7 + API 冒烟 8/8 通过 |
 | Makefile | ✅ | 统一入口已包含 `serve-agent-service` / `test-agent-service` / `test-contract-agent-service` |
 | NLU 模块 | ⏭️ | 跳过, 结构化输入 |
-| 前端 UI | ⬜ | `packages/web/` |
+| 前端 UI | ✅ | `packages/web/` — React + Vite 聊天交互页，已接入 agent-service |
 
 ## API 端点一览
 
@@ -162,6 +162,7 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 **测试**:
 - `make test-agent-service`（agent-service 全量）
 - `make test-contract-agent-service`（agent-service 契约）
+- `make test-web`（web 构建校验）
 - `make test-all`（根项目 + agent-service）
 
 **输入示例**:

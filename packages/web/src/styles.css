@@ -1,0 +1,209 @@
+:root {
+  --bg: #f4efe6;
+  --paper: #fffaf2;
+  --ink: #2a231a;
+  --brand: #0f766e;
+  --accent: #b45309;
+  --line: #dfd3c3;
+  --assistant: #e8f5f3;
+  --user: #f8ede2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background:
+    radial-gradient(circle at 15% 15%, #ffe9c8 0%, rgba(255, 233, 200, 0) 35%),
+    radial-gradient(circle at 80% 0%, #d1f4ed 0%, rgba(209, 244, 237, 0) 45%),
+    var(--bg);
+  color: var(--ink);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  gap: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.chat-shell,
+.state-panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 16px 30px rgba(52, 41, 30, 0.08);
+}
+
+.chat-shell {
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.hero h1 {
+  margin: 0;
+  letter-spacing: 0.02em;
+  font-size: clamp(24px, 3.2vw, 40px);
+  color: #14532d;
+}
+
+.hero p {
+  margin: 8px 0 0;
+  color: #3c3a36;
+}
+
+.message-list {
+  min-height: 340px;
+  max-height: 54vh;
+  overflow: auto;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(251, 244, 234, 0.9));
+}
+
+.message {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  animation: rise 220ms ease;
+}
+
+.message header {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-bottom: 4px;
+}
+
+.message p {
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.45;
+}
+
+.message-assistant {
+  background: var(--assistant);
+  border-color: #b9e8df;
+}
+
+.message-user {
+  background: var(--user);
+  border-color: #efd8bf;
+}
+
+.action-tray {
+  display: grid;
+  gap: 10px;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+button {
+  border: 1px solid #ccb8a3;
+  background: #fff7ec;
+  color: #3b3329;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+button:hover:enabled {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.route-btn {
+  background: linear-gradient(135deg, var(--brand), #0b5d57);
+  border-color: transparent;
+  color: #f4fffd;
+}
+
+.composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.composer input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+.error {
+  border: 1px solid #e7b9ad;
+  background: #fff0ec;
+  color: #a5341c;
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.state-panel {
+  padding: 14px;
+  overflow: auto;
+  max-height: calc(100vh - 32px);
+}
+
+.state-panel h3 {
+  margin: 6px 0;
+  color: #6f4a16;
+}
+
+.state-panel p {
+  margin: 2px 0 10px;
+}
+
+.state-panel pre {
+  margin: 0 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .state-panel {
+    max-height: none;
+  }
+}
