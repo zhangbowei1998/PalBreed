@@ -118,28 +118,30 @@ export function ChatPage() {
           <LoginGate onLogin={() => setAuthOpen(true)} />
         ) : (
           <>
-            <BreedingTree
-              targetPal={stateSnapshot?.target_pal ?? null}
-              selectedPairs={selectedPairs}
-              palNameToId={palNameToId}
-              palProfiles={palProfiles}
-            />
+            <div className="chat-scroll">
+              <BreedingTree
+                targetPal={stateSnapshot?.target_pal ?? null}
+                selectedPairs={selectedPairs}
+                palNameToId={palNameToId}
+                palProfiles={palProfiles}
+              />
 
-            <MessageList
-              messages={messages}
-              palNameToId={palNameToId}
-              palProfiles={palProfiles}
-              loading={loading}
-              pairActionMap={pairActionMap}
-              onSelectPair={handleSelectPair}
-            />
-            <ActionTray
-              actions={displayActions}
-              loading={loading}
-              onAction={async (item) => {
-                await runAction(item);
-              }}
-            />
+              <MessageList
+                messages={messages}
+                palNameToId={palNameToId}
+                palProfiles={palProfiles}
+                loading={loading}
+                pairActionMap={pairActionMap}
+                onSelectPair={handleSelectPair}
+              />
+              <ActionTray
+                actions={displayActions}
+                loading={loading}
+                onAction={async (item) => {
+                  await runAction(item);
+                }}
+              />
+            </div>
             <ChatComposer loading={loading} onSend={sendMessage} />
           </>
         )}

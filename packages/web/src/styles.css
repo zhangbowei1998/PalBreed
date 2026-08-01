@@ -74,6 +74,13 @@ body,
 }
 
 /* ── 聊天主区（消息列表） ── */
+.chat-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+
 .chat-shell {
   background: var(--paper);
   border: 1px solid var(--line);
@@ -666,10 +673,59 @@ button:disabled {
 }
 
 @media (max-width: 640px) {
+  /* ── 手机端全屏布局：顶栏 + 滚动内容区 + 底部固定输入框 ── */
+  .layout {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 0;
+    max-width: none;
+    gap: 10px;
+    padding: 10px;
+  }
+  .topbar {
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    border-radius: 12px;
+  }
+  .brand-emoji {
+    font-size: 24px;
+  }
+  .brand-text h1 {
+    font-size: 17px;
+  }
   .brand-text p {
     display: none;
   }
-  .topbar {
-    padding: 10px 14px;
+  .chat-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+  }
+  /* 配种树 / 操作区不压缩：内容多时由 chat-scroll 整体滚动 */
+  .chat-scroll > *:not(.bubble-list) {
+    flex-shrink: 0;
+  }
+  .bubble-list {
+    max-height: none;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .composer {
+    flex: 0 0 auto;
+  }
+  /* 触控目标：行内帕鲁按钮 + 发送按钮放大到接近 44px */
+  .pal-inline-btn {
+    min-height: 36px;
+  }
+  .ant-sender-actions-btn {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .login-gate {
+    flex: 1 1 auto;
+    min-height: 0;
+    border-radius: 12px;
   }
 }
