@@ -43,13 +43,38 @@
 
 ## 快速开始
 
+### 方式一：Docker 部署（推荐，一键启动全部）
+
+```bash
+# 1. 准备环境变量（DeepSeek API key 必填）
+cp .env.example .env
+# 编辑 .env 填入 LLM_API_KEY 和 AUTH_SECRET
+
+# 2. 启动全部服务（postgres + api + agent-web + web）
+docker compose up -d --build
+
+# 3. 访问
+#    前端:     http://localhost:8080
+#    配种 API: http://localhost:8000
+#    Agent:    http://localhost:9000
+```
+
+Docker 部署会：
+- 自动建表（5 表规范化）+ 从 `data/processed/pal_data.json` 灌入 288 只帕鲁
+- agent-web 自动连 PG 做长期记忆持久化 + 用户体系
+- nginx 统一入口：`/agent/*` `/auth/*` → agent-web，`/api/*` → api（同源无跨域）
+
+> 云部署：同一份 compose 配置可直接用于云主机（改端口、加反向代理/HTTPS 即可）。
+
+### 方式二：本地开发模式
+
 ```bash
 # 克隆项目
 git clone <repo-url>
 cd pl-agent
 
 # 启动 PostgreSQL（必需）
-docker compose up -d
+docker compose up -d postgres
 
 # 后端（配种 API）
 uv sync

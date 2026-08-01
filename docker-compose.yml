@@ -1,7 +1,11 @@
-# PostgreSQL + pgAdmin for pl-agent
-# 启动: docker compose up -d
-# pgAdmin: http://localhost:5051 (admin@admin.com / admin)
-# 停止: docker compose down
+# ============================================================
+# 幻兽帕鲁配种 Agent — Docker Compose 部署
+# 服务: postgres / api / agent-web / web
+# 用法:
+#   1. 准备 .env（DeepSeek API key 等）
+#   2. docker compose up -d --build
+#   3. 打开 http://localhost:8080
+# ============================================================
 
 services:
   postgres:
@@ -15,24 +19,89 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./data/sql:/docker-entrypoint-initdb.d # 自动执行 DDL
+      - ./data/sql:/docker-entrypoint-initdb.d # 自动执行 DDL (5 表)
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres -d pl_agent" ]
       interval: 5s
       timeout: 3s
-      retries: 5
+      retries: 10
+    restart: unless-stopped
 
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: pl-agent-pgadmin
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    container_name: pl-agent-api
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      DATABASE_URL: postgresql://postgres@postgres:5432/pl_agent
+      PYTHONPATH: /app/packages/core:/app/packages/adapters:/app/packages/api:/app/packages
+    # 启动前先灌入帕鲁数据（幂等）
+    entrypoint: >
+      /bin/sh -c " python /app/scripts/seed_docker.py && exec uvicorn pl_agent.api.main:app --host 0.0.0.0 --port 8000 "
     ports:
-      - "5051:80"
+      - "8000:8000"
     depends_on:
       postgres:
         condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\" || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  agent-web:
+    build:
+      context: .
+      dockerfile: docker/agent-web.Dockerfile
+    container_name: pl-agent-agent-web
+    environment:
+      # LLM
+      LLM_ENABLED: "true"
+      LLM_PROVIDER: ${LLM_PROVIDER:-deepseek}
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://api.deepseek.com}
+      LLM_API_KEY: ${LLM_API_KEY:?请在 .env 设置 LLM_API_KEY}
+      LLM_MODEL: ${LLM_MODEL:-deepseek-chat}
+      LLM_TEMPERATURE: "0.1"
+      # 上游配种 API
+      BREEDING_API_BASE_URL: http://api:8000
+      # 记忆存储
+      LONG_TERM_STORE: postgres
+      DATABASE_URL: postgresql://postgres@postgres:5432/pl_agent
+      SHORT_TERM_MAX_TURNS: "12"
+      # 用户体系
+      USER_STORE: postgres
+      AUTH_SECRET: ${AUTH_SECRET:-change-me-in-production}
+      AUTH_TOKEN_TTL_S: "604800"
+    ports:
+      - "9000:9000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:9000/health')\" || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+    container_name: pl-agent-web
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+      agent-web:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   pgdata:
