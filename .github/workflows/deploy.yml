@@ -17,7 +17,47 @@ env:
   AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
 
 jobs:
+  # ⭐ 测试门禁：测试通过才允许部署（fail fast，防止坏代码上线）
+  test:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run Python unit tests
+        run: |
+          uv run pytest \
+            packages/core/pl_agent/core/__tests__/ \
+            packages/adapters/adapters/paldb/__tests__/ \
+            packages/agent/pl_agent/agent/__tests__/ \
+            packages/agent/pl_agent/agent/intent/__tests__/ \
+            packages/agent/pl_agent/agent/llm/__tests__/ \
+            packages/agent/pl_agent/agent/tools/__tests__/ \
+            packages/agent-web/tests/ \
+            -q
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: packages/web/package-lock.json
+
+      - name: Web type-check
+        run: |
+          cd packages/web
+          npm ci
+          npx tsc --noEmit -p tsconfig.app.json
+
   deploy:
+    needs: test
     name: Deploy pl-agent to ECS
     runs-on: ubuntu-latest
     timeout-minutes: 30
