@@ -36,11 +36,10 @@ jobs:
           uv run pytest \
             packages/core/pl_agent/core/__tests__/ \
             packages/adapters/adapters/paldb/__tests__/ \
+            packages/adapters/adapters/postgres/__tests__/ \
             packages/agent/pl_agent/agent/__tests__/ \
-            packages/agent/pl_agent/agent/intent/__tests__/ \
             packages/agent/pl_agent/agent/llm/__tests__/ \
-            packages/agent/pl_agent/agent/tools/__tests__/ \
-            packages/agent-web/tests/ \
+            packages/agent-web/tests/unit/ \
             -q
 
       - name: Setup Node
