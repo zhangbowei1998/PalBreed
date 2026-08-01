@@ -57,10 +57,14 @@ async def test_agent_loop_runs_tool_then_returns_answer():
         system_prompt="你是测试助手",
     )
 
-    answer = await loop.run("墨罗娜怎么配种")
+    result = await loop.run("墨罗娜怎么配种")
 
-    assert "奥沧鲸" in answer
-    assert "凌角马" in answer
+    assert "奥沧鲸" in result.content
+    assert "凌角马" in result.content
+    # 监测：应记录到一次 query_parent_pairs 工具调用
+    assert len(result.tool_calls) == 1
+    assert result.tool_calls[0].name == "query_parent_pairs"
+    assert result.tool_calls[0].success is True
 
 
 class MemoryCheckingLLM:
@@ -85,7 +89,7 @@ async def test_agent_loop_carries_history():
     loop = AgentLoop(llm=llm, registry=registry, system_prompt="你是测试助手")
 
     history = [{"role": "user", "content": "手工最高的是哪只帕鲁"}]
-    answer = await loop.run("怎么配种", history=history)
+    result = await loop.run("怎么配种", history=history)
 
     assert llm.seen_history
-    assert answer == "应该是指墨罗娜。"
+    assert result.content == "应该是指墨罗娜。"

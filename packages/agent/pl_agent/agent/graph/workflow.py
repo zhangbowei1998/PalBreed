@@ -11,6 +11,7 @@ from ..common.constants import (
     ACTION_EXPAND_PARENT,
     ACTION_SELECT_PARENT_PAIR,
 )
+from ..common.telemetry import timer_ms
 from ..config import Settings
 from ..intent import Intent, IntentRecognizer
 from ..interaction.click_protocol import parse_expand_fallback
@@ -24,10 +25,11 @@ from ..memory.long_term import (
     extract_owned_facts,
     extract_preference_facts,
 )
+from ..monitoring.models import AgentTrace, TraceStore
 from ..state.memory_store import InMemorySessionRepository
 from ..state.models import ChatTurn, ClickEvent, SessionState
 from ..tools import ToolRegistry, build_breeding_tools
-from .agent_loop import AgentLoop
+from .agent_loop import AgentLoop, AgentLoopResult
 from .guards import GuardViolation, ensure_expand_allowed
 from .nodes import (
     build_reused_node_response,
@@ -87,12 +89,14 @@ class AgentWorkflow:
         client: BreedingApiClient,
         llm: LLMClient | None = None,
         long_term_memory: LongTermMemoryStore | None = None,
+        trace_store: TraceStore | None = None,
     ) -> None:
         self._settings = settings
         self._repository = repository
         self._client = client
         self._llm = llm
         self._long_term_memory = long_term_memory or LongTermMemory()
+        self._trace_store = trace_store
         self._recognizer = IntentRecognizer(llm=llm, breeding_api=client)
         self._tool_registry = ToolRegistry(
             build_breeding_tools(client, top_n_default=settings.top_candidates)
@@ -200,19 +204,28 @@ class AgentWorkflow:
         # 上下文压缩：早期对话的摘要（若之前压缩过）
         history_summary = state.history_summary or None
 
-        try:
-            reply = await self._agent_loop.run(
-                message,
-                history=history,
-                long_term_facts=long_term_facts,
-                history_summary=history_summary,
-            )
-        except Exception as exc:  # noqa: BLE001
-            return build_response(
-                messages=[f"LLM 处理失败：{exc}"],
-                actions=[],
-                state=state,
-            )
+        with timer_ms() as metric:
+            try:
+                result = await self._agent_loop.run(
+                    message,
+                    history=history,
+                    long_term_facts=long_term_facts,
+                    history_summary=history_summary,
+                )
+                reply = result.content
+            except Exception as exc:  # noqa: BLE001
+                reply = f"LLM 处理失败：{exc}"
+                result = None
+
+        # 监测：组装本次对话 trace 并记录
+        await self._record_trace(
+            session_id=session_id,
+            user_key=user_key,
+            user_message=message,
+            reply=reply,
+            result=result,
+            latency_ms=metric["elapsed_ms"],
+        )
 
         # 维护短期记忆：用户消息 + 助手回答。超过上限时把最早的一批压缩成摘要。
         state.chat_history.append(ChatTurn(role="user", content=message))
@@ -249,6 +262,42 @@ class AgentWorkflow:
         if fact.category == "preference":
             return f"用户偏好：{fact.content}"
         return fact.content
+
+    async def _record_trace(
+        self,
+        *,
+        session_id: str,
+        user_key: str,
+        user_message: str,
+        reply: str,
+        result: AgentLoopResult | None,
+        latency_ms: int,
+    ) -> None:
+        if self._trace_store is None:
+            return
+        tool_calls = list(result.tool_calls) if result else []
+        used_tools = bool(tool_calls)
+        had_error = bool(result and result.error) or (result is None)
+        total = len(tool_calls)
+        ok = sum(1 for tc in tool_calls if tc.success)
+        trace = AgentTrace(
+            session_id=session_id,
+            user_key=user_key,
+            user_message=user_message,
+            reply=reply,
+            model=result.model if result else "",
+            llm_rounds=list(result.llm_rounds) if result else [],
+            error=result.error if result else ("workflow 异常" if result is None else ""),
+            latency_ms=latency_ms,
+            used_tools=used_tools,
+            had_error=had_error,
+            tool_success_rate=(ok / total) if total else 1.0,
+            reply_length=len(reply),
+        )
+        try:
+            await self._trace_store.record(trace)
+        except Exception:  # noqa: BLE001 — 监测失败不阻塞主流程
+            pass
 
     async def _handle_expand_pal(
         self, session_id: str, state: SessionState, pal_name: str

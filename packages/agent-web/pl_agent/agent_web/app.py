@@ -24,9 +24,11 @@ from pl_agent.agent.graph.workflow import (
 from pl_agent.agent.llm import LLMConfig, create_llm_client
 from pl_agent.agent.memory.long_term import LongTermMemory, LongTermMemoryStore
 from pl_agent.agent.memory.postgres import PostgresLongTermMemory
+from pl_agent.agent.monitoring.postgres import PostgresTraceStore
 from pl_agent.agent.state.memory_store import InMemorySessionRepository
 
 from .auth.routes import resolve_user_id_from_request, router as auth_router
+from .monitoring_routes import router as monitoring_router
 
 
 class ChatRequest(BaseModel):
@@ -76,17 +78,23 @@ async def lifespan(app: FastAPI):
     if isinstance(user_store, PostgresUserStore):
         await user_store.connect()
 
+    # 监测：agent 对话 trace 存储
+    trace_store = PostgresTraceStore(settings.database_url)
+    await trace_store.connect()
+
     app.state.settings = settings
     app.state.repository = repository
     app.state.llm = llm
     app.state.long_term_memory = long_term_memory
     app.state.user_store = user_store
+    app.state.trace_store = trace_store
     app.state.workflow = AgentWorkflow(
         settings=settings,
         repository=repository,
         client=client,
         llm=llm,
         long_term_memory=long_term_memory,
+        trace_store=trace_store,
     )
     try:
         yield
@@ -95,6 +103,7 @@ async def lifespan(app: FastAPI):
             await long_term_memory.close()
         if isinstance(user_store, PostgresUserStore):
             await user_store.close()
+        await trace_store.close()
 
 
 app = FastAPI(title="agent-web", lifespan=lifespan)
@@ -104,6 +113,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "http://localhost:8080",
+        "http://127.0.0.1:8080",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -111,6 +122,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(monitoring_router)
 
 
 @app.get("/health")
