@@ -183,6 +183,12 @@ function renderAssistantContent(
 }
 
 export function MessageList({ messages, palNameToId, palProfiles, loading, pairActionMap, onSelectPair }: Props) {
+  // 流式占位：最后一条 assistant 消息内容为空（正在流式生成），
+  // 此时它本身显示 typing 动画，不再额外追加独立 typing 气泡，避免重复 AI 块。
+  const hasStreamingPlaceholder = messages.some(
+    (m) => m.role === "assistant" && m.content === "" && !m.trace,
+  );
+
   const items: BubbleItemType[] = [
     ...messages.map((msg) => {
       if (msg.role === "user") {
@@ -195,7 +201,13 @@ export function MessageList({ messages, palNameToId, palProfiles, loading, pairA
       return {
         key: msg.id,
         role: "assistant" as const,
-        content: (
+        content: msg.content === "" && !msg.trace ? (
+          <div className="typing">
+            <span />
+            <span />
+            <span />
+          </div>
+        ) : (
           <div>
             {msg.trace && <ThinkingProcess trace={msg.trace} />}
             {renderAssistantContent(
@@ -210,7 +222,7 @@ export function MessageList({ messages, palNameToId, palProfiles, loading, pairA
         ),
       };
     }),
-    ...(loading
+    ...(!hasStreamingPlaceholder && loading
       ? [{
           key: "typing",
           role: "assistant" as const,
