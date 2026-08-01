@@ -191,7 +191,7 @@ export function MessageList({ messages, palNameToId, palProfiles, loading, pairA
         assistant: {
           placement: "start",
           variant: "outlined",
-          avatar: <Avatar size={28} style={{ background: "#1677ff" }} icon={<RobotOutlined />} />,
+          avatar: <Avatar size={28} style={{ background: "#111111" }} icon={<RobotOutlined />} />,
         },
       }}
     />

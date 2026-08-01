@@ -6,7 +6,7 @@ import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <XProvider theme={{ token: { colorPrimary: "#1677ff" } }}>
+    <XProvider theme={{ token: { colorPrimary: "#111111" } }}>
       <App />
     </XProvider>
   </React.StrictMode>,

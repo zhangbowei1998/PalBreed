@@ -93,7 +93,7 @@ export function ChatPage() {
               <Dropdown menu={userMenu} placement="bottomRight">
                 <Button type="text" className="user-chip">
                   <Space>
-                    <Avatar size={26} style={{ background: "#1677ff" }}>{user.username.slice(0, 1).toUpperCase()}</Avatar>
+                    <Avatar size={26} style={{ background: "#111111" }}>{user.username.slice(0, 1).toUpperCase()}</Avatar>
                     <span>{user.username}</span>
                   </Space>
                 </Button>
