@@ -5,7 +5,7 @@ import pytest
 from pl_agent.agent.config import Settings
 from pl_agent.agent.graph.agent_loop import AgentLoop
 from pl_agent.agent.graph.workflow import AgentWorkflow, ChatInput
-from pl_agent.agent.llm import LLMResponse
+from pl_agent.agent.llm import LLMResponse, ToolCall
 from pl_agent.agent.memory.long_term import LongTermMemory
 from pl_agent.agent.state.memory_store import InMemorySessionRepository
 from pl_agent.agent.tools import ToolRegistry, build_breeding_tools
@@ -164,4 +164,80 @@ async def test_anonymous_session_isolated_from_user_session(tmp_path):
     assert anon is not None and logged is not None
     assert anon.chat_history[0].content == "匿名消息"
     assert logged.chat_history[0].content == "登录用户消息"
+
+
+class ToolCallingLLM:
+    """第一轮调用 query_parent_pairs，第二轮返回最终文本。"""
+
+    def __init__(self) -> None:
+        self.round = 0
+
+    async def chat(self, messages, *, tools=None):
+        self.round += 1
+        if self.round == 1:
+            return LLMResponse(
+                content="",
+                model="fake",
+                tool_calls=[
+                    ToolCall(
+                        id="call_1",
+                        name="query_parent_pairs",
+                        arguments={"pal_name": "阿努比斯"},
+                    )
+                ],
+            )
+        return LLMResponse(content="阿努比斯可以这样配。", model="fake")
+
+
+class PairFakeClient(WorkflowFakeClient):
+    """提供一组真实配种对的客户端。"""
+
+    async def get_parent_pairs(self, pal_id: str):
+        if pal_id == "阿努比斯":
+            return [
+                {"parent_a": "空涡龙", "parent_b": "妖焰灯", "method": "breed"},
+                {"parent_a": "默世鹿", "parent_b": "塞赫麦特", "method": "breed"},
+            ]
+        return []
+
+
+@pytest.mark.asyncio
+async def test_llm_chat_returns_select_parent_pair_actions(tmp_path):
+    """LLM 调用 query_parent_pairs 成功后，应返回可点击的配种方案操作，
+    前端据此触发配种二叉树。"""
+    settings = Settings()
+    repository = InMemorySessionRepository()
+    llm = ToolCallingLLM()
+
+    workflow = AgentWorkflow(
+        settings=settings,
+        repository=repository,
+        client=PairFakeClient(),
+        llm=llm,
+        long_term_memory=LongTermMemory(data_dir=tmp_path),
+    )
+
+    result = await workflow.handle_chat(
+        ChatInput(session_id="tree1", message="阿努比斯怎么配种")
+    )
+
+    # LLM 文本回复 + 确定性的父母候选消息
+    assert len(result["messages"]) >= 2
+    assert "父母候选" in result["messages"][1]["content"]
+
+    # 返回 select_parent_pair 操作，前端可点击
+    pair_actions = [
+        a for a in result["actions"] if a["action"] == "select_parent_pair"
+    ]
+    assert pair_actions, "LLM 配种后应返回 select_parent_pair actions"
+    assert pair_actions[0]["payload"]["child_pal_id"] == "阿努比斯"
+    assert len(pair_actions) == 2
+
+    # state 已记录候选，配种树可渲染
+    snapshot = result["state_snapshot"]
+    assert snapshot["candidate_pairs"], "候选配种组合应已记录"
+    assert snapshot["edges"], "配种边应已写入"
+    # LLM 查询配种方案后，自动设为当前目标，后续追溯可正常进行
+    assert snapshot["target_pal"] == "阿努比斯"
+    assert snapshot["confirmed_target_pal"] == "阿努比斯"
 

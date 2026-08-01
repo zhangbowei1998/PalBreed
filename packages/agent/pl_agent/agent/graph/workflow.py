@@ -263,9 +263,41 @@ class AgentWorkflow:
         meta: dict = {}
         if trace_info:
             meta["trace"] = trace_info
+
+        # 若 LLM 调用了 query_parent_pairs 且成功，则复用确定性配种链路，
+        # 生成「父母候选」消息 + select_parent_pair 操作，让前端可点击并渲染配种二叉树。
+        extra_messages: list[str] = []
+        extra_actions: list[dict] = []
+        if result is not None:
+            for tc in result.tool_calls:
+                if tc.name == "query_parent_pairs" and tc.success:
+                    pal = (tc.result or {}).get("pal") or {}
+                    pal_id = pal.get("id") or ""
+                    if pal_id:
+                        # LLM 查询某帕鲁配种方案 = 用户对该帕鲁感兴趣，
+                        # 把它设为当前目标，后续追溯 / 展开才能正常进行。
+                        if not state.target_pal:
+                            state.target_pal = pal_id
+                            state.confirmed_target_pal = pal_id
+                        try:
+                            pm, pa = await query_parents_and_record(
+                                session_id=session_id,
+                                state=state,
+                                repository=self._repository,
+                                client=self._client,
+                                pal_id=pal_id,
+                            )
+                            extra_messages.extend(pm)
+                            extra_actions.extend(pa)
+                        except Exception:  # noqa: BLE001
+                            # 配种链路异常不影响 LLM 文本回复
+                            pass
+            if extra_messages:
+                state = await self._repository.get(session_id) or state
+
         return build_response(
-            messages=[reply],
-            actions=[],
+            messages=[reply, *extra_messages],
+            actions=extra_actions,
             state=state,
             meta=meta,
         )
