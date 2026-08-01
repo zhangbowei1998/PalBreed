@@ -29,6 +29,33 @@ function extractTrace(data: AgentData): AgentTraceInfo | null {
   return trace as AgentTraceInfo;
 }
 
+/**
+ * 合并配种方案操作（select_parent_pair）：保留历史已渲染的可点击配种行，
+ * 用最新响应去重合并。其它 action（confirm/expand/continue）直接用最新的。
+ * 否则每次追溯后，之前层级的父母候选行会因 actions 被覆盖而失去可点击性。
+ */
+function mergeActions(prev: AgentAction[], next: AgentAction[]): AgentAction[] {
+  const keyOf = (a: AgentAction): string => {
+    if (a.action !== "select_parent_pair") return "";
+    return `pair:${a.payload.child_pal_id ?? ""}:${a.payload.pair_index ?? ""}`;
+  };
+  const seen = new Set<string>();
+  const merged: AgentAction[] = [];
+  for (const a of next) {
+    const k = keyOf(a);
+    if (k && seen.has(k)) continue;
+    if (k) seen.add(k);
+    merged.push(a);
+  }
+  for (const a of prev) {
+    const k = keyOf(a);
+    if (!k || seen.has(k)) continue;
+    seen.add(k);
+    merged.push(a);
+  }
+  return merged;
+}
+
 function normalizeMessages(data: AgentData, baseId: string): ChatMessage[] {
   const trace = extractTrace(data);
   return data.messages.map((m, idx) => ({
@@ -188,7 +215,7 @@ export function useAgentSession(userKey: string) {
             : [];
           return [...rest, ...head, ...finalMsgs.slice(1)];
         });
-        setActions(doneData.actions);
+        setActions((prev) => mergeActions(prev, doneData.actions));
         setStateSnapshot(doneData.state_snapshot);
         void prefetchPalProfiles(doneData.state_snapshot);
         void prefetchPalProfilesFromText(doneData.messages.map((m) => m.content));
@@ -214,7 +241,7 @@ export function useAgentSession(userKey: string) {
     try {
       const data = await action(sessionId, item.action, payload);
       setMessages((prev) => [...prev, ...normalizeMessages(data, `a-${Date.now()}`)]);
-      setActions(data.actions);
+      setActions((prev) => mergeActions(prev, data.actions));
       setStateSnapshot(data.state_snapshot);
       void prefetchPalProfiles(data.state_snapshot);
       void prefetchPalProfilesFromText(data.messages.map((m) => m.content));

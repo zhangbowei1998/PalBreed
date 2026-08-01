@@ -508,6 +508,7 @@ class AgentWorkflow:
                 session_id=data.session_id,
                 state=state,
                 repository=self._repository,
+                client=self._client,
                 child_pal_id=data.child_pal_id,
                 pair_index=data.pair_index,
             )

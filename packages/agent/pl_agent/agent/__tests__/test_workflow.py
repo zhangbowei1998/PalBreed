@@ -140,3 +140,6 @@ async def test_confirm_then_select_returns_continue_actions():
         a for a in result["actions"] if a["action"] == "continue_from_parent"
     ]
     assert len(continue_actions) == 2
+    # select_parent_pair 消息必须用中文名展示 child（防止回退成英文 id）
+    assert any("已选择 阿努比斯" in m["content"] for m in result["messages"])
+    assert not any("已选择 anubis" in m["content"] for m in result["messages"])

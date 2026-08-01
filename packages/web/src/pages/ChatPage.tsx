@@ -45,10 +45,15 @@ export function ChatPage() {
   const pairActionMap: Record<string, AgentAction> = Object.fromEntries(
     actions
       .filter((item) => item.action === "select_parent_pair")
-      .map((item) => {
+      .flatMap((item) => {
         const childPalId = String(item.payload.child_pal_id ?? "");
+        const childPalName = String(item.payload.child_pal_name ?? childPalId);
         const pairIndex = Number(item.payload.pair_index);
-        return [`${childPalId}:${pairIndex}`, item] as const;
+        // 同时用英文 id 和中文名作为 key，兼容消息头两种展示形式
+        return [
+          [`${childPalId}:${pairIndex}`, item] as const,
+          [`${childPalName}:${pairIndex}`, item] as const,
+        ];
       }),
   );
 

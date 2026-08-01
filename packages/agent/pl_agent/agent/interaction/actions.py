@@ -31,6 +31,7 @@ def build_select_pair_action(
     pair_index: int,
     parent_a_name: str,
     parent_b_name: str,
+    child_pal_name: str = "",
 ) -> dict:
     return {
         "action": ACTION_SELECT_PARENT_PAIR,
@@ -38,6 +39,7 @@ def build_select_pair_action(
         "payload": {
             "child_pal_id": child_pal_id,
             "pair_index": pair_index,
+            "child_pal_name": child_pal_name,
         },
     }
 

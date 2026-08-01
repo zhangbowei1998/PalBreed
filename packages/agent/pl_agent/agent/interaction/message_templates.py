@@ -10,7 +10,7 @@ def top_candidates_message(lines: list[str]) -> str:
 
 def parent_pairs_message(target: str, pairs: list[dict]) -> str:
     if not pairs:
-        return f"{target} 当前无可用父母组合，已标记为叶子节点。"
+        return f"{target} 没有更简单的配种组合了，只能作为基础帕鲁直接获取。"
     lines = [f"{target} 的父母候选："]
     for idx, item in enumerate(pairs, start=1):
         lines.append(

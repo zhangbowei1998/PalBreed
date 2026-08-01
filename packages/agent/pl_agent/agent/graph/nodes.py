@@ -74,6 +74,13 @@ async def query_parents_and_record(
         state.node_depths[pal_id] = current_depth
     await repository.save(session_id, state)
 
+    # target 用于消息展示：优先中文名（parent_pairs_message 会显示给用户）
+    try:
+        target_detail = await client.resolve_pal(pal_id)
+        target_cn = target_detail.get("cn_name") or pal_id
+    except Exception:  # noqa: BLE001
+        target_cn = pal_id
+
     rendered_pairs: list[dict] = []
     option_edges: list[Edge] = []
     actions: list[dict] = []
@@ -123,14 +130,15 @@ async def query_parents_and_record(
                 pair_index=idx,
                 parent_a_name=parent_a_name,
                 parent_b_name=parent_b_name,
+                child_pal_name=target_cn,
             )
         )
-
     state.candidate_pairs[pal_id] = option_edges
 
     await repository.save(session_id, state)
     state = await repository.get(session_id) or state
-    return [parent_pairs_message(pal_id, rendered_pairs)], actions
+
+    return [parent_pairs_message(target_cn, rendered_pairs)], actions
 
 
 async def select_parent_pair(
@@ -138,6 +146,7 @@ async def select_parent_pair(
     session_id: str,
     state: SessionState,
     repository: SessionRepository,
+    client: BreedingApiClient,
     child_pal_id: str,
     pair_index: int,
 ) -> tuple[list[str], list[dict]]:
@@ -155,9 +164,16 @@ async def select_parent_pair(
     state.current_focus_pal = child_pal_id
     await repository.save(session_id, state)
 
+    # child 中文名用于消息展示
+    try:
+        child_detail = await client.resolve_pal(child_pal_id)
+        child_cn = child_detail.get("cn_name") or child_pal_id
+    except Exception:  # noqa: BLE001
+        child_cn = child_pal_id
+
     messages = [
         selected_pair_message(
-            child_name=child_pal_id,
+            child_name=child_cn,
             parent_a_name=selected.parent_a_name,
             parent_b_name=selected.parent_b_name,
         )
