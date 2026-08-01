@@ -12,8 +12,9 @@ export function ChatComposer({ loading, onSend }: Props) {
   async function handleSubmit(text: string) {
     const trimmed = text.trim();
     if (!trimmed) return;
-    await onSend(trimmed);
+    // 立即清空输入框（乐观清空），避免等待流式生成期间输入框残留旧文本
     setValue("");
+    await onSend(trimmed);
   }
 
   return (
