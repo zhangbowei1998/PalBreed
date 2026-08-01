@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { action, chat, getPalProfile, resolvePalByName } from "../services/agentClient";
+import { action, chatStream, getPalProfile, resolvePalByName } from "../services/agentClient";
 import type { AgentAction, AgentData, AgentTraceInfo, ChatMessage, PalProfile } from "../types";
 
 /** 会话 ID 按用户维度存储，避免不同用户共用 localStorage key 造成串扰。 */
@@ -149,20 +149,52 @@ export function useAgentSession(userKey: string) {
       role: "user",
       content: input,
     };
+    const assistantId = `a-${Date.now()}`;
 
     setError(null);
     setLoading(true);
     setMessages((prev) => [...prev, userMsg]);
+    // 先占位一条空的 assistant 消息，流式过程中持续填充
+    setMessages((prev) => [...prev, { id: assistantId, role: "assistant", content: "" }]);
 
     try {
-      const data = await chat(sessionId, input);
-      setMessages((prev) => [...prev, ...normalizeMessages(data, `a-${Date.now()}`)]);
-      setActions(data.actions);
-      setStateSnapshot(data.state_snapshot);
-      void prefetchPalProfiles(data.state_snapshot);
-      void prefetchPalProfilesFromText(data.messages.map((m) => m.content));
+      const doneBox: { data: AgentData | null } = { data: null };
+      await chatStream(
+        sessionId,
+        input,
+        (delta) => {
+          // 累积文本到当前 assistant 消息
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === assistantId ? { ...m, content: m.content + delta } : m,
+            ),
+          );
+        },
+        (data) => {
+          doneBox.data = data;
+        },
+      );
+
+      const doneData = doneBox.data;
+      if (doneData) {
+        // 流式完成：用最终完整数据补齐消息（trace / 富文本）并刷新 actions / state
+        const finalMsgs = normalizeMessages(doneData, `a-${Date.now()}`);
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantId
+              ? (finalMsgs[0] ? { ...finalMsgs[0], id: assistantId } : m)
+              : m,
+          ),
+        );
+        setActions(doneData.actions);
+        setStateSnapshot(doneData.state_snapshot);
+        void prefetchPalProfiles(doneData.state_snapshot);
+        void prefetchPalProfilesFromText(doneData.messages.map((m) => m.content));
+      }
     } catch (err) {
       setError((err as Error).message);
+      // 出错时移除空的占位消息，避免留下空白气泡
+      setMessages((prev) => prev.filter((m) => m.id !== assistantId));
     } finally {
       setLoading(false);
     }

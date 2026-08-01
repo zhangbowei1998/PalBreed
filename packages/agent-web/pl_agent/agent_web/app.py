@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from pl_agent.agent.auth import make_user_store
@@ -139,6 +140,8 @@ async def agent_chat(body: ChatRequest, request: Request) -> dict:
 
     workflow: AgentWorkflow = app.state.workflow
     user_id = resolve_user_id_from_request(request)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="请先登录")
     try:
         with timer_ms() as metric:
             data = await workflow.handle_chat(
@@ -163,12 +166,91 @@ async def agent_chat(body: ChatRequest, request: Request) -> dict:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
+@app.post("/agent/chat/stream")
+async def agent_chat_stream(body: ChatRequest, request: Request):
+    """SSE 流式聊天：逐 token 推送回答文本（打字机效果）。"""
+    if not body.session_id or not body.message.strip():
+        raise HTTPException(
+            status_code=400, detail="session_id and message are required"
+        )
+
+    workflow: AgentWorkflow = app.state.workflow
+    user_id = resolve_user_id_from_request(request)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="请先登录")
+
+    async def event_stream():
+        import asyncio
+        import json
+
+        q: asyncio.Queue = asyncio.Queue()
+        result: dict = {"data": None, "error": None}
+
+        async def on_text(delta: str) -> None:
+            await q.put(("delta", delta))
+
+        async def worker() -> None:
+            try:
+                with timer_ms() as metric:
+                    data = await workflow.handle_chat(
+                        ChatInput(
+                            session_id=body.session_id,
+                            message=body.message,
+                            user_id=user_id,
+                        ),
+                        text_callback=on_text,
+                    )
+                data["meta"] = {
+                    **data.get("meta", {}),
+                    "action": "chat",
+                    "latency_ms": metric["elapsed_ms"],
+                    "user_id": user_id,
+                }
+                result["data"] = data
+            except Exception as exc:  # noqa: BLE001
+                result["error"] = str(exc)
+            finally:
+                await q.put(("__end__", None))
+
+        task = asyncio.create_task(worker())
+        try:
+            while True:
+                kind, payload = await q.get()
+                if kind == "__end__":
+                    break
+                if kind == "delta":
+                    yield f"data: {json.dumps({'type': 'delta', 'content': payload}, ensure_ascii=False)}\n\n"
+        finally:
+            if not task.done():
+                task.cancel()
+
+        if result["error"] is not None:
+            yield f"data: {json.dumps({'type': 'error', 'message': result['error']}, ensure_ascii=False)}\n\n"
+        else:
+            yield f"data: {json.dumps({'type': 'done', 'data': result['data']}, ensure_ascii=False)}\n\n"
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
 @app.post("/agent/action")
 async def agent_action(body: ActionRequest, request: Request) -> dict:
     if not body.session_id or not body.action:
         raise HTTPException(
             status_code=400, detail="session_id and action are required"
         )
+
+    valid_actions = {
+        "confirm_target",
+        "expand_parent",
+        "select_parent_pair",
+        "continue_from_parent",
+    }
+    if body.action not in valid_actions:
+        raise HTTPException(status_code=400, detail=f"未知 action: {body.action}")
 
     if body.action == "expand_parent" and (
         not body.pal_id or not body.source_message_id
@@ -194,6 +276,8 @@ async def agent_action(body: ActionRequest, request: Request) -> dict:
 
     workflow: AgentWorkflow = app.state.workflow
     user_id = resolve_user_id_from_request(request)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="请先登录")
     try:
         with timer_ms() as metric:
             data = await workflow.handle_action(
@@ -230,6 +314,8 @@ async def get_session(session_id: str, request: Request) -> dict:
     repository: InMemorySessionRepository = app.state.repository
     # 与 handle_chat/handle_action 一致的按用户隔离 key
     user_id = resolve_user_id_from_request(request)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="请先登录")
     internal_key = f"u:{user_id or app.state.settings.default_user_key}:{session_id}"
     state = await repository.get(internal_key)
     if not state:

@@ -56,6 +56,8 @@ class AgentLoop:
         history: list[dict] | None = None,
         long_term_facts: list[str] | None = None,
         history_summary: str | None = None,
+        *,
+        text_callback=None,
     ) -> AgentLoopResult:
         """Run one user turn with two memory layers + optional compressed context.
 
@@ -64,6 +66,8 @@ class AgentLoop:
           (e.g. owned pals) injected into the system prompt.
         - ``history_summary``: compressed summary of earlier turns that were
           dropped from ``history``, injected into the system prompt.
+        - ``text_callback``: optional async callable receiving final text
+          deltas as the model streams them (for SSE / typing effect).
         """
         tools = self._registry.to_openai_functions()
         system_content = self._system_prompt
@@ -91,6 +95,8 @@ class AgentLoop:
         error = ""
 
         for i in range(self._max_rounds):
+            # 是否本轮可流式：流式只适用于最终文本轮。
+            # 先用普通 chat 判断是否请求工具（工具调用需完整 JSON，无法流式）。
             try:
                 response = await self._llm.chat(messages, tools=tools)
                 last_model = response.model or last_model
@@ -107,8 +113,17 @@ class AgentLoop:
 
             if not response.tool_calls:
                 rounds.append(round_rec)
+                content = response.content
+                # 有回调且支持流式：重新走一遍流式以获得打字机效果。
+                if text_callback is not None and hasattr(self._llm, "chat_stream"):
+                    streamed: list[str] = []
+                    async for delta in self._llm.chat_stream(messages, tools=tools):
+                        streamed.append(delta)
+                        await text_callback(delta)
+                    if streamed:
+                        content = "".join(streamed)
                 return AgentLoopResult(
-                    content=response.content,
+                    content=content,
                     model=last_model,
                     llm_rounds=rounds,
                     error=error,

@@ -73,6 +73,83 @@ export async function chat(sessionId: string, message: string): Promise<AgentDat
   });
 }
 
+/**
+ * SSE 流式聊天：逐 token 推送回答文本。
+ * - onDelta: 收到一段文本增量
+ * - onDone: 收到最终完整数据（actions / state_snapshot / trace）
+ */
+export async function chatStream(
+  sessionId: string,
+  message: string,
+  onDelta: (delta: string) => void,
+  onDone: (data: AgentData) => void,
+): Promise<void> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 60000);
+  let res: Response;
+  try {
+    res = await fetch(`${baseUrl}/agent/chat/stream`, {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeaders(),
+      },
+      body: JSON.stringify({ session_id: sessionId, message }),
+    });
+  } catch (err) {
+    if ((err as Error).name === "AbortError") {
+      throw new Error("请求超时：agent-service 无响应，请稍后重试");
+    }
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`HTTP ${res.status}: ${text}`);
+  }
+
+  const reader = res.body?.getReader();
+  if (!reader) throw new Error("浏览器不支持流式读取");
+
+  const decoder = new TextDecoder("utf-8");
+  let buffer = "";
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      // 按 SSE 块（空行分隔）解析
+      const blocks = buffer.split("\n\n");
+      buffer = blocks.pop() ?? "";
+      for (const block of blocks) {
+        for (const line of block.split("\n")) {
+          if (!line.startsWith("data:")) continue;
+          const payload = line.slice(5).trim();
+          if (!payload) continue;
+          try {
+            const msg = JSON.parse(payload);
+            if (msg.type === "delta") {
+              onDelta(msg.content as string);
+            } else if (msg.type === "done") {
+              onDone(msg.data as AgentData);
+            } else if (msg.type === "error") {
+              throw new Error(msg.message as string);
+            }
+          } catch (err) {
+            if (err instanceof SyntaxError) continue;
+            throw err;
+          }
+        }
+      }
+    }
+  } finally {
+    reader.releaseLock();
+  }
+}
+
 export async function action(
   sessionId: string,
   actionName: string,

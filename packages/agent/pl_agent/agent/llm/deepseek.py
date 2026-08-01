@@ -54,6 +54,64 @@ class DeepSeekClient(LLMClient):
             payload["tool_choice"] = "auto"
         return payload
 
+    def _stream_payload(
+        self, messages: list[ChatMessage | dict], tools: list[dict] | None
+    ) -> dict:
+        payload: dict = {
+            "model": self._config.model,
+            "messages": [self._serialize_message(m) for m in messages],
+            "temperature": self._config.temperature,
+            "max_tokens": self._config.max_tokens,
+            "stream": True,
+        }
+        if tools:
+            payload["tools"] = tools
+            payload["tool_choice"] = "auto"
+        return payload
+
+    async def chat_stream(
+        self,
+        messages: list[ChatMessage | dict],
+        *,
+        tools: list[dict] | None = None,
+    ):
+        """Stream chat completion (OpenAI SSE). Yields text deltas."""
+        url = f"{self._config.base_url.rstrip('/')}/chat/completions"
+        try:
+            async with httpx.AsyncClient(timeout=None) as client:
+                async with client.stream(
+                    "POST",
+                    url,
+                    headers=self._headers(),
+                    content=json.dumps(self._stream_payload(messages, tools)),
+                ) as response:
+                    if response.status_code >= 400:
+                        body = await response.aread()
+                        raise LLMUnavailableError(
+                            f"LLM HTTP {response.status_code}: {body[:300].decode(errors='ignore')}"
+                        )
+                    async for line in response.aiter_lines():
+                        if not line or not line.startswith("data:"):
+                            continue
+                        data = line[len("data:"):].strip()
+                        if data == "[DONE]":
+                            break
+                        try:
+                            chunk = json.loads(data)
+                        except json.JSONDecodeError:
+                            continue
+                        try:
+                            delta = chunk["choices"][0]["delta"]
+                        except (KeyError, IndexError, TypeError):
+                            continue
+                        content = delta.get("content")
+                        if content:
+                            yield content
+        except httpx.TimeoutException as exc:
+            raise LLMTimeoutError("LLM stream timed out") from exc
+        except httpx.HTTPError as exc:
+            raise LLMUnavailableError(f"LLM stream network error: {exc}") from exc
+
     async def chat(
         self,
         messages: list[ChatMessage | dict],

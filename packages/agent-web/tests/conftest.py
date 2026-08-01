@@ -60,4 +60,18 @@ def test_client():
         workflow._client = FakeUpstreamClient()
         # 集成测试锁定到规则模式（不依赖真实 LLM），保持确定性。
         workflow._agent_loop = None
+
+        # 注册测试用户并注入 Authorization 头：接口现已强制登录。
+        # 用户名固定，重复运行时注册返回 409，改走登录拿新 token。
+        reg = client.post(
+            "/auth/register",
+            json={"username": "it_user", "password": "itpass123456"},
+        )
+        if reg.status_code == 409:
+            reg = client.post(
+                "/auth/login",
+                json={"username": "it_user", "password": "itpass123456"},
+            )
+        token = reg.json()["data"]["token"]
+        client.headers.update({"Authorization": f"Bearer {token}"})
         yield client

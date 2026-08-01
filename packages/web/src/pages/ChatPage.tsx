@@ -6,6 +6,7 @@ import { ActionTray } from "../components/ActionTray";
 import { AuthModal } from "../components/AuthModal";
 import { BreedingTree, type SelectedPair } from "../components/BreedingTree";
 import { ChatComposer } from "../components/ChatComposer";
+import { LoginGate } from "../components/LoginGate";
 import { MessageList } from "../components/MessageList";
 import { useAgentSession } from "../hooks/useAgentSession";
 import { useAuth } from "../hooks/useAuth";
@@ -108,29 +109,35 @@ export function ChatPage() {
 
         {error && <div className="error">{error}</div>}
 
-        <BreedingTree
-          targetPal={stateSnapshot?.target_pal ?? null}
-          selectedPairs={selectedPairs}
-          palNameToId={palNameToId}
-          palProfiles={palProfiles}
-        />
+        {!user ? (
+          <LoginGate onLogin={() => setAuthOpen(true)} />
+        ) : (
+          <>
+            <BreedingTree
+              targetPal={stateSnapshot?.target_pal ?? null}
+              selectedPairs={selectedPairs}
+              palNameToId={palNameToId}
+              palProfiles={palProfiles}
+            />
 
-        <MessageList
-          messages={messages}
-          palNameToId={palNameToId}
-          palProfiles={palProfiles}
-          loading={loading}
-          pairActionMap={pairActionMap}
-          onSelectPair={handleSelectPair}
-        />
-        <ActionTray
-          actions={displayActions}
-          loading={loading}
-          onAction={async (item) => {
-            await runAction(item);
-          }}
-        />
-        <ChatComposer loading={loading} onSend={sendMessage} />
+            <MessageList
+              messages={messages}
+              palNameToId={palNameToId}
+              palProfiles={palProfiles}
+              loading={loading}
+              pairActionMap={pairActionMap}
+              onSelectPair={handleSelectPair}
+            />
+            <ActionTray
+              actions={displayActions}
+              loading={loading}
+              onAction={async (item) => {
+                await runAction(item);
+              }}
+            />
+            <ChatComposer loading={loading} onSend={sendMessage} />
+          </>
+        )}
 
         <AuthModal
           open={authOpen}

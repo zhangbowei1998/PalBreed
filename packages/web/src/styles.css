@@ -395,6 +395,41 @@ button:disabled {
   padding: 8px 10px;
 }
 
+/* ── 未登录引导 ── */
+.login-gate {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.login-gate-card {
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.login-gate-emoji {
+  font-size: 42px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.login-gate-card h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: #111111;
+}
+
+.login-gate-card p {
+  margin: 0 0 20px;
+  color: #6b6b6b;
+  font-size: 14px;
+}
+
 /* ── 思考过程 ── */
 .thinking {
   margin-bottom: 10px;

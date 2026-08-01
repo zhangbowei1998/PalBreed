@@ -95,6 +95,21 @@ class LLMClient(ABC):
         ``LLMResponse.tool_calls`` when the model asks to call a tool.
         """
 
+    async def chat_stream(
+        self,
+        messages: list[ChatMessage | dict],
+        *,
+        tools: list[dict] | None = None,
+    ):
+        """Stream a chat completion, yielding text deltas.
+
+        Default implementation falls back to a single ``chat`` call.
+        Providers that support OpenAI-style SSE streaming override this.
+        """
+        response = await self.chat(messages, tools=tools)
+        if response.content:
+            yield response.content
+
     async def complete(self, prompt: str) -> str:
         """Convenience helper for single-prompt completion."""
         response = await self.chat([ChatMessage(role=Role.USER, content=prompt)])

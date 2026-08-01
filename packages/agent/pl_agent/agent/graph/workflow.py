@@ -136,14 +136,15 @@ class AgentWorkflow:
         state.limits.max_nodes = self._settings.max_nodes
         return await self._repository.save(session_id, state)
 
-    async def handle_chat(self, data: ChatInput) -> dict:
+    async def handle_chat(self, data: ChatInput, *, text_callback=None) -> dict:
         # 短期记忆按用户隔离：session_id 与 user 绑定成存储 key（匿名也加 default 前缀）
         data.session_id = self._session_key(data.session_id, data.user_id)
         state = await self._load_or_create_state(data.session_id)
 
         if self._agent_loop is not None:
             return await self._handle_llm_chat(
-                data.session_id, state, data.message, user_id=data.user_id
+                data.session_id, state, data.message, user_id=data.user_id,
+                text_callback=text_callback,
             )
 
         fallback_expand = parse_expand_fallback(data.message)
@@ -203,6 +204,8 @@ class AgentWorkflow:
         state: SessionState,
         message: str,
         user_id: str | None = None,
+        *,
+        text_callback=None,
     ) -> dict:
         assert self._agent_loop is not None
 
@@ -226,6 +229,7 @@ class AgentWorkflow:
                     history=history,
                     long_term_facts=long_term_facts,
                     history_summary=history_summary,
+                    text_callback=text_callback,
                 )
                 reply = result.content
             except Exception as exc:  # noqa: BLE001
