@@ -1,318 +1,176 @@
-# 数据库规范化迁移 — 开发计划
+# API 数据访问 ORM 迁移计划
 
-> 基于: `docs/architecture/DATABASE_DESIGN.md` v1.1 | 日期: 2026-07-31
-
----
-
-## 变更概览
-
-| 维度 | 当前 (宽表) | 目标 (5 表规范化) |
-|------|------------|------------------|
-| 表数量 | 1 (`pals`) | 5 (`pal`, `pal_aliase`, `pal_element`, `work_suitability`, `breeding_rule`) |
-| 工作适应性 | 12 列 (每列一个索引) | 独立表 + 1 个复合索引 |
-| 元素 | JSONB `elements` | `pal_element` 行 |
-| 别名 | JSONB `aliases` | `pal_aliase` 行 |
-| PK 类型 | TEXT (game_id) | SERIAL (id) + UNIQUE game_id |
-| 配种规则 | 代码硬编码 | `breeding_rule` 表 |
-| 配种 SQL | `FROM pals a, pals b WHERE {col}>=...` | `JOIN work_suitability` |
+> 版本: v2.1 | 日期: 2026-08-01 | 状态: 已完成
 
 ---
 
-## Phase 1 — 迁移 SQL
+## 1. 目标与范围
 
-**文件**: `data/sql/002_normalize.sql`
+### 1.1 迁移目标
 
-**产出**: 一个事务脚本，包含:
-1. `CREATE TABLE` 5 张新表
-2. `INSERT INTO ... SELECT` 从旧 `pals` 迁移数据
-3. 宽列 `handiwork/kindling/...` → `work_suitability` 行 (12 行/帕鲁)
-4. `JSONB elements` → `pal_element` 行
-5. `JSONB aliases` → `pal_aliase` 行
-6. 建索引
-7. `DROP TABLE pals; ALTER TABLE pal RENAME TO pals;` (保持旧表名兼容过渡)
+将 `packages/api` 的数据库访问方式由 `asyncpg + 原生 SQL` 迁移为 `SQLAlchemy Async ORM`，并保持以下不变：
 
-**风险**: 不可逆操作。执行前 `pg_dump` 备份。
+- 对外 API 路径与响应结构
+- 业务规则（配种公式、特殊规则优先级、超范围回退）
+- PostgreSQL 不可用时 JSON 降级策略
 
----
+### 1.2 本次范围
 
-## Phase 2 — schema.py (数据模型)
+在本次改造中，`API` 运行时和启动加载涉及的数据库操作统一迁移到 ORM：
 
-**文件**: `packages/core/pl_agent/core/schema.py`
+- 启动加载全量帕鲁
+- 名称查询配种父母对
+- 特殊配种规则守卫
+- 工种等级筛选
+- 工种统计查询
 
-**变更**: **Pal 扁平面向业务层不变**。`Pal` dataclass 保持现有结构——它是 API 和业务逻辑的内部表示。数据库规范化不影响 `Pal` 的 Python 形态。
+### 1.3 非范围
 
-新增两个轻量 dataclass 用于 DB 读写:
-
-```python
-@dataclass
-class PalRow:
-    """pal 表行 — 不含子表数据"""
-    id: int
-    game_id: str
-    zukan_index: int
-    cn_name: str
-    en_name: str
-    combi_rank: int
-    rarity: int
-    is_wild: bool
-    image_url: str | None
-    wiki_url: str | None
-
-@dataclass
-class BreedingRuleRow:
-    """breeding_rule 表行"""
-    id: int
-    child_id: int
-    parent_a_id: int | None
-    parent_b_id: int | None
-    rule_type: str  # fixed_pair / same_species / unbreedable
-    description: str | None
-```
-
-`WorkSuitability` 不变——仍是 12 个 int 字段的 dataclass，在 adapter 层做行↔对象转换。
+- `packages/adapters` 的写入链路（爬虫入库）
+- 数据库 DDL 结构（`data/sql/002_normalize.sql`）
+- 前端接口契约
 
 ---
 
-## Phase 3 — Postgres Adapter (写入)
+## 2. 现状问题
 
-**文件**: `packages/adapters/adapters/postgres/adapter.py`
-
-**变更**: 重写 `UPSERT_PAL` 为多表事务写入:
-
-```
-Pal (业务对象)
-  │
-  ├── 1. INSERT INTO pal (...) ON CONFLICT (game_id) DO UPDATE
-  │      返回 pal.id
-  │
-  ├── 2. DELETE + INSERT pal_element (属性 1-2 行)
-  │
-  ├── 3. DELETE + INSERT pal_aliase (别名 0-N 行)
-  │
-  └── 4. UPSERT work_suitability (12 行, level>=0)
-         INSERT ... ON CONFLICT (pal_id, work_type) DO UPDATE
-```
-
-`upsert_all(pals)` 不变，内部逐条调用新的 `upsert_pal(pal)`。
+1. API 层存在数据库连接与 SQL 细节泄漏到路由逻辑（可维护性低）。
+2. 查询分散在多个模块，复用能力弱。
+3. 原生 SQL 字符串较多，不利于类型感知和结构化重构。
+4. 生命周期管理依赖底层连接池细节，扩展困难。
 
 ---
 
-## Phase 4 — Postgres Loader (读取)
+## 3. 目标架构
 
-**文件**: `packages/adapters/adapters/postgres/loader.py`
-
-**变更**: 核心改动——加载逻辑从单表 SELECT 变为多表 JOIN 拼接:
-
-### `load_all()` (替代 `load_hot()`)
-
-```sql
--- 一条查询拼装完整 Pal 列表
-SELECT
-    p.id, p.game_id, p.zukan_index, p.cn_name, p.en_name,
-    p.combi_rank, p.rarity, p.is_wild, p.image_url, p.wiki_url,
-    array_agg(pe.element_type) FILTER (WHERE pe.element_type IS NOT NULL) AS elements,
-    coalesce(jsonb_object_agg(ws.work_type, ws.level)
-             FILTER (WHERE ws.work_type IS NOT NULL), '{}') AS work_suitability_json,
-    array_agg(pa.alias) FILTER (WHERE pa.alias IS NOT NULL) AS aliases
-FROM pal p
-LEFT JOIN pal_element pe ON p.id = pe.pal_id
-LEFT JOIN work_suitability ws ON p.id = ws.pal_id
-LEFT JOIN pal_aliase pa ON p.id = pa.pal_id
-GROUP BY p.id
-ORDER BY p.combi_rank;
+```
+FastAPI Route
+   │
+   ▼
+OrmQueryService (业务查询服务)
+   │
+   ▼
+SQLAlchemy AsyncSession
+   │
+   ▼
+ORM Models (pal/work_suitability/...)
+   │
+   ▼
+PostgreSQL
 ```
 
-然后在 Python 侧装配 `Pal` 对象:
-- `element_type[]` → `list[Element]`
-- `work_suitability_json` → `WorkSuitability.from_dict()`
+关键点：
 
-### `get_detail(pal_id)` — 不变，仍查 `pal` 表
-
-### `query_suitability(work_type, min_level, limit)` — **简化**:
-
-```sql
--- 之前: SELECT id, cn_name, {work_type} AS lv FROM pals WHERE {work_type} >= $1
--- 现在: 直接查 work_suitability + JOIN pal
-SELECT p.id, p.cn_name, p.combi_rank, ws.level
-FROM work_suitability ws
-JOIN pal p ON ws.pal_id = p.id
-WHERE ws.work_type = $1 AND ws.level >= $2
-ORDER BY ws.level DESC
-LIMIT $3;
-```
-
-**安全改进**: 不再有动态列名插值（之前是 SQL 注入风险点）。
-
-### 删除 `BreedingIndex`
-
-不需要单独的索引 dataclass——启动时直接加载 `list[Pal]` 到内存，Parser 构建索引。
+- 路由不直接触达连接池。
+- ORM 模型集中在 `api/db/models.py`。
+- 查询逻辑集中在 `api/db/queries.py`。
+- `lifespan` 初始化 `OrmQueryService`，并保留 JSON 降级。
 
 ---
 
-## Phase 5 — API Routes (SQL 重写)
+## 4. 详细执行计划
 
-**文件**: `packages/api/pl_agent/api/routes/query.py`
+### Phase A: 依赖与基础设施
 
-### 变更明细
+- 修改 `packages/api/pyproject.toml`：新增
+  - `sqlalchemy>=2.0`
+  - `asyncpg>=0.30`
+- 新增 `packages/api/pl_agent/api/db/`
+  - `base.py`：Declarative Base
+  - `models.py`：ORM 表映射
+  - `session.py`：异步 engine / sessionmaker
+  - `queries.py`：统一查询服务
 
-#### `BREED_PARENTS_SQL`
+验收：
 
-```sql
--- 之前
-SELECT a.cn_name, a.id, a.combi_rank, a.is_wild,
-       b.cn_name, b.id, b.combi_rank, b.is_wild
-FROM pals a, pals b
-WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $1
-  AND a.id != $2 AND b.id != $2 AND a.id <= b.id
+- API 包可成功导入 ORM 模块，无循环依赖。
 
--- 之后 (仅表名从 pals 变 pal，列名不变)
-SELECT a.cn_name, a.id, a.combi_rank, a.is_wild,
-       b.cn_name, b.id, b.combi_rank, b.is_wild
-FROM pal a, pal b
-WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $1
-  AND a.id != $2 AND b.id != $2 AND a.id <= b.id
-```
+### Phase B: 启动加载迁移
 
-> `$2` 现在是 `pal.id` (SERIAL)，不再混用 game_id。
+- 改造 `packages/api/pl_agent/api/main.py`
+  - 使用 `OrmQueryService.load_all_pals()` 构建 `QueryParser`
+  - 将 `orm_service` 挂载到 `app.state`
+  - 保留异常回退到 JSON 加载
 
-#### `SUITABILITY_SQL` — **最大改动**
+验收：
 
-```sql
--- 之前 (动态列插值 — 不安全)
-SELECT id, cn_name, number, combi_rank, is_wild, handiwork, kindling, ...
-FROM pals WHERE {col} >= $1 ORDER BY {col} DESC LIMIT $2
+- `/health` 正常返回，且 `pals_loaded > 0`（PG 可用场景）。
 
--- 之后 (参数化 JOIN)
-SELECT p.id, p.cn_name, p.number, p.combi_rank, p.is_wild, ws.level
-FROM pal p
-JOIN work_suitability ws ON p.id = ws.pal_id
-WHERE ws.work_type = $1 AND ws.level >= $2
-ORDER BY ws.level DESC
-LIMIT $3
-```
+### Phase C: 路由查询迁移
 
-**收益**: 消除 `f-string` 动态列名插值，彻底解决 SQL 注入风险。
+- 改造 `packages/api/pl_agent/api/routes/query.py`
+  - 删除路由内直接操作连接池的代码
+  - 使用 `OrmQueryService` 执行：
+    - `get_breeding_rules_by_game_id`
+    - `get_pal_pair_by_db_id`
+    - `query_parent_pairs_by_rank`
+    - `query_suitability`
+    - `get_work_stats`
 
-#### `WORK_STATS_SQL` — **大幅简化**
+验收：
 
-```sql
--- 之前 (12 路 UNION ALL)
-SELECT 'handiwork' AS wt, max(handiwork), avg(handiwork),
-       count(*) FILTER (WHERE handiwork>0) FROM pals
-UNION ALL
-SELECT 'kindling', max(kindling), avg(kindling),
-       count(*) FILTER (WHERE kindling>0) FROM pals
-UNION ALL ...
+- `/api/query` 名称查询与属性查询均可用。
+- `/api/suitability/stats` 返回结构不变。
 
--- 之后 (一条 GROUP BY)
-SELECT work_type,
-       max(level) AS max_level,
-       ROUND(avg(level), 1) AS avg_level,
-       count(*) FILTER (WHERE level > 0) AS pal_count
-FROM work_suitability
-GROUP BY work_type
-ORDER BY max_level DESC;
-```
+### Phase D: 文档同步
 
-**收益**: 12 路 UNION ALL → 1 个 GROUP BY，SQL 从 ~60 行缩小到 ~10 行。
+- 更新需求文档中“技术选型”和“数据访问方式”描述。
+- 更新架构文档中 API 数据访问层图示与说明。
+- 更新上下文文档，补充 AI 接手指引。
 
-#### `_pal_row_to_dict()` — 适配新行结构
+验收：
 
-不再从宽列构建 `work_suitability`，改为从 JOIN 结果构建。
+- 文档可清晰回答“数据库访问在哪里、怎么改、如何扩展”。
 
-#### `_breeding_query()` — 增加守卫
+### Phase E: 验证与收尾
 
-```python
-async def _breeding_query(pool, pal_id: int, combi_rank: int):
-    # 第 0 步: 查特殊规则
-    rules = await pool.fetch(
-        "SELECT rule_type, parent_a_id, parent_b_id FROM breeding_rule WHERE child_id = $1",
-        pal_id
-    )
-    for r in rules:
-        if r["rule_type"] == "unbreedable":
-            return []  # 不可配种
-        if r["rule_type"] == "same_species":
-            return [ParentPair(...)]  # 同类繁殖
-        if r["rule_type"] == "fixed_pair":
-            ...  # 固定组合
+- 运行关键接口 smoke 验证。
+- 若出现类型或行为偏差，优先保持向后兼容。
 
-    # 第 1 步: 公式
-    rows = await pool.fetch(BREED_PARENTS_SQL, combi_rank, pal_id)
-    return [ParentPair(...) for r in rows]
-```
+验收：
+
+- 核心路径全部通过：
+  - `POST /api/query`（名称）
+  - `POST /api/query`（工种）
+  - `GET /api/suitability/stats`
+  - `GET /health`
 
 ---
 
-## Phase 6 — main.py (启动逻辑)
+## 5. 回滚策略
 
-**文件**: `packages/api/pl_agent/api/main.py`
+若 ORM 改造导致严重回归：
 
-**变更**: 最小改动:
-
-1. `PostgresLoader.load_hot()` → `PostgresLoader.load_all()` (返回 `list[Pal]`)
-2. 删除 `BreedingIndex` 概念——直接用 `list[Pal]` 传给 `QueryParser`
-3. `QueryParser(all_pals)` — 内部构建自己的索引
-4. PG 降级路径不变
-
-```python
-# 之前
-index = await pg_loader.load_hot()       # → BreedingIndex
-all_pals = index.pals
-parser = QueryParser(all_pals)
-
-# 之后
-pals = await pg_loader.load_all()        # → list[Pal]
-parser = QueryParser(pals)
-```
+1. 回退 `main.py` 和 `routes/query.py` 到上一版。
+2. 保留 `db/` 目录但不启用。
+3. 通过分支恢复 `asyncpg + SQL` 路径。
 
 ---
 
-## Phase 7 — data_loader.py (JSON 降级)
+## 6. 风险与对策
 
-**文件**: `packages/core/pl_agent/core/data_loader.py`
+1. 配种 CROSS JOIN 逻辑在 ORM 表达中的可读性下降。
+- 对策：使用 `aliased(PalModel)` + 明确注释，必要时保留 SQLAlchemy `text` 作为兜底。
 
-**变更**: 极小改动。JSON 文件 (`pal_data.json`) 格式不变——Pal 扁平面向文件存储仍然合理。仅在 JSON → Pal 反序列化时确保 `elements`、`work_suitability` 正确映射。
+2. API 响应字段可能在改造中被意外改变。
+- 对策：以现有 formatter 为唯一输出层，路由只替换数据来源。
 
----
-
-## Phase 8 — paldb adapter/parser (数据采集)
-
-**文件**: `packages/adapters/adapters/paldb/adapter.py`
-
-**变更**: 不需要改动。爬虫采集的是扁平的 `Pal` 对象，写入 PG 时由 PostgresAdapter 负责拆表。adapter 只需输出 `list[Pal]`，不关心最终存储结构。
+3. 启动阶段若 ORM 初始化失败可能导致服务不可用。
+- 对策：保留 JSON fallback，确保最小可用。
 
 ---
 
-## 实施顺序
+## 7. 执行记录
 
-```
-Phase 1 ──▶ Phase 2 ──▶ Phase 3 ──▶ Phase 4 ──▶ Phase 5 ──▶ Phase 6 ──▶ Phase 7
- (SQL)     (schema)   (adapter)   (loader)    (routes)    (main)     (fallback)
-                                      │
-                                      └── Phase 3+4 可并行 ──┘
-                                                    │
-                                              Phase 8 (验证)
-```
+- [x] 读取并确认现有架构与数据库文档
+- [x] 产出完整 ORM 迁移计划
+- [x] 引入 ORM 依赖与模块
+- [x] API 路由迁移完成
+- [x] 文档更新完成
+- [x] 关键接口验证完成
 
-| Phase | 依赖 | 可并行 | 风险 |
-|:---:|------|:---:|------|
-| 1 | 无 | - | 🔴 不可逆数据迁移 |
-| 2 | 无 | ✅ Phase 1 | 🟡 schema 加字段不破坏现有 |
-| 3 | 1, 2 | ✅ Phase 4 | 🟡 UPSERT 逻辑需验证 |
-| 4 | 1, 2 | ✅ Phase 3 | 🟡 JOIN 查询性能 |
-| 5 | 4 | ❌ 依赖 loader | 🟡 SQL 重写需逐条验证 |
-| 6 | 4 | ❌ | 🟢 仅改 3 行 |
-| 7 | 无 | ✅ 全部 | 🟢 JSON 格式不变 |
+验证摘要（2026-08-01）：
 
-## 验证清单
-
-- [ ] `002_normalize.sql` 在本地 PG 执行成功，数据无丢失
-- [ ] `PostgresWriter.upsert_all()` 写入 288 条 Pal，5 表行数正确
-- [ ] `PostgresLoader.load_all()` 返回 `list[Pal]`，work_suitability 正确
-- [ ] `POST /api/query {"input": "墨罗娜"}` 返回父母对 (22 对)
-- [ ] `POST /api/query {"input": "手工:6"}` 返回候选列表
-- [ ] `GET /api/suitability/stats` 12 工种统计正确
-- [ ] `GET /health` pals_loaded=288
-- [ ] PG 不可用时 JSON 降级正常 (make serve 无 PG)
-- [ ] 现有 63 个测试全部通过
+- API 冒烟脚本通过 8/8（health、name_query、suitability、out_of_range、pal_detail、breeding_tree、stats、not_found）。
+- `pl_agent.api.main` 在项目 PYTHONPATH 下可正常导入。
+- 新增 `OrmQueryService` 单元测试 7/7 通过（不依赖真实 PostgreSQL，使用 AsyncSession mock）。

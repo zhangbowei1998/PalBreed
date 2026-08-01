@@ -2,7 +2,7 @@
 
 > 版本: v1.2 | 日期: 2026-08-04 | 状态: **已废弃 ⛔**
 
-> ⚠️ **本文档已归档。** v0.2 起核心引擎层 (breeding_engine, breeding_tree, suitability_query, path_optimizer, interfaces) 已全部移除。配种计算现由 `packages/api/pl_agent/api/routes/query.py` 中的 PostgreSQL SQL 直接完成。参考 `ARCHITECTURE.md` §4 了解当前实现。
+> ⚠️ **本文档已归档。** v0.2 起核心引擎层 (breeding_engine, breeding_tree, suitability_query, path_optimizer, interfaces) 已全部移除。配种计算现由 API ORM 查询服务完成（`packages/api/pl_agent/api/routes/query.py` + `packages/api/pl_agent/api/db/queries.py`）。参考 `ARCHITECTURE.md` §4 了解当前实现。
 
 ---
 

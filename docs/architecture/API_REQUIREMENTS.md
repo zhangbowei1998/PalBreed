@@ -1,6 +1,6 @@
 # API 服务需求文档
 
-> 版本: v2.0 | 日期: 2026-08-04 | 状态: 重构完成 — 引擎层已移除，SQL 直连
+> 版本: v2.1 | 日期: 2026-08-01 | 状态: 重构完成 — 引擎层已移除，ORM 查询服务
 
 ---
 
@@ -22,10 +22,10 @@
 
 ### 1.1 定位
 
-API 层是所有业务逻辑的**承载者**。路由直接通过 PostgreSQL SQL 实现配种查询和属性筛选：
+API 层是所有业务逻辑的**承载者**。路由通过 ORM 查询服务访问 PostgreSQL，实现配种查询和属性筛选：
 
 1. 接收 HTTP 请求
-2. 执行 PostgreSQL SQL 查询
+2. 调用 ORM 查询服务
 3. 格式化响应
 
 ### 1.2 与 NLU 的关系
@@ -45,7 +45,7 @@ v0.2 (未来):   用户 ──▶ NLU ──▶ API ──▶ 引擎
 | 异步 | 内置 async/await |
 | 文档 | 自动生成 Swagger (`/docs`) |
 | CORS | 全开（开发阶段） |
-| 数据加载 | PG 全量加载 pals (Parser 索引) + SQL 直查；PG 不可用时 JSON 降级 |
+| 数据加载 | PG 全量加载 pals (Parser 索引) + ORM 查询；PG 不可用时 JSON 降级 |
 
 ---
 
@@ -212,7 +212,7 @@ GET /api/pal/Anubis
 
 ### 3.4 GET `/api/breeding/tree/{pal_id}` — 获取父母对
 
-返回目标帕鲁的所有可配种父母组合 (ParentPair 列表)，由 SQL CROSS JOIN 计算得出。
+返回目标帕鲁的所有可配种父母组合 (ParentPair 列表)，由 ORM 生成的 CROSS JOIN 查询计算得出。
 
 ### 3.5 GET `/api/suitability/stats` — 全工种统计
 
@@ -240,7 +240,7 @@ GET /api/pal/Anubis
          │ 否
          ▼
 ┌──────────────────┐
-│ 2. 中文名/英文名/ │── 是 ──▶ name_query → SQL 配种查询
+│ 2. 中文名/英文名/ │── 是 ──▶ name_query → ORM 配种查询
 │    别名精确匹配？  │
 └────────┬─────────┘
          │ 否
@@ -392,9 +392,8 @@ GET /api/pal/Anubis
 ```python
 # 优先从 PostgreSQL 加载 pals
 try:
-    async with pool.acquire() as conn:
-        rows = await conn.fetch("SELECT * FROM pals")
-        pals = [parse_pal_row(row) for row in rows]
+  orm_service = OrmQueryService.from_env()
+  pals = await orm_service.load_all_pals()
 except Exception:
     # PG 不可用: JSON 降级
     pals = DataLoader().load("data/processed/pal_data.json")
@@ -411,8 +410,8 @@ POST /api/query  {"input": "手工:6"}
   ├── 1. 输入解析 (Parser)
   │      "手工:6" → {type: "suitability", work_type: "handiwork", level: 6}
   │
-  ├── 2. SQL 属性筛选
-  │      SELECT cn_name FROM pals WHERE handiwork >= 6 ORDER BY handiwork DESC
+  ├── 2. ORM 属性筛选
+  │      work_suitability JOIN pal
   │
   ├── 3. 格式化响应
   └── 4. 返回候选列表
@@ -423,22 +422,23 @@ POST /api/query  {"input": "阿努比斯"}
   │
   ├── 1. 名称匹配 → Pal
   │
-  ├── 2. 执行 SQL 配种查询 (CROSS JOIN)
+  ├── 2. 执行 ORM 配种查询 (CROSS JOIN)
   │
   ├── 3. 格式化响应
   └── 4. 返回父母对列表
 ```
 
-### 7.3 配种 SQL
+### 7.3 配种查询（ORM 语义）
 
 ```python
-BREED_PARENTS_SQL = """
-    SELECT a.cn_name AS parent_a, b.cn_name AS parent_b
-    FROM pals a, pals b
-    WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $1
-      AND a.id != $2 AND b.id != $2
-      AND a.id <= b.id
-"""
+pa = aliased(PalModel)
+pb = aliased(PalModel)
+stmt = (
+  select(pa.cn_name.label("parent_a"), pb.cn_name.label("parent_b"))
+  .select_from(pa)
+  .join(pb, true())
+  .where(func.round((pa.combi_rank + pb.combi_rank) / 2.0) == target_rank)
+)
 ```
 
 ---

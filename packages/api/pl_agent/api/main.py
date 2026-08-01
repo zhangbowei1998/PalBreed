@@ -23,17 +23,16 @@ app.add_middleware(
 async def lifespan(application: FastAPI):
     """启动加载数据 (PG 优先, JSON 降级)."""
     from .parser import QueryParser
+    from .db.queries import OrmQueryService
 
     all_pals: list = []
-    pg_loader = None
+    orm_service = None
 
     # ── 1. PostgreSQL ────────────────────────────────────────
     try:
-        from adapters.postgres.loader import PostgresLoader
-
-        pg_loader = PostgresLoader()
-        all_pals = await pg_loader.load_all()
-        application.state.pg_loader = pg_loader
+        orm_service = OrmQueryService.from_env()
+        all_pals = await orm_service.load_all_pals()
+        application.state.orm_service = orm_service
         print(f"✅ PG: {len(all_pals)} pals")
     except Exception as e:
         print(f"⚠ PG unavailable ({e}), JSON fallback...")
@@ -53,8 +52,8 @@ async def lifespan(application: FastAPI):
     application.state.parser = QueryParser(all_pals)
     print(f"🚀 API ready: {len(all_pals)} pals")
     yield
-    if pg_loader:
-        await pg_loader.close()
+    if orm_service:
+        await orm_service.close()
 
 
 app.router.lifespan_context = lifespan

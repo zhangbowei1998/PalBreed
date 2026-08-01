@@ -11,7 +11,7 @@
 
 ## 这是什么
 
-一个智能化的幻兽帕鲁配种助手。用自然语言描述你想要的帕鲁（打字或语音），系统告诉你从哪里开始抓、怎么一步步配种。
+一个智能化的幻兽帕鲁配种助手。用自然语言描述你想要的帕鲁（打字或语音），系统会先筛选候选，再基于 CombiRank 计算配种父母组合。
 
 **示例**：
 
@@ -32,11 +32,11 @@
 
 | 功能 | 说明 |
 |------|------|
-| 🔍 **名称直查** | 输入帕鲁名 → 直接返回配种树 |
-| 🏭 **属性反向查** | 输入"手工10级" → 列出所有符合的帕鲁 → 选一个 → 配种树 |
+| 🔍 **名称直查** | 输入帕鲁名 → 返回父母组合（一级） |
+| 🏭 **属性反向查** | 输入"手工10级" → 列出所有符合的帕鲁 → 选一个 → 父母组合 |
 | 🎤 **语音输入** | 支持语音描述需求 (Web Speech API) |
-| 🌲 **配种树可视化** | 从野外基础帕鲁开始，树形展示完整配种路径 |
-| 📊 **多路径择优** | 多条方案自动排序：步数最少 > 最容易获取 |
+| 🧮 **ORM 配种查询** | API 通过 SQLAlchemy Async ORM 访问 PostgreSQL，执行 CROSS JOIN 公式查询 |
+| 📊 **工种统计** | 输出 12 工种 max/avg/count 统计 |
 
 ## 快速开始
 
@@ -85,6 +85,7 @@ pl-agent/
 | [`docs/context/CONTEXT.md`](./docs/context/CONTEXT.md) | 🔰 AI 接手快速上下文 |
 | [`docs/architecture/ARCHITECTURE.md`](./docs/architecture/ARCHITECTURE.md) | 🏗️ 完整架构设计 |
 | [`docs/architecture/PROJECT_STRUCTURE.md`](./docs/architecture/PROJECT_STRUCTURE.md) | 📁 目录与依赖关系 |
+| [`docs/architecture/MIGRATION_PLAN.md`](./docs/architecture/MIGRATION_PLAN.md) | 🛠️ ORM 迁移计划与执行记录 |
 
 ## 技术栈
 
@@ -92,6 +93,7 @@ pl-agent/
 |----|------|
 | 核心引擎 | Python 3.10+ |
 | API 服务 | FastAPI |
+| 数据访问 | SQLAlchemy Async ORM + asyncpg |
 | 前端 | React 18 + Vite + TypeScript |
 | 数据源 | [paldb.cc](https://paldb.cc/cn/) (游戏数据, 持续更新) |
 | 语音 | Web Speech API (MVP) → Whisper (进阶) |
@@ -108,7 +110,7 @@ pl-agent/
 
 ## 开发状态
 
-🚧 早期开发阶段，详见 [`docs/CONTEXT.md`](./docs/CONTEXT.md)
+🚧 持续迭代中，详见 [`docs/context/CONTEXT.md`](./docs/context/CONTEXT.md)
 
 ## 许可
 

@@ -1,10 +1,11 @@
-"""API routes — breeding queries via normalized PostgreSQL."""
+"""API routes — breeding queries via ORM service."""
 
 from dataclasses import dataclass, field
 
 from fastapi import APIRouter, Request
 
 from .. import QueryRequest
+from ..db.queries import OrmQueryService
 from ..parser import QueryKind, QueryParser
 
 router = APIRouter(prefix="/api")
@@ -27,44 +28,6 @@ class BreedingResult:
     parent_pairs: list[ParentPair] = field(default_factory=list)
     total: int = 0
 
-
-# ── PostgreSQL SQL (normalized tables) ────────────────────────
-
-BREED_PARENTS_SQL = """
-SELECT a.cn_name AS pa_cn, a.game_id AS pa_id, a.combi_rank AS pa_rank, a.is_wild AS pa_wild,
-       b.cn_name AS pb_cn, b.game_id AS pb_id, b.combi_rank AS pb_rank, b.is_wild AS pb_wild
-FROM pal a, pal b
-WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $1
-  AND a.game_id != $2 AND b.game_id != $2
-  AND a.id <= b.id
-ORDER BY a.combi_rank
-"""
-
-SUITABILITY_SQL = """
-SELECT p.game_id AS id, p.cn_name, p.zukan_index, p.combi_rank, p.is_wild, ws.level
-FROM work_suitability ws
-JOIN pal p ON ws.pal_id = p.id
-WHERE ws.work_type = $1 AND ws.level >= $2
-ORDER BY ws.level DESC
-LIMIT $3
-"""
-
-WORK_STATS_SQL = """
-SELECT work_type,
-       MAX(level)            AS max_level,
-       ROUND(AVG(level), 1)  AS avg_level,
-       COUNT(*) FILTER (WHERE level > 0) AS pal_count
-FROM work_suitability
-GROUP BY work_type
-ORDER BY max_level DESC
-"""
-
-BREEDING_RULE_SQL = """
-SELECT br.rule_type, br.parent_a_id, br.parent_b_id, br.description
-FROM breeding_rule br
-JOIN pal p ON br.child_id = p.id
-WHERE p.game_id = $1
-"""
 
 # ── helpers ───────────────────────────────────────────────────
 
@@ -148,9 +111,11 @@ async def get_breeding_tree(request: Request, pal_id: str, all: bool = False):
 
 @router.get("/suitability/stats")
 async def get_stats(request: Request):
-    pg_loader = getattr(request.app.state, "pg_loader", None)
-    if pg_loader:
-        stats_rows = await pg_loader.get_work_stats()
+    orm_service: OrmQueryService | None = getattr(
+        request.app.state, "orm_service", None
+    )
+    if orm_service:
+        stats_rows = await orm_service.get_work_stats()
         stats = {
             r["work_type"]: {
                 "max_level": r["max_level"],
@@ -174,73 +139,69 @@ async def get_stats(request: Request):
 
 
 async def _breeding_query(request: Request, pal, show_all: bool = False):
-    pg_loader = getattr(request.app.state, "pg_loader", None)
+    orm_service: OrmQueryService | None = getattr(
+        request.app.state, "orm_service", None
+    )
     pal_dict = _pal_to_dict(pal)
     pairs = []
 
-    if pg_loader:
-        await pg_loader._ensure_pool()
-        async with pg_loader._pool.acquire() as conn:
-            # 第 0 步: 查特殊配种规则
-            rules = await conn.fetch(BREEDING_RULE_SQL, pal.id)
-            for r in rules:
-                if r["rule_type"] == "unbreedable":
-                    pairs = []
-                    break
-                if r["rule_type"] == "same_species":
+    if orm_service:
+        # 第 0 步: 查特殊配种规则
+        rules = await orm_service.get_breeding_rules_by_game_id(pal.id)
+        for r in rules:
+            if r["rule_type"] == "unbreedable":
+                pairs = []
+                break
+            if r["rule_type"] == "same_species":
+                pairs.append(
+                    ParentPair(
+                        parent_a={"cn_name": pal.cn_name, "id": pal.id},
+                        parent_b={"cn_name": pal.cn_name, "id": pal.id},
+                        child=pal_dict,
+                        method="same_species",
+                    )
+                )
+                break
+            if r["rule_type"] == "fixed_pair":
+                if r["parent_a_id"] is None or r["parent_b_id"] is None:
+                    continue
+                pa = await orm_service.get_pal_pair_by_db_id(r["parent_a_id"])
+                pb = await orm_service.get_pal_pair_by_db_id(r["parent_b_id"])
+                if pa and pb:
                     pairs.append(
                         ParentPair(
-                            parent_a={"cn_name": pal.cn_name, "id": pal.id},
-                            parent_b={"cn_name": pal.cn_name, "id": pal.id},
+                            parent_a=pa,
+                            parent_b=pb,
                             child=pal_dict,
-                            method="same_species",
+                            method="fixed_pair",
                         )
                     )
-                    break
-                if r["rule_type"] == "fixed_pair":
-                    pa = await conn.fetchrow(
-                        "SELECT cn_name, game_id AS id, combi_rank, is_wild FROM pal WHERE id = $1",
-                        r["parent_a_id"],
-                    )
-                    pb = await conn.fetchrow(
-                        "SELECT cn_name, game_id AS id, combi_rank, is_wild FROM pal WHERE id = $1",
-                        r["parent_b_id"],
-                    )
-                    if pa and pb:
-                        pairs.append(
-                            ParentPair(
-                                parent_a=dict(pa),
-                                parent_b=dict(pb),
-                                child=pal_dict,
-                                method="fixed_pair",
-                            )
-                        )
-                    break
+                break
 
-            # 第 1 步: CombiRank 公式 (仅当无特殊规则命中时)
-            if not rules or all(
-                r["rule_type"] not in ("unbreedable", "same_species", "fixed_pair")
-                for r in rules
-            ):
-                rows = await conn.fetch(BREED_PARENTS_SQL, pal.combi_rank, pal.id)
-                for r in rows:
-                    pairs.append(
-                        ParentPair(
-                            parent_a={
-                                "cn_name": r["pa_cn"],
-                                "id": r["pa_id"],
-                                "combi_rank": r["pa_rank"],
-                                "is_wild": r["pa_wild"],
-                            },
-                            parent_b={
-                                "cn_name": r["pb_cn"],
-                                "id": r["pb_id"],
-                                "combi_rank": r["pb_rank"],
-                                "is_wild": r["pb_wild"],
-                            },
-                            child=pal_dict,
-                        )
+        # 第 1 步: CombiRank 公式 (仅当无特殊规则命中时)
+        if not rules or all(
+            r["rule_type"] not in ("unbreedable", "same_species", "fixed_pair")
+            for r in rules
+        ):
+            rows = await orm_service.query_parent_pairs_by_rank(pal.combi_rank, pal.id)
+            for r in rows:
+                pairs.append(
+                    ParentPair(
+                        parent_a={
+                            "cn_name": r["pa_cn"],
+                            "id": r["pa_id"],
+                            "combi_rank": r["pa_rank"],
+                            "is_wild": r["pa_wild"],
+                        },
+                        parent_b={
+                            "cn_name": r["pb_cn"],
+                            "id": r["pb_id"],
+                            "combi_rank": r["pb_rank"],
+                            "is_wild": r["pb_wild"],
+                        },
+                        child=pal_dict,
                     )
+                )
 
     result = BreedingResult(pal=pal_dict, parent_pairs=pairs, total=len(pairs))
     from ..formatter import format_success
@@ -272,15 +233,17 @@ async def _suitability_query(
         format_out_of_range,
     )
 
-    pg_loader = getattr(request.app.state, "pg_loader", None)
+    orm_service: OrmQueryService | None = getattr(
+        request.app.state, "orm_service", None
+    )
     cond = conds[0]  # v1: 仅支持单工种
     work_type, min_level = cond
 
-    if pg_loader:
-        results = await pg_loader.query_suitability(work_type, min_level, limit=50)
+    if orm_service:
+        results = await orm_service.query_suitability(work_type, min_level, limit=50)
         if not results:
             # 超范围: 查最高等级
-            top_results = await pg_loader.query_suitability(work_type, 1, limit=10)
+            top_results = await orm_service.query_suitability(work_type, 1, limit=10)
             max_lv = top_results[0]["level"] if top_results else 0
             return format_out_of_range(raw_input, work_type, max_lv, top_results)
         return format_suitability_candidates(raw_input, work_type, results)

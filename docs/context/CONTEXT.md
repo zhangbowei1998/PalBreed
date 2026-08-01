@@ -6,7 +6,7 @@
 
 ## 一句话描述
 
-一个智能化的**幻兽帕鲁（Palworld）配种助手 Agent**。用户输入帕鲁名或"工种:等级"，系统通过 PostgreSQL SQL 直接计算 CombiRank 配种公式，返回所有可能的父母组合。
+一个智能化的**幻兽帕鲁（Palworld）配种助手 Agent**。用户输入帕鲁名或"工种:等级"，系统通过 ORM 查询服务访问 PostgreSQL 计算 CombiRank 配种公式，返回所有可能的父母组合。
 
 ---
 
@@ -62,11 +62,12 @@ pl-agent/
 │   │       └── gamefile/           ← 游戏文件 (预留)
 │   ├── api/              ← 🌐 FastAPI + 业务逻辑
 │   │   └── pl_agent/api/
+│   │       ├── db/                 ← SQLAlchemy Async ORM 层
 │   │       ├── main.py             ← FastAPI 入口 + lifespan
 │   │       ├── parser.py           ← 输入解析 (NAME/SUITABILITY/FUZZY)
 │   │       ├── formatter.py        ← 响应格式化
 │   │       ├── routes/
-│   │       │   └── query.py        ← 路由 + SQL 配种查询
+│   │       │   └── query.py        ← 路由 + ORM 查询调用
 │   │       └── __tests__/          ← API 测试
 │   ├── nlu/              ← 💬 意图解析 (v0.2)
 │   └── web/              ← 🖥️ 前端 UI (v0.3)
@@ -96,8 +97,8 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
                                           ┌──────────────┴──────────────────┐
                                           ▼                                 ▼
                                     API 启动加载                        API 运行时
-                                    LOAD_ALL_SQL                      配种 SQL (CROSS JOIN)
-                                    (4 表 JOIN 拼装 Pal)              + breeding_rule 守卫
+                                    ORM load_all_pals                 ORM 查询 (CROSS JOIN)
+                                    (selectinload 拼装 Pal)           + breeding_rule 守卫
                                                                       属性筛选 (参数化 JOIN)
                                                                       统计 (GROUP BY)
 ```
@@ -127,9 +128,9 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 | 架构设计 | ✅ | `docs/architecture/*` |
 | Schema 定义 | ✅ | `schema.py` — Pal, WorkSuitability, PalRow, BreedingRuleRow |
 | 数据层 | ✅ | scraper → parser → adapter → PostgreSQL (5 表) + JSON 降级 |
-| API 服务 | ✅ | FastAPI — SQL 直连, 参数化查询, 8 端点 |
+| API 服务 | ✅ | FastAPI — SQLAlchemy Async ORM, 参数化查询, 8 端点 |
 | 数据库规范化 | ✅ | 5 表 (pal/pal_element/work_suitability/pal_aliase/breeding_rule) |
-| 测试 | ✅ | 8 冒烟测试全部通过 |
+| 测试 | ✅ | ORM 单测 7/7 + API 冒烟 8/8 通过 |
 | Makefile | ✅ | make serve / test / scrape / demo |
 | NLU 模块 | ⏭️ | 跳过, 结构化输入 |
 | 前端 UI | ⬜ | `packages/web/` |
@@ -157,7 +158,7 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 |:---:|------|------|
 | 1 | 前端 UI | `packages/web/` |
 | 2 | NLU 模块 | `packages/nlu/` |
-| 3 | 特殊配种规则 (SQL 版) | `routes/query.py` |
+| 3 | 特殊配种规则扩充 | `routes/query.py` + `api/db/queries.py` |
 
 详细设计见 `docs/architecture/` 下各需求文档。
 
@@ -167,7 +168,7 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 
 - **后端**: Python 3.10+ / FastAPI
 - **前端**: TypeScript / React 18 / Vite
-- **数据库**: PostgreSQL 16 + asyncpg (配种查询走 SQL CROSS JOIN)
+- **数据库**: PostgreSQL 16 + SQLAlchemy Async ORM + asyncpg
 - **语音**: Web Speech API (MVP) → Whisper (进阶)
 - **NLU**: 规则引擎 (MVP) → LLM (进阶)
 
@@ -197,7 +198,7 @@ WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $target_rank
 ## 架构要点
 
 - **core 包**: 纯数据模型，含 PalRow/BreedingRuleRow DB 行类型，无业务逻辑
-- **api 包**: 所有业务逻辑在路由中直接 SQL，两步配种查询 (守卫 + CROSS JOIN)
+- **api 包**: 业务逻辑在路由层，数据库访问集中在 ORM 查询服务，两步配种查询 (守卫 + CROSS JOIN)
 - **数据库**: 5 表规范化 (pal/pal_element/work_suitability/pal_aliase/breeding_rule)
 - **属性筛选**: 参数化 JOIN work_suitability，消除 SQL 注入
 - **PG 降级**: 无 PG 时回退到 JSON 文件 + Python 内存遍历
@@ -215,7 +216,8 @@ WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $target_rank
 | 🗄️ 数据库设计 (ERD/DDL) | `docs/architecture/DATABASE_DESIGN.md` |
 | 🔌 外部数据如何接入 | `packages/adapters/base.py` + `docs/architecture/DATA_LAYER_REQUIREMENTS.md` |
 | 🌐 API 服务需求 | `docs/architecture/API_REQUIREMENTS.md` |
-| ⚙️ 配种逻辑实现 | `packages/api/pl_agent/api/routes/query.py` (SQL) |
+| ⚙️ 配种逻辑实现 | `packages/api/pl_agent/api/routes/query.py` + `packages/api/pl_agent/api/db/queries.py` |
+| 🧪 ORM 单元测试 | `packages/api/pl_agent/api/__tests__/test_orm_queries.py` |
 | ❗ 业务异常定义 | `packages/core/pl_agent/core/errors.py` |
 | API 有哪些接口 | `docs/architecture/API_REQUIREMENTS.md` §3 |
 | AI 行为指引 | `.github/copilot-instructions.md` |

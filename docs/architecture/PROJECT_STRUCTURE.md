@@ -1,6 +1,6 @@
 # 项目目录结构
 
-> 更新: 2026-08-04 | 5 表规范化 | SQL 直连配种查询
+> 更新: 2026-08-01 | 5 表规范化 | ORM 配种查询
 
 ---
 
@@ -52,10 +52,11 @@ pl-agent/
 │   ├── api/                          ← 🌐 FastAPI 服务 (Python)
 │   │   └── pl_agent/api/
 │   │       ├── __init__.py           ← QueryRequest 模型
+│   │       ├── db/                   ← ORM 模型 + 查询服务
 │   │       ├── main.py               ← 入口 + lifespan
 │   │       ├── parser.py             ← 输入解析 (NAME/SUITABILITY/FUZZY)
 │   │       ├── formatter.py          ← 响应格式化
-│   │       ├── routes/query.py       ← 路由 + SQL 查询
+│   │       ├── routes/query.py       ← 路由 + ORM 查询调用
 │   │       └── __tests__/            ← API 冒烟脚本
 │   │
 │   ├── nlu/                          ← 💬 NLU 意图解析 (v0.2 预留)
@@ -91,7 +92,7 @@ paldb.cc → scraper/parser → PalDBAdapter
                                │
                     ┌──────────┴──────────┐
                     ▼                     ▼
-             API 启动加载            API 运行时 SQL
+             API 启动加载            API 运行时 ORM
              pals → 内存            配种查询 (CROSS JOIN)
              (Parser 索引)          属性筛选 (WHERE)
                     │                     │
@@ -107,9 +108,9 @@ paldb.cc → scraper/parser → PalDBAdapter
 | 边 | 方向 | 协议/方式 | 延迟 |
 |----|------|----------|:---:|
 | adapters → PG | Pal → SQL | asyncpg | ~1ms/条 |
-| PG → API 启动 | SQL → 内存 | asyncpg SELECT | ~50ms 启动 |
-| PG → API 配种 | CROSS JOIN SQL | asyncpg | ~10-50ms |
-| PG → API 详情 | SQL 单行 | asyncpg | ~1ms |
+| PG → API 启动 | ORM → 内存 | SQLAlchemy + asyncpg | ~50ms 启动 |
+| PG → API 配种 | ORM CROSS JOIN | SQLAlchemy + asyncpg | ~10-50ms |
+| PG → API 详情 | ORM SELECT | SQLAlchemy + asyncpg | ~1ms |
 | API → Web | HTTP REST | JSON | ~10ms |
 
 > 配种计算完全由 PostgreSQL 完成，利用数据库 CROSS JOIN 能力。
@@ -136,10 +137,10 @@ paldb.cc → scraper/parser → PalDBAdapter
 
 ### `packages/api` — API + 业务逻辑
 
-- **职责**: HTTP 路由、输入解析、SQL 配种查询、响应格式化
+- **职责**: HTTP 路由、输入解析、ORM 配种查询、响应格式化
 - **lifespan**: 启动时从 PG 加载 pals → 构建 Parser
-- **依赖**: core (schema) + adapters/postgres
-- **框架**: FastAPI + asyncpg
+- **依赖**: core (schema) + sqlalchemy + asyncpg
+- **框架**: FastAPI + SQLAlchemy Async ORM
 
 ### `packages/nlu` — 自然语言理解 (v0.2 预留)
 
@@ -172,7 +173,7 @@ POST /api/query {"input": "手工:4"}
 api/parser.py → QueryKind.SUITABILITY
   │
   ▼
-api/routes/query.py → SQL: SELECT * FROM pals WHERE handiwork >= 4
+api/routes/query.py → ORM: work_suitability JOIN pal (handiwork >= 4)
   │
   ▼
 返回候选列表 → 用户选择 "阿努比斯"
@@ -181,10 +182,9 @@ api/routes/query.py → SQL: SELECT * FROM pals WHERE handiwork >= 4
 POST /api/query {"input": "阿努比斯"}
   │
   ├── 名称匹配 → Pal
-  └── SQL 配种查询 (CROSS JOIN)
-  │   SELECT a.cn_name, b.cn_name
-  │   FROM pals a, pals b
-  │   WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $rank
+  └── ORM 配种查询 (CROSS JOIN)
+  │   select(pa.cn_name, pb.cn_name)
+  │   where round((pa.combi_rank + pb.combi_rank) / 2.0) == rank
   └── format_name_query(pal, pairs) → JSON
   │
   ▼

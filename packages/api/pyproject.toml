@@ -3,7 +3,13 @@ name = "pl-agent-api"
 version = "0.1.0"
 description = "幻兽帕鲁配种 Agent — FastAPI 服务"
 requires-python = ">=3.10"
-dependencies = ["fastapi>=0.115", "uvicorn[standard]>=0.30", "pl-agent-core"]
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pl-agent-core",
+    "sqlalchemy>=2.0",
+    "asyncpg>=0.30",
+]
 
 [tool.uv.sources]
 pl-agent-core = { workspace = true }
