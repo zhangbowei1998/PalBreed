@@ -38,6 +38,37 @@ from .nodes import (
     select_parent_pair,
 )
 
+_BREEDING_KEYWORDS = (
+    "怎么配种",
+    "怎么配",
+    "怎样配",
+    "如何配",
+    "怎么生",
+    "怎么合成",
+    "配种组合",
+    "配种方案",
+    "配种",
+    "的父母",
+)
+
+
+def extract_breeding_target(message: str) -> str | None:
+    """从「XX怎么配种 / XX的父母」类消息提取帕鲁名候选（需 resolve 验证）。
+
+    返回配种关键词之前的主体文本；关键词缺失或在开头时返回 None。
+    """
+    text = message.strip()
+    if not text:
+        return None
+    for kw in _BREEDING_KEYWORDS:
+        idx = text.find(kw)
+        if idx > 0:
+            candidate = text[:idx].strip(" ，,。！!？?：:、")
+            if candidate:
+                return candidate
+    return None
+
+
 _SYSTEM_PROMPT = """\
 你是幻兽帕鲁（Palworld）配种助手。用户会问你关于帕鲁的问题，例如：
 - 某只帕鲁怎么配种 / 父母是谁（必须调用 query_parent_pairs 获取精确结果）
@@ -305,6 +336,39 @@ class AgentWorkflow:
                             pass
             if extra_messages:
                 state = await self._repository.get(session_id) or state
+
+        # 兜底：LLM 未调用配种工具时，若消息明显是「XX怎么配种 / XX的父母」类
+        # 意图，按规则提取帕鲁名并复用确定性配种链路，生成可点击的父母候选，
+        # 避免 LLM 直接文本回答（不调用工具）导致前端无法继续选择。
+        if not used_breeding_tool:
+            target = extract_breeding_target(message)
+            if target:
+                try:
+                    pal = await self._client.resolve_pal_name(target)
+                except Exception:  # noqa: BLE001
+                    pal = None
+                if pal and pal.get("id"):
+                    pal_id = pal["id"]
+                    # 配种目标 = 用户感兴趣的帕鲁，设为当前目标供追溯 / 展开使用。
+                    if not state.target_pal:
+                        state.target_pal = pal_id
+                        state.confirmed_target_pal = pal_id
+                    try:
+                        pm, pa = await query_parents_and_record(
+                            session_id=session_id,
+                            state=state,
+                            repository=self._repository,
+                            client=self._client,
+                            pal_id=pal_id,
+                        )
+                        extra_messages.extend(pm)
+                        extra_actions.extend(pa)
+                        used_breeding_tool = True
+                    except Exception:  # noqa: BLE001
+                        # 配种链路异常不影响 LLM 文本回复
+                        pass
+                if extra_messages:
+                    state = await self._repository.get(session_id) or state
 
         # 话题切换清理：本轮未调用配种工具（用户问的是与配种无关的新问题，
         # 例如「石头怎么获取」），应清空上一轮残留的配种树 / 目标，

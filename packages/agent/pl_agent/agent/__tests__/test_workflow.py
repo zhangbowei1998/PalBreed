@@ -5,6 +5,7 @@ import pytest
 from pl_agent.agent.clients.schemas import SuitabilityCandidate, UpstreamPal
 from pl_agent.agent.config import Settings
 from pl_agent.agent.graph.workflow import ActionInput, AgentWorkflow, ChatInput
+from pl_agent.agent.llm import LLMResponse
 from pl_agent.agent.state.memory_store import InMemorySessionRepository
 
 
@@ -143,3 +144,57 @@ async def test_confirm_then_select_returns_continue_actions():
     # select_parent_pair 消息必须用中文名展示 child（防止回退成英文 id）
     assert any("已选择 阿努比斯" in m["content"] for m in result["messages"])
     assert not any("已选择 anubis" in m["content"] for m in result["messages"])
+
+
+class DirectAnswerLLM:
+    """LLM 直接文本回答，不调用任何工具（模拟 DeepSeek 偶发不调用工具）。"""
+
+    def __init__(self) -> None:
+        self.calls = 0
+
+    async def chat(self, messages, *, tools=None):
+        self.calls += 1
+        return LLMResponse(
+            content="阿努比斯的配种方案有很多种，以下是部分组合：空涡龙 × 妖焰灯 等。",
+            model="fake",
+            tool_calls=[],
+        )
+
+
+@pytest.mark.asyncio
+async def test_llm_direct_answer_falls_back_to_breeding_candidates():
+    """LLM 未调用配种工具时，规则兜底仍生成可点击的父母候选。"""
+    workflow = AgentWorkflow(
+        settings=Settings(top_candidates=3),
+        repository=InMemorySessionRepository(),
+        client=FakeClient(),
+        llm=DirectAnswerLLM(),
+    )
+
+    result = await workflow.handle_chat(
+        ChatInput(session_id="s6", message="阿努比斯怎么配种")
+    )
+
+    # LLM 文本回复保留
+    assert any("配种方案" in m["content"] for m in result["messages"])
+    # 兜底补上父母候选消息 + select_parent_pair 按钮
+    assert any("父母候选" in m["content"] for m in result["messages"])
+    assert any(a["action"] == "select_parent_pair" for a in result["actions"])
+
+
+@pytest.mark.asyncio
+async def test_topic_switch_does_not_trigger_breeding_fallback():
+    """非配种话题（如资源获取）不触发兜底，也不误清配种树。"""
+    workflow = AgentWorkflow(
+        settings=Settings(top_candidates=3),
+        repository=InMemorySessionRepository(),
+        client=FakeClient(),
+        llm=DirectAnswerLLM(),
+    )
+
+    result = await workflow.handle_chat(
+        ChatInput(session_id="s7", message="石头怎么获取")
+    )
+
+    assert not any(a["action"] == "select_parent_pair" for a in result["actions"])
+    assert not any("父母候选" in m["content"] for m in result["messages"])
