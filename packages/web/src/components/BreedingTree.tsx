@@ -199,6 +199,8 @@ export function BreedingTree({ targetPal, selectedPairs, palNameToId, palProfile
         pixelRatio: 2,
         backgroundColor: "#ffffff",
         cacheBust: true,
+        // 导出时排除操作按钮容器，避免「复制/图片」出现在生成的图片里
+        filter: (el) => !(el instanceof HTMLElement && el.classList.contains("breed-tree-actions")),
       });
       const blob = await (await fetch(dataUrl)).blob();
       // 优先用 ClipboardItem 复制图片到剪贴板
@@ -230,7 +232,7 @@ export function BreedingTree({ targetPal, selectedPairs, palNameToId, palProfile
     <div className="breed-tree" ref={treeRef}>
       <div className="breed-tree-head">
         <h3 className="breed-tree-title">已确认配种路径</h3>
-        <Space size={4}>
+        <Space size={4} className="breed-tree-actions">
           <Tooltip title="复制配种路线为文字">
             <Button size="small" type="text" icon={<CopyOutlined />} onClick={() => void copyText()}>
               复制
