@@ -177,15 +177,17 @@ export function useAgentSession(userKey: string) {
 
       const doneData = doneBox.data;
       if (doneData) {
-        // 流式完成：用最终完整数据补齐消息（trace / 富文本）并刷新 actions / state
+        // 流式完成：第一条消息（LLM 文本）替换占位并补 trace；
+        // 其余 extra 消息（如确定性的父母候选行）追加到列表，
+        // 保证配种方案可点击、配种树可展开。
         const finalMsgs = normalizeMessages(doneData, `a-${Date.now()}`);
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === assistantId
-              ? (finalMsgs[0] ? { ...finalMsgs[0], id: assistantId } : m)
-              : m,
-          ),
-        );
+        setMessages((prev) => {
+          const rest = prev.filter((m) => m.id !== assistantId);
+          const head = finalMsgs[0]
+            ? [{ ...finalMsgs[0], id: assistantId }]
+            : [];
+          return [...rest, ...head, ...finalMsgs.slice(1)];
+        });
         setActions(doneData.actions);
         setStateSnapshot(doneData.state_snapshot);
         void prefetchPalProfiles(doneData.state_snapshot);
