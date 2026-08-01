@@ -1,4 +1,4 @@
-.PHONY: install test test-unit test-smoke test-all lint clean scrape demo serve help
+.PHONY: install test test-unit test-smoke test-all test-agent-service test-contract-agent-service lint clean scrape demo serve serve-agent-service help
 
 PYTHONPATH := packages/core:packages/adapters:packages/api:packages
 export PYTHONPATH
@@ -17,6 +17,13 @@ test-smoke:
 
 test-all:
 	uv run pytest packages/adapters/adapters/paldb/__tests__/ packages/core/pl_agent/core/__tests__/ tests/smoke/ -v
+	cd agent-service && uv run --with pytest --with pytest-asyncio pytest -q
+
+test-agent-service:
+	cd agent-service && uv run --with pytest --with pytest-asyncio pytest -q
+
+test-contract-agent-service:
+	cd agent-service && uv run --with pytest --with pytest-asyncio pytest tests/contract -q
 
 test-api:
 	uv run pytest packages/api/pl_agent/api/__tests__/ -v
@@ -29,6 +36,9 @@ demo:
 
 serve:
 	uv run uvicorn pl_agent.api.main:app --reload --port 8000
+
+serve-agent-service:
+	cd agent-service && uv run uvicorn pl_agent_agent.app:app --reload --port 9000
 
 lint:
 	uv run ruff check packages/
@@ -54,9 +64,12 @@ help:
 	@echo "  make test-smoke   仅冒烟测试"
 	@echo "  make test-all     全部测试"
 	@echo "  make test-api     API 集成测试"
+	@echo "  make test-agent-service   agent-service 全量测试"
+	@echo "  make test-contract-agent-service   agent-service 契约测试"
 	@echo "  make scrape       从 paldb.cc 抓取数据"
 	@echo "  make demo         引擎功能演示"
 	@echo "  make serve        启动 API 服务"
+	@echo "  make serve-agent-service   启动 agent-service"
 	@echo "  make lint         代码检查"
 	@echo "  make format       自动格式化"
 	@echo "  make clean        清理缓存"

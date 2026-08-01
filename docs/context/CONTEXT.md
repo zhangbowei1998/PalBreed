@@ -129,9 +129,10 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 | Schema 定义 | ✅ | `schema.py` — Pal, WorkSuitability, PalRow, BreedingRuleRow |
 | 数据层 | ✅ | scraper → parser → adapter → PostgreSQL (5 表) + JSON 降级 |
 | API 服务 | ✅ | FastAPI — SQLAlchemy Async ORM, 参数化查询, 8 端点 |
+| Agent 服务 | ✅ | `agent-service/` — chat/action/session 接口、状态管理、路线汇总、测试体系 |
 | 数据库规范化 | ✅ | 5 表 (pal/pal_element/work_suitability/pal_aliase/breeding_rule) |
 | 测试 | ✅ | ORM 单测 7/7 + API 冒烟 8/8 通过 |
-| Makefile | ✅ | make serve / test / scrape / demo |
+| Makefile | ✅ | 统一入口已包含 `serve-agent-service` / `test-agent-service` / `test-contract-agent-service` |
 | NLU 模块 | ⏭️ | 跳过, 结构化输入 |
 | 前端 UI | ⬜ | `packages/web/` |
 
@@ -145,7 +146,23 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 | `/api/breeding/tree/{id}` | GET | 父母对列表 (一级) |
 | `/api/suitability/stats` | GET | 全工种统计 |
 
-**启动**: `make serve` → http://localhost:8000
+## Agent-service 端点一览
+
+| 端点 | 方法 | 说明 |
+|------|:---:|------|
+| `/health` | GET | 健康检查 |
+| `/agent/chat` | POST | 聊天入口（含 Top-3 候选确认） |
+| `/agent/action` | POST | 动作入口（confirm_target / expand_parent / summarize_route） |
+| `/agent/session/{session_id}` | GET | 会话快照读取 |
+
+**启动**:
+- `make serve` → http://localhost:8000
+- `make serve-agent-service` → http://localhost:9000
+
+**测试**:
+- `make test-agent-service`（agent-service 全量）
+- `make test-contract-agent-service`（agent-service 契约）
+- `make test-all`（根项目 + agent-service）
 
 **输入示例**:
 - `{"input": "阿努比斯"}` → 父母对列表
@@ -156,9 +173,10 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 
 | 优先级 | 任务 | 位置 |
 |:---:|------|------|
-| 1 | 前端 UI | `packages/web/` |
-| 2 | NLU 模块 | `packages/nlu/` |
-| 3 | 特殊配种规则扩充 | `routes/query.py` + `api/db/queries.py` |
+| 1 | agent-web 独立项目落地与联调 | `agent-web/`（待创建） |
+| 2 | Agent 服务会话存储从内存升级到 Redis | `agent-service/src/pl_agent_agent/state/` |
+| 3 | NLU 模块增强与多工种意图扩展 | `packages/nlu/` |
+| 4 | 特殊配种规则扩充 | `packages/api/pl_agent/api/routes/query.py` + `packages/api/pl_agent/api/db/queries.py` |
 
 详细设计见 `docs/architecture/` 下各需求文档。
 

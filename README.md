@@ -56,6 +56,25 @@ npm install
 npm run dev
 ```
 
+### 统一命令入口（Makefile）
+
+```bash
+# 启动现有 API
+make serve
+
+# 启动 agent-service
+make serve-agent-service
+
+# 仅跑 agent-service 测试
+make test-agent-service
+
+# 跑 agent-service 契约测试
+make test-contract-agent-service
+
+# 根项目全量测试（含 agent-service）
+make test-all
+```
+
 ## 项目结构
 
 ```
