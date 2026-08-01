@@ -149,7 +149,8 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 
 **关键组件**：
 - `agent-web/app.py`：FastAPI 入口，lifespan 装配各组件；路由 `/agent/chat` `/agent/action` `/agent/session/{id}` `/auth/*`
-- `agent/graph/workflow.py`：`AgentWorkflow` 主编排，`_SYSTEM_PROMPT` 定义 agent 行为规则（配种必须调工具、省略主语结合上下文推断）
+- `agent/graph/workflow.py`：`AgentWorkflow` 主编排（配种必须调工具、省略主语结合上下文推断等行为规则）
+- `agent/prompts/`：**所有 LLM 提示词集中存放**（独立 `.md` 文件，便于阅读与优化）——`assistant.md`（主助手）/ `intent_recognizer.md`（意图识别）/ `context_compress.md`（对话压缩）；由 `prompts/__init__.py` 用 `importlib.resources` 加载导出
 - `agent/graph/agent_loop.py`：`AgentLoop` 多轮 tool_calls 循环，透传 wire-format dict 消息
 - `agent/tools/breeding.py`：确定性配种工具（query_parent_pairs / resolve_pal / query_top_suitability / query_pal_stats）
 - `agent/llm/`：可插拔 LLM 抽象（`LLMClient`），`DeepSeekClient` 走 OpenAI 兼容协议

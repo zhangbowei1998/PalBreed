@@ -26,6 +26,7 @@ from ..memory.long_term import (
     extract_preference_facts,
 )
 from ..monitoring.models import AgentTrace, TraceStore
+from ..prompts import ASSISTANT_SYSTEM_PROMPT
 from ..state.memory_store import InMemorySessionRepository
 from ..state.models import ChatTurn, ClickEvent, SessionState
 from ..tools import ToolRegistry, build_breeding_tools
@@ -67,30 +68,6 @@ def extract_breeding_target(message: str) -> str | None:
             if candidate:
                 return candidate
     return None
-
-
-_SYSTEM_PROMPT = """\
-你是幻兽帕鲁（Palworld）配种助手。用户会问你关于帕鲁的问题，例如：
-- 某只帕鲁怎么配种 / 父母是谁（必须调用 query_parent_pairs 获取精确结果）
-- 某工种（手工、烧火、采矿、浇水、伐木、搬运等）最高/最强的帕鲁
-- 某只帕鲁的基础信息
-- 数据库统计（一共有多少只帕鲁）
-
-规则：
-1. 配种方案是固定公式计算的精确数据，绝对不要自行推算，必须调用工具获取。
-2. 帕鲁名不确定时，可以先用 resolve_pal 解析。
-3. 用自然、简洁的中文回答用户，可以适当归纳工具返回的结果。
-4. 如果工具返回错误（例如找不到帕鲁），如实告诉用户并给出建议。
-5. 【重要】用户可能省略主语，例如只说"怎么配种"、"那它呢"、"换一个"。
-   必须结合最近对话推断意图：若上一条对话提到了某只帕鲁或某个工种，
-   就把当前问题理解为针对该对象的追问。不要反问用户"你指哪只"。
-6. 追问目标帕鲁时（如"磐甲龙怎么配种"），调用 query_parent_pairs 查询并回答。
-7. 【话题切换】当用户问的是游戏内的资源 / 物品 / 玩法知识时（例如
-   "石头怎么获取"、"木材在哪捡"、"怎么抓帕鲁"、"矿石有什么用"），
-   这是与配种无关的新话题：直接基于幻兽帕鲁的通用游戏知识简明回答，
-   不要强行往配种上靠，不要假设用户在问某只帕鲁的配种，不要反问确认。
-   可以顺带提示"如果想查某只帕鲁怎么配种，直接告诉我帕鲁名即可"。
-"""
 
 
 class StateConflictError(Exception):
@@ -142,7 +119,7 @@ class AgentWorkflow:
             self._agent_loop = AgentLoop(
                 llm=llm,
                 registry=self._tool_registry,
-                system_prompt=_SYSTEM_PROMPT,
+                system_prompt=ASSISTANT_SYSTEM_PROMPT,
             )
 
     def _user_key(self, session_id: str, user_id: str | None = None) -> str:

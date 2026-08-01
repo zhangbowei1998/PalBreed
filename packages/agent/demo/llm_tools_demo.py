@@ -12,13 +12,8 @@ from pl_agent.agent.clients.breeding_api_client import BreedingApiClient
 from pl_agent.agent.config import load_settings
 from pl_agent.agent.graph.agent_loop import AgentLoop
 from pl_agent.agent.llm import LLMConfig, create_llm_client
+from pl_agent.agent.prompts import ASSISTANT_SYSTEM_PROMPT
 from pl_agent.agent.tools import ToolRegistry, build_breeding_tools
-
-SYSTEM_PROMPT = (
-    "你是幻兽帕鲁（Palworld）配种助手。配种方案是固定公式计算的精确数据，"
-    "绝对不要自行推算，必须调用 query_parent_pairs 工具获取。"
-    "用自然、简洁的中文回答用户。"
-)
 
 
 async def run_once(question: str) -> str:
@@ -35,7 +30,7 @@ async def run_once(question: str) -> str:
     registry = ToolRegistry(
         build_breeding_tools(api, top_n_default=settings.top_candidates)
     )
-    loop = AgentLoop(llm=llm, registry=registry, system_prompt=SYSTEM_PROMPT)
+    loop = AgentLoop(llm=llm, registry=registry, system_prompt=ASSISTANT_SYSTEM_PROMPT)
     return await loop.run(question)
 
 

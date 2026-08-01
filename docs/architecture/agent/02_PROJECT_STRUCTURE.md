@@ -58,6 +58,11 @@ packages/agent/                 ← 🤖 独立 agent 模块（无 web 框架依
         ├── intent/             ← 意图识别（LLM + 规则回退）
         │   ├── recognizer.py
         │   └── schemas.py
+        ├── prompts/            ← 📝 所有 LLM 提示词（独立 .md 便于阅读/优化）
+        │   ├── __init__.py     ←   importlib.resources 加载导出
+        │   ├── assistant.md           主配种助手
+        │   ├── intent_recognizer.md   意图识别器
+        │   └── context_compress.md    对话历史压缩
         └── common/
             ├── types.py
             ├── constants.py

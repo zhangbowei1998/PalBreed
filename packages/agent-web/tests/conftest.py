@@ -68,6 +68,9 @@ def test_client():
         workflow._client = FakeUpstreamClient()
         # 集成测试锁定到规则模式（不依赖真实 LLM），保持确定性。
         workflow._agent_loop = None
+        # 意图识别也锁定规则模式：真实 LLM 对同一句话的判定会漂移
+        # （例如把「手工等级最高的帕鲁」误判为配种意图），导致集成测试不稳定。
+        workflow._recognizer._llm = None
 
         # 注册测试用户并注入 Authorization 头：接口现已强制登录。
         # 用户名固定，重复运行时注册返回 409，改走登录拿新 token。

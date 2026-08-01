@@ -8,18 +8,8 @@
 from __future__ import annotations
 
 from ..llm import LLMClient
+from ..prompts import CONTEXT_COMPRESS_PROMPT
 from ..state.models import ChatTurn
-
-_COMPRESS_PROMPT = """\
-下面是一段幻兽帕鲁配种助手的对话历史。请把它压缩成一段简洁的中文摘要，要求：
-1. 保留用户已经问过的帕鲁名字、已经确定的配种目标、已经得到的配种方案（父代组合）。
-2. 保留用户提到过的自己拥有的帕鲁、偏好、昵称等个人信息。
-3. 不要写"用户问/助手答"这类过程性描述，直接提炼事实。
-4. 如果后面没有值得保留的信息，返回"（无重要信息）"。
-
-对话历史：
-{history}
-"""
 
 
 async def summarize_history(llm: LLMClient, turns: list[ChatTurn]) -> str:
@@ -31,7 +21,7 @@ async def summarize_history(llm: LLMClient, turns: list[ChatTurn]) -> str:
         return ""
     lines = [f"{turn.role}: {turn.content}" for turn in turns]
     history_block = "\n".join(lines)
-    prompt = _COMPRESS_PROMPT.format(history=history_block)
+    prompt = CONTEXT_COMPRESS_PROMPT.format(history=history_block)
 
     try:
         response = await llm.chat([{"role": "user", "content": prompt}])
