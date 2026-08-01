@@ -44,21 +44,23 @@ jobs:
               fi
             fi
 
-      # 2. rsync 增量同步代码（排除本地缓存/密钥，避免覆盖服务器 .env）
+      # 2. 原生 rsync 增量同步（runner 自带 rsync，不依赖第三方 action 拉 Docker 镜像）
       - name: Sync code via rsync
-        uses: burnett01/rsync-deployments@7.0.0
-        with:
-          switches: >-
-            -avzr --delete
-            --exclude=.git --exclude=.env --exclude=.venv
-            --exclude=node_modules --exclude=.npm-cache --exclude=__pycache__
-            --exclude=.pytest_cache --exclude=.ruff_cache --exclude=.DS_Store
-          path: ./
-          remote_path: /opt/pl-agent/
-          remote_host: ${{ secrets.SERVER_HOST }}
-          remote_port: 22
-          remote_user: ${{ secrets.SERVER_USER }}
-          remote_key: ${{ secrets.SERVER_SSH_KEY }}
+        env:
+          SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          HOST: ${{ secrets.SERVER_HOST }}
+          USER: ${{ secrets.SERVER_USER }}
+        run: |
+          set -e
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          rsync -avzr --delete \
+            --exclude=.git --exclude=.env --exclude=.venv \
+            --exclude=node_modules --exclude=.npm-cache --exclude=__pycache__ \
+            --exclude=.pytest_cache --exclude=.ruff_cache --exclude=.DS_Store \
+            -e "ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new -o BatchMode=yes" \
+            ./ "$USER@$HOST:/opt/pl-agent/"
 
       # 3. 从 GitHub Secrets 生成 .env，然后重建所有服务
       - name: Write .env and rebuild
