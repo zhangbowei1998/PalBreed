@@ -183,11 +183,11 @@ function renderAssistantContent(
 }
 
 export function MessageList({ messages, palNameToId, palProfiles, loading, pairActionMap, onSelectPair }: Props) {
-  // 流式占位：最后一条 assistant 消息内容为空（正在流式生成），
-  // 此时它本身显示 typing 动画，不再额外追加独立 typing 气泡，避免重复 AI 块。
-  const hasStreamingPlaceholder = messages.some(
-    (m) => m.role === "assistant" && m.content === "" && !m.trace,
-  );
+  // 流式占位：最后一条 assistant 消息尚无 trace 且正在加载（文本逐字生成中），
+  // 此时该气泡本身就是 AI 回复，不再追加独立 typing 气泡，避免出现两个 AI 块。
+  const lastMsg = messages[messages.length - 1];
+  const hasStreamingPlaceholder =
+    loading && lastMsg?.role === "assistant" && !lastMsg.trace;
 
   const items: BubbleItemType[] = [
     ...messages.map((msg) => {
@@ -198,10 +198,12 @@ export function MessageList({ messages, palNameToId, palProfiles, loading, pairA
           content: msg.content,
         };
       }
+      // 流式占位且内容仍为空：显示 typing 动画
+      const isBlankPlaceholder = msg.content === "" && !msg.trace;
       return {
         key: msg.id,
         role: "assistant" as const,
-        content: msg.content === "" && !msg.trace ? (
+        content: isBlankPlaceholder ? (
           <div className="typing">
             <span />
             <span />
@@ -222,6 +224,7 @@ export function MessageList({ messages, palNameToId, palProfiles, loading, pairA
         ),
       };
     }),
+    // 仅当没有流式占位消息时才追加独立 typing 气泡（非流式 action 等场景）。
     ...(!hasStreamingPlaceholder && loading
       ? [{
           key: "typing",
