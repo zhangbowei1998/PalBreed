@@ -3,8 +3,9 @@ from __future__ import annotations
 import pytest
 
 from pl_agent.agent.config import Settings
+from pl_agent.agent.common.constants import ACTION_SELECT_PARENT_PAIR
 from pl_agent.agent.graph.agent_loop import AgentLoop
-from pl_agent.agent.graph.workflow import AgentWorkflow, ChatInput
+from pl_agent.agent.graph.workflow import AgentWorkflow, ActionInput, ChatInput
 from pl_agent.agent.llm import LLMResponse, ToolCall
 from pl_agent.agent.memory.long_term import LongTermMemory
 from pl_agent.agent.state.memory_store import InMemorySessionRepository
@@ -240,4 +241,50 @@ async def test_llm_chat_returns_select_parent_pair_actions(tmp_path):
     # LLM 查询配种方案后，自动设为当前目标，后续追溯可正常进行
     assert snapshot["target_pal"] == "阿努比斯"
     assert snapshot["confirmed_target_pal"] == "阿努比斯"
+
+
+@pytest.mark.asyncio
+async def test_topic_switch_clears_breeding_tree(tmp_path):
+    """用户先问配种，再问与配种无关的新话题（LLM 不调用配种工具），
+    应清空上一轮残留的配种树 / 目标，避免页面展示无关的配种路线。"""
+    settings = Settings()
+    repository = InMemorySessionRepository()
+    llm = ToolCallingLLM()  # 第 1 轮调 query_parent_pairs，第 2 轮纯文本
+
+    workflow = AgentWorkflow(
+        settings=settings,
+        repository=repository,
+        client=PairFakeClient(),
+        llm=llm,
+        long_term_memory=LongTermMemory(data_dir=tmp_path),
+    )
+
+    # 第 1 轮：配种 → 生成配种树状态
+    r1 = await workflow.handle_chat(
+        ChatInput(session_id="switch1", message="阿努比斯怎么配种")
+    )
+    assert r1["state_snapshot"]["selected_pairs"] == []  # 尚未点击
+    assert r1["state_snapshot"]["candidate_pairs"], "应有候选组合"
+    assert r1["state_snapshot"]["target_pal"] == "阿努比斯"
+
+    # 模拟用户点击选择一组父母 → selected_pairs 有值（配种树出现）
+    r2 = await workflow.handle_action(
+        ActionInput(
+            session_id="switch1",
+            action=ACTION_SELECT_PARENT_PAIR,
+            child_pal_id="阿努比斯",
+            pair_index=0,
+        )
+    )
+    assert r2["state_snapshot"]["selected_pairs"], "选择父母后配种树应出现"
+
+    # 第 2 轮：问与配种无关的话题「石头怎么获取」，LLM 不再调用配种工具
+    r3 = await workflow.handle_chat(
+        ChatInput(session_id="switch1", message="石头怎么获取")
+    )
+    snapshot = r3["state_snapshot"]
+    assert snapshot["selected_pairs"] == [], "新话题应清空配种树"
+    assert snapshot["target_pal"] is None, "新话题应清空目标帕鲁"
+    assert snapshot["edges"] == [], "新话题应清空配种边"
+    assert snapshot["candidate_pairs"] == {}, "新话题应清空候选组合"
 

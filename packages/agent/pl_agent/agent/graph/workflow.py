@@ -54,6 +54,11 @@ _SYSTEM_PROMPT = """\
    必须结合最近对话推断意图：若上一条对话提到了某只帕鲁或某个工种，
    就把当前问题理解为针对该对象的追问。不要反问用户"你指哪只"。
 6. 追问目标帕鲁时（如"磐甲龙怎么配种"），调用 query_parent_pairs 查询并回答。
+7. 【话题切换】当用户问的是游戏内的资源 / 物品 / 玩法知识时（例如
+   "石头怎么获取"、"木材在哪捡"、"怎么抓帕鲁"、"矿石有什么用"），
+   这是与配种无关的新话题：直接基于幻兽帕鲁的通用游戏知识简明回答，
+   不要强行往配种上靠，不要假设用户在问某只帕鲁的配种，不要反问确认。
+   可以顺带提示"如果想查某只帕鲁怎么配种，直接告诉我帕鲁名即可"。
 """
 
 
@@ -268,9 +273,11 @@ class AgentWorkflow:
         # 生成「父母候选」消息 + select_parent_pair 操作，让前端可点击并渲染配种二叉树。
         extra_messages: list[str] = []
         extra_actions: list[dict] = []
+        used_breeding_tool = False
         if result is not None:
             for tc in result.tool_calls:
                 if tc.name == "query_parent_pairs" and tc.success:
+                    used_breeding_tool = True
                     pal = (tc.result or {}).get("pal") or {}
                     pal_id = pal.get("id") or ""
                     if pal_id:
@@ -294,6 +301,23 @@ class AgentWorkflow:
                             pass
             if extra_messages:
                 state = await self._repository.get(session_id) or state
+
+        # 话题切换清理：本轮未调用配种工具（用户问的是与配种无关的新问题，
+        # 例如「石头怎么获取」），应清空上一轮残留的配种树 / 目标，
+        # 避免页面继续展示无关的配种路线。
+        if not used_breeding_tool and (state.selected_pairs or state.target_pal):
+            state.selected_pairs = []
+            state.target_pal = None
+            state.confirmed_target_pal = None
+            state.current_focus_pal = None
+            state.edges = []
+            state.candidate_pairs = {}
+            state.pending_frontier = []
+            state.explored_nodes = []
+            state.node_depths = {}
+            state.click_trace = []
+            state.touch()
+            await self._repository.save(session_id, state)
 
         return build_response(
             messages=[reply, *extra_messages],
