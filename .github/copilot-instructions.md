@@ -11,6 +11,9 @@
 - **数据库**: 5 表规范化设计 (`docs/architecture/DATABASE_DESIGN.md`)，SERIAL PK + game_id UK
 - **适配器层**: 外部数据必须通过 `packages/adapters/` 中的适配器流入
 - **禁止循环引用**: `core` → 无依赖，`adapters` → 仅依赖 `core`，`api` → 依赖 `core`
+- **Agent 模块**: `packages/agent`（纯逻辑，无 FastAPI）→ `packages/agent-web`（FastAPI 服务层）→ 依赖 `agent`。`agent` 不依赖 FastAPI/uvicorn。
+- **命名空间**: 所有包挂在 PEP 420 命名空间 `pl_agent.*` 下（`pl_agent.core` / `pl_agent.agent` / `pl_agent.agent_web`）。
+- **记忆/用户体系**: 见 `docs/context/CONTEXT.md` 的「记忆系统」与「用户体系」章节。
 
 ## 代码组织
 
@@ -19,6 +22,18 @@
 - **冒烟测试**: 放在 `tests/smoke/` 下，核心流程端到端验证。
 - **Demo 脚本**: 放在各包的 `demo/` 目录下，用于快速手动验证。
 - **文档**: 按类型放在 `docs/architecture/`、`docs/context/`、`docs/decisions/` 下。
+- **测试命令**: `make test-agent`（agent 单元）/ `make test-agent-web`（agent-web 服务）/ `make test-all`（全量）。
+
+## Agent 模块约定
+
+- **配种数据必须走工具**: Agent 逻辑（LLM）绝对不自行推算配种，必须调用 `packages/agent/pl_agent/agent/tools/breeding.py` 的工具。
+- **LLM 抽象**: 业务代码只依赖 `pl_agent.agent.llm.LLMClient` 抽象，通过 `create_llm_client()` 创建（DeepSeek/OpenAI 兼容）。新增模型 → 实现 `LLMClient` 并注册到 factory。
+- **记忆系统**:
+  - 短期记忆: `SessionState.chat_history`（内存，重启丢失；上限 `SHORT_TERM_MAX_TURNS`）
+  - 长期记忆: `pl_agent.agent.memory` 存储协议 `LongTermMemoryStore`（file / postgres 两种实现），**按用户维度隔离**
+  - 上下文压缩: `memory/compress.py` 用 LLM 压缩早期对话到 `history_summary`
+- **用户体系**: 认证核心在 `agent/auth/`（存储/密码/token，无路由）；FastAPI 路由在 `agent-web/auth/routes.py`。密钥来自 `AUTH_SECRET` 环境变量，**禁止硬编码密钥**。
+- **配置**: `agent/config.py` 的 `Settings` 从 `.env` 读取（`packages/agent/.env`，已被 gitignore）。
 
 ## 错误处理
 
@@ -28,6 +43,7 @@
   - 适配器错误 → `AdapterError`
   - 数据校验错误 → `DataIntegrityError`
   - 配种问题 → `BreedingLoopError` / `PalNotFoundError`
+- Agent 内部: 工具执行错误 → `ToolError`；LLM 网络/解析错误 → `LLMError` 子类；状态冲突 → `StateConflictError` / `GuardViolation`。
 
 ## 数据来源
 
@@ -78,6 +94,15 @@ paldb.cc → adapters/paldb/scraper.py → parser.py → adapter.py → schema.P
 ```
 
 任何新增数据源都走同样的 adapter 模式，不允许裸调外部 API 进入 core。
+
+**Agent 数据流**（用户对话 → 配种结果）:
+```
+用户聊天 → agent-web (FastAPI :9000)
+        → AgentWorkflow (graph/workflow.py)
+        → AgentLoop (LLM function calling, graph/agent_loop.py)
+        → ToolRegistry → breeding.py 工具 → BreedingApiClient (上游 api :8000)
+        → 精确配种数据 → LLM 组织中文回答 → 前端
+```
 
 1. Read `docs/context/CONTEXT.md`
 2. Check `docs/architecture/` for relevant design docs

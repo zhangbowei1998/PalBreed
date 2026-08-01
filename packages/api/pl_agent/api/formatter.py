@@ -22,6 +22,16 @@ _WORK_TYPE_CN = {
 }
 
 
+def _resolve_pal_image_url(pal: Pal) -> str | None:
+    """Prefer real pal portrait URL; fallback to deterministic PalIcon path."""
+    raw = pal.image_url
+    if raw and "/Pal/Texture/PalIcon/" in raw:
+        return raw
+    # Some legacy rows stored work-type icons like T_icon_palwork_00.webp.
+    # Build canonical portrait URL from pal id so UI always gets a pal avatar.
+    return f"https://cdn.paldb.cc/image/Pal/Texture/PalIcon/Normal/T_{pal.id}_icon_normal.webp"
+
+
 def format_pal_summary(pal: Pal) -> dict:
     return {
         "id": pal.id,
@@ -32,6 +42,8 @@ def format_pal_summary(pal: Pal) -> dict:
         "elements": [e.value for e in pal.elements],
         "rarity": pal.rarity,
         "is_wild": pal.is_wild,
+        "image_url": _resolve_pal_image_url(pal),
+        "wiki_url": pal.wiki_url,
         "work_suitability": pal.work_suitability.to_dict(),
     }
 

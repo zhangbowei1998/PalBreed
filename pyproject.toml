@@ -3,24 +3,50 @@ name = "pl-agent"
 version = "0.1.0"
 description = "幻兽帕鲁配种 Agent — monorepo workspace"
 requires-python = ">=3.10"
-dependencies = ["pl-agent-core", "pl-agent-adapters", "pl-agent-api"]
+dependencies = [
+    "pl-agent-core",
+    "pl-agent-adapters",
+    "pl-agent-api",
+    "pl-agent-agent",
+    "pl-agent-agent-web",
+]
 
 [tool.uv.sources]
 pl-agent-core = { workspace = true }
 pl-agent-adapters = { workspace = true }
 pl-agent-api = { workspace = true }
+pl-agent-agent = { workspace = true }
+pl-agent-agent-web = { workspace = true }
 
 [tool.uv.workspace]
-members = ["packages/core", "packages/adapters", "packages/api"]
+members = [
+    "packages/core",
+    "packages/adapters",
+    "packages/api",
+    "packages/agent",
+    "packages/agent-web",
+]
 
 [dependency-groups]
 dev = ["pytest>=8", "pytest-asyncio>=0.25"]
 
 [tool.pytest.ini_options]
-pythonpath = ["packages/core", "packages/adapters", "packages/api", "packages"]
+pythonpath = [
+    "packages/core",
+    "packages/adapters",
+    "packages/api",
+    "packages/agent",
+    "packages/agent-web",
+    "packages",
+]
 asyncio_mode = "auto"
 testpaths = [
     "packages/core/pl_agent/core/__tests__",
     "packages/adapters/adapters/paldb/__tests__",
+    "packages/agent/pl_agent/agent/__tests__",
+    "packages/agent/pl_agent/agent/intent/__tests__",
+    "packages/agent/pl_agent/agent/llm/__tests__",
+    "packages/agent/pl_agent/agent/tools/__tests__",
+    "packages/agent-web/tests",
     "tests",
 ]

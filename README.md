@@ -37,6 +37,9 @@
 | 🎤 **语音输入** | 支持语音描述需求 (Web Speech API) |
 | 🧮 **ORM 配种查询** | API 通过 SQLAlchemy Async ORM 访问 PostgreSQL，执行 CROSS JOIN 公式查询 |
 | 📊 **工种统计** | 输出 12 工种 max/avg/count 统计 |
+| 🤖 **Agent 对话** | `packages/agent`（纯逻辑）+ `packages/agent-web`（FastAPI 服务）— LLM function calling 聊天、配种工具调用 |
+| 🧠 **记忆系统** | 短期记忆（会话内）+ 长期记忆（跨会话按用户，PG 持久化）+ LLM 上下文压缩 |
+| 👤 **用户体系** | 注册/登录/token，长期记忆按用户隔离（前端登录页后续补充） |
 
 ## 快速开始
 
@@ -48,9 +51,12 @@ cd pl-agent
 # 启动 PostgreSQL（必需）
 docker compose up -d
 
-# 后端
+# 后端（配种 API）
 uv sync
 make serve
+
+# Agent 服务
+make serve-agent-service
 
 # 前端 (另一个终端)
 make serve-web
@@ -62,19 +68,19 @@ make serve-web
 # 启动现有 API
 make serve
 
-# 启动 agent-service
+# 启动 agent-web（聊天 Agent 服务）
 make serve-agent-service
 
 # 启动 web 前端
 make serve-web
 
-# 仅跑 agent-service 测试
-make test-agent-service
+# 仅跑 agent 模块测试
+make test-agent
 
-# 跑 agent-service 契约测试
-make test-contract-agent-service
+# 跑 agent-web 服务测试
+make test-agent-web
 
-# 根项目全量测试（含 agent-service）
+# 根项目全量测试（含 agent / agent-web）
 make test-all
 
 # 仅做 web 构建校验
@@ -93,7 +99,9 @@ pl-agent/
 ├── packages/             ← 📦 Monorepo 业务包
 │   ├── core/             ← 🧠 配种算法引擎 + Schema
 │   ├── adapters/         ← 🔌 外部数据适配层
-│   ├── api/              ← 🌐 FastAPI 服务
+│   ├── api/              ← 🌐 FastAPI 服务（配种查询）
+│   ├── agent/            ← 🤖 独立 agent 模块（LLM/tools/记忆/用户，无 web 依赖）
+│   ├── agent-web/        ← 🌐 agent 的 FastAPI 服务层（服务前端）
 │   ├── nlu/              ← 💬 意图解析
 │   ├── web/              ← 🖥️ 前端 UI
 │   └── shared/           ← 🔗 跨包类型

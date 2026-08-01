@@ -5,6 +5,12 @@ __pycache__/
 .venv/
 .pytest_cache/
 
+# Secrets
+.env
+.env.local
+.env.*
+!.env.example
+
 # uv
 uv.lock
 
@@ -25,3 +31,7 @@ node_modules/
 # Data (raw HTML is large, only commit processed)
 data/raw/pages/
 data/raw/extracted/
+
+# Agent runtime data (file-mode memory / users) — 不提交
+packages/agent/data/
+*.json.bak

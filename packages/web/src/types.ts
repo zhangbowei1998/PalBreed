@@ -1,5 +1,17 @@
 export type AgentRole = "assistant" | "user";
 
+export type PalProfile = {
+  id: string;
+  number: number;
+  cn_name: string;
+  en_name: string;
+  combi_rank: number;
+  rarity: number;
+  is_wild: boolean;
+  image_url?: string | null;
+  wiki_url?: string | null;
+};
+
 export type ChatMessage = {
   id: string;
   role: AgentRole;
@@ -7,7 +19,11 @@ export type ChatMessage = {
 };
 
 export type AgentAction = {
-  action: "expand_parent" | "summarize_route" | "confirm_target";
+  action:
+    | "expand_parent"
+    | "confirm_target"
+    | "select_parent_pair"
+    | "continue_from_parent";
   label: string;
   payload: Record<string, unknown>;
 };
@@ -34,6 +50,15 @@ export type AgentStateSnapshot = {
   click_trace: Array<{ pal_id: string; ts: string }>;
   pending_frontier?: string[];
   node_depths?: Record<string, number>;
+  selected_pairs?: Array<{
+    child_pal_id: string;
+    parent_a_id: string;
+    parent_a_name: string;
+    parent_b_id: string;
+    parent_b_name: string;
+    method: string;
+    depth: number;
+  }>;
 };
 
 export type AgentData = {
@@ -41,9 +66,4 @@ export type AgentData = {
   actions: AgentAction[];
   state_snapshot: AgentStateSnapshot;
   meta?: Record<string, unknown>;
-  graph_json?: {
-    nodes: Array<{ id: string; name: string; depth: number; status: string }>;
-    edges: Array<{ source: string; target: string; method: string }>;
-    roots: string[];
-  };
 };

@@ -1,6 +1,6 @@
-.PHONY: install install-web test test-unit test-smoke test-all test-agent-service test-contract-agent-service test-web lint clean scrape demo serve serve-agent-service serve-web build-web help
+.PHONY: install install-web test test-unit test-smoke test-all test-agent test-agent-web test-web lint clean scrape demo serve serve-agent-service serve-web build-web help
 
-PYTHONPATH := packages/core:packages/adapters:packages/api:packages
+PYTHONPATH := packages/core:packages/adapters:packages/api:packages/agent:packages/agent-web:packages
 export PYTHONPATH
 
 install:
@@ -20,14 +20,14 @@ test-smoke:
 
 test-all:
 	uv run pytest packages/adapters/adapters/paldb/__tests__/ packages/core/pl_agent/core/__tests__/ tests/smoke/ -v
-	cd agent-service && uv run --with pytest --with pytest-asyncio pytest -q
+	uv run pytest packages/agent/pl_agent/agent/__tests__/ packages/agent-web/tests/ -q
 	cd packages/web && npm_config_cache=.npm-cache npm install && npm run build
 
-test-agent-service:
-	cd agent-service && uv run --with pytest --with pytest-asyncio pytest -q
+test-agent:
+	uv run pytest packages/agent/pl_agent/agent/__tests__/ packages/agent/pl_agent/agent/intent/__tests__/ packages/agent/pl_agent/agent/llm/__tests__/ -q
 
-test-contract-agent-service:
-	cd agent-service && uv run --with pytest --with pytest-asyncio pytest tests/contract -q
+test-agent-web:
+	uv run pytest packages/agent-web/tests -q
 
 test-web:
 	cd packages/web && npm_config_cache=.npm-cache npm install && npm run build
@@ -45,7 +45,7 @@ serve:
 	uv run uvicorn pl_agent.api.main:app --reload --port 8000
 
 serve-agent-service:
-	cd agent-service && uv run uvicorn --app-dir src pl_agent_agent.app:app --reload --port 9000
+	uv run uvicorn pl_agent.agent_web.app:app --reload --port 9000
 
 serve-web:
 	cd packages/web && npm_config_cache=.npm-cache npm install && npm run dev
@@ -78,13 +78,13 @@ help:
 	@echo "  make test-smoke   仅冒烟测试"
 	@echo "  make test-all     全部测试"
 	@echo "  make test-api     API 集成测试"
-	@echo "  make test-agent-service   agent-service 全量测试"
-	@echo "  make test-contract-agent-service   agent-service 契约测试"
+	@echo "  make test-agent   agent 模块测试"
+	@echo "  make test-agent-web   agent-web 服务测试"
 	@echo "  make test-web     web 构建校验"
 	@echo "  make scrape       从 paldb.cc 抓取数据"
 	@echo "  make demo         引擎功能演示"
 	@echo "  make serve        启动 API 服务"
-	@echo "  make serve-agent-service   启动 agent-service"
+	@echo "  make serve-agent-service   启动 agent-web 服务（端口 9000）"
 	@echo "  make serve-web    启动 web 前端"
 	@echo "  make build-web    构建 web 前端"
 	@echo "  make lint         代码检查"

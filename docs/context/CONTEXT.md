@@ -69,6 +69,23 @@ pl-agent/
 │   │       ├── routes/
 │   │       │   └── query.py        ← 路由 + ORM 查询调用
 │   │       └── __tests__/          ← API 测试
+│   ├── agent/            ← 🤖 独立 agent 模块 (Python, 无 web 依赖)
+│   │   └── pl_agent/agent/
+│   │       ├── llm/                ← LLM 客户端抽象 (DeepSeek/OpenAI 兼容)
+│   │       ├── tools/              ← function calling 工具 (配种/解析/统计)
+│   │       ├── memory/             ← 长期记忆 (file/postgres) + 上下文压缩
+│   │       ├── graph/              ← AgentWorkflow / AgentLoop / guards
+│   │       ├── intent/             ← 意图识别 (LLM + 规则回退)
+│   │       ├── interaction/        ← 响应构建 / 点击协议
+│   │       ├── state/              ← 会话状态模型 + 内存仓库
+│   │       ├── auth/               ← 用户存储/密码/token (无路由)
+│   │       ├── clients/            ← breeding API client
+│   │       ├── summarizer/         ← 配种树摘要
+│   │       └── config.py           ← 运行时配置 + .env 加载
+│   ├── agent-web/        ← 🌐 agent 的 FastAPI 服务层 (服务前端)
+│   │   └── pl_agent/agent_web/
+│   │       ├── app.py              ← FastAPI 入口 + lifespan + 路由
+│   │       └── auth/routes.py      ← /auth/register|login|me
 │   ├── nlu/              ← 💬 意图解析 (v0.2)
 │   └── web/              ← 🖥️ 前端 UI (v0.3)
 │
@@ -103,6 +120,70 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
                                                                       统计 (GROUP BY)
 ```
 
+---
+
+## Agent 架构（packages/agent + packages/agent-web）
+
+```
+前端 (React, packages/web) ──HTTP──▶ agent-web (FastAPI, :9000)
+                                        │
+                              app.py lifespan 装配：
+                              user_store / long_term_memory / LLM / workflow
+                                        ▼
+                                   AgentWorkflow
+                          ┌──────────────┼──────────────┐
+                          ▼              ▼              ▼
+                    短期记忆        长期记忆        上下文压缩
+                 (chat_history)   (用户持久事实)   (LLM 摘要)
+                          │              │              │
+                          └──────────────┼──────────────┘
+                                         ▼
+                                    AgentLoop
+                          (LLM function calling 多轮循环)
+                                         │
+                          ┌──────────────┼──────────────┐
+                          ▼              ▼              ▼
+                     ToolRegistry   DeepSeekClient   BreedingApiClient
+                     (配种工具)      (pl_agent.llm)   (上游 :8000)
+```
+
+**关键组件**：
+- `agent-web/app.py`：FastAPI 入口，lifespan 装配各组件；路由 `/agent/chat` `/agent/action` `/agent/session/{id}` `/auth/*`
+- `agent/graph/workflow.py`：`AgentWorkflow` 主编排，`_SYSTEM_PROMPT` 定义 agent 行为规则（配种必须调工具、省略主语结合上下文推断）
+- `agent/graph/agent_loop.py`：`AgentLoop` 多轮 tool_calls 循环，透传 wire-format dict 消息
+- `agent/tools/breeding.py`：确定性配种工具（query_parent_pairs / resolve_pal / query_top_suitability / query_pal_stats）
+- `agent/llm/`：可插拔 LLM 抽象（`LLMClient`），`DeepSeekClient` 走 OpenAI 兼容协议
+- `agent/memory/`：`LongTermMemory`（file）`PostgresLongTermMemory`（PG）+ `compress.py` 摘要压缩
+- `agent/auth/`：用户核心（存储/密码/token，**无 FastAPI 路由**）；路由在 `agent-web/auth/routes.py`
+
+**依赖方向**：`agent-web` → `agent`（workspace）；`agent` 不依赖 FastAPI。
+
+---
+
+## 记忆系统
+
+### 短期记忆（会话内）
+- `SessionState.chat_history` 记录最近 `SHORT_TERM_MAX_TURNS`（默认 12）轮 user+assistant
+- 前端 `useAgentSession` 用 localStorage 持久化 sessionId（`pl_agent_session_id`），页面刷新保持同一会话
+- ⚠️ 会话状态目前存内存（`InMemorySessionRepository`），**服务重启会丢失**；未来可做 Postgres 会话仓库
+
+### 长期记忆（跨会话持久）
+- 存储用户持久事实（"用户拥有阿努比斯"、"用户偏好墨罗娜"），**按用户维度隔离**
+- 存储后端：`LONG_TERM_STORE=file`（`packages/agent/data/`）或 `postgres`（`agent_long_term_memory` 表）
+- 事实抽取：规则式正则（`extract_owned_facts` / `extract_preference_facts`），识别"我已有/我喜欢 帕鲁名"
+
+### 上下文压缩
+- 短期记忆超过 `max_turns*2` 时，最早一批对话用 LLM 压缩成摘要（`memory/compress.py`）
+- 摘要存 `SessionState.history_summary`，每轮注入 system prompt
+
+### 用户体系
+- `POST /auth/register` `POST /auth/login` 返回 HMAC 签名 token（`AUTH_SECRET`）
+- chat/action 带 `Authorization: Bearer <token>` 时按用户隔离长期记忆；匿名回退 `default_user_key`
+- 用户存储：`USER_STORE=file`（`packages/agent/data/users.json`）或 `postgres`（`agent_users` 表）
+- 密码 PBKDF2-HMAC-SHA256 哈希（`agent/auth/security.py`）
+
+---
+
 ## 数据来源
 
 **主力**: [paldb.cc](https://paldb.cc/cn/) — 活跃维护 (v1.0.2, 2026-07-29)，中文，服务端渲染 HTML，可爬取。
@@ -129,12 +210,12 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 | Schema 定义 | ✅ | `schema.py` — Pal, WorkSuitability, PalRow, BreedingRuleRow |
 | 数据层 | ✅ | scraper → parser → adapter → PostgreSQL (5 表) |
 | API 服务 | ✅ | FastAPI — SQLAlchemy Async ORM, 参数化查询, 8 端点 |
-| Agent 服务 | ✅ | `agent-service/` — chat/action/session 接口、状态管理、路线汇总、测试体系 |
+| Agent 服务 | ✅ | `packages/agent/`（独立 agent 模块）+ `packages/agent-web/`（FastAPI 服务层）— chat/action/session 接口、LLM function calling、记忆系统、用户体系、测试体系 |
 | 数据库规范化 | ✅ | 5 表 (pal/pal_element/work_suitability/pal_aliase/breeding_rule) |
 | 测试 | ✅ | ORM 单测 7/7 + API 冒烟 8/8 通过 |
-| Makefile | ✅ | 统一入口已包含 `serve-agent-service` / `test-agent-service` / `test-contract-agent-service` |
+| Makefile | ✅ | 统一入口已包含 `serve-agent-service` / `test-agent` / `test-agent-web` |
 | NLU 模块 | ⏭️ | 跳过, 结构化输入 |
-| 前端 UI | ✅ | `packages/web/` — React + Vite 聊天交互页，已接入 agent-service |
+| 前端 UI | ✅ | `packages/web/` — React + Vite 聊天交互页，已接入 agent-web |
 
 ## API 端点一览
 
@@ -149,24 +230,27 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 API 运行约束：
 - PostgreSQL 为必需依赖；数据库不可用时 API 启动失败，不会回退到 JSON。
 
-## Agent-service 端点一览
+## Agent-web 端点一览
 
 | 端点 | 方法 | 说明 |
 |------|:---:|------|
 | `/health` | GET | 健康检查 |
-| `/agent/chat` | POST | 聊天入口（含 Top-3 候选确认） |
-| `/agent/action` | POST | 动作入口（confirm_target / expand_parent / summarize_route） |
+| `/agent/chat` | POST | 聊天入口（LLM + function calling，含短期/长期记忆、上下文压缩） |
+| `/agent/action` | POST | 动作入口（confirm_target / expand_parent / select_parent_pair） |
 | `/agent/session/{session_id}` | GET | 会话快照读取 |
+| `/auth/register` | POST | 用户注册（返回 token） |
+| `/auth/login` | POST | 用户登录（返回 token） |
+| `/auth/me` | GET | 当前用户（Bearer token） |
 
 **启动**:
 - `make serve` → http://localhost:8000
 - `make serve-agent-service` → http://localhost:9000
 
 **测试**:
-- `make test-agent-service`（agent-service 全量）
-- `make test-contract-agent-service`（agent-service 契约）
+- `make test-agent`（agent 模块单元测试）
+- `make test-agent-web`（agent-web 服务测试）
 - `make test-web`（web 构建校验）
-- `make test-all`（根项目 + agent-service）
+- `make test-all`（根项目 + agent + agent-web）
 
 **输入示例**:
 - `{"input": "阿努比斯"}` → 父母对列表
@@ -177,8 +261,8 @@ API 运行约束：
 
 | 优先级 | 任务 | 位置 |
 |:---:|------|------|
-| 1 | agent-web 独立项目落地与联调 | `agent-web/`（待创建） |
-| 2 | Agent 服务会话存储从内存升级到 Redis | `agent-service/src/pl_agent_agent/state/` |
+| 1 | 前端登录注册页面 | `packages/web/`（后端已就绪） |
+| 2 | Agent 服务会话存储从内存升级到 Redis | `packages/agent/pl_agent/agent/state/` |
 | 3 | NLU 模块增强与多工种意图扩展 | `packages/nlu/` |
 | 4 | 特殊配种规则扩充 | `packages/api/pl_agent/api/routes/query.py` + `packages/api/pl_agent/api/db/queries.py` |
 

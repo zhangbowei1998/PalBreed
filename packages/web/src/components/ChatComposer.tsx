@@ -6,7 +6,7 @@ type Props = {
 };
 
 export function ChatComposer({ loading, onSend }: Props) {
-  const [value, setValue] = useState("手工等级最高的帕鲁怎么配种");
+  const [value, setValue] = useState("手工最高的是哪只帕鲁");
 
   async function submit(event: FormEvent) {
     event.preventDefault();
@@ -21,10 +21,11 @@ export function ChatComposer({ loading, onSend }: Props) {
       <input
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="输入：手工等级最高的帕鲁怎么配种"
+        placeholder="输入：手工最高 / 烧火最高 / 采矿最高…"
+        disabled={loading}
       />
       <button type="submit" disabled={loading}>
-        发送
+        {loading ? "查询中..." : "发送"}
       </button>
     </form>
   );

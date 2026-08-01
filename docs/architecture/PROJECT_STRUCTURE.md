@@ -59,6 +59,28 @@ pl-agent/
 │   │       ├── routes/query.py       ← 路由 + ORM 查询调用
 │   │       └── __tests__/            ← API 冒烟脚本
 │   │
+│   ├── agent/                        ← 🤖 独立 agent 模块 (Python, 无 web 依赖)
+│   │   └── pl_agent/agent/
+│   │       ├── config.py             ← 运行时配置 + .env 加载
+│   │       ├── llm/                  ← LLM 客户端抽象 (DeepSeek/OpenAI 兼容)
+│   │       ├── tools/                ← function calling 工具 (配种/解析/统计)
+│   │       ├── memory/               ← 长期记忆 (file/postgres) + 上下文压缩
+│   │       ├── graph/                ← AgentWorkflow / AgentLoop / guards
+│   │       ├── intent/               ← 意图识别 (LLM + 规则回退)
+│   │       ├── interaction/          ← 响应构建 / 点击协议
+│   │       ├── state/                ← 会话状态模型 + 内存仓库
+│   │       ├── clients/              ← breeding API client
+│   │       ├── auth/                 ← 用户存储/密码/token (无路由)
+│   │       ├── summarizer/           ← 配种树摘要
+│   │       ├── common/               ← 常量 / telemetry
+│   │       ├── data/                 ← 本地数据 (file 模式记忆)
+│   │       └── __tests__/            ← agent 单元测试
+│   │
+│   ├── agent-web/                    ← 🌐 agent 的 FastAPI 服务层 (服务前端)
+│   │   └── pl_agent/agent_web/
+│   │       ├── app.py                ← FastAPI 入口 + lifespan + 路由
+│   │       └── auth/routes.py        ← /auth/register|login|me
+│   │
 │   ├── nlu/                          ← 💬 NLU 意图解析 (v0.2 预留)
 │   └── web/                          ← 🖥️ 前端 UI (v0.3 预留)
 │
@@ -141,6 +163,29 @@ paldb.cc → scraper/parser → PalDBAdapter
 - **lifespan**: 启动时从 PG 加载 pals → 构建 Parser
 - **依赖**: core (schema) + sqlalchemy + asyncpg
 - **框架**: FastAPI + SQLAlchemy Async ORM
+
+### `packages/agent` — 独立 agent 模块
+
+- **职责**: LLM 对话 + function calling + 记忆系统 + 用户认证核心
+- **包含**:
+  - `llm/`: 可插拔 LLM 客户端抽象（DeepSeek / OpenAI 兼容）
+  - `tools/`: 确定性配种工具（暴露给 LLM function calling）
+  - `memory/`: 长期记忆（file/postgres）+ 短期记忆 + 上下文压缩
+  - `graph/`: `AgentWorkflow` + `AgentLoop`（多轮 tool_calls）+ guards
+  - `auth/`: 用户存储（file/postgres）、密码哈希、token 签发（**无 FastAPI 路由**）
+  - `state/`: 会话状态模型 + 仓库
+- **不依赖**: FastAPI / uvicorn（纯逻辑，可独立测试复用）
+- **依赖**: httpx + pydantic + asyncpg + python-dotenv
+
+### `packages/agent-web` — agent 的 FastAPI 服务层
+
+- **职责**: 为前端提供 HTTP 服务
+- **包含**:
+  - `app.py`: FastAPI 入口 + lifespan 装配（用户存储/记忆/LLM/workflow）
+  - `auth/routes.py`: `/auth/register` `/auth/login` `/auth/me`
+- **依赖**: `packages/agent`（workspace）+ fastapi + uvicorn
+- **框架**: FastAPI
+- **端点**: `/health` `/agent/chat` `/agent/action` `/agent/session/{id}` + `/auth/*`
 
 ### `packages/nlu` — 自然语言理解 (v0.2 预留)
 

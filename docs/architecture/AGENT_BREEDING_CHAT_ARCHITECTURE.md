@@ -248,5 +248,5 @@ MVP 固定 mode=explored_only。
 
 ## 13. agent-service 专项开发文档
 
-- 入口索引: `docs/architecture/agent-service/README.md`
+- 入口索引: `docs/architecture/agent/README.md`
 - 适用范围: 仅 `agent-service` 项目，不包含前端实现细节。

@@ -1,9 +1,22 @@
-import { useMemo, useState } from "react";
-import { action, chat } from "../services/agentClient";
-import type { AgentAction, AgentData, ChatMessage } from "../types";
+import { useState } from "react";
+import { action, chat, getPalProfile } from "../services/agentClient";
+import type { AgentAction, AgentData, ChatMessage, PalProfile } from "../types";
+
+const SESSION_KEY = "pl_agent_session_id";
 
 function makeSessionId(): string {
   return `web-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+/** 会话 ID 持久化到 localStorage：页面刷新 / 服务重启后同一浏览器保持同一会话。 */
+function getOrCreateSessionId(): string {
+  const existing = localStorage.getItem(SESSION_KEY);
+  if (existing) {
+    return existing;
+  }
+  const fresh = makeSessionId();
+  localStorage.setItem(SESSION_KEY, fresh);
+  return fresh;
 }
 
 function normalizeMessages(data: AgentData, baseId: string): ChatMessage[] {
@@ -15,18 +28,49 @@ function normalizeMessages(data: AgentData, baseId: string): ChatMessage[] {
 }
 
 export function useAgentSession() {
-  const [sessionId] = useState(() => makeSessionId());
+  const [sessionId] = useState(() => getOrCreateSessionId());
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [actions, setActions] = useState<AgentAction[]>([]);
   const [stateSnapshot, setStateSnapshot] = useState<AgentData["state_snapshot"] | null>(null);
-  const [graphJson, setGraphJson] = useState<AgentData["graph_json"] | null>(null);
+  const [palProfiles, setPalProfiles] = useState<Record<string, PalProfile>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const canSummarize = useMemo(
-    () => actions.some((a) => a.action === "summarize_route"),
-    [actions],
-  );
+  async function prefetchPalProfiles(snapshot: AgentData["state_snapshot"] | null) {
+    if (!snapshot) return;
+    const ids = new Set<string>();
+    for (const edge of snapshot.edges ?? []) {
+      ids.add(edge.parent_a_id);
+      ids.add(edge.parent_b_id);
+      ids.add(edge.child_pal_id);
+    }
+    for (const c of snapshot.target_candidates ?? []) {
+      ids.add(c.pal_id);
+    }
+
+    const missing = [...ids].filter((id) => !(id in palProfiles));
+    if (missing.length === 0) return;
+
+    const entries = await Promise.all(
+      missing.map(async (id) => {
+        try {
+          const profile = await getPalProfile(id);
+          return [id, profile] as const;
+        } catch {
+          return null;
+        }
+      }),
+    );
+
+    const next: Record<string, PalProfile> = {};
+    for (const item of entries) {
+      if (!item) continue;
+      next[item[0]] = item[1];
+    }
+    if (Object.keys(next).length > 0) {
+      setPalProfiles((prev) => ({ ...prev, ...next }));
+    }
+  }
 
   async function sendMessage(input: string) {
     if (!input.trim()) return;
@@ -45,7 +89,7 @@ export function useAgentSession() {
       setMessages((prev) => [...prev, ...normalizeMessages(data, `a-${Date.now()}`)]);
       setActions(data.actions);
       setStateSnapshot(data.state_snapshot);
-      setGraphJson(data.graph_json ?? null);
+      void prefetchPalProfiles(data.state_snapshot);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -53,7 +97,7 @@ export function useAgentSession() {
     }
   }
 
-  async function runAction(item: AgentAction) {
+  async function runAction(item: AgentAction): Promise<AgentData | null> {
     setError(null);
     setLoading(true);
 
@@ -67,34 +111,25 @@ export function useAgentSession() {
       setMessages((prev) => [...prev, ...normalizeMessages(data, `a-${Date.now()}`)]);
       setActions(data.actions);
       setStateSnapshot(data.state_snapshot);
-      setGraphJson(data.graph_json ?? null);
+      void prefetchPalProfiles(data.state_snapshot);
+      return data;
     } catch (err) {
       setError((err as Error).message);
+      return null;
     } finally {
       setLoading(false);
     }
-  }
-
-  async function summarize() {
-    const summarizeAction = actions.find((a) => a.action === "summarize_route") ?? {
-      action: "summarize_route" as const,
-      label: "生成配种路线",
-      payload: { mode: "explored_only" },
-    };
-    await runAction(summarizeAction);
   }
 
   return {
     sessionId,
     messages,
     actions,
+    palProfiles,
     stateSnapshot,
-    graphJson,
     loading,
     error,
-    canSummarize,
     sendMessage,
     runAction,
-    summarize,
   };
 }

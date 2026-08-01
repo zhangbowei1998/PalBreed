@@ -17,12 +17,12 @@
 ## 2. 推荐目录结构（双项目）
 
 ```text
-agent-service/
+packages/agent/
 ├── pyproject.toml
 ├── README.md
 ├── .env.example
 ├── src/
-│   └── pl_agent_agent/
+│   └── pl_agent.agent/
 │       ├── app.py                              # Agent 服务入口（HTTP）
 │       ├── config.py                           # 配置加载
 │       ├── graph/

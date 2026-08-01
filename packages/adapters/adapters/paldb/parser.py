@@ -219,13 +219,39 @@ class PalDBParser:
         internal_id: str,
         warnings: list[str],
     ) -> str | None:
-        """first cdn.paldb.cc image"""
+        """Prefer pal portrait image under PalIcon path."""
+
+        def normalize_src(src: str) -> str:
+            if src.startswith("http"):
+                return src
+            if src.startswith("//"):
+                return "https:" + src
+            return f"https://{src}"
+
+        candidates: list[str] = []
         for img in soup.find_all("img"):
             src = img.get("src", "")
-            if "cdn.paldb.cc/image" in src:
-                if not src.startswith("http"):
-                    src = "https:" + src if src.startswith("//") else f"https://{src}"
+            if "cdn.paldb.cc/image" not in src:
+                continue
+            candidates.append(normalize_src(src))
+
+        # 1) Exact-id portrait first.
+        for src in candidates:
+            if "/Pal/Texture/PalIcon/" in src and f"T_{internal_id}_icon" in src:
                 return src
+
+        # 2) Any portrait path as fallback.
+        for src in candidates:
+            if "/Pal/Texture/PalIcon/" in src:
+                return src
+
+        # 3) Last resort: deterministic portrait URL.
+        if internal_id:
+            return (
+                "https://cdn.paldb.cc/image/Pal/Texture/PalIcon/Normal/"
+                f"T_{internal_id}_icon_normal.webp"
+            )
+
         warnings.append(f"{internal_id}: image_url not found")
         return None
 
