@@ -1,11 +1,21 @@
+import { App, Avatar, Button, Dropdown, Space } from "antd";
+import type { MenuProps } from "antd";
+import { UserOutlined, LogoutOutlined, LoginOutlined } from "@ant-design/icons";
+import { useState } from "react";
 import { ActionTray } from "../components/ActionTray";
+import { AuthModal } from "../components/AuthModal";
 import { BreedingTree, type SelectedPair } from "../components/BreedingTree";
 import { ChatComposer } from "../components/ChatComposer";
 import { MessageList } from "../components/MessageList";
 import { useAgentSession } from "../hooks/useAgentSession";
+import { useAuth } from "../hooks/useAuth";
 import type { AgentAction } from "../types";
 
 export function ChatPage() {
+  const { user, login, register, logout } = useAuth();
+  const [authOpen, setAuthOpen] = useState(false);
+  const userKey = user?.id ?? "anonymous";
+
   const {
     messages,
     actions,
@@ -15,7 +25,7 @@ export function ChatPage() {
     error,
     sendMessage,
     runAction,
-  } = useAgentSession();
+  } = useAgentSession(userKey);
 
   const palNameToId = Object.fromEntries(
     (stateSnapshot?.edges ?? []).flatMap((edge) => [
@@ -56,12 +66,44 @@ export function ChatPage() {
     }
   }
 
+  const userMenu: MenuProps = {
+    items: [
+      { key: "logout", icon: <LogoutOutlined />, label: "退出登录" },
+    ],
+    onClick: ({ key }) => {
+      if (key === "logout") {
+        logout();
+      }
+    },
+  };
+
   return (
-    <main className="layout">
-      <section className="chat-shell">
-        <header className="hero">
-          <h1>配种探索控制台</h1>
-          <p>点击父母组合即可展开配种二叉树，实时查看每一步的配种路径。</p>
+    <App className="app-root">
+      <main className="layout">
+        <header className="topbar">
+          <div className="brand">
+            <span className="brand-emoji" aria-hidden="true">🦤</span>
+            <div className="brand-text">
+              <h1>帕鲁配种助手</h1>
+              <p>AI 会思考、调用配种工具，再给你精确答案。</p>
+            </div>
+          </div>
+          <div className="topbar-user">
+            {user ? (
+              <Dropdown menu={userMenu} placement="bottomRight">
+                <Button type="text" className="user-chip">
+                  <Space>
+                    <Avatar size={26} style={{ background: "#1677ff" }}>{user.username.slice(0, 1).toUpperCase()}</Avatar>
+                    <span>{user.username}</span>
+                  </Space>
+                </Button>
+              </Dropdown>
+            ) : (
+              <Button type="primary" icon={<LoginOutlined />} onClick={() => setAuthOpen(true)}>
+                登录 / 注册
+              </Button>
+            )}
+          </div>
         </header>
 
         {error && <div className="error">{error}</div>}
@@ -89,7 +131,14 @@ export function ChatPage() {
           }}
         />
         <ChatComposer loading={loading} onSend={sendMessage} />
-      </section>
-    </main>
+
+        <AuthModal
+          open={authOpen}
+          onClose={() => setAuthOpen(false)}
+          onLogin={login}
+          onRegister={register}
+        />
+      </main>
+    </App>
   );
 }

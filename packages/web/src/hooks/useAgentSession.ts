@@ -1,40 +1,65 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { action, chat, getPalProfile } from "../services/agentClient";
-import type { AgentAction, AgentData, ChatMessage, PalProfile } from "../types";
+import type { AgentAction, AgentData, AgentTraceInfo, ChatMessage, PalProfile } from "../types";
 
-const SESSION_KEY = "pl_agent_session_id";
+/** 会话 ID 按用户维度存储，避免不同用户共用 localStorage key 造成串扰。 */
+function sessionStorageKey(userKey: string): string {
+  return `pl_agent_session_id_${userKey}`;
+}
 
 function makeSessionId(): string {
   return `web-${Math.random().toString(36).slice(2, 10)}`;
 }
 
 /** 会话 ID 持久化到 localStorage：页面刷新 / 服务重启后同一浏览器保持同一会话。 */
-function getOrCreateSessionId(): string {
-  const existing = localStorage.getItem(SESSION_KEY);
+function getOrCreateSessionId(userKey: string): string {
+  const key = sessionStorageKey(userKey);
+  const existing = localStorage.getItem(key);
   if (existing) {
     return existing;
   }
   const fresh = makeSessionId();
-  localStorage.setItem(SESSION_KEY, fresh);
+  localStorage.setItem(key, fresh);
   return fresh;
 }
 
+function extractTrace(data: AgentData): AgentTraceInfo | null {
+  const trace = data.meta?.trace;
+  if (!trace || typeof trace !== "object") return null;
+  return trace as AgentTraceInfo;
+}
+
 function normalizeMessages(data: AgentData, baseId: string): ChatMessage[] {
+  const trace = extractTrace(data);
   return data.messages.map((m, idx) => ({
     id: `${baseId}-${idx}`,
     role: m.role,
     content: m.content,
+    trace: m.role === "assistant" ? trace : null,
   }));
 }
 
-export function useAgentSession() {
-  const [sessionId] = useState(() => getOrCreateSessionId());
+export function useAgentSession(userKey: string) {
+  const [sessionId, setSessionId] = useState(() => getOrCreateSessionId(userKey));
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [actions, setActions] = useState<AgentAction[]>([]);
   const [stateSnapshot, setStateSnapshot] = useState<AgentData["state_snapshot"] | null>(null);
   const [palProfiles, setPalProfiles] = useState<Record<string, PalProfile>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const userKeyRef = useRef(userKey);
+
+  // 用户切换（登录/登出）时：会话、消息、动作全部重置，防止记忆串扰。
+  useEffect(() => {
+    if (userKeyRef.current === userKey) return;
+    userKeyRef.current = userKey;
+    setSessionId(getOrCreateSessionId(userKey));
+    setMessages([]);
+    setActions([]);
+    setStateSnapshot(null);
+    setPalProfiles({});
+    setError(null);
+  }, [userKey]);
 
   async function prefetchPalProfiles(snapshot: AgentData["state_snapshot"] | null) {
     if (!snapshot) return;

@@ -226,9 +226,12 @@ async def agent_action(body: ActionRequest, request: Request) -> dict:
 
 
 @app.get("/agent/session/{session_id}")
-async def get_session(session_id: str) -> dict:
+async def get_session(session_id: str, request: Request) -> dict:
     repository: InMemorySessionRepository = app.state.repository
-    state = await repository.get(session_id)
+    # 与 handle_chat/handle_action 一致的按用户隔离 key
+    user_id = resolve_user_id_from_request(request)
+    internal_key = f"u:{user_id or app.state.settings.default_user_key}:{session_id}"
+    state = await repository.get(internal_key)
     if not state:
         raise HTTPException(status_code=404, detail="session not found")
     return {"success": True, "data": {"state_snapshot": state.model_dump()}}

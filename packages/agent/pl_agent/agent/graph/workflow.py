@@ -111,8 +111,16 @@ class AgentWorkflow:
 
     def _user_key(self, session_id: str, user_id: str | None = None) -> str:
         # 有登录用户时按用户隔离长期记忆；匿名会话退回 default。
-        # 前端登录注册上线后，把这里的 user_id 换成登录态即可。
         return user_id or self._settings.default_user_key
+
+    def _session_key(self, session_id: str, user_id: str | None = None) -> str:
+        """短期记忆存储 key：按用户隔离，避免不同用户会话串扰。
+
+        登录用户: u:{user_id}:{session_id}
+        匿名用户: u:default:{session_id}
+        """
+        user = user_id or self._settings.default_user_key
+        return f"u:{user}:{session_id}"
 
     async def _load_or_create_state(self, session_id: str) -> SessionState:
         state = await self._repository.get(session_id)
@@ -124,6 +132,8 @@ class AgentWorkflow:
         return await self._repository.save(session_id, state)
 
     async def handle_chat(self, data: ChatInput) -> dict:
+        # 短期记忆按用户隔离：session_id 与 user 绑定成存储 key（匿名也加 default 前缀）
+        data.session_id = self._session_key(data.session_id, data.user_id)
         state = await self._load_or_create_state(data.session_id)
 
         if self._agent_loop is not None:
@@ -218,7 +228,7 @@ class AgentWorkflow:
                 result = None
 
         # 监测：组装本次对话 trace 并记录
-        await self._record_trace(
+        trace_info = await self._record_trace(
             session_id=session_id,
             user_key=user_key,
             user_message=message,
@@ -250,10 +260,14 @@ class AgentWorkflow:
         for fact in extract_preference_facts(message):
             await self._long_term_memory.add(user_key, fact)
 
+        meta: dict = {}
+        if trace_info:
+            meta["trace"] = trace_info
         return build_response(
             messages=[reply],
             actions=[],
             state=state,
+            meta=meta,
         )
 
     def _format_fact(self, fact: MemoryFact) -> str:
@@ -272,9 +286,7 @@ class AgentWorkflow:
         reply: str,
         result: AgentLoopResult | None,
         latency_ms: int,
-    ) -> None:
-        if self._trace_store is None:
-            return
+    ) -> dict | None:
         tool_calls = list(result.tool_calls) if result else []
         used_tools = bool(tool_calls)
         had_error = bool(result and result.error) or (result is None)
@@ -294,10 +306,31 @@ class AgentWorkflow:
             tool_success_rate=(ok / total) if total else 1.0,
             reply_length=len(reply),
         )
+        # 返回给前端的工具调用摘要（不依赖 trace_store 是否启用）
+        trace_info = {
+            "latency_ms": latency_ms,
+            "model": trace.model,
+            "used_tools": used_tools,
+            "had_error": had_error,
+            "tool_success_rate": trace.tool_success_rate,
+            "tool_calls": [
+                {
+                    "name": tc.name,
+                    "arguments": tc.arguments,
+                    "success": tc.success,
+                    "error": tc.error,
+                    "result": tc.result,
+                }
+                for tc in tool_calls
+            ],
+        }
+        if self._trace_store is None:
+            return trace_info
         try:
             await self._trace_store.record(trace)
         except Exception:  # noqa: BLE001 — 监测失败不阻塞主流程
             pass
+        return trace_info
 
     async def _handle_expand_pal(
         self, session_id: str, state: SessionState, pal_name: str
@@ -348,6 +381,8 @@ class AgentWorkflow:
         )
 
     async def handle_action(self, data: ActionInput) -> dict:
+        # 短期记忆按用户隔离：session_id 与 user 绑定成存储 key（匿名也加 default 前缀）
+        data.session_id = self._session_key(data.session_id, data.user_id)
         state = await self._load_or_create_state(data.session_id)
 
         if data.action == ACTION_CONFIRM_TARGET:

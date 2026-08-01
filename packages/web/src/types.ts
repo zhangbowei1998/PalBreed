@@ -16,6 +16,7 @@ export type ChatMessage = {
   id: string;
   role: AgentRole;
   content: string;
+  trace?: AgentTraceInfo | null;
 };
 
 export type AgentAction = {
@@ -66,4 +67,21 @@ export type AgentData = {
   actions: AgentAction[];
   state_snapshot: AgentStateSnapshot;
   meta?: Record<string, unknown>;
+};
+
+export type AgentToolCall = {
+  name: string;
+  arguments: Record<string, unknown>;
+  success: boolean;
+  error?: string;
+  result?: Record<string, unknown>;
+};
+
+export type AgentTraceInfo = {
+  latency_ms: number;
+  model: string;
+  used_tools: boolean;
+  had_error: boolean;
+  tool_success_rate: number;
+  tool_calls: AgentToolCall[];
 };

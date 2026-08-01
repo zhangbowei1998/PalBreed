@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useRef } from "react";
-
+import { Avatar } from "antd";
+import { Bubble, type BubbleItemType } from "@ant-design/x";
+import { RobotOutlined, UserOutlined } from "@ant-design/icons";
 import type { AgentAction, ChatMessage, PalProfile } from "../types";
+import { ThinkingProcess } from "./ThinkingProcess";
 
 type Props = {
   messages: ChatMessage[];
@@ -133,38 +135,65 @@ function renderAssistantContent(
 }
 
 export function MessageList({ messages, palNameToId, palProfiles, loading, pairActionMap, onSelectPair }: Props) {
-  const listRef = useRef<HTMLDivElement | null>(null);
-  const endRef = useRef<HTMLDivElement | null>(null);
-
-  const messageCount = useMemo(() => messages.length, [messages]);
-
-  useEffect(() => {
-    const host = listRef.current;
-    const end = endRef.current;
-    if (!host || !end) return;
-    const id = requestAnimationFrame(() => {
-      end.scrollIntoView({ behavior: "smooth", block: "end" });
-    });
-    return () => cancelAnimationFrame(id);
-  }, [messageCount, loading]);
+  const items: BubbleItemType[] = [
+    ...messages.map((msg) => {
+      if (msg.role === "user") {
+        return {
+          key: msg.id,
+          role: "user" as const,
+          content: msg.content,
+        };
+      }
+      return {
+        key: msg.id,
+        role: "assistant" as const,
+        content: (
+          <div>
+            {msg.trace && <ThinkingProcess trace={msg.trace} />}
+            {renderAssistantContent(
+              msg.content,
+              palNameToId,
+              palProfiles,
+              loading,
+              pairActionMap,
+              onSelectPair,
+            )}
+          </div>
+        ),
+      };
+    }),
+    ...(loading
+      ? [{
+          key: "typing",
+          role: "assistant" as const,
+          content: (
+            <div className="typing">
+              <span />
+              <span />
+              <span />
+            </div>
+          ),
+        }]
+      : []),
+  ];
 
   return (
-    <div className="message-list" ref={listRef}>
-      {messages.map((msg) => (
-        <article key={msg.id} className={`message message-${msg.role}`}>
-          <header>{msg.role === "user" ? "你" : "Agent"}</header>
-          {msg.role === "assistant"
-            ? renderAssistantContent(msg.content, palNameToId, palProfiles, loading, pairActionMap, onSelectPair)
-            : <p>{msg.content}</p>}
-        </article>
-      ))}
-      {loading && (
-        <article className="message message-assistant message-loading">
-          <header>Agent</header>
-          <p>正在分析并查询中...</p>
-        </article>
-      )}
-      <div ref={endRef} />
-    </div>
+    <Bubble.List
+      className="bubble-list"
+      items={items}
+      autoScroll
+      role={{
+        user: {
+          placement: "end",
+          variant: "filled",
+          avatar: <Avatar size={28} icon={<UserOutlined />} />,
+        },
+        assistant: {
+          placement: "start",
+          variant: "outlined",
+          avatar: <Avatar size={28} style={{ background: "#1677ff" }} icon={<RobotOutlined />} />,
+        },
+      }}
+    />
   );
 }

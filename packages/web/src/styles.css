@@ -33,8 +33,50 @@ body,
   max-width: 1100px;
   margin: 0 auto;
   padding: 16px;
+  min-height: 100vh;
 }
 
+/* ── 顶栏（品牌 + 用户状态） ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 16px 30px rgba(52, 41, 30, 0.08);
+  padding: 12px 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-emoji {
+  font-size: 30px;
+}
+
+.brand-text h1 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  color: #14532d;
+}
+
+.brand-text p {
+  margin: 2px 0 0;
+  color: #3c3a36;
+  font-size: 13px;
+}
+
+.topbar-user .user-chip {
+  font-weight: 600;
+}
+
+/* ── 聊天主区（消息列表） ── */
 .chat-shell {
   background: var(--paper);
   border: 1px solid var(--line);
@@ -45,55 +87,18 @@ body,
   gap: 12px;
 }
 
-.hero h1 {
-  margin: 0;
-  letter-spacing: 0.02em;
-  font-size: clamp(24px, 3.2vw, 40px);
-  color: #14532d;
-}
-
-.hero p {
-  margin: 8px 0 0;
-  color: #3c3a36;
-}
-
-.message-list {
+.bubble-list {
   min-height: 340px;
-  max-height: 54vh;
+  max-height: 52vh;
   overflow: auto;
-  padding: 8px;
+  padding: 12px;
   border-radius: 12px;
   border: 1px solid var(--line);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(251, 244, 234, 0.9));
 }
 
-.message-list::-webkit-scrollbar {
-  width: 10px;
-}
-
-.message-list::-webkit-scrollbar-thumb {
-  background: #d7c6b0;
-  border-radius: 999px;
-}
-
-.message {
-  margin: 10px 0;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  animation: rise 220ms ease;
-}
-
-.message header {
-  font-size: 12px;
-  opacity: 0.75;
-  margin-bottom: 4px;
-}
-
-.message p {
-  margin: 0;
-  white-space: pre-wrap;
-  line-height: 1.45;
+.bubble-list .ant-bubble-content {
+  box-shadow: 0 2px 8px rgba(52, 41, 30, 0.06);
 }
 
 .message-body {
@@ -321,21 +326,6 @@ body,
   font-weight: 500;
 }
 
-.message-loading p {
-  color: #1f6a63;
-  font-style: italic;
-}
-
-.message-assistant {
-  background: var(--assistant);
-  border-color: #b9e8df;
-}
-
-.message-user {
-  background: var(--user);
-  border-color: #efd8bf;
-}
-
 .action-tray {
   display: grid;
   gap: 10px;
@@ -375,22 +365,10 @@ button:disabled {
 }
 
 .composer {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
-}
-
-.composer input {
-  width: 100%;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 10px 12px;
+  border-radius: 14px;
   background: #fff;
-}
-
-.composer input:disabled {
-  background: #f6f0e8;
-  color: #7d6f61;
+  box-shadow: 0 4px 14px rgba(52, 41, 30, 0.08);
 }
 
 .error {
@@ -401,6 +379,203 @@ button:disabled {
   padding: 8px 10px;
 }
 
+/* ── 思考过程 ── */
+.thinking {
+  margin-bottom: 10px;
+  border: 1px solid #cfe8e4;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+  overflow: hidden;
+}
+
+.thinking-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-size: 13px;
+  color: #1f6a63;
+}
+
+.thinking-toggle:hover {
+  background: rgba(15, 118, 110, 0.05);
+}
+
+.thinking-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--brand);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+  flex: 0 0 auto;
+}
+
+.thinking-title {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.thinking-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.thinking-tool-chip {
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  border: 1px solid #9bc9c4;
+  background: #e8f5f3;
+  color: #0f766e;
+}
+
+.thinking-tool-chip.fail {
+  border-color: #ffb3a6;
+  background: #ffebe9;
+  color: #cf222e;
+}
+
+.thinking-arrow {
+  margin-left: 4px;
+  transition: transform 160ms ease;
+  color: #7d8f8c;
+}
+
+.thinking-arrow.open {
+  transform: rotate(90deg);
+}
+
+.thinking-body {
+  padding: 8px 10px 10px;
+  border-top: 1px dashed #cfe8e4;
+  display: grid;
+  gap: 8px;
+}
+
+.thinking-meta {
+  font-size: 12px;
+  color: #57606a;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.thinking-err {
+  color: #cf222e;
+  font-weight: 600;
+}
+
+.thinking-note {
+  font-size: 13px;
+  color: #57606a;
+}
+
+.tool-card {
+  border: 1px solid #e0e6e4;
+  border-radius: 8px;
+  background: #fdfdfd;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.tool-card-fail {
+  border-color: #ffb3a6;
+  background: #fff6f4;
+}
+
+.tool-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.tool-card-name {
+  font-weight: 600;
+  color: #0f766e;
+}
+
+.tool-card-status {
+  font-size: 11px;
+  padding: 1px 8px;
+  border-radius: 999px;
+}
+
+.tool-card-status.ok {
+  background: #dafbe1;
+  color: #1a7f37;
+}
+
+.tool-card-status.fail {
+  background: #ffebe9;
+  color: #cf222e;
+}
+
+.tool-card-row {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.tool-card-label {
+  color: #8a7f72;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.tool-card-row code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  background: #f6f8fa;
+  border-radius: 5px;
+  padding: 3px 6px;
+  word-break: break-all;
+  white-space: pre-wrap;
+  color: #3a3f47;
+}
+
+.tool-card-row code.err {
+  background: #ffebe9;
+  color: #cf222e;
+}
+
+/* ── 打字动画 ── */
+.typing {
+  display: inline-flex;
+  gap: 4px;
+  padding: 6px 2px;
+}
+
+.typing span {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--brand);
+  opacity: 0.4;
+  animation: blink 1.2s infinite;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%, 60%, 100% { opacity: 0.4; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
 @keyframes rise {
   from {
     opacity: 0;
@@ -409,5 +584,24 @@ button:disabled {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* 滚动条美化 */
+.bubble-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.bubble-list::-webkit-scrollbar-thumb {
+  background: #d7c6b0;
+  border-radius: 999px;
+}
+
+@media (max-width: 640px) {
+  .brand-text p {
+    display: none;
+  }
+  .topbar {
+    padding: 10px 14px;
   }
 }

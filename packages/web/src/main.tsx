@@ -1,10 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { XProvider } from "@ant-design/x";
 import App from "./App";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <XProvider theme={{ token: { colorPrimary: "#1677ff" } }}>
+      <App />
+    </XProvider>
   </React.StrictMode>,
 );
