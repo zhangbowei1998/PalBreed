@@ -25,7 +25,7 @@ from pl_agent.agent.graph.workflow import (
 from pl_agent.agent.llm import LLMConfig, create_llm_client
 from pl_agent.agent.memory.long_term import LongTermMemory, LongTermMemoryStore
 from pl_agent.agent.memory.postgres import PostgresLongTermMemory
-from pl_agent.agent.monitoring.postgres import PostgresTraceStore
+from pl_agent.agent.monitoring import InMemoryTraceStore, PostgresTraceStore
 from pl_agent.agent.state.memory_store import InMemorySessionRepository
 
 from .auth.routes import resolve_user_id_from_request, router as auth_router
@@ -79,9 +79,17 @@ async def lifespan(app: FastAPI):
     if isinstance(user_store, PostgresUserStore):
         await user_store.connect()
 
-    # 监测：agent 对话 trace 存储
-    trace_store = PostgresTraceStore(settings.database_url)
-    await trace_store.connect()
+    # 监测：agent 对话 trace 存储（postgres 生产 / file 测试或无 DB 环境）
+    if settings.trace_store == "postgres":
+        try:
+            trace_store = PostgresTraceStore(settings.database_url)
+            await trace_store.connect()
+        except Exception as exc:  # noqa: BLE001
+            # 数据库不可用时降级到内存，避免服务因依赖 DB 而无法启动
+            print(f"⚠️ trace_store postgres 连接失败，降级为内存: {exc}")
+            trace_store = InMemoryTraceStore()
+    else:
+        trace_store = InMemoryTraceStore()
 
     app.state.settings = settings
     app.state.repository = repository

@@ -40,6 +40,8 @@ class TestPostgresConfig:
         assert c.port == 5432
 
     def test_from_env(self, monkeypatch):
+        # 确保 DATABASE_URL 不存在，走独立字段分支（避免被 .env 污染）
+        monkeypatch.delenv("DATABASE_URL", raising=False)
         monkeypatch.setenv("PGHOST", "pg.example.com")
         monkeypatch.setenv("PGPORT", "5433")
         monkeypatch.setenv("PGDATABASE", "palworld")

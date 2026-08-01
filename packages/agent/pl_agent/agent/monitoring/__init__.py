@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from .inmemory import InMemoryTraceStore
 from .models import (
     AgentTrace,
     LlmRoundRecord,
@@ -12,6 +13,7 @@ from .postgres import PostgresTraceStore
 
 __all__ = [
     "AgentTrace",
+    "InMemoryTraceStore",
     "LlmRoundRecord",
     "PostgresTraceStore",
     "ToolCallRecord",

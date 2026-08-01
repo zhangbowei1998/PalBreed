@@ -34,6 +34,7 @@ class Settings:
     default_user_key: str = "default"
     short_term_max_turns: int = 12  # 短期记忆保留最近 N 轮（含 user+assistant）
     long_term_store: str = "file"  # "file" | "postgres"
+    trace_store: str = "postgres"  # "file" | "postgres"（监测 trace 存储）
     database_url: str = "postgresql://postgres@localhost:5432/pl_agent"
     # Auth / user system
     user_store: str = "file"  # "file" | "postgres"
@@ -123,6 +124,7 @@ def load_settings() -> Settings:
         default_user_key=os.getenv("DEFAULT_USER_KEY", "default"),
         short_term_max_turns=int(os.getenv("SHORT_TERM_MAX_TURNS", "12")),
         long_term_store=os.getenv("LONG_TERM_STORE", "file"),
+        trace_store=os.getenv("TRACE_STORE", "postgres"),
         database_url=os.getenv(
             "DATABASE_URL", "postgresql://postgres@localhost:5432/pl_agent"
         ),

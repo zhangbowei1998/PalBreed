@@ -1,5 +1,13 @@
 from __future__ import annotations
 
+import os
+
+# 测试环境不依赖真实 PostgreSQL：强制使用内存/文件存储，
+# 否则 TestClient(app) 触发 lifespan 时会尝试连接 PG 导致失败。
+os.environ.setdefault("LONG_TERM_STORE", "file")
+os.environ.setdefault("USER_STORE", "file")
+os.environ.setdefault("TRACE_STORE", "file")
+
 from dataclasses import dataclass
 
 import pytest
