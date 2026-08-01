@@ -208,6 +208,23 @@ body,
   color: #555555;
 }
 
+.breed-tree-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.breed-tree-head .breed-tree-title {
+  margin: 0;
+}
+
+.breed-tree-head .ant-btn-text {
+  font-size: 12px;
+  color: #555555;
+}
+
 .breed-tree-empty {
   padding: 10px 12px;
   border: 1px dashed var(--line);

@@ -1,3 +1,7 @@
+import { App, Button, Space, Tooltip } from "antd";
+import { CopyOutlined, PictureOutlined } from "@ant-design/icons";
+import { toPng } from "html-to-image";
+import { useRef } from "react";
 import type { PalProfile } from "../types";
 
 export type SelectedPair = {
@@ -83,7 +87,42 @@ function PalNode({
   );
 }
 
+/** 把配种树转成可粘贴的文本（微信友好）。 */
+function buildRouteText(
+  rootToken: string,
+  pairByChild: Map<string, SelectedPair>,
+  palNameToId: Record<string, string>,
+  palProfiles: Record<string, PalProfile>,
+): string {
+  const lines: string[] = [];
+  const resolveName = (token: string): string => {
+    const profile = resolveProfile(token, palNameToId, palProfiles);
+    return profile?.cn_name ?? token;
+  };
+
+  const visit = (childToken: string, indent: number) => {
+    const pair = pairByChild.get(childToken);
+    const childName = resolveName(childToken);
+    if (!pair) {
+      lines.push(`${"  ".repeat(indent)}${childName}`);
+      return;
+    }
+    const a = resolveName(pair.parent_a_id);
+    const b = resolveName(pair.parent_b_id);
+    const prefix = indent === 0 ? "" : `${"  ".repeat(indent)}└─ `;
+    lines.push(`${prefix}${childName} = ${a} + ${b}`);
+    visit(pair.parent_a_id, indent + 1);
+    visit(pair.parent_b_id, indent + 1);
+  };
+
+  visit(rootToken, 0);
+  return lines.join("\n");
+}
+
 export function BreedingTree({ targetPal, selectedPairs, palNameToId, palProfiles }: Props) {
+  const treeRef = useRef<HTMLDivElement | null>(null);
+  const { message } = App.useApp();
+
   const pairByChild = new Map<string, SelectedPair>();
   for (const pair of selectedPairs) {
     pairByChild.set(pair.child_pal_id, pair);
@@ -99,9 +138,73 @@ export function BreedingTree({ targetPal, selectedPairs, palNameToId, palProfile
     );
   }
 
+  const rootName = resolveProfile(rootToken, palNameToId, palProfiles)?.cn_name ?? rootToken;
+  const rootTokenSafe: string = rootToken;
+
+  async function copyText() {
+    const text = buildRouteText(rootTokenSafe, pairByChild, palNameToId, palProfiles);
+    const content = `【${rootName} 配种路线】\n${text}`;
+    try {
+      await navigator.clipboard.writeText(content);
+      message.success("配种路线已复制，可粘贴到微信发送");
+    } catch {
+      message.error("复制失败，请手动选择文本");
+    }
+  }
+
+  async function copyImage() {
+    const node = treeRef.current;
+    if (!node) return;
+    try {
+      // CDN 帕鲁头像不支持 CORS，导出时排除 <img>，保证图片必然可生成；
+      // 文字节点 + 连线 + 白底在微信里依然清晰可读。
+      const dataUrl = await toPng(node, {
+        pixelRatio: 2,
+        backgroundColor: "#ffffff",
+        cacheBust: true,
+        filter: (el) => el.tagName !== "IMG",
+      });
+      const blob = await (await fetch(dataUrl)).blob();
+      // 优先用 ClipboardItem 复制图片到剪贴板
+      try {
+        if (typeof ClipboardItem !== "undefined") {
+          await navigator.clipboard.write([
+            new ClipboardItem({ "image/png": blob }),
+          ]);
+          message.success("配种路线图片已复制，可粘贴到微信发送");
+          return;
+        }
+      } catch {
+        // 剪贴板写图片失败，退化为下载
+      }
+      // 退化：下载图片
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = `${rootName}-配种路线.png`;
+      a.click();
+      message.success("图片已下载（浏览器不支持直接复制图片）");
+    } catch {
+      message.error("生成图片失败");
+    }
+  }
+
   return (
-    <div className="breed-tree">
-      <h3 className="breed-tree-title">已确认配种路径</h3>
+    <div className="breed-tree" ref={treeRef}>
+      <div className="breed-tree-head">
+        <h3 className="breed-tree-title">已确认配种路径</h3>
+        <Space size={4}>
+          <Tooltip title="复制配种路线为文字">
+            <Button size="small" type="text" icon={<CopyOutlined />} onClick={() => void copyText()}>
+              复制
+            </Button>
+          </Tooltip>
+          <Tooltip title="把配种树导出为图片">
+            <Button size="small" type="text" icon={<PictureOutlined />} onClick={() => void copyImage()}>
+              图片
+            </Button>
+          </Tooltip>
+        </Space>
+      </div>
       <ul className="breed-tree-root">
         <PalNode
           token={rootToken}
