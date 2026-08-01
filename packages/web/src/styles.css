@@ -207,6 +207,9 @@ body,
   border-radius: 12px;
   background: #ffffff;
   overflow-x: auto;
+  /* 关键：li 是 inline-block，默认会换行。nowrap 强制节点单行横向排布，
+     超宽时由 overflow-x 横向滚动，避免深层树节点串行/连线错乱。 */
+  white-space: nowrap;
 }
 
 .breed-tree-title {
