@@ -1,0 +1,84 @@
+# ============================================================
+# GitHub Actions — 自动部署到阿里云 ECS
+# 触发: push 到 main / 手动触发
+# 流程: SSH → rsync 同步代码 → 生成 .env → docker compose up -d --build
+# 前置: 见 docs/architecture/ALIYUN_DEPLOY.md 第 11 节
+# ============================================================
+name: Deploy to Aliyun ECS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {} # 允许在 GitHub Actions 页面手动触发
+
+env:
+  # 通过环境变量把 secret 传给 ssh-action 的 envs，避免在脚本里内嵌密钥
+  LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+  AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+
+jobs:
+  deploy:
+    name: Deploy pl-agent to ECS
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 1. 服务器准备：建目录 + 确保 rsync 已安装
+      - name: Prepare remote server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            set -e
+            mkdir -p /opt/pl-agent
+            if ! command -v rsync >/dev/null 2>&1; then
+              if command -v yum >/dev/null 2>&1; then
+                yum install -y rsync
+              else
+                apt-get update -y && apt-get install -y rsync
+              fi
+            fi
+
+      # 2. rsync 增量同步代码（排除本地缓存/密钥，避免覆盖服务器 .env）
+      - name: Sync code via rsync
+        uses: burnett01/rsync-deployments@7.0.0
+        with:
+          switches: >-
+            -avzr --delete
+            --exclude=.git --exclude=.env --exclude=.venv
+            --exclude=node_modules --exclude=.npm-cache --exclude=__pycache__
+            --exclude=.pytest_cache --exclude=.ruff_cache --exclude=.DS_Store
+          path: ./
+          remote_path: /opt/pl-agent/
+          remote_host: ${{ secrets.SERVER_HOST }}
+          remote_port: 22
+          remote_user: ${{ secrets.SERVER_USER }}
+          remote_key: ${{ secrets.SERVER_SSH_KEY }}
+
+      # 3. 从 GitHub Secrets 生成 .env，然后重建所有服务
+      - name: Write .env and rebuild
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          envs: LLM_API_KEY,AUTH_SECRET
+          script: |
+            set -e
+            cd /opt/pl-agent
+            # .env 由 CI 生成，永远不进入仓库
+            printf 'LLM_API_KEY=%s\n' "$LLM_API_KEY" > .env
+            printf 'LLM_PROVIDER=deepseek\n' >> .env
+            printf 'LLM_BASE_URL=https://api.deepseek.com\n' >> .env
+            printf 'LLM_MODEL=deepseek-chat\n' >> .env
+            printf 'AUTH_SECRET=%s\n' "$AUTH_SECRET" >> .env
+            # 重建并启动所有服务（web 前端也会在服务器上重新构建）
+            docker compose up -d --build
+            echo "---- 容器状态 ----"
+            docker compose ps
