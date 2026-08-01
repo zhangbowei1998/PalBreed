@@ -9,7 +9,8 @@ WORKDIR /app
 # 复制依赖清单并安装（利用缓存）
 COPY packages/web/package.json packages/web/package-lock.json* /app/packages/web/
 WORKDIR /app/packages/web
-RUN npm ci --ignore-scripts --cache /tmp/npm-cache
+# 淘宝 npm 镜像，避免大陆服务器访问 registry.npmjs.org 超时
+RUN npm ci --ignore-scripts --cache /tmp/npm-cache --registry=https://registry.npmmirror.com
 
 # 复制源码并构建
 COPY packages/web/ /app/packages/web/

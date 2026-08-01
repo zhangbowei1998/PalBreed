@@ -12,9 +12,9 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# 安装第三方依赖
+# 安装第三方依赖（阿里云 PyPI 镜像，避免大陆服务器访问国外源超时）
 COPY scripts/docker-requirements-api.txt /tmp/deps/requirements.txt
-RUN pip install --no-cache-dir -r /tmp/deps/requirements.txt
+RUN pip install --no-cache-dir -i https://mirrors.aliyun.com/pypi/simple/ -r /tmp/deps/requirements.txt
 
 # 复制源码
 COPY packages/core/pl_agent /app/packages/core/pl_agent
