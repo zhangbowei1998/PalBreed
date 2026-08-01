@@ -17,7 +17,7 @@
 | **CombiRank** | 官方繁殖力值，配种计算唯一核心参数。子代 = 父母 CombiRank 平均值取最近 |
 | **基础帕鲁** | `is_wild=true` 的帕鲁，野外可直接捕获 |
 | **配种公式** | SQL: `round((a.combi_rank + b.combi_rank) / 2) = child.combi_rank` |
-| **查询方式** | PostgreSQL 5 表规范化，CROSS JOIN + breeding_rule 守卫查询 |
+| **查询方式** | PostgreSQL 5 表规范化，CROSS JOIN + breeding_rule 守卫查询（无 JSON fallback） |
 
 ---
 
@@ -45,7 +45,7 @@ pl-agent/
 │   │   └── pl_agent/core/
 │   │       ├── schema.py           ← ★ canonical models
 │   │       ├── errors.py           ← domain exceptions
-│   │       ├── data_loader.py      ← JSON 降级加载
+│   │       ├── data_loader.py      ← 离线数据工具（API 运行时不使用）
 │   │       └── __tests__/          ← 数据模型测试
 │   ├── adapters/         ← 🔌 外部数据适配
 │   │   └── adapters/
@@ -127,7 +127,7 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 |------|:---:|------|
 | 架构设计 | ✅ | `docs/architecture/*` |
 | Schema 定义 | ✅ | `schema.py` — Pal, WorkSuitability, PalRow, BreedingRuleRow |
-| 数据层 | ✅ | scraper → parser → adapter → PostgreSQL (5 表) + JSON 降级 |
+| 数据层 | ✅ | scraper → parser → adapter → PostgreSQL (5 表) |
 | API 服务 | ✅ | FastAPI — SQLAlchemy Async ORM, 参数化查询, 8 端点 |
 | Agent 服务 | ✅ | `agent-service/` — chat/action/session 接口、状态管理、路线汇总、测试体系 |
 | 数据库规范化 | ✅ | 5 表 (pal/pal_element/work_suitability/pal_aliase/breeding_rule) |
@@ -145,6 +145,9 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 | `/api/pal/{id}` | GET | 帕鲁详情 |
 | `/api/breeding/tree/{id}` | GET | 父母对列表 (一级) |
 | `/api/suitability/stats` | GET | 全工种统计 |
+
+API 运行约束：
+- PostgreSQL 为必需依赖；数据库不可用时 API 启动失败，不会回退到 JSON。
 
 ## Agent-service 端点一览
 
@@ -220,7 +223,7 @@ WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $target_rank
 - **api 包**: 业务逻辑在路由层，数据库访问集中在 ORM 查询服务，两步配种查询 (守卫 + CROSS JOIN)
 - **数据库**: 5 表规范化 (pal/pal_element/work_suitability/pal_aliase/breeding_rule)
 - **属性筛选**: 参数化 JOIN work_suitability，消除 SQL 注入
-- **PG 降级**: 无 PG 时回退到 JSON 文件 + Python 内存遍历
+- **数据源策略**: API 仅使用 PostgreSQL，不启用 JSON 降级
 
 ---
 

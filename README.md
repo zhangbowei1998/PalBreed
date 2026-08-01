@@ -45,15 +45,15 @@
 git clone <repo-url>
 cd pl-agent
 
+# 启动 PostgreSQL（必需）
+docker compose up -d
+
 # 后端
-cd packages/api
-pip install -r requirements.txt
-uvicorn pl_agent.api.main:app --reload
+uv sync
+make serve
 
 # 前端 (另一个终端)
-cd packages/web
-npm install
-npm run dev
+make serve-web
 ```
 
 ### 统一命令入口（Makefile）
@@ -120,13 +120,13 @@ pl-agent/
 | API 服务 | FastAPI |
 | 数据访问 | SQLAlchemy Async ORM + asyncpg |
 | 前端 | React 18 + Vite + TypeScript |
-| 数据源 | [paldb.cc](https://paldb.cc/cn/) (游戏数据, 持续更新) |
+| 数据源 | PostgreSQL 16（由 paldb.cc 抓取后入库） |
 | 语音 | Web Speech API (MVP) → Whisper (进阶) |
 | NLU | 规则引擎 (MVP) → LLM (进阶) |
 
 ## 数据来源
 
-数据来自 [paldb.cc](https://paldb.cc/cn/)，一个持续维护的幻兽帕鲁数据库网站（基于游戏解包数据）。通过离线爬虫脚本获取，存储为本地 JSON 文件。
+基础数据来自 [paldb.cc](https://paldb.cc/cn/)，通过离线爬虫脚本抓取后写入 PostgreSQL；API 运行时仅从数据库读取，不再使用 JSON 降级。
 
 关键数据字段：
 - **CombiRank** — 官方繁殖力值，配种计算核心

@@ -45,7 +45,7 @@ serve:
 	uv run uvicorn pl_agent.api.main:app --reload --port 8000
 
 serve-agent-service:
-	cd agent-service && uv run uvicorn pl_agent_agent.app:app --reload --port 9000
+	cd agent-service && uv run uvicorn --app-dir src pl_agent_agent.app:app --reload --port 9000
 
 serve-web:
 	cd packages/web && npm_config_cache=.npm-cache npm install && npm run dev

@@ -111,97 +111,87 @@ async def get_breeding_tree(request: Request, pal_id: str, all: bool = False):
 
 @router.get("/suitability/stats")
 async def get_stats(request: Request):
-    orm_service: OrmQueryService | None = getattr(
-        request.app.state, "orm_service", None
-    )
-    if orm_service:
-        stats_rows = await orm_service.get_work_stats()
-        stats = {
-            r["work_type"]: {
-                "max_level": r["max_level"],
-                "avg_level": r["avg_level"],
-                "count": r["pal_count"],
-            }
-            for r in stats_rows
+    orm_service: OrmQueryService = request.app.state.orm_service
+    stats_rows = await orm_service.get_work_stats()
+    stats = {
+        r["work_type"]: {
+            "max_level": r["max_level"],
+            "avg_level": r["avg_level"],
+            "count": r["pal_count"],
         }
-        parser: QueryParser = request.app.state.parser
-        from ..formatter import format_success
-
-        return format_success({"total_pals": len(parser._all_pals), **stats})
+        for r in stats_rows
+    }
 
     parser: QueryParser = request.app.state.parser
     from ..formatter import format_success
 
-    return format_success({"total_pals": len(parser._all_pals)})
+    return format_success({"total_pals": len(parser._all_pals), **stats})
 
 
 # ── internal helpers ──────────────────────────────────────────
 
 
 async def _breeding_query(request: Request, pal, show_all: bool = False):
-    orm_service: OrmQueryService | None = getattr(
-        request.app.state, "orm_service", None
-    )
+    orm_service: OrmQueryService = request.app.state.orm_service
     pal_dict = _pal_to_dict(pal)
     pairs = []
 
-    if orm_service:
-        # 第 0 步: 查特殊配种规则
-        rules = await orm_service.get_breeding_rules_by_game_id(pal.id)
-        for r in rules:
-            if r["rule_type"] == "unbreedable":
-                pairs = []
-                break
-            if r["rule_type"] == "same_species":
+    # 第 0 步: 查特殊配种规则
+    rules = await orm_service.get_breeding_rules_by_game_id(pal.id)
+    for r in rules:
+        if r["rule_type"] == "unbreedable":
+            pairs = []
+            break
+        if r["rule_type"] == "same_species":
+            pairs.append(
+                ParentPair(
+                    parent_a={"cn_name": pal.cn_name, "id": pal.id},
+                    parent_b={"cn_name": pal.cn_name, "id": pal.id},
+                    child=pal_dict,
+                    method="same_species",
+                )
+            )
+            break
+        if r["rule_type"] == "fixed_pair":
+            if r["parent_a_id"] is None or r["parent_b_id"] is None:
+                continue
+            pa = await orm_service.get_pal_pair_by_db_id(r["parent_a_id"])
+            pb = await orm_service.get_pal_pair_by_db_id(r["parent_b_id"])
+            if pa and pb:
                 pairs.append(
                     ParentPair(
-                        parent_a={"cn_name": pal.cn_name, "id": pal.id},
-                        parent_b={"cn_name": pal.cn_name, "id": pal.id},
+                        parent_a=pa,
+                        parent_b=pb,
                         child=pal_dict,
-                        method="same_species",
+                        method="fixed_pair",
                     )
                 )
-                break
-            if r["rule_type"] == "fixed_pair":
-                if r["parent_a_id"] is None or r["parent_b_id"] is None:
-                    continue
-                pa = await orm_service.get_pal_pair_by_db_id(r["parent_a_id"])
-                pb = await orm_service.get_pal_pair_by_db_id(r["parent_b_id"])
-                if pa and pb:
-                    pairs.append(
-                        ParentPair(
-                            parent_a=pa,
-                            parent_b=pb,
-                            child=pal_dict,
-                            method="fixed_pair",
-                        )
-                    )
-                break
+            break
 
-        # 第 1 步: CombiRank 公式 (仅当无特殊规则命中时)
-        if not rules or all(
-            r["rule_type"] not in ("unbreedable", "same_species", "fixed_pair")
-            for r in rules
-        ):
-            rows = await orm_service.query_parent_pairs_by_rank(pal.combi_rank, pal.id)
-            for r in rows:
-                pairs.append(
-                    ParentPair(
-                        parent_a={
-                            "cn_name": r["pa_cn"],
-                            "id": r["pa_id"],
-                            "combi_rank": r["pa_rank"],
-                            "is_wild": r["pa_wild"],
-                        },
-                        parent_b={
-                            "cn_name": r["pb_cn"],
-                            "id": r["pb_id"],
-                            "combi_rank": r["pb_rank"],
-                            "is_wild": r["pb_wild"],
-                        },
-                        child=pal_dict,
-                    )
+    # 第 1 步: CombiRank 公式 (仅当无特殊规则命中时)
+    if not rules or all(
+        r["rule_type"] not in ("unbreedable", "same_species", "fixed_pair")
+        for r in rules
+    ):
+        rows = await orm_service.query_parent_pairs_by_rank(pal.combi_rank, pal.id)
+        for r in rows:
+            pairs.append(
+                ParentPair(
+                    parent_a={
+                        "cn_name": r["pa_cn"],
+                        "id": r["pa_id"],
+                        "combi_rank": r["pa_rank"],
+                        "is_wild": r["pa_wild"],
+                    },
+                    parent_b={
+                        "cn_name": r["pb_cn"],
+                        "id": r["pb_id"],
+                        "combi_rank": r["pb_rank"],
+                        "is_wild": r["pb_wild"],
+                    },
+                    child=pal_dict,
                 )
+            )
 
     result = BreedingResult(pal=pal_dict, parent_pairs=pairs, total=len(pairs))
     from ..formatter import format_success
@@ -233,56 +223,14 @@ async def _suitability_query(
         format_out_of_range,
     )
 
-    orm_service: OrmQueryService | None = getattr(
-        request.app.state, "orm_service", None
-    )
+    orm_service: OrmQueryService = request.app.state.orm_service
     cond = conds[0]  # v1: 仅支持单工种
     work_type, min_level = cond
 
-    if orm_service:
-        results = await orm_service.query_suitability(work_type, min_level, limit=50)
-        if not results:
-            # 超范围: 查最高等级
-            top_results = await orm_service.query_suitability(work_type, 1, limit=10)
-            max_lv = top_results[0]["level"] if top_results else 0
-            return format_out_of_range(raw_input, work_type, max_lv, top_results)
-        return format_suitability_candidates(raw_input, work_type, results)
-
-    # JSON 降级: Python 遍历
-    parser: QueryParser = request.app.state.parser
-    pals = parser._all_pals
-    matched = []
-    for p in pals:
-        lv = getattr(p.work_suitability, work_type, 0)
-        if lv >= min_level:
-            matched.append((p, lv))
-    matched.sort(key=lambda x: (-x[1], x[0].combi_rank))
-    results = [
-        {
-            "id": p.id,
-            "cn_name": p.cn_name,
-            "number": p.number,
-            "combi_rank": p.combi_rank,
-            "is_wild": p.is_wild,
-            "level": lv,
-        }
-        for p, lv in matched[:50]
-    ]
+    results = await orm_service.query_suitability(work_type, min_level, limit=50)
     if not results:
-        all_lv = sorted(
-            [(p, getattr(p.work_suitability, work_type, 0)) for p in pals],
-            key=lambda x: -x[1],
-        )[:10]
-        max_lv = all_lv[0][1] if all_lv else 0
-        top_results = [
-            {
-                "id": p.id,
-                "cn_name": p.cn_name,
-                "number": p.number,
-                "combi_rank": p.combi_rank,
-                "level": lv,
-            }
-            for p, lv in all_lv
-        ]
+        # 超范围: 查最高等级
+        top_results = await orm_service.query_suitability(work_type, 1, limit=10)
+        max_lv = top_results[0]["level"] if top_results else 0
         return format_out_of_range(raw_input, work_type, max_lv, top_results)
     return format_suitability_candidates(raw_input, work_type, results)

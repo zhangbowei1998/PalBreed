@@ -19,7 +19,9 @@ import pytest
 from pl_agent.core.schema import Element, Pal, WorkSuitability
 from pl_agent.core.data_loader import DataLoader
 
-_HAS_LEGACY_ENGINE = importlib.util.find_spec("pl_agent.core.breeding_engine") is not None
+_HAS_LEGACY_ENGINE = (
+    importlib.util.find_spec("pl_agent.core.breeding_engine") is not None
+)
 
 # ── check PG availability ──────────────────────────────────────────
 
