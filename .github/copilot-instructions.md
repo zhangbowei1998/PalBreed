@@ -75,24 +75,23 @@
 ## 数据流
 
 ```
-paldb.cc → adapters/paldb/scraper.py → parser.py → adapter.py → schema.Pal
-                                                                      │
-                                          ┌───────────────────────────┘
-                                          ▼
-                              adapters/postgres/adapter.py
-                              (4 表事务: pal + element + aliase + work)
-                                          │
-                                          ▼
-                                    PostgreSQL 16
-                              (5 表: pal/pal_element/
-                               work_suitability/pal_aliase/
-                               breeding_rule)
-                                          │
-                              adapters/postgres/loader.py
-                              (LOAD_ALL_SQL: 4 表 JOIN 拼装)
-                                          │
-                                          ▼
-                              api/routes/query.py (SQL 直连)
+data-palworld.tc-imba.com (pals/breeding/passives/items + locales)
+      │  scripts/fetch_tcimba.py → data/tc-imba/
+      ▼
+adapters/tcimba/parser.py → adapter.py (TciDataBundle, 语义 id)
+      │
+      ▼
+adapters/postgres/ext_writer.py
+(22 表事务: 主表 pal/skill/passive/item → 1:1 详情 → 关联表)
+      │
+      ▼
+PostgreSQL 16 (22 表: 5 基础 + stats/技能/被动/物品/掉落/召唤)
+      │
+      ▼
+api/db/models.py (ORM 22 表) + queries.py (S6-S10 扩展查询)
+      │
+      ▼
+api/routes/query.py (配种 + /pals/{id}/detail + /passives + /items/...)
 ```
 
 任何新增数据源都走同样的 adapter 模式，不允许裸调外部 API 进入 core。

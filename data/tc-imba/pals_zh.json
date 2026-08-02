@@ -1,0 +1,2394 @@
+{
+ "SheepBall": {
+  "name": "棉悠悠",
+  "description": "它只要走在坡道上就肯定会跌倒并滚动起来。 \r\n而且还会因为眼冒金星而无法动弹， \r\n非常容易被当做是猎物，是食物链的底层。",
+  "partnerSkill": {
+   "name": "茸茸盾牌",
+   "desc": "发动后，它会化身为装备在玩家身上的盾牌。 将它分派到家畜牧场，它就有机会掉落羊毛。"
+  }
+ },
+ "PinkCat": {
+  "name": "捣蛋猫",
+  "description": "它装出一副威风凛凛的样子，其实胆小软弱。 \r\n如果被<characterName id=|PinkCat|/>看不起， \r\n某种意义上可谓奇耻大辱。",
+  "partnerSkill": {
+   "name": "跟猫借手手",
+   "desc": "若它在队伍中，<characterName id=|PinkCat|/>就会帮忙载运行李，玩家的负重上限将提高100/120/140/160/200。（不可叠加）"
+  }
+ },
+ "ChickenPal": {
+  "name": "皮皮鸡",
+  "description": "它非常弱小，却又非常美味。 \r\n与<characterName id=|SheepBall|/>同样都是极为弱小的帕鲁。 \r\n但不论再怎么对这种帕鲁展开围猎，它们也还是会从某处冒出来。",
+  "partnerSkill": {
+   "name": "产蛋",
+   "desc": "将它分派到家畜牧场，它就有机会产下蛋。"
+  }
+ },
+ "Carbunclo": {
+  "name": "翠叶鼠",
+  "description": "拥有等同于5至7岁儿童的智力。\r\n虽然很适合作为伙伴，但也有不少的记录显示，\r\n有些个体在学会使用武器后杀害了自己的主人。",
+  "partnerSkill": {
+   "name": "翠叶鼠出击",
+   "desc": "发动后它会坐在玩家的头上，配合玩家的攻击用冲锋枪进行追击。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "BluePlatypus": {
+  "name": "冲浪鸭",
+  "description": "它产生的水可在任何地方形成波浪。\r\n在事态紧急时可用身体冲浪形式移动。\r\n但经常因为势头过猛，而发生撞墙而死的惨剧。",
+  "partnerSkill": {
+   "name": "乘风破浪",
+   "desc": "发动后，<characterName id=|BluePlatypus|/>会乘着浪头冲向敌人。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "BluePlatypus_Fire": {
+  "name": "热浪鸭",
+  "description": "腹部的摩擦系数很高，\r\n身体冲浪时会产生火花。\r\n经常因为势头过猛，从而变成一团火球。",
+  "partnerSkill": {
+   "name": "热浪滚滚",
+   "desc": "发动后，<characterName id=|BluePlatypus_Fire|/>会乘着焰浪冲向敌人。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "CuteFox": {
+  "name": "玉藻狐",
+  "description": "帕洛斯群岛的偶像。\r\n胆敢欺负<characterName id=|CuteFox|/>的人，\r\n会在转眼间成为全民公敌。",
+  "partnerSkill": {
+   "name": "挖掘指导",
+   "desc": "将它分派到家畜牧场，它就有机会从地里挖出道具。"
+  }
+ },
+ "FlyingManta": {
+  "name": "鲁米儿",
+  "description": "它会乘着风任其带它翱翔四方。\r\n只要在旅途中找到命中之人，\r\n就会结束自己的旅程。",
+  "partnerSkill": {
+   "name": "微风滑翔",
+   "desc": "若它在队伍中，会改变滑翔伞的性能，并使玩家免受坠落伤害。 滑翔期间能够长时间快速移动。 （滑翔伞性能强化：-/小/中/大/特大）"
+  }
+ },
+ "FlyingManta_Thunder": {
+  "name": "雷米儿",
+  "description": "鲜艳的外表能帮助它找到命中之人。\r\n自古以来，就有因为<characterName id=|FlyingManta_Thunder|/>而触电的事故。\r\n现今的岛上，黄黑相间的纹理被认作危险的颜色。",
+  "partnerSkill": {
+   "name": "电风滑翔",
+   "desc": "若它在队伍中，会改变滑翔伞的性能，并使玩家免受坠落伤害。 滑翔期间能够长时间快速移动。 （滑翔伞性能强化：-/小/中/大/特大）"
+  }
+ },
+ "WoolFox": {
+  "name": "米露菲",
+  "description": "与<characterName id=|SheepBall|/>相较，这种帕鲁的毛质更加优良，\r\n个性也更适合作为家畜。\r\n但历史上这种帕鲁总是被当成宠物。\r\n毕竟可爱就是正义。",
+  "partnerSkill": {
+   "name": "蓬松毛毛",
+   "desc": "若它在队伍中，无属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加） 将它分派到家畜牧场，它就有机会掉落羊毛。"
+  }
+ },
+ "KendoFrog": {
+  "name": "武道蛙",
+  "description": "族群中犯下大错的个体会被逼迫自裁。 \r\n用树枝刺穿自己那膨胀到极限的鸣囊， \r\n就会像泄气的气球一样飞向大气圈的远方，魂归天国。",
+  "partnerSkill": {
+   "name": "蓄势跳跃",
+   "desc": "发动后，<characterName id=|KendoFrog|/>会靠忠诚心和膨胀的腹部积蓄力量。玩家在踩上去后能高高跳起。 在落地前，玩家的攻击力提升50/56/64/74/86%。"
+  }
+ },
+ "KendoFrog_Dark": {
+  "name": "极道蛙",
+  "description": "抛弃荣誉的<characterName id=|KendoFrog|/>聚集在一起，衍生出的分支族群。\r\n不论用上多么下作的手段也要狩猎掉盯上的猎物。\r\n如果在午夜遇到了一群<characterName id=|KendoFrog_Dark|/>，\r\n那魂归天国的就是这边了。",
+  "partnerSkill": {
+   "name": "蓄势暗跃",
+   "desc": "发动后，<characterName id=|KendoFrog_Dark|/>会靠忠诚心和膨胀的腹部积蓄力量。 玩家在踩上去后能高高跳起。 若它在队伍中，玩家和帕鲁以暗属性攻击命中敌方弱点时的伤害提升25/27/30/34/40%。（不可叠加）"
+  }
+ },
+ "LeafMomonga": {
+  "name": "达鼠泥",
+  "description": "在<characterName id=|LeafMomonga|/>看来，坏了的东西只要捶一下就好了。\r\n而它的力道掌控，对人类而言堪称完美。\r\n只要被其捶一下，停止跳动的心脏就能顺利起搏。",
+  "partnerSkill": {
+   "name": "起搏鼠鼠",
+   "desc": "若它在队伍中，<characterName id=|LeafMomonga|/>会在玩家陷入濒死状态时，通过疗愈能力让玩家以最大HP30/36/42/48/60%的状态复活。 （冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "Ganesha": {
+  "name": "壶小象",
+  "description": "它那被认为是鼻子的器官会喷出大量的水。 \r\n虽然也有人指出那只是鼻涕罢了， \r\n但是研究者们仍然为此进行了热烈的讨论。",
+  "partnerSkill": {
+   "name": "疗伤之浴",
+   "desc": "若它在队伍中，若玩家的生命值低于30%，恢复20/24/28/32/40%的生命值。（不可叠加） ※发动后需120秒冷却方可再次触发"
+  }
+ },
+ "PlantSlime": {
+  "name": "叶泥泥",
+  "description": "身体如树汁一般，是一种非常不可思议的帕鲁。\r\n如果失去了头顶的新芽，便会渐渐枯萎。\r\n最终走向腐烂殆尽的结局。",
+  "partnerSkill": {
+   "name": "樵夫啦啦队",
+   "desc": "若它在队伍中，玩家伐木时造成的伤害将提升30/35/40/45/50%，所有木材种类的重量都将减轻40/45/50/55/60%。（不可叠加）"
+  }
+ },
+ "SamuraiDog": {
+  "name": "宗铭丸",
+  "description": "互相紧盯然后拔刀一闪，这便是<characterName id=|SamuraiDog|/>间的领地争夺。\r\n说起来，最好不要训练被饲养的个体「等下」命令，\r\n它会无法忍耐接到「好」的命令之后，发自本能的拔刀行为。",
+  "partnerSkill": {
+   "name": "干劲支援",
+   "desc": "若它在队伍中，玩家使用近战武器时的伤害提升10/15/20/25/35%。（不可叠加）"
+  }
+ },
+ "CloverFairy": {
+  "name": "幸叶茸",
+  "description": "曾经存在过额头上的叶子有3片以上的个体，\r\n但是因为被当作了幸运的象征，叶片多的个体被滥捕，\r\n最终导致整个种族开始向着叶片数量少的方向进化了。",
+  "partnerSkill": {
+   "name": "幸运三叶草",
+   "desc": "若它在据点里，其他据点帕鲁的采集工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "Hedgehog": {
+  "name": "电棘鼠",
+  "description": "它在受到冲击后会释放储存的电力。\r\n它的电压超过1000万伏特。\r\n将它扔出去的话，威力比普通的重型炮弹危险得多。",
+  "partnerSkill": {
+   "name": "电击炸弹",
+   "desc": "发动后就能将<characterName id=|Hedgehog|/>装备在手上，若将它投向敌人且命中目标，便会引发雷属性爆炸。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "Hedgehog_Ice": {
+  "name": "冰刺鼠",
+  "description": "它在受到冲击后会释放储存的冷气。 \r\n它发射的冷气呈放射状，可冻结大气。 \r\n攻击它的对象会被击穿身体。",
+  "partnerSkill": {
+   "name": "冻结炸弹",
+   "desc": "发动后就能将<characterName id=|Hedgehog_Ice|/>装备在手上，若将它投向敌人且命中目标，便会引发冰属性爆炸。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "NegativeKoala": {
+  "name": "瞅什魔",
+  "description": "它眼神凶恶，朋友也很少，\r\n但其实心地很善良。 \r\n有人曾目击到它向离群的<characterName id=|CuteFox|/>分享食物。",
+  "partnerSkill": {
+   "name": "摄取咖啡因",
+   "desc": "发动后，<characterName id=|NegativeKoala|/>会大量饮用能量饮料，<characterName id=|NegativeKoala|/>的移动速度和工作速度会因此提升100/200/400/600/900%。 将它分派到家畜牧场，它就有机会掉落毒腺。"
+  }
+ },
+ "Penguin": {
+  "name": "企丸丸",
+  "description": "它的翅膀已完全退化，无法飞翔。\r\n但基因中刻着对天空的向往。\r\n因此它想尽办法，想要再一次飞翔。",
+  "partnerSkill": {
+   "name": "企丸丸发射",
+   "desc": "发动后玩家将装备火箭发射器，并可将<characterName id=|Penguin|/>当作炮弹射出。 命中目标后<characterName id=|Penguin|/>会爆炸，并陷入濒死状态。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "Penguin_Electric": {
+  "name": "闪丸丸",
+  "description": "它的翅膀已完全退化，无法飞翔。\r\n对天空的向往逐渐变成嫉妒\r\n为了击落天空中会飞的家伙，得到了雷电的力量！",
+  "partnerSkill": {
+   "name": "闪丸丸发射",
+   "desc": "发动后玩家将装备火箭发射器，并可将<characterName id=|Penguin_Electric|/>当作炮弹射出。 命中目标后<characterName id=|Penguin_Electric|/>会爆炸，并陷入濒死状态。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "CaptainPenguin": {
+  "name": "企丸王",
+  "description": "其实它与<characterName id=|Penguin|/>是毫无关系的物种。\r\n但因为什么都不做就能获得大家的追捧，\r\n所以就努力摆出一副高傲的态度。",
+  "partnerSkill": {
+   "name": "勇敢的海之战士",
+   "desc": "若它在队伍中，击倒火属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "CaptainPenguin_Black": {
+  "name": "闪丸王",
+  "description": "为了能在水中狩猎，得到了雷电的力量从而改变了体色。\r\n虽然因此失去了<characterName id=|Penguin|/>们的追随。 \r\n可谁曾想， \r\n现在反倒是有了叫做<characterName id=|Penguin_Electric|/>的小弟。",
+  "partnerSkill": {
+   "name": "不屈的雷击船长",
+   "desc": "若它在队伍中，玩家和帕鲁以水属性攻击命中敌方弱点时的伤害将提升25/27/30/34/40%。（不可叠加）"
+  }
+ },
+ "WizardOwl": {
+  "name": "啼卡尔",
+  "description": "这类帕鲁经常会陷入沉思，\r\n且会因过度思考而失眠。\r\n「我思故我在」。",
+  "partnerSkill": {
+   "name": "暗影睿智",
+   "desc": "若它在队伍中，暗属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "Alpaca": {
+  "name": "美露帕",
+  "description": "可别被它那毛茸茸的外表给骗了。 \r\n若挨下由它那双长腿甩出的一记超高速踢击， \r\n整个人可是会飞到地球的另一端。",
+  "partnerSkill": {
+   "name": "蓬蓬羊毛",
+   "desc": "可骑在它的背上移动。 若它在队伍中，<characterName id=|KingAlpaca|/>的防御力和移动速度将会提升。 将它分派到家畜牧场，它就有机会掉落羊毛。"
+  }
+ },
+ "KingAlpaca": {
+  "name": "君王美露帕",
+  "description": "统领着<characterName id=|Alpaca|/>们。\r\n<characterName id=|KingAlpaca|/>之间的决斗，会以族群的统治权为赌注。\r\n孤身一只的个体就是输家。",
+  "partnerSkill": {
+   "name": "大力国王",
+   "desc": "可骑在它的背上移动。 此帕鲁的防御力和移动速度会按照队伍中<characterName id=|Alpaca|/>的数量提升，每只增加5/7/9/11/14%。"
+  }
+ },
+ "KingAlpaca_Ice": {
+  "name": "冰帝美露帕",
+  "description": "这种帕鲁性格冷淡，不擅长表达情感。\r\n这个孤独的个体对<characterName id=|Alpaca|/>来说没有什么价值，简直是个悲剧。",
+  "partnerSkill": {
+   "name": "冷酷国王",
+   "desc": "可骑在它的背上移动。 此帕鲁的防御力和移动速度会按照队伍中<characterName id=|Alpaca|/>的数量提升，每只增加5/7/9/11/14%。"
+  }
+ },
+ "DreamDemon": {
+  "name": "寐魔",
+  "description": "它可以使心仪的对象陷入熟睡当中， \r\n并使对方永远做着幸福的美梦。 \r\n直到死亡来临之前都不会醒来。",
+  "partnerSkill": {
+   "name": "逐梦者",
+   "desc": "若它在队伍中，就会出现于玩家身边。 它会用暗属性的魔弹追击敌对个体。 且该追击不会使猎物毙命。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "Monkey": {
+  "name": "新叶猿",
+  "description": "在古时这种帕鲁会使用树枝等细长状的物品作为武器。\r\n但在它们与人类频繁接触后，便不再使用这些物品。\r\n因为它们发现了同样细长，却更为高效的「枪械」。",
+  "partnerSkill": {
+   "name": "猴急步枪",
+   "desc": "发动后，<characterName id=|Monkey|/>会在一定时间内用突击步枪猛烈扫射附近的敌人。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "Monkey_Fire": {
+  "name": "秋叶猿",
+  "description": "手掌部位得到了进化，\r\n能够握住烧红的物品而不被烫伤。\r\n若是把子弹打光了，说不定能够握住高温的枪管，\r\n然后抡起枪身揍人。",
+  "partnerSkill": {
+   "name": "枪火奇猿",
+   "desc": "发动后，<characterName id=|Monkey_Fire|/>会在一定时间内以火属性突击步枪猛烈扫射附近的敌人。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "NightFox": {
+  "name": "露娜蒂",
+  "description": "如果在夜路上发现了<characterName id=|NightFox|/>的毛， \r\n最好不要將它捡起，而是直接原路返回。 \r\n因为那是通往无尽黑夜的单程票。",
+  "partnerSkill": {
+   "name": "冷娇",
+   "desc": "发动后，它会探测附近的帕鲁雕像。 （探测范围扩大/冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "LavaGirl": {
+  "name": "融焰娘",
+  "description": "这种帕鲁哭泣时流的不是眼泪，而是岩浆。\r\n而这些岩浆更会被身体吸收，使它的躯体越来越炎热。\r\n换言之，流过的眼泪越多，它就越强。",
+  "partnerSkill": {
+   "name": "熔岩之泪",
+   "desc": "若它在队伍中，非战斗时每秒令玩家与队伍帕鲁的生命值恢复0.1/0.15/0.2/0.3/0.5%。（不可叠加） 将它分派到家畜牧场，它就有机会掉落喷火器官。"
+  }
+ },
+ "FlameBambi": {
+  "name": "燎火鹿",
+  "description": "野生的<characterName id=|FlameBambi|/>从不生病，让人相当惊讶。\r\n据说这种帕鲁永保健康的秘诀，\r\n就是每天吃掉一根用树枝烧成的木炭。",
+  "partnerSkill": {
+   "name": "微小火种",
+   "desc": "若它在队伍中，火属性帕鲁的防御力会提升15/17/20/24/30%。（不可叠加） 将它分派到家畜牧场，它就有机会掉落喷火器官。"
+  }
+ },
+ "Bastet": {
+  "name": "喵丝特",
+  "description": "它尾部的硬化组织即使割下后也不会发生劣化。\r\n人们迷信它的尾部能够招来财运，\r\n导致许多<characterName id=|Bastet|/>因此殒命。",
+  "partnerSkill": {
+   "name": "招财猫",
+   "desc": "将它分派到家畜牧场，它就有机会从地里挖出金币。"
+  }
+ },
+ "Bastet_Ice": {
+  "name": "冰丝特",
+  "description": "它尾部的结晶非常美丽，但它死去时结晶也会随之崩解。\r\n人们迷信大量饲养它能够招来财运，\r\n于是<characterName id=|Bastet_Ice|/>通常都会得到悉心的照料。",
+  "partnerSkill": {
+   "name": "晴天冰雳",
+   "desc": "将它分派到家畜牧场，它就有机会掉落Iceorgan。"
+  }
+ },
+ "Boar": {
+  "name": "草莽猪",
+  "description": "它十分好战，会在弄清双方力量差距前挑事。 \r\n虽然身材娇小，但拥有惊人的冲锋威力， \r\n甚至能弹飞巨大岩石。",
+  "partnerSkill": {
+   "name": "坚硬头壳",
+   "desc": "可骑在它的背上移动。 骑乘期间破坏岩石的效率将提升500/750/1100/1500/2000%。"
+  }
+ },
+ "Kitsunebi": {
+  "name": "火绒狐",
+  "description": "它刚出生时无法很好地操纵火焰，\r\n动不动就不小心喷出火焰，结果呛到自己。\r\n<characterName id=|Kitsunebi|/>的喷嚏会引起森林火灾。",
+  "partnerSkill": {
+   "name": "抱抱火焰",
+   "desc": "发动后，它会化身为装备在玩家身上的火焰喷射器。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "Kitsunebi_Ice": {
+  "name": "雪绒狐",
+  "description": "它刚出生时无法很好地操纵冷气\r\n动不动就不小心喷出冷气，结果噎住自己。\r\n感冒时鼻涕会结冰，导致呼吸困难，手足无措。",
+  "partnerSkill": {
+   "name": "抱抱寒冰",
+   "desc": "发动后，它会化身为装备在玩家身上的冷冻喷射器。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "NegativeOctopus": {
+  "name": "勾魂鱿",
+  "description": "它会咬住敌人的脖子，将对方身体吸干。\r\n帕鲁木乃伊极为罕见，\r\n而它们基本上都是<characterName id=|NegativeOctopus|/>的牺牲品。",
+  "partnerSkill": {
+   "name": "炸鱿鱼",
+   "desc": "若它在队伍中，会改变滑翔伞的性能。 滑翔期间能够长时间漂浮在空中。 （滑翔伞性能强化：-/小/中/大/特大）"
+  }
+ },
+ "NegativeOctopus_Neutral": {
+  "name": "蚀魂鱿",
+  "description": "它会咬住敌人的脖子，将对方浑身血液吸干。\r\n<characterName id=|NegativeOctopus_Neutral|/>同族之间互相咬住的话，\r\n因为双方都想要将对手吸干，\r\n在任意一方被榨干之前，彼此将无法分开。",
+  "partnerSkill": {
+   "name": "炸鱿鱼",
+   "desc": "若它在队伍中，会改变滑翔伞的性能。 滑翔期间能够长时间漂浮在空中。 （滑翔伞性能强化：-/小/中/大/特大）"
+  }
+ },
+ "CuteMole": {
+  "name": "遁地鼠",
+  "description": "它的巨大爪子的硬度宛如钻石般坚固。 \r\n因为磨爪子需要消耗不少能量， \r\n所以有时候等它磨完爪子，一天就过去了。",
+  "partnerSkill": {
+   "name": "矿工啦啦队",
+   "desc": "若它在队伍中，玩家采矿时造成的伤害将提升30/34/40/48/60%，石头的重量将减轻80/84/88/92/100%。（不可叠加）"
+  }
+ },
+ "Deer": {
+  "name": "紫霞鹿",
+  "description": "拥有最富有力量感的双角的个体，会成为这种帕鲁的领袖。\r\n犄角断裂时，内心也会大受打击。\r\n这时候它就会默默离开族群，在远离人烟的地方结束一生。",
+  "partnerSkill": {
+   "name": "森林守护者",
+   "desc": "可骑在它的背上移动。 骑乘期间可以进行2段跳跃，破坏树木的效率也会提升220/260/320/400/500%。"
+  }
+ },
+ "Deer_Ground": {
+  "name": "祇岳鹿",
+  "description": "拥有最坚硬双角的个体，会成为这种帕鲁的领袖。\r\n一旦失去了角，它的领袖地位也将不复存在。\r\n这时候它只能在同伴的目送下离开，悄然回归尘土。",
+  "partnerSkill": {
+   "name": "金之森守护者",
+   "desc": "可骑在它的背上移动。骑乘期间可以进行2段跳跃。 若它在据点里，其他据点帕鲁的伐木工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "Garm": {
+  "name": "猎狼",
+  "description": "<characterName id=|Garm|/>与人类之间的关联早已淡化， \r\n但过去与人类共同狩猎的模式， \r\n构成了它们如今的狩猎体系。",
+  "partnerSkill": {
+   "name": "猎狼骑手",
+   "desc": "可骑在它的背上移动。 骑乘期间的移动速度会稍微变快一点。 （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "BerryGoat": {
+  "name": "灌木羊",
+  "description": "只要它肚子不饿，它背上的草丛就会结出野莓。\r\n若它遇见中意的对象，它会请对方吃掉自己的野莓，\r\n抓住了对方的胃，就诞生了一对新的伴侣。",
+  "partnerSkill": {
+   "name": "采摘野莓",
+   "desc": "将它分派到家畜牧场，就有机会从背上掉落红色野莓。 若它在队伍中，每5分钟会让当前饱腹度最低的帕鲁恢复100/120/140/160/200点饱腹度。（不可叠加）"
+  }
+ },
+ "BerryGoat_Dark": {
+  "name": "郁木羊",
+  "description": "它背上的灌木结出的果实，会根据其精神状态改变味道。 \r\n越是在恶劣的环境下生长，味道就会越来越甜 \r\n所以被饲养的绝大多数<characterName id=|BerryGoat_Dark|/>，都不曾知晓爱。",
+  "partnerSkill": {
+   "name": "采摘毒腺",
+   "desc": "将它分派到家畜牧场，有机会从背上掉落毒腺。 若它在队伍中，每5分钟会让当前饱腹度最低的帕鲁恢复100/120/140/160/200点饱腹度。（不可叠加）"
+  }
+ },
+ "MopBaby": {
+  "name": "毛掸儿",
+  "description": "在地面爬行，并以微小的有机物为食的帕鲁。\r\n摄入的没营养的物质一段时间后会排出体外。\r\n将它用作拖把进行清洁的话，就能构筑双赢的关系。",
+  "partnerSkill": {
+   "name": "毛茸茸茸茸",
+   "desc": "若它在队伍中，<characterName id=|MopKing|/>的防御力和攻击力会有所提升。"
+  }
+ },
+ "MopKing": {
+  "name": "毛老爹",
+  "description": "由于它拥有相当丰厚的体毛， \r\n因此在冬眠期间会有大量的<characterName id=|MopBaby|/>躲在它的体毛里。 \r\n过去的最高记录竟然高达101只。",
+  "partnerSkill": {
+   "name": "毛茸茸之王",
+   "desc": "可骑在它的背上移动。 此帕鲁的防御力和攻击力会按照队伍中<characterName id=|MopBaby|/>的数量提升，每只增加12/13/15/19/24%。"
+  }
+ },
+ "TentacleTurtle": {
+  "name": "盔盔仔",
+  "description": "为保护脆弱的本体，获得了坚硬的甲壳。\r\n作为代价则完全舍弃了本体的防御力，\r\n现在的它甚至会因为挠痒而陷入昏厥。",
+  "partnerSkill": {
+   "name": "尖刺刺运输",
+   "desc": "若它在队伍中，金属矿石的重量会减轻80/84/88/92/100%。（不可叠加）"
+  }
+ },
+ "TentacleTurtle_Ground": {
+  "name": "金盔仔",
+  "description": "为保护脆弱的本体，获得了坚硬的甲壳。\r\n大半的触觉神经都集中在了手部和甲壳上，\r\n偷偷摸一下它的本体也不会被发现。",
+  "partnerSkill": {
+   "name": "亮闪闪运输",
+   "desc": "若它在队伍中，硫磺和石炭的重量将减轻80/84/88/92/100%，且玩家和帕鲁以地属性攻击命中敌方弱点时的伤害提升25/27/30/34/40%。（不可叠加）"
+  }
+ },
+ "WindChimes": {
+  "name": "吊缚灵",
+  "description": "它那巨大的双臂就连铁块都能撕裂。\r\n过去曾有过将犯下重罪的人绑在城镇的广场上，\r\n让<characterName id=|Windchimes|/>直接撕下他的肉这种极端残忍的处刑。",
+  "partnerSkill": {
+   "name": "空中秋千",
+   "desc": "若它在队伍中，会改变滑翔伞的性能。 滑翔期间能够缓缓上升。 （滑翔伞性能强化：-/小/中/大/特大）"
+  }
+ },
+ "WindChimes_Ice": {
+  "name": "冰缚灵",
+  "description": "它那巨大的双臂就连冰砖都能撕碎。\r\n过去曾有过将犯下重罪的人绑在城镇的广场上，\r\n让<characterName id=|Windchimes_Ice|/>直接扯下他们的头发，\r\n是种极为残忍的警示性惩罚。",
+  "partnerSkill": {
+   "name": "寒空秋千",
+   "desc": "若它在队伍中，会改变滑翔伞的性能。 滑翔期间能够缓缓上升。 （滑翔伞性能强化：-/小/中/大/特大）"
+  }
+ },
+ "SweetsSheep": {
+  "name": "棉花糖",
+  "description": "它全身上下都比糖还要甜18000倍。\r\n被其气味吸引的肉食性帕鲁，若是咬上一口，\r\n就会被甜到翻白眼昏迷。",
+  "partnerSkill": {
+   "name": "糖果甜心",
+   "desc": "将它分派到家畜牧场，它就有机会掉落棉花糖。 若它在据点里，据点帕鲁的饱腹度的减少幅度将会-10/-12/-14/-16/-20%。（不可叠加）"
+  }
+ },
+ "SweetsSheep_Ground": {
+  "name": "可可棉花糖",
+  "description": "虽然棉毛上散发出香甜浓郁的气息，但是肉质却苦涩到令人战栗。\r\n被其气味吸引的肉食性帕鲁，若是咬上一口，\r\n就会因难以忍受的苦味，翻着白眼再起不能。",
+  "partnerSkill": {
+   "name": "苦涩甜心",
+   "desc": "将它分派到家畜牧场，它就有机会掉落焦糖棉花糖。 若它在据点里，据点帕鲁的饱腹度的减少幅度将会-15/-17/-19/-21/-25%。（不可叠加）"
+  }
+ },
+ "CowPal": {
+  "name": "波霸牛",
+  "description": "这种帕鲁不须特意照料，无论其性别为何，\r\n都会像水龙头般地分泌大量牛奶。\r\n这就是生命的神秘之处吧。",
+  "partnerSkill": {
+   "name": "产奶",
+   "desc": "将它分派到家畜牧场，它就有机会产出牛奶。"
+  }
+ },
+ "BlueDragon": {
+  "name": "碧海龙",
+  "description": "它的白色飘带遇到不纯之水就会变黑。\r\n由于它的这种特质可以用于鉴毒，曾致使人类对其疯狂猎捕，\r\n导致它至今仍对人类抱有戒心。",
+  "partnerSkill": {
+   "name": "水翔之舞",
+   "desc": "可骑在它的背上在水上移动。 骑乘期间玩家的攻击会转变为水属性，且攻击力提升5/7/10/14/20%。 （水上移动速度提升：-/10%/14%/18%/25%）"
+  }
+ },
+ "BlueDragon_Ice": {
+  "name": "碧月龙",
+  "description": "它的白色飘带会一直吸收周围的热量。\r\n不可思议的是，飘带的温度不会有丝毫变化。\r\n因为它的这种性质，曾致使人类对其疯狂猎捕，\r\n导致它至今仍对人类抱有戒心。",
+  "partnerSkill": {
+   "name": "冰翔之舞",
+   "desc": "可骑在它的背上在水上移动。 骑乘期间玩家的攻击会转变为冰属性，且攻击力提升5/7/10/14/20%。 （水上移动速度提升：-/10%/14%/18%/25%）"
+  }
+ },
+ "ElecCat": {
+  "name": "伏特喵",
+  "description": "它在旱季时期容易精神紧绷，总是一触即发。\r\n一旦和同伴发生摩擦，\r\n就会演变成电火花四溅的大战。",
+  "partnerSkill": {
+   "name": "静电",
+   "desc": "若它在队伍中，雷属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加） 将它分派到家畜牧场，它就有机会掉落发电器官。"
+  }
+ },
+ "Kelpie": {
+  "name": "水灵儿",
+  "description": "它的性格会因出生地水质的不同而有所差异。\r\n诞生于肮脏水源地的<characterName id=|Kelpie|/>大多都性格恶劣，\r\n一副街边混混的派头。",
+  "partnerSkill": {
+   "name": "洒水",
+   "desc": "若它在队伍中，水属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加） 将它分派到家畜牧场，它就有机会掉落水栖帕鲁的黏液。"
+  }
+ },
+ "Kelpie_Fire": {
+  "name": "火灵儿",
+  "description": "它的性格会因出生地水温的不同而有所差异。\r\n诞生于温暖水源地的<characterName id=|Kelpie|/>往往较为热情，\r\n充满源源不绝的干劲。",
+  "partnerSkill": {
+   "name": "熔岩泼洒",
+   "desc": "若它在队伍中，火属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加） 将它分派到家畜牧场，它就有机会掉落喷火器官。"
+  }
+ },
+ "PinkRabbit": {
+  "name": "姬小兔",
+  "description": "这种帕鲁的脸上总是挂著微笑。\r\n<characterName id=|PinkCat|/>偶尔会恶作剧，把它的缎带打成死结，\r\n只有这种时候它才会露出恶鬼般的神色。",
+  "partnerSkill": {
+   "name": "微笑公主兔",
+   "desc": "若它在队伍中，无属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加） 若它在据点里，其他据点帕鲁的手工作业工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "PinkRabbit_Grass": {
+  "name": "艾小兔",
+  "description": "这种帕鲁的脸上总是挂著微笑。 \r\n<characterName id=|PinkCat|/>偶尔会恶作剧，把它的缎带打成死结， \r\n每到这时，它都会笑眯眯的把<characterName id=|PinkCat|/>暴揍一顿。",
+  "partnerSkill": {
+   "name": "暴力青草兔",
+   "desc": "若它在队伍中，玩家和帕鲁以草属性攻击命中敌方弱点时的伤害将提升25/27/30/34/40%。（不可叠加） <characterName id=|PinkRabbit_Grass|/>在武器制作台或武器工厂等处工作时，工作效率将会提升200/220/260/320/400%。"
+  }
+ },
+ "JellyfishFairy": {
+  "name": "海月仙",
+  "description": "和<characterName id=|JellyfishGhost|/>样貌非常接近的帕鲁。\r\n和朋友们出行计划过多，导致预定计划冲突时，\r\n就会拜托关系要好的<characterName id=|JellyfishGhost|/>，让它代替它去。\r\n作为回礼会和<characterName id=|JellyfishGhost|/>约一次会。",
+  "partnerSkill": {
+   "name": "海月仙祝福",
+   "desc": "若它在队伍中，垂钓时获得的道具增加55/65/75/85/95%。（不可叠加） 此外，当<characterName id=|JellyfishFairy|/>和<characterName id=|JellyfishGhost|/>同时在据点里时，<characterName id=|JellyfishFairy|/>浇水的工作速度提升50/60/70/90/120%。（不可叠加）"
+  }
+ },
+ "JellyfishGhost": {
+  "name": "海月灵",
+  "description": "和<characterName id=|JellyfishFairy|/>样貌非常接近的帕鲁。\r\n有时会为了计划冲突的<characterName id=|JellyfishFairy|/>，作为它的替身代替其赴约。\r\n由于演技过于逼真，谁都没有注意到是替身。",
+  "partnerSkill": {
+   "name": "海月灵祝福",
+   "desc": "若它在队伍中，打捞时获得的道具增加55/65/75/85/95%。（不可叠加） 此外，当<characterName id=|JellyfishFairy|/>和<characterName id=|JellyfishGhost|/>同时在据点里时，<characterName id=|JellyfishGhost|/>浇水的工作速度提升50/60/70/90/120%。（不可叠加）"
+  }
+ },
+ "ClioneTwins": {
+  "name": "莉欧·莉涅",
+  "description": "要是缺了其中一方，就会从不知何处出现替补者。\r\n然后两者就会像无事发生般，开始和睦的生活在一起。\r\n对于<characterName id=|ClioneTwins|/>来说，最重要的是「和睦相处」。",
+  "partnerSkill": {
+   "name": "魔力双子",
+   "desc": "若它在据点里，其他据点帕鲁的浇水工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "OctopusGirl": {
+  "name": "墨沫姬",
+  "description": "若要和它一起睡觉，最好确认下明天的行程。\r\n吸盘的痕迹看起来就像吻痕，\r\n如果被睡糊涂的它吸住，就会造成不必要的误解。",
+  "partnerSkill": {
+   "name": "缠人小公主",
+   "desc": "若它在队伍中，在垂钓小游戏中的判定条和鱼的图标未重合期间，捕获计量槽的下降量减少12/17/22/28/35%。（不可叠加）"
+  }
+ },
+ "OctopusGirl_Neutral": {
+  "name": "梦沫姬",
+  "description": "若要和它一起睡觉，最好确认下明天的行程。\r\n吸盘的痕迹看起来就像咬痕，\r\n如果被睡糊涂的它吸住，就会增加不必要的烦恼。",
+  "partnerSkill": {
+   "name": "咬咬姬",
+   "desc": "若它在队伍中，水属性帕鲁的防御力提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "Eagle": {
+  "name": "天擒鸟",
+  "description": "即使它抓着人，也能毫不费力地飞向天空。 \r\n可是在疲惫至极时就会二话不说地松开脚爪， \r\n因而导致的高空坠落死亡事故屡见不鲜。",
+  "partnerSkill": {
+   "name": "天擒鸟滑翔",
+   "desc": "若它在队伍中，会改变滑翔伞的性能。 能够高速滑翔，且右手能在滑翔期间使用枪械射击。 （滑翔伞性能强化：-/小/中/大/特大）"
+  }
+ },
+ "GhostBlackCat": {
+  "name": "念影喵",
+  "description": "迄今为止，所有养育过它们一族的人类的思念，\r\n全都凝聚在它背后的手里。\r\n近来，尽情宠爱<characterName id=|GhostBlackCat|/>似乎已成了大家的共识。",
+  "partnerSkill": {
+   "name": "附体灵猫",
+   "desc": "若它在队伍中，触发背面奖励时的捕获概率增加。（不可叠加） （捕获概率提升：-/小/中/大/特大）"
+  }
+ },
+ "HawkBird": {
+  "name": "疾风隼",
+  "description": "它会将刚出生的帕鲁抓到巢中，\r\n代替父母养育它长大。\r\n等到能吃的时候，就会猎杀它。",
+  "partnerSkill": {
+   "name": "旅伴",
+   "desc": "可骑在它的背上在空中飞行。 （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "CatBat": {
+  "name": "猫蝠怪",
+  "description": "它喜欢突然出现在其他帕鲁面前，傲慢地张开双翼炫耀自己。 \r\n虽然是一种恐吓行为， \r\n但它脸上却带有几分陶醉的神情。",
+  "partnerSkill": {
+   "name": "猫妖感应",
+   "desc": "发动后能够发出超声波，来探测附近地下城、宝箱以及废品的位置。 （探测范围扩大/冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "ColorfulBird": {
+  "name": "炸蛋鸟",
+  "description": "这类帕鲁产下的蛋会爆炸，相当恐怖。 \r\n平时会将从屁股射出的蛋用作武器， \r\n不过若它无计可施，它就会采取自爆手段了。",
+  "partnerSkill": {
+   "name": "炸蛋发射器",
+   "desc": "发动后会化身为装备在玩家身上的发射器，并制造出会爆炸的蛋。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "Kirin": {
+  "name": "雷角马",
+  "description": "以前，它被认为是雷神的使者，不会被人类狩猎。\r\n然而，当有人目击到它被闪电击中后死亡，\r\n信仰逐渐消失，它也字面意思上沦落到当牛做马。",
+  "partnerSkill": {
+   "name": "疾风迅雷",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家和帕鲁以雷属性攻击命中敌方弱点时的伤害将提升25/27/30/34/40%。（不可叠加）"
+  }
+ },
+ "Kirin_Ice": {
+  "name": "凌角马",
+  "description": "昔日，它被视为冬之神的使者，无人敢猎捕。\r\n然而当有人目睹它在冰面滑倒的瞬间，\r\n信仰逐渐消失，一失足即成千古牛马。",
+  "partnerSkill": {
+   "name": "冰华乱舞",
+   "desc": "可骑在它的背上移动。 骑乘期间玩家的攻击会转变为冰属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "SharkKid": {
+  "name": "鲨小子",
+  "description": "这种帕鲁在很久以前是相当强大的巨型水栖帕鲁，\r\n但食物减少后，它们就搬到了陆地上。\r\n由于走路会消耗许多能量，\r\n导致它们的体型逐渐变小，现在已经是非常弱小的帕鲁了。",
+  "partnerSkill": {
+   "name": "易怒鲨鲨",
+   "desc": "发动后会以水枪攻击锁定的目标敌人。 此帕鲁使用的水枪的威力将提升至1.1/1.3/1.6/2/2.5倍。 若它在队伍中，玩家的攻击力提升10/11/13/16/20%。"
+  }
+ },
+ "SharkKid_Fire": {
+  "name": "红小鲨",
+  "description": "这种帕鲁在很久以前是相当强大的巨型水栖帕鲁，\r\n但食物减少后，它们就搬到了陆地上。\r\n由于走路会燃烧许多热量，\r\n意外地让它们体内的火之力量觉醒了！",
+  "partnerSkill": {
+   "name": "易怒鲨鲨",
+   "desc": "发动后会以烈焰溅射攻击锁定的目标敌人。 此帕鲁使用的烈焰溅射的威力将提升至1.1/1.3/1.6/2/2.5倍。 若它在队伍中，玩家的攻击力提升10/11/13/16/20%。"
+  }
+ },
+ "Werewolf": {
+  "name": "月镰魔",
+  "description": "它头上的角可通过沐浴月光生长。\r\n虽然这种帕鲁并不讨厌阳光，\r\n可是它的角在被太阳照射时会发痒。",
+  "partnerSkill": {
+   "name": "黑暗中的闪亮利爪",
+   "desc": "发动后会以飞跃爪击攻击锁定的目标敌人。 此帕鲁使用的飞跃爪击的威力将提升至1.1/1.3/1.6/2/2.5倍。 若它在队伍中，玩家的近战武器攻击速度提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "Werewolf_Ice": {
+  "name": "霜镰魔",
+  "description": "它头上的角是绝对不会融化的，不可思议的冰。 \r\n用它折断的角制成的刨冰，那可真称的上是绝顶美味， \r\n无论是吃刨冰的人，还是<characterName id=|Werewolf_Ice|/>，头都很疼。",
+  "partnerSkill": {
+   "name": "冰结利爪",
+   "desc": "发动后会以吹雪爪击攻击锁定的目标敌人。 此帕鲁使用的吹雪爪击的威力将提升至1.1/1.3/1.6/2/2.5倍。 若它在队伍中，玩家的近战武器攻击速度提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "DarkCrow": {
+  "name": "黑鸦隐士",
+  "description": "它曾经在天空中自由翱翔， \r\n但在与<characterName id=|Eagle|/>的竞争中败北， \r\n于是舍弃天空，过起了与黑夜共生的低调生活。",
+  "partnerSkill": {
+   "name": "夜袭怪鸟",
+   "desc": "发动后可以使用夜视，即使在黑暗中也能看得一清二楚。 再次发动即可解除该效果。 将它分派到家畜牧场，它就有机会从地里挖出骨头。"
+  }
+ },
+ "FlameBuffalo": {
+  "name": "炽焰牛",
+  "description": "昔日这种帕鲁常常被肉食帕鲁所猎杀。 \r\n<characterName id=|FlameBuffalo|/>对此深感不平， \r\n于是这股愤怒化作炽热的火焰，在世代之间代代相传。",
+  "partnerSkill": {
+   "name": "温暖之躯",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家的耐寒能力+2。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "FluffyBird": {
+  "name": "雪绵啾",
+  "description": "它脸颊周围的绒毛能吸收冲击力。\r\n就算被击飞几米也没什么大不了的，\r\n但整理羽毛很麻烦，痒的地方又挠不到，\r\n总觉得有些烦乱、郁闷。",
+  "partnerSkill": {
+   "name": "软萌圆圆鸟",
+   "desc": "若它在队伍中，提升对陷入冻结状态帕鲁的捕获概率。（不可叠加） （捕获概率提升：-/小/中/大/特大）"
+  }
+ },
+ "LittleBriarRose": {
+  "name": "荊棘魔仙",
+  "description": "它的刺上有毒，被刺到会有危险。 \r\n与<characterName id=|CuteButterfly|/>关系很好， \r\n只有让它吸花蜜时，才会露出开心的表情。",
+  "partnerSkill": {
+   "name": "公主的视线",
+   "desc": "若它在队伍中，草属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "CuteButterfly": {
+  "name": "幻悦蝶",
+  "description": "吸入它的鳞粉后，会获得升天般的愉悦感。 \r\n虽然有人试图对这种帕鲁严加管理， \r\n但受到帕鲁保护团体的反对，至今没有进展。",
+  "partnerSkill": {
+   "name": "神秘鳞粉",
+   "desc": "发动后会以毒雾攻击锁定的目标敌人。 若它在据点里，其他据点帕鲁的牧场的工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "ElecPomeranian": {
+  "name": "电汪汪",
+  "description": "泡在水里的话，蓬松的毛会大量吸水。\r\n在它抖动身体甩干水分时，会伴随剧烈的放电，\r\n和它一起泡澡可是赌命的行为。",
+  "partnerSkill": {
+   "name": "电光强化",
+   "desc": "若它在据点里，其他据点帕鲁的发电工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "FairyDragon": {
+  "name": "精灵龙",
+  "description": "它的性格正如外表一样单纯无害。 \r\n正因为如此，它无法很好地区分善恶， \r\n容易被内心歹毒的人利用。",
+  "partnerSkill": {
+   "name": "善良的圣洁之龙",
+   "desc": "可骑在它的背上在空中飞行。 飞行时移动速度会提升。 若它在队伍中，击倒暗属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "FairyDragon_Water": {
+  "name": "水灵龙",
+  "description": "它的性格正如外表一样单纯无害。\r\n正因为如此，它所采取的所有行动都无恶意，\r\n即便是杀死了谁，也不会有任何想法。",
+  "partnerSkill": {
+   "name": "善良的流水之龙",
+   "desc": "可骑在它的背上在空中飞行。 飞行时移动速度会提升。 若它在队伍中，玩家和帕鲁受到的火属性伤害减轻15/17/20/24/30%，并且不会陷入点燃状态。（不可叠加）"
+  }
+ },
+ "BirdDragon": {
+  "name": "烽歌龙",
+  "description": "据说用<characterName id=|BirdDragon|/>的外骨骼制成的笛子， \r\n所奏的笛声可越遍千山万水， \r\n因此在古代战事中通常会被用来发出攻击信号。",
+  "partnerSkill": {
+   "name": "大空袭击者",
+   "desc": "可骑在它的背上在空中飞行。 若它在队伍中，玩家攻击敌方弱点部位造成的伤害将提升20/22/26/32/40%。（不可叠加）"
+  }
+ },
+ "BirdDragon_Ice": {
+  "name": "霜歌龙",
+  "description": "据说用<characterName id=|BirdDragon_Ice|/>的外骨骼制成的笛子， \r\n所奏的笛声可越遍千山万水， \r\n因此在古代战事中通常会被用来吹奏胜利凯歌。",
+  "partnerSkill": {
+   "name": "大空袭击者",
+   "desc": "可骑在它的背上在空中飞行。 若它在队伍中，玩家攻击敌方弱点部位造成的伤害将提升30/32/36/42/50%。（不可叠加）"
+  }
+ },
+ "CatVampire": {
+  "name": "夜幕魔蝠",
+  "description": "它会在黑暗中袭击猎物，用斗篷般的翅膀将其包裹起来。 \r\n至于翅膀内侧到底发生了什么，以及为什么会沾染上红色， \r\n这类问题还是不要深究为妙。",
+  "partnerSkill": {
+   "name": "窃取生命",
+   "desc": "与它并肩作战时，会为玩家和<characterName id=|CatVampire|/>赋予生命窃取效果，攻击造成伤害时将恢复等同于伤害量5/6/7/8/9%的HP。"
+  }
+ },
+ "VioletFairy": {
+  "name": "薇莉塔",
+  "description": "城堡里开满了国王最喜欢的花朵。\r\n但大型战争爆发，战火即将波及城堡。\r\n这时，一只花朵精灵凭空出现了。\r\n──摘自童话《国王的花朵》。",
+  "partnerSkill": {
+   "name": "大地净化",
+   "desc": "若它在队伍中，击倒地属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加） 将它分派到家畜牧场，它就有机会掉落各种各样的种子。"
+  }
+ },
+ "SoldierBee": {
+  "name": "骑士蜂",
+  "description": "它是发誓效忠<characterName id=|QueenBee|/>的仆人。 \r\n誓死消灭对女王有害的一切事物。 \r\n甚至不惜采取自爆手段，也要守卫女王到最后一刻。",
+  "partnerSkill": {
+   "name": "工蜂",
+   "desc": "将它分派到家畜牧场，它就有机会掉落蜂蜜。 若它在队伍中，<characterName id=|QueenBee|/>的攻击力会有所提升。"
+  }
+ },
+ "QueenBee": {
+  "name": "女皇蜂",
+  "description": "它是统御<characterName id=|SoldierBee|/>的天选女王。 \r\n为伟大女王效力的喜悦 \r\n让无数甘愿为其劳动至死的仆人络绎不绝。",
+  "partnerSkill": {
+   "name": "女王蜂的统率",
+   "desc": "此帕鲁的攻击力会按照队伍中<characterName id=|SoldierBee|/>的数量提升，每只增加12/13/15/19/24%。"
+  }
+ },
+ "PinkLizard": {
+  "name": "博爱蜥",
+  "description": "它总是为了寻求一夜之欢而纠缠他人。\r\n一开始只对帕鲁有兴趣，\r\n但近年来，它的魔爪也开始伸向人类。",
+  "partnerSkill": {
+   "name": "爱心吸取",
+   "desc": "与它并肩作战时，会为玩家和<characterName id=|PinkLizard|/>赋予生命窃取效果，攻击造成伤害时将恢复等同于伤害量5/6/7/8/9%的HP。"
+  }
+ },
+ "NaughtyCat": {
+  "name": "笑魇猫",
+  "description": "如果进入<characterName id=|NaughtyCat|/>的领地， 它监视来者的眼睛就会闪闪发光。\r\n这并不是比喻，而是真的会发光。",
+  "partnerSkill": {
+   "name": "猫眼逼人",
+   "desc": "可骑在它的背上移动。 若它在队伍中，捡到帕鲁蛋时将有50/55/60/65/75%的概率再捡到1颗。（不可叠加）"
+  }
+ },
+ "PurpleSpider": {
+  "name": "桃蛛娘",
+  "description": "它非常的粘人，字面意义上的如胶似漆。\r\n越是想要甩开它，就会粘的越紧。\r\n以上就是它的「性格」特征。",
+  "partnerSkill": {
+   "name": "桃色之网",
+   "desc": "可骑在它的背上移动。 骑乘期间可以进行2段跳跃， 并向射击地点发射蜘蛛丝，牵引身体快速移动。 （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "IceSeal": {
+  "name": "香草豹冰",
+  "description": "种群内能在雪上滑行最快的个体，就是最了不起的个体。\r\n有时会有因为冲太快飞跃起来的个体突然从天而降，\r\n在争夺首领地位时这种情况尤其多发。\r\n今天晴转多云，部分地区大到「豹」雨。",
+  "partnerSkill": {
+   "name": "滑雪行家",
+   "desc": "可骑在它的背上移动。 在雪地上时，移动速度提升80/100/120/140/160%。 并且可以在斜坡处快速向下滑行。"
+  }
+ },
+ "IceSeal_Ground": {
+  "name": "巧克力豹冰",
+  "description": "种群内能在雪上滑行最快的个体，就是最了不起的个体。\r\n有时会有因为冲太快飞跃起来的个体一头扎进雪里。\r\n在争夺首领地位时这种情况尤其多发。\r\n今日路况拥挤，当心连环「豹扎」。",
+  "partnerSkill": {
+   "name": "雪山速滑",
+   "desc": "可骑在它的背上移动。 在雪地上时，移动速度提升80/100/120/140/160%。 并且可以在斜坡处快速向下滑行。 滑行时初始速度较慢，但最高速度更快。"
+  }
+ },
+ "LizardMan": {
+  "name": "朋克蜥",
+  "description": "这种帕鲁对站姿的讲究异常执着。\r\n它总是追求着最帅气的姿势。\r\n给它一面镜子的话，它能为研究姿势而站一整天。",
+  "partnerSkill": {
+   "name": "透明化",
+   "desc": "发动后10/12/14/16/20秒内，<characterName id=|LizardMan|/>与玩家将变得透明，在敌方视野中隐去身形。 （冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "LizardMan_Fire": {
+  "name": "热血蜥",
+  "description": "这种帕鲁对站姿的讲究异常执着。\r\n它总是在寻找最热血的姿势，\r\n因此它的饲主会被迫整天欣赏热血到让人烦躁的姿势。",
+  "partnerSkill": {
+   "name": "透明化",
+   "desc": "发动后10/12/14/16/20秒内，<characterName id=|LizardMan_Fire|/>与玩家将变得透明，在敌方视野中隐去身形。 （冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "Gorilla": {
+  "name": "铁拳猿",
+  "description": "它会用不同的节奏敲击地面与同伴沟通。 \r\n每种节奏所对应的意思会根据族群有所差异， \r\n但人类至今仍未能完全理解其具体分类。",
+  "partnerSkill": {
+   "name": "火力全开大猩猩模式",
+   "desc": "发动后会解放野性之力，并在一定时间内<characterName id=|Gorilla|/>的攻击力将提升75/115/165/225/300%。"
+  }
+ },
+ "Gorilla_Ground": {
+  "name": "石掌猿",
+  "description": "它会用不同的节奏敲击地面与同伴沟通。\r\n有着比<characterName id=|Gorilla|/>更霸道的腕力，\r\n假如所有的<characterName id=|Gorilla_Ground|/>同时捶击大地，\r\n帕洛斯群岛将在1秒内沉没。",
+  "partnerSkill": {
+   "name": "火力全开铁臂大猩猩",
+   "desc": "若它在队伍中，玩家的攀爬速度提升50/60/70/85/100%。（不可叠加）"
+  }
+ },
+ "Serpent": {
+  "name": "滑水蛇",
+  "description": "它流线型的外形很适合在水上活动。 \r\n因此经常被非法捕鱼团捕捉， \r\n并被拿来代替冲浪板使用。",
+  "partnerSkill": {
+   "name": "滑滑水蛇",
+   "desc": "可骑在它的背上在水上移动。 将它分派到家畜牧场，它就有机会掉落皮革。 （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "Serpent_Ground": {
+  "name": "流沙蛇",
+  "description": "它流线型的外形很适合在沙上活动。 \r\n因此经常被非法捕鱼团捕捉， \r\n并被拿来代替冲浪板使用。",
+  "partnerSkill": {
+   "name": "滑滑沙蛇",
+   "desc": "可骑在它的背上移动。 若它在队伍中，会为玩家的攻击附加2/3/4/5/6点泥泞异常状态值。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "RobinHood": {
+  "name": "羽箭射手",
+  "description": "这类帕鲁在森林里过着狩猎生活，特征习性等与人类十分接近。\r\n在远古时代，便走上了与人类不同的进化之路。\r\n但也许它们就是能解答「帕鲁为何物」这个问题的关键。",
+  "partnerSkill": {
+   "name": "射箭达人",
+   "desc": "若它在队伍中，玩家使用弓箭时的伤害提升10/15/20/25/35%。（不可叠加）"
+  }
+ },
+ "RobinHood_Ground": {
+  "name": "山岳射手",
+  "description": "这类帕鲁在岩石地带过着狩猎生活，特征习性等与人类十分接近。\r\n每当从遗址中发现<characterName id=|RobinHood_Ground|/>的骨头时，\r\n那里总是一定会有人类的骨头。",
+  "partnerSkill": {
+   "name": "挽弓达人",
+   "desc": "若它在队伍中，玩家使用弓箭时的蓄力速度提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "FlowerRabbit": {
+  "name": "波娜兔",
+  "description": "它喜欢植物众多的地方， \r\n但是最近，<characterName id=|FlowerRabbit|/>似乎集体染上了花粉症。",
+  "partnerSkill": {
+   "name": "兔兔助手",
+   "desc": "若它在队伍中，就会出现在玩家身边。 它会自动前去拾取附近的道具。 （道具回收范围提升：-/小/中/大/特大）"
+  }
+ },
+ "FoxMage": {
+  "name": "焰巫狐",
+  "description": "这种帕鲁能操控阳之力量，施展奇妙的法术。\r\n不论任何食物都喜欢吃全熟。\r\n和<characterName id=|CatMage|/>的关系相当不好。",
+  "partnerSkill": {
+   "name": "狐神大人",
+   "desc": "发动后，<characterName id=|FoxMage|/>会将力量分给玩家，让玩家的攻击转变为火属性，且攻击力提升30/35/40/45/50%。"
+  }
+ },
+ "FoxMage_Dark": {
+  "name": "幽巫狐",
+  "description": "经过双亲的教育，已经不再挑食\r\n只要是甜的东西，无论什么都喜欢。\r\n和<characterName id=|CatMage_Fire|/>的关系相当不好。",
+  "partnerSkill": {
+   "name": "巫神大人",
+   "desc": "发动后，<characterName id=|FoxMage_Dark|/>会将力量分给玩家，让玩家的攻击转变为暗属性，且攻击力提升30/35/40/45/50%。"
+  }
+ },
+ "CatMage": {
+  "name": "暗巫猫",
+  "description": "这种帕鲁能操控阴之力量，施展奇妙的法术。\r\n不论任何食物都喜欢生吃。\r\n和<characterName id=|FoxMage|/>的关系相当不好。",
+  "partnerSkill": {
+   "name": "怪奇黑魔法",
+   "desc": "若它在队伍中，击倒无属性帕鲁时获得的掉落道具增加40/50/60/70/80%。 此外，玩家投掷帕鲁球时，有10/15/20/30/50%的概率不会消耗帕鲁球。（不可叠加）"
+  }
+ },
+ "CatMage_Fire": {
+  "name": "炽巫猫",
+  "description": "经过双亲的教育，已经不再挑食\r\n只要是辣的东西，无论什么都喜欢。\r\n和<characterName id=|FoxMage_Dark|/>的关系相当不好。",
+  "partnerSkill": {
+   "name": "热情黑魔法",
+   "desc": "若它在据点里，其他据点帕鲁的生火工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "HadesBird": {
+  "name": "雷冥鸟",
+  "description": "它能从地狱召唤雷电。\r\n如果被<characterName id=|HadesBird|/>释放的电流电死，\r\n灵魂就会坠入地狱。",
+  "partnerSkill": {
+   "name": "冥府之翼",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为暗属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "HadesBird_Electric": {
+  "name": "雷鸣鸟",
+  "description": "它能从地狱召唤雷电。\r\n虽被分类为<characterName id=|HadesBird|/>的亚种，\r\n但是也有学说称、实际应该是<characterName id=|HadesBird_Electric|/>被来自地狱的雷电击中，\r\n变异成了<characterName id=|HadesBird|/>。",
+  "partnerSkill": {
+   "name": "雷鸣之翼",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为雷属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "GrassMinotaur": {
+  "name": "密林陶洛斯",
+  "description": "角上的那片叶子，无论如何拉扯也不会掉落。\r\n而当它自行飘落时，\r\n<characterName id=|GrassMinotaur|/>便感应到自身大限将至。",
+  "partnerSkill": {
+   "name": "大自然之威",
+   "desc": "发动后，<characterName id=|GrassMinotaur|/>会将力量分给玩家，让玩家的攻击转变为草属性，且攻击力提升30/35/40/45/50%。"
+  }
+ },
+ "GrassMinotaur_Ice": {
+  "name": "冰峰陶洛斯",
+  "description": "只要一息尚存，头上的冰角就不会融化。\r\n当水滴从冰角上滴落之时，\r\n<characterName id=|GrassMinotaur_Ice|/>便会感觉到自己的身体逐渐变得冰冷。",
+  "partnerSkill": {
+   "name": "永冻土之威",
+   "desc": "若它在队伍中，玩家攻击浸湿状态的敌人时，一击就会让敌人陷入冻结状态。"
+  }
+ },
+ "Mutant": {
+  "name": "秘斯媞雅",
+  "description": "要是不小心和它对视，就会被操纵。\r\n大部分带着<characterName id=|Mutant|/>的人\r\n都以为自己才是主人。",
+  "partnerSkill": {
+   "name": "反重力",
+   "desc": "若它在队伍中，投掷出去的帕鲁球将会自动追踪帕鲁，且玩家的负重上限提高300/339/399/480/600。 （不可叠加）"
+  }
+ },
+ "FengyunDeeper": {
+  "name": "云海鹿",
+  "description": "在遥远的过去，它因美丽的外观而常被选作绘画题材，\r\n是人们相当熟悉的存在。\r\n随着时代变迁，它那美丽的皮毛和角成为了艺术品的材料，\r\n使这种帕鲁更广为人知。",
+  "partnerSkill": {
+   "name": "风云",
+   "desc": "可骑在它的背上移动。 骑乘期间可以进行2段跳跃。 （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "FengyunDeeper_Electric": {
+  "name": "雷隐鹿",
+  "description": "在遥远的过去，有着如果画出<characterName id=|FengyunDeeper_Electric|/>\r\n就会被落雷劈死的迷信。\r\n随着时代变迁，仿照<characterName id=|FengyunDeeper_Electric|/>样子的艺术品\r\n被视作有着避雷效果的护身符，成为了人们熟悉的存在。",
+  "partnerSkill": {
+   "name": "雷云",
+   "desc": "可骑在它的背上移动。 骑乘期间可以进行2段跳跃。 若它在队伍中，击倒水属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "FlowerDinosaur": {
+  "name": "花冠龙",
+  "description": "它只要生气便会暴走，如同烈火一般不受控制。\r\n因此「踩了<characterName id=|FlowerDinosaur|/>尾巴」这句话就是\r\n指激怒某人的意思。",
+  "partnerSkill": {
+   "name": "馥郁花香之龙",
+   "desc": "可骑在它的背上移动。 若它在队伍中，龙属性帕鲁的防御力会提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "FlowerDinosaur_Electric": {
+  "name": "雷冠龙",
+  "description": "它曾被落雷击中，但幸运地捡回一条命。\r\n因此「雷落<characterName id=|FlowerDinosaur_Electric|/>」这句话就是\r\n指九死一生，大难不死的意思。",
+  "partnerSkill": {
+   "name": "落雷绽放之龙",
+   "desc": "可骑在它的背上移动。 若它在队伍中，雷属性帕鲁的防御力会提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "Ronin": {
+  "name": "浪刃武士",
+  "description": "它在死亡时身体会化为刀，由下一代继承。\r\n<characterName id=|Ronin|/>以外的生物拿到这把刀时，\r\n会因承受不住它的亡者之声而发狂。",
+  "partnerSkill": {
+   "name": "紫电一闪",
+   "desc": "发动后会以居合斩攻击锁定的目标敌人。 此帕鲁使用的居合斩的威力将提升至1.1/1.3/1.6/2/2.5倍。"
+  }
+ },
+ "Ronin_Dark": {
+  "name": "鬼刃武士",
+  "description": "它在死亡时身体会化为刀，由下一代继承。\r\n若是继承的<characterName id=|Ronin|/>内心懦弱，\r\n就会因为承受不住刀内亡魂的咒怨\r\n化身为<characterName id=|Ronin_Dark|/>，四处徘徊。",
+  "partnerSkill": {
+   "name": "秘技·紫电一闪",
+   "desc": "发动后会以居合斩攻击锁定的目标敌人。 此帕鲁使用的居合斩的威力将提升至1.1/1.3/1.6/2/2.5倍。 若它在队伍中，玩家的近战武器攻击伤害在非战斗时提升30/35/42/51/65%。（不可叠加）"
+  }
+ },
+ "IceCrocodile": {
+  "name": "肚肚鳄",
+  "description": "它的口腔内部十分凉爽，只要把嘴闭上就是移动冷库。\r\n其唾液中所含的特殊成份也有食品保鲜的作用。\r\n虽然也不是不能被人类当做保存食物的冰箱，\r\n至于卫生方面的问题，还是闭上嘴比较好。",
+  "partnerSkill": {
+   "name": "雪盆大口",
+   "desc": "若它在队伍中，食材和料理的重量会减轻30/35/40/50/60%。并在冰属性帕鲁原有的防腐效果基础上，让腐败速度进一步-30/-42/-54/-66/-80%。（不可叠加）"
+  }
+ },
+ "GrassMammoth": {
+  "name": "森猛犸",
+  "description": "这种帕鲁背部的植被因个体而异。\r\n有段时间曾被视为观赏帕鲁而受人喜爱\r\n甚至曾经出现过<characterName id=|GrassMammoth|/>的专业修剪师。",
+  "partnerSkill": {
+   "name": "盖亚粉碎者",
+   "desc": "可骑在它的背上移动。 骑乘期间破坏树木的效率会提高220/260/320/400/500%，破坏矿石的效率会提高500/750/1100/1500/2000%。"
+  }
+ },
+ "GrassMammoth_Ice": {
+  "name": "雪猛犸",
+  "description": "这种帕鲁背部的植被因个体而异。\r\n在<characterName id=|GrassMammoth_Ice|/>的背上曾发现过被认为已经灭绝的冰冻植物种子，\r\n在冷冻状态下保存良好。",
+  "partnerSkill": {
+   "name": "冰霜粉碎者",
+   "desc": "可骑在它的背上移动。 骑乘期间破坏树木的效率会提高220/260/320/400/500%，破坏矿石的效率会提高500/750/1100/1500/2000%。"
+  }
+ },
+ "StuffedShark": {
+  "name": "布偶鲨",
+  "description": "虽然看上去就像是什么生物自布偶中向外窥视一样，\r\n但是试着将手探进去却又什么也摸不到。\r\n不仅如此，手甚至可以无止境地向深处伸去，\r\n也许，这里面就是宇宙吧。",
+  "partnerSkill": {
+   "name": "水流扳机",
+   "desc": "发动后，<characterName id=|StuffedShark|/>会将力量分给玩家，让玩家的攻击转变为水属性，且攻击力提升30/35/40/45/50%。"
+  }
+ },
+ "StuffedShark_Fire": {
+  "name": "粉粉布偶鲨",
+  "description": "从口部伸手进去也什么都摸不到，甚至能无止境地探向深处。\r\n认为这是某种异次元空间的研究者们，突发奇想将其当作睡袋\r\n试图把整个身子挤进去，但却导致它干呕了。\r\n看来，还是有体内这个概念的。",
+  "partnerSkill": {
+   "name": "炎炎收纳间",
+   "desc": "若它在队伍中，<characterName id=|StuffedShark_Fire|/>会帮忙分担负重，背包内武器的重量减轻60/70/80/90/100%，且玩家和帕鲁以火属性攻击命中敌方弱点时的伤害提升25/27/30/34/40%。（不可叠加）"
+  }
+ },
+ "FlowerDoll": {
+  "name": "花丽娜",
+  "description": "它在寿命已尽时，会变成一株巨大的植物。\r\n之后每十年绽放出美丽的花朵，\r\n而新的<characterName id=|FlowerDoll|/>将会从中诞生。",
+  "partnerSkill": {
+   "name": "花精灵的祝福",
+   "desc": "发动后可通过花朵的治愈能力，来恢复玩家75/77/79/82/85%的生命值。 若它在据点里，其他据点帕鲁的播种工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "FlowerDoll_Fire": {
+  "name": "樱丽娜",
+  "description": "它在寿命已尽时，会自燃化作灰烬。\r\n这周围的土壤则会因此变得非常肥沃，\r\n此后的10年左右，无数的草木在此繁荣茂盛。",
+  "partnerSkill": {
+   "name": "花精灵的热情",
+   "desc": "发动后，它会用花朵的治愈之力让玩家的生命值恢复80/82/84/86/90%。 若它在队伍中，玩家和帕鲁受到的草属性伤害减轻15/17/20/24/30%，并且不会陷入缠绕状态。（不可叠加）"
+  }
+ },
+ "PandaGirl": {
+  "name": "莉芳",
+  "description": "磨砺一脉相传的武术，唯有日日精进！\r\n沉溺情爱乃荒唐无稽！唯有日日修行！\r\n时机已至！向心仪之人发起攻势！唯有失恋！\r\n恋爱之术未曾传承！此情唯有未竟！",
+  "partnerSkill": {
+   "name": "克己复礼",
+   "desc": "<characterName id=|PandaGirl|/>的攻击力和防御力，会随着队伍中其他草属性帕鲁的数量提升，每只增加2/3/4/5/6%。"
+  }
+ },
+ "Baphomet": {
+  "name": "炎魔羊",
+  "description": "它会在夜晚捕猎后，将猎物带回自己的领地。\r\n那些被抓住的帕鲁，之后会遭受何种对待，\r\n就不难想象了。",
+  "partnerSkill": {
+   "name": "焰爪猎人",
+   "desc": "发动后会以狱火爪攻击锁定的目标敌人。 此帕鲁使用的狱火爪的威力将提升至1.1/1.3/1.6/2/2.5倍。"
+  }
+ },
+ "Baphomet_Dark": {
+  "name": "暗魔羊",
+  "description": "它只对帕鲁幼崽感兴趣，会将其掠走带回自己的领地。\r\n不难想象，那些被夺走幼崽的帕鲁们会陷入多么绝望的境地。",
+  "partnerSkill": {
+   "name": "黑爪猎人",
+   "desc": "发动后会以恶梦爪攻击锁定的目标敌人。 此帕鲁使用的恶梦爪的威力将提升至1.1/1.3/1.6/2/2.5倍。"
+  }
+ },
+ "RaijinDaughter": {
+  "name": "雷鸣童子",
+  "description": "它对落单的帕鲁往往很和蔼可亲。\r\n但要是有误会了什么的帕鲁因此缠上它，\r\n它就会立即找来落雷解决掉对方。",
+  "partnerSkill": {
+   "name": "雷电姑娘",
+   "desc": "若它在队伍中，就会出现于玩家身边。 它会用雷属性的落雷追击敌对个体。 且该追击不会使猎物毙命。 （追击强化：-/小/中/大/特大）"
+  }
+ },
+ "RaijinDaughter_Water": {
+  "name": "天阴童子",
+  "description": "会温柔的对待落单的帕鲁\r\n趁放松警惕时，招来落雷解决对方。\r\n虽然是这么打算的，但是由于抓不住时机\r\n结果就那么一直和睦相处了。",
+  "partnerSkill": {
+   "name": "乌云姑娘",
+   "desc": "若它在队伍中，就会出现于玩家身边。 它会用暗属性的落雷追击敌对个体。 且该追击不会使猎物毙命。 （追击强化：-/小/中/大/特大）"
+  }
+ },
+ "FireKirin": {
+  "name": "火麒麟",
+  "description": "这种帕鲁全身都是高效的散热器官，\r\n使它能够发挥惊人的耐力。\r\n当有人坐在它身上时，它会注意不烫伤对方。",
+  "partnerSkill": {
+   "name": "赤兔马",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为火属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "FireKirin_Dark": {
+  "name": "邪麒麟",
+  "description": "这种帕鲁会燃烧神秘的暗物质以获取能量，\r\n并将剩余的暗粒子排出体外。\r\n当有人坐在它身上时，会控制排放量，以免该人被黑暗侵蚀。",
+  "partnerSkill": {
+   "name": "黑兔马",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为暗属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "LazyDragon": {
+  "name": "佩克龙",
+  "description": "虽然看起来无精打采，但实际上相当凶猛。\r\n它将眼中所见之物全部视为食物，\r\n并不惜一切代价捕食。",
+  "partnerSkill": {
+   "name": "饿饿飞弹",
+   "desc": "可骑在它的背上移动。 骑乘期间它还能用导弹发射器连续攻击。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "LazyDragon_Electric": {
+  "name": "派克龙",
+  "description": "<characterName id=|LazyDragon|/>突发奇想，\r\n是时候让自己做出些改变了。\r\n那个瞬间，灵感就像雷电贯穿了它的全身！",
+  "partnerSkill": {
+   "name": "飞弹盛宴",
+   "desc": "可骑在它的背上移动。 骑乘期间它还能用导弹发射器连续攻击。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "IceFox": {
+  "name": "吹雪狐",
+  "description": "当极光在夜空中闪耀时，\r\n这种帕鲁会仰望天空，以美妙的嗓音歌唱。\r\n但这个习性也让它非常容易被敌人锁定。",
+  "partnerSkill": {
+   "name": "极光的指引",
+   "desc": "若它在队伍中，冰属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加） 将它分派到家畜牧场，它就有机会掉落结冰器官。"
+  }
+ },
+ "ThunderBird": {
+  "name": "迅雷鸟",
+  "description": "虽说与<characterName id=|RedArmorBird|/>外形相似，但并无任何关系。\r\n它会采用快速俯冲，并用尖锐的喙击败敌人。\r\n那身姿宛如落雷一般。",
+  "partnerSkill": {
+   "name": "天雷",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为雷属性，且攻击力提升5/7/10/14/20%。 <characterName id=|ThunderBird|/>的移动速度，会随着队伍中其他雷属性帕鲁的数量提升，每只增加5/9/13/18/25%。"
+  }
+ },
+ "ThunderBird_Ice": {
+  "name": "疾霜鸟",
+  "description": "特化适应了寒冷环境，即便身形纤细也能抵御严寒。\r\n从高空俯冲攻击的威力惊人，\r\n要比喻的话，就像巨大的冰锥从天而降一般。",
+  "partnerSkill": {
+   "name": "天霰",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为冰属性，且攻击力提升5/7/10/14/20%。 <characterName id=|ThunderBird_Ice|/>的移动速度，会随着队伍中其他冰属性帕鲁的数量提升，每只增加5/9/13/18/25%。"
+  }
+ },
+ "GhostAnglerfish": {
+  "name": "冥灯鱼",
+  "description": "散发着光芒的拟饵照亮了黑暗。\r\n被这光亮吸引来的帕鲁如果被<characterName id=|GhostAnglerFish|/>发现的话，那可是插翅难逃了。\r\n它会一直作为其向导，直到该帕鲁平安返回自己的家。",
+  "partnerSkill": {
+   "name": "暗夜引路人",
+   "desc": "可骑在它的背上在水上移动。 <characterName id=|GhostAnglerfish|/>的移动速度，会随着队伍中其他暗属性或水属性帕鲁的数量提升，每只增加5/9/13/18/25%。"
+  }
+ },
+ "GhostAnglerfish_Fire": {
+  "name": "炙灯鱼",
+  "description": "剧烈燃烧的拟饵，在烧烤猎物时也能用上。\r\n被烤肉香气吸引来的帕鲁如果被<characterName id=|GhostAnglerFish_Fire|/>发现的话，那可是插翅难逃了。\r\n它会一直热情款待，直到被吸引来的帕鲁肚子吃撑。",
+  "partnerSkill": {
+   "name": "深海名厨",
+   "desc": "可骑在它的背上在水上移动。 <characterName id=|GhostAnglerfish_Fire|/>的移动速度，会随着队伍中其他火属性或水属性帕鲁的数量提升，每只增加5/9/13/18/25%。"
+  }
+ },
+ "ThunderDog": {
+  "name": "霹雳犬",
+  "description": "当它全速冲刺时就宛如一道闪电一般。 \r\n如果<characterName id=|ThunderDog|/>同类之间发生冲突， \r\n更会不断响起雷鸣般的轰隆声。",
+  "partnerSkill": {
+   "name": "雷雳跃行",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间可以进行2段跳跃。 <characterName id=|ThunderDog|/>的移动速度，会随着队伍中其他雷属性帕鲁的数量提升，每只增加5/9/13/18/25%。"
+  }
+ },
+ "ThunderDog_Ice": {
+  "name": "凛光犬",
+  "description": "它若在雪原上全速奔跑，就会扬起大量飞雪。\r\n由于完全看不到彼此，\r\n导致<characterName id=|ThunderDog_Ice|/>间经常发生交通事故。",
+  "partnerSkill": {
+   "name": "霜跃疾行",
+   "desc": "可骑在它的背上移动。 骑乘期间可以进行2段跳跃。 若它在队伍中，冰属性帕鲁的防御力会提升15/17/20/24/30%。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "DarkScorpion": {
+  "name": "冥铠蝎",
+  "description": "它的本体是一种能量体，内部是空的。\r\n它会将猎物活生生地塞进外壳并将其吸收。\r\n周围总是不断回响着地狱般的呻吟声。",
+  "partnerSkill": {
+   "name": "钢铁之蝎",
+   "desc": "若它在队伍中，玩家的防御力将提升5/6/7/8/10%，且击倒雷属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "DarkScorpion_Ground": {
+  "name": "金铠蝎",
+  "description": "它的本体是一种能量体，内部是空的。\r\n通过将砂石和矿物填充进外壳，得以实现了压倒性的质量。\r\n被其击中的生物只能发出如地狱般的呻吟声。",
+  "partnerSkill": {
+   "name": "黄金之蝎",
+   "desc": "若它在队伍中，玩家的防御力将提升5/6/7/8/10%，且击倒雷属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "CactusDoll": {
+  "name": "球抱苞",
+  "description": "当某种感情变得强烈时，它的尖刺就会伸缩。\r\n被精心养育的<characterName id=|CactusDoll|/>，会令人忍不住想要拥入怀中，\r\n但是十有八九都是悲剧结尾。",
+  "partnerSkill": {
+   "name": "请你抱抱我",
+   "desc": "若它在队伍中，玩家和帕鲁对缠绕状态的敌人造成的伤害将提升50/53/56/60/65%。（不可叠加）"
+  }
+ },
+ "CactusDoll_Dark": {
+  "name": "妖抱苞",
+  "description": "当某种感情变得强烈时，它的尖刺就会伸缩。\r\n在满满的爱意中成长的<characterName id=|CactusDoll_Dark|/>，\r\n总是动不动就爱往主人怀里钻，\r\n但若要接纳它的爱，就要一并接纳它带来的痛。",
+  "partnerSkill": {
+   "name": "紧紧抱住你",
+   "desc": "若它在队伍中，会为玩家的攻击附加2/3/4/5/6点缠绕异常状态值。（不可叠加）"
+  }
+ },
+ "IceDeer": {
+  "name": "严冬鹿",
+  "description": "它碧蓝通透的尖角闪耀着绝对零度的光芒。\r\n如果用手直接碰触，全身会立即冻结，\r\n连同性命一起崩解四散。",
+  "partnerSkill": {
+   "name": "冰凉之躯",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家的耐暑能力+2。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "GrassPanda": {
+  "name": "叶胖达",
+  "description": "它拥有令人难以置信的力量。 \r\n在某次实验中，它甚至可以轻松撕破3000张叠在一起的纸。 \r\n你我都该庆幸它并不是肉食性帕鲁。",
+  "partnerSkill": {
+   "name": "不良熊猫",
+   "desc": "可骑在它的背上移动。 骑乘期间它还能用榴弹发射器连续攻击。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "GrassPanda_Electric": {
+  "name": "雷胖达",
+  "description": "它拥有令人难以置信的力量。\r\n可以将电力转为神经信号，突破身体能力的极限。\r\n只要提到最强生物，就必定有它。",
+  "partnerSkill": {
+   "name": "不良熊猫",
+   "desc": "可骑在它的背上移动。 骑乘期间它还能用榴弹发射器连续攻击。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "WeaselDragon": {
+  "name": "疾旋鼬",
+  "description": "它能将身体蜷缩起来，并以迅疾的速度旋转移动。\r\n过去人们会在被驯服的<characterName id=|WeaselDragon|/>身上装上放牛奶的袋子再放牧，\r\n以此利用它的旋转能力来制作黄油。",
+  "partnerSkill": {
+   "name": "扭扭鼬鼬",
+   "desc": "可骑在它的背上移动。 骑乘期间玩家的攻击会转变为龙属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "WeaselDragon_Fire": {
+  "name": "桃旋鼬",
+  "description": "它能将身体蜷缩起来，一路火花带闪电地旋转移动。\r\n另外在情绪激动时也会放出火花。\r\n如果过度抚摸就会燃起来。",
+  "partnerSkill": {
+   "name": "烧鼬鼬",
+   "desc": "可骑在它的背上移动。 骑乘期间玩家的攻击会转变为火属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "RedArmorBird": {
+  "name": "燧火鸟",
+  "description": "虽说与<characterName id=|ThunderBird|/>外形相似，但并无任何关系。 \r\n它主要以岩石为食，因此经年累月后， \r\n不只是鸟喙，它的整个头部也变得十分坚硬。",
+  "partnerSkill": {
+   "name": "烈焰之翼",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为火属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "VolcanoDragon": {
+  "name": "流焰龙",
+  "description": "健康的个体，背部熔岩的流动也会十分顺畅。\r\n如果生活习惯不健康，熔岩流动也会越来越滞涩。\r\n最坏会发生熔岩堵塞，最后突然大爆发。",
+  "partnerSkill": {
+   "name": "熔岩霸主",
+   "desc": "可骑在它的背上移动。 <characterName id=|VolcanoDragon|/>的攻击力，会随着队伍中其他火属性或地属性帕鲁的数量提升，每只增加4/5/6/7/8%。"
+  }
+ },
+ "VolcanoDragon_Ice": {
+  "name": "川霜龙",
+  "description": "健康的个体，背部物质的温度也会十分稳定。\r\n但一旦心跳过快，温度便会失去稳定。\r\n最坏会发生气化或凝固，\r\n最后突然休克而亡。",
+  "partnerSkill": {
+   "name": "寒冰霸主",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家和帕鲁以冰属性攻击命中敌方弱点时的伤害将提升25/27/30/34/40%。（不可叠加）"
+  }
+ },
+ "TropicalOstrich": {
+  "name": "咕咕桑葩",
+  "description": "会用其独特的舞蹈打乱对手的节奏。\r\n在领地争夺时，首先被对方带节奏的那一方就是败者。\r\n求爱、消遣、万事唯有舞蹈！\r\n话说，当它面向人类跳舞时，那又代表着什么意思呢？",
+  "partnerSkill": {
+   "name": "桑巴舞步",
+   "desc": "可骑在它的背上移动。 在草地上移动时，移动速度会提高155/175/195/215/240%。"
+  }
+ },
+ "DrillGame": {
+  "name": "碎岩龟",
+  "description": "过去有则寓言故事叫做「<characterName id=|DrillGame|/>的钻头」。\r\n那是个关于拥有最强甲壳和钻头的<characterName id=|DrillGame|/>\r\n思考矛盾的道德故事。",
+  "partnerSkill": {
+   "name": "钻头粉碎者",
+   "desc": "发动后会进入甲壳回旋状态。 它会一边旋转一边跟随玩家，且破坏矿石的效率将提升800/1000/1200/1500/2000%。"
+  }
+ },
+ "SakuraSaurus": {
+  "name": "连理龙",
+  "description": "它在交配前后，体味会发生巨大变化。\r\n人们认为它找到伴侣后的香味芳香迷人，\r\n并将其称为「初恋之香」。",
+  "partnerSkill": {
+   "name": "恋香初绽",
+   "desc": "可骑在它的背上移动。 若它在队伍中，捡到的帕鲁蛋将有35/37/39/41/45%的概率变为头目帕鲁蛋。（不可叠加）"
+  }
+ },
+ "SakuraSaurus_Water": {
+  "name": "海誓龙",
+  "description": "它在交配前后，体味会发生巨大变化。\r\n人们认为它找到伴侣前的香味芳香迷人，\r\n将其称为「纯洁之香」。",
+  "partnerSkill": {
+   "name": "纯心盛绽",
+   "desc": "可骑在它的背上移动。 若它在队伍中，捡到的帕鲁蛋将有45/47/49/51/55%的概率变为头目帕鲁蛋。（不可叠加）"
+  }
+ },
+ "LazyCatfish": {
+  "name": "趴趴鲶",
+  "description": "这种帕鲁过于放松时，所有反应都会变得极为迟缓。\r\n即使身中28刀，大概也要到隔天早上\r\n它才会发现自己早该死去。",
+  "partnerSkill": {
+   "name": "改善土质",
+   "desc": "若它在队伍中，地属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加） 将它分派到家畜牧场，它就有机会掉落优质帕鲁油。"
+  }
+ },
+ "LazyCatfish_Gold": {
+  "name": "梆梆鲶",
+  "description": "身体表面有着惊人的反射率。\r\n不仅如此，它各处神经的反射速度比<characterName id=|LazyCatfish|/>还慢！",
+  "partnerSkill": {
+   "name": "黄金丰收",
+   "desc": "若它在队伍中，打倒的敌人掉落的金币提升100/110/130/160/200%。（不可叠加） 将它分派到家畜牧场，它就会掉落优质帕鲁油或者小概率掉落金币。"
+  }
+ },
+ "Plesiosaur": {
+  "name": "梁叶龙",
+  "description": "吐息中混合着的疑似花粉的，\r\n无论什么植物都能授粉成功的奇妙物质。\r\n对于那些身上长有植物的帕鲁而言，这是个令兽心情复杂的家伙。",
+  "partnerSkill": {
+   "name": "暖洋洋晴日",
+   "desc": "可骑在它的背上移动。 若它在据点里，分派到配种牧场的帕鲁产蛋速度加快20/26/32/38/50%。（不可叠加）"
+  }
+ },
+ "AmaterasuWolf": {
+  "name": "苍焰狼",
+  "description": "性格极为纤细敏感，\r\n遇到讨厌的事物，就会躲在洞窟里不愿出来。\r\n而古人们也认为，若<characterName id=|AmaterasuWolf|/>躲藏起来则是一种不吉之兆。",
+  "partnerSkill": {
+   "name": "日轮之狼",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家和帕鲁受到的冰属性伤害减轻15/17/20/24/30%，并且不会陷入冻结状态。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "AmaterasuWolf_Dark": {
+  "name": "幽焰狼",
+  "description": "性格极为纤细敏感，\r\n遇到讨厌的事物，就会躲在洞窟里不愿出来。\r\n由于过于家里蹲，兽生也变得阴暗起来。",
+  "partnerSkill": {
+   "name": "昙天之狼",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家和帕鲁受到的暗属性伤害减轻15/17/20/24/30%，并且不会陷入黑暗状态。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "Manticore": {
+  "name": "狱焰王",
+  "description": "它比较喜欢吃生肉，但每次吃到肚里的都成了全熟的肉。\r\n这是因为它以灼热利爪为武器，\r\n但却不知猎物会因此被烤成焦炭。",
+  "partnerSkill": {
+   "name": "狱炎狮子",
+   "desc": "可骑在它的背上移动。 若它在队伍中，击倒草属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "Manticore_Dark": {
+  "name": "狱阎王",
+  "description": "它比较喜欢吃正常的肉，但每次吃到肚里的都成了受污染的肉。\r\n这是因为它以暗黑利爪为武器，\r\n但却不知猎物会因此受到诅咒。",
+  "partnerSkill": {
+   "name": "黑炎狮子",
+   "desc": "可骑在它的背上移动。 若它在队伍中，击倒无属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "HerculesBeetle": {
+  "name": "铠格力斯",
+  "description": "它全身包裹着超强力装甲，\r\n拥有难以比拟的强度和耐热性。\r\n即使是凝固汽油弹也拿它毫无办法。",
+  "partnerSkill": {
+   "name": "攻守一体的黑甲",
+   "desc": "若它在队伍中，当玩家的近战攻击在5/6/7/8/9秒内命中5次时，它会在玩家周边生成护盾。（不可叠加）"
+  }
+ },
+ "HerculesBeetle_Ground": {
+  "name": "格鲁力斯",
+  "description": "它全身包裹着超强力装甲， \r\n拥有难以比拟的强度和耐热性。\r\n即使被<characterName id=|GrassMammoth|/>踩踏也不疼不痒。",
+  "partnerSkill": {
+   "name": "攻守一体的金甲",
+   "desc": "若它在队伍中，当玩家的近战攻击在5/6/7/8/9秒内命中5次时，它会在玩家周边生成护盾。（不可叠加）"
+  }
+ },
+ "SnowPeafowl": {
+  "name": "白真雪雀",
+  "description": "对时间很敏感，每天早晨必然在固定的时间醒来。\r\n帕洛斯群岛的一天之所以被分为24个片段，\r\n据说就是因为从正面看开屏的<characterName id=|SnowPeafowl|/>时，\r\n尾羽上分割的空白区域有24个的缘故。",
+  "partnerSkill": {
+   "name": "孔雀迅捷",
+   "desc": "若它在队伍中，受到<characterName id=|SnowPeafowl|/>释放的冷气影响，玩家会更专注，武器重新装弹的速度提升20/26/32/38/50%。（不可叠加）"
+  }
+ },
+ "DarkFlameFox": {
+  "name": "紫狐娇",
+  "description": "虽然摆出一副双手叉腰，一副如画般的神气姿态，\r\n但是实际上，由于尾巴和头发过于沉重，\r\n它不过是为了不摔倒而拼命保持平衡罢了。",
+  "partnerSkill": {
+   "name": "暗狐秘咒",
+   "desc": "若它在队伍中，玩家的攻及击中点燃状态的敌人时，会使敌人周边燃烧，对碰到火焰的敌人持续造成相当于玩家攻击力15/18/21/24/30%的伤害。（不可叠加）"
+  }
+ },
+ "WhiteMoth": {
+  "name": "绸笠蛾",
+  "description": "它喜欢下雨天气，每当下雨， \r\n它总会站在原地不动享受雨水。 \r\n<characterName id=|Kitsunebi|/>会常常跑来躲雨。",
+  "partnerSkill": {
+   "name": "神秘缠丝者",
+   "desc": "发动后会以钻石星辰攻击锁定的目标敌人。 此帕鲁使用的钻石星辰的威力将提升至1.1/1.3/1.6/2/2.5倍。 将它分派到家畜牧场，它就有机会制造出优质的布。"
+  }
+ },
+ "WhiteMoth_Neutral": {
+  "name": "绢笠蛾",
+  "description": "它喜欢凝望天空，\r\n常常静静地伫立在那里。\r\n经常成为小型帕鲁们聚会的场所。",
+  "partnerSkill": {
+   "name": "神秘缠金丝者",
+   "desc": "若它在队伍中，无属性帕鲁的防御力会提升15/17/20/24/30%。（不可叠加） 将它分派到家畜牧场，它就有机会制作优质的布。"
+  }
+ },
+ "GhostBeast": {
+  "name": "噬魂兽",
+  "description": "它喜欢生物濒死时身体所散发的独特气味。\r\n因此一旦被<characterName id=|GhostBeast|/>黏上了，\r\n也就代表着大限将至。",
+  "partnerSkill": {
+   "name": "冥界使者",
+   "desc": "可骑在它的背上移动。 若它在队伍中，每次打倒敌人时，全体队伍帕鲁的主动技能冷却时间缩短30/34/40/48/60%。（不可叠加）"
+  }
+ },
+ "MushroomDragon": {
+  "name": "菇咚",
+  "description": "吸入了大量<characterName id=|MushroomDragon|/>的孢子会陷入一种神志不清的状态。\r\n偶尔会见到它呆站着一动不动，\r\n它这不是在模仿蘑菇，\r\n而是吸自己的孢子吸嗨了。",
+  "partnerSkill": {
+   "name": "飘飘然孢子",
+   "desc": "可骑在它的背上移动。 将它分派到家畜牧场，它就有机会掉落蘑菇或者洞穴蘑菇。"
+  }
+ },
+ "MushroomDragon_Dark": {
+  "name": "菇波",
+  "description": "散布的大量孢子可以轻易遮挡阳光。\r\n偶尔会见到它呆站着一动不动，\r\n它这不是在模仿蘑菇，\r\n而是被自己的孢子遮住，什么都看不见。",
+  "partnerSkill": {
+   "name": "幽幽然孢子",
+   "desc": "可骑在它的背上移动。 若它在据点里，<characterName id=|MushroomDragon_Dark|/>的神奇孢子将会使据点内帕鲁的SAN值下降速度减缓10/11.5/13/14/15%。"
+  }
+ },
+ "IceWitch": {
+  "name": "冰姬灵",
+  "description": "就算身体会在酷暑时融化，它还是痴迷于日光浴。\r\n就算身体会在高温时融化，它依然痴迷于泡温泉。\r\n反正最终都是一死，那么不如融化在艳阳高照的露天温泉里。",
+  "partnerSkill": {
+   "name": "魔女的冷气",
+   "desc": "发动后，<characterName id=|IceWitch|/>会将力量分给玩家，让玩家的攻击转变为冰属性，且攻击力提升30/35/40/45/50%。"
+  }
+ },
+ "MummyPal": {
+  "name": "缚乃伊",
+  "description": "如同金色绷带般的器官有着伸缩自如的特性。\r\n若是处于极端干燥的环境下会发生断裂，\r\n所以每天检查保湿必不可少。",
+  "partnerSkill": {
+   "name": "黄泉归来",
+   "desc": "与玩家并肩作战时，若<characterName id=|MummyPal|/>陷入濒死状态，<characterName id=|MummyPal|/>会消耗全部的饱腹度并复活。 （冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "Umihebi": {
+  "name": "覆海龙",
+  "description": "传说有位贤者因冤罪而被推入漩涡，\r\n随后以<characterName id=|Umihebi|/>之姿重生，\r\n并一举毁灭了整个国家。",
+  "partnerSkill": {
+   "name": "呼唤风暴的深海龙",
+   "desc": "可骑在它的背上在水上移动。 若它在队伍中，玩家和帕鲁对浸湿状态的敌人造成的伤害将提升50/53/56/60/65%。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "Umihebi_Fire": {
+  "name": "腾炎龙",
+  "description": "传说有位战士因冤罪而被推落火山，\r\n随后以<characterName id=|Umihebi_Fire|/>之姿重生，\r\n并把整个国家烧成一片焦土。",
+  "partnerSkill": {
+   "name": "呼唤风暴的熔岩龙",
+   "desc": "可骑在它的背上移动。 若它在队伍中，能让熔岩伤害无效化，且玩家和帕鲁对点燃状态的敌人造成的伤害将提升50/53/56/60/65%。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "Suzaku": {
+  "name": "朱雀",
+  "description": "过去人们认为它是带来旱季的使者。\r\n只要前一年发生干旱，人们就会全力驱逐这种帕鲁，\r\n祈祷今年能够获得丰收。",
+  "partnerSkill": {
+   "name": "炎之翼",
+   "desc": "可骑在它的背上在空中飞行。 <characterName id=|Suzaku|/>的移动速度，会随着队伍中其他火属性帕鲁的数量提升，每只增加5/9/13/18/25%。"
+  }
+ },
+ "Suzaku_Water": {
+  "name": "清雀",
+  "description": "过去人们认为它是带来雨季的使者。\r\n只要前一年发生水患，人们就会全力驱逐这种帕鲁，\r\n祈祷今年能够平安度过。",
+  "partnerSkill": {
+   "name": "水之翼",
+   "desc": "可骑在它的背上在空中飞行。 <characterName id=|Suzaku_Water|/>的移动速度，会随着队伍中其他水属性帕鲁的数量提升，每只增加5/9/13/18/25%。"
+  }
+ },
+ "FeatherOstrich": {
+  "name": "战冠雀",
+  "description": "行一步，断迷茫。\r\n行两步，舍忧虑。\r\n行三步，离怯懦。\r\n敌虽魍魉，吾亦往。",
+  "partnerSkill": {
+   "name": "飞砂腿",
+   "desc": "可骑在它的背上移动。 在砂地上移动时，移动速度会提高50/62/74/86/100%。"
+  }
+ },
+ "SkyDragon": {
+  "name": "天羽龙",
+  "description": "将<characterName id=|SkyDragon|/>当作抱枕一同入睡， \r\n就能体验如同身处天堂一般的舒适感。 \r\n但如果个体的睡相很差，那么会因被压扁而进入天堂。",
+  "partnerSkill": {
+   "name": "天空龙的慈爱",
+   "desc": "可骑在它的背上在空中飞行。 若它在队伍中，龙属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "SkyDragon_Grass": {
+  "name": "翠羽龙",
+  "description": "在拥抱<characterName id=|SkyDragon_Grass|/>时，\r\n如果闻到了太阳的味道和草原的馨香，那明天就是晴天。\r\n如果闻到一股发霉的味道，那明天就是倾盆大雨。",
+  "partnerSkill": {
+   "name": "翠龙的慈爱",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为草属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "LeafPrincess": {
+  "name": "春彩娘",
+  "description": "一到开春时节，就会乘风在岛上散布花粉。 \r\n<characterName id=|FlowerRabbit|/>之所以会得花粉症， \r\n都怪<characterName id=|LeafPrincess|/>。",
+  "partnerSkill": {
+   "name": "繁花告春",
+   "desc": "若它在据点里，<characterName id=|LeafPrincess|/>会为农园注入元气，使作物的生长加速50/55/60/65/70%。"
+  }
+ },
+ "SmallArmadillo": {
+  "name": "球犰",
+  "description": "曾经有一段时间流行过<characterName id=|SmallArmadillo|/>足球这项运动。 \r\n虽然因为收到帕鲁保护组织的强烈反对，很快就被废除， \r\n但其实被当球踢能够清理死皮，<characterName id=|SmallArmadillo|/>也并非不情不愿。",
+  "partnerSkill": {
+   "name": "滚滚沙滩球",
+   "desc": "若它在队伍中，地属性帕鲁的防御力提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "GuardianDog": {
+  "name": "八云犬",
+  "description": "有着辟邪的特性，\r\n昔日曾经作为优秀的伙伴，和岛民构筑起了良好的关系。\r\n而现在，<characterName id=|GuardianDog|/>和人们之间已经垒起了名为「邪念」的高墙。",
+  "partnerSkill": {
+   "name": "物以类聚",
+   "desc": "可骑在它的背上移动。 与它并肩作战时，遇到和它有着相同被动技能的帕鲁的概率将提升15/18/21/24/30%。 ※部分被动技能除外"
+  }
+ },
+ "SwordCutlassfish": {
+  "name": "鞘刀鱼",
+  "description": "有着将骨骼和身躯暂时分离，用骨骼斩断敌人的疯狂生态。\r\n如若不赶快收回体内，自己也会力竭倒下。\r\n有传言在年轻的个体间流行着比赛身体分离时长的危险游戏，但真假未知。",
+  "partnerSkill": {
+   "name": "斩骨断肉",
+   "desc": "发动后，<characterName id=|SwordCutlassfish|/>会化身为玩家的刀（攻击：2600/2700/3000/3400/3900）。 若不及时解除，<characterName id=|SwordCutlassfish|/>将陷入濒死状态。 发动居合斩后同样会陷入濒死状态。"
+  }
+ },
+ "SwordCutlassfish_Fire": {
+  "name": "炼刃鱼",
+  "description": "能将骨骼和身体暂时分离，用骨头斩断敌人。\r\n如若不赶快收回体内，自己也会力竭倒下。\r\n据传闻，年老的个体会故意长时间分离，借此激发求生本能，\r\n以期达到延寿的效果，但真假未知。",
+  "partnerSkill": {
+   "name": "炼骨断肉",
+   "desc": "发动后，<characterName id=|SwordCutlassfish_Fire|/>会化身为玩家的刀（攻击：2900/3000/3300/3700/4200）。 若不及时解除，<characterName id=|SwordCutlassfish_Fire|/>将陷入濒死状态。 发动居合斩后同样会陷入濒死状态。"
+  }
+ },
+ "VolcanicMonster": {
+  "name": "熔岩兽",
+  "description": "它的全身上下都流淌着如岩浆般的血液。 \r\n若往它身上大量泼水，这些水会瞬间遇热蒸发。 \r\n随后便会引发大规模的水蒸气爆炸。",
+  "partnerSkill": {
+   "name": "贪食矿石之兽",
+   "desc": "可骑在它的背上移动。 若它在队伍中，所有矿石种类的重量会减轻30/35/40/50/60%。（不可叠加）"
+  }
+ },
+ "VolcanicMonster_Ice": {
+  "name": "寒霜兽",
+  "description": "它的全身上下都流淌着超低温的血液。 \r\n若突然往它身上施加热量，其血液会蒸发。 \r\n随后便会引发大规模的蒸气爆炸。",
+  "partnerSkill": {
+   "name": "贪食冰霜之兽",
+   "desc": "可骑在它的背上移动。 若它在队伍中，所有矿石种类的重量会减轻35/40/45/55/65%。（不可叠加）"
+  }
+ },
+ "NightBlueHorse": {
+  "name": "夜冥驹",
+  "description": "它最为自豪的，就是自己如流水般柔顺的鬃毛。\r\n如果发现了毛发分叉，就会害羞的无法集中精力奔跑。\r\n由于静电会导致炸毛，绝对不会让<characterName id=|BlueThunderHorse|/>靠近。",
+  "partnerSkill": {
+   "name": "夜舞者",
+   "desc": "可骑在它的背上移动。骑乘期间跳跃能力提升。 夜晚期间，此帕鲁的移动速度提升50/62/74/86/100%。（不可叠加）"
+  }
+ },
+ "NightBlueHorse_Neutral": {
+  "name": "日耀驹",
+  "description": "它最为自豪的就是自己光彩夺目的鬃毛。 \r\n只要有一点脏污，就会害羞的无法集中精力奔跑。 \r\n因为容易沾上皮脂污垢，即便是最喜欢的帕鲁驯养师，也不希望被黏糊糊的摸个不停。",
+  "partnerSkill": {
+   "name": "光舞者",
+   "desc": "可骑在它的背上移动，骑乘期间跳跃能力提升。 <characterName id=|NightBlueHorse_Neutral|/>的移动速度，会随着队伍中其他无属性帕鲁的数量提升，每只增加5/9/13/18/25%。"
+  }
+ },
+ "RockBeast": {
+  "name": "磐峰兽",
+  "description": "通过撞击更坚硬的岩石，来保持自己中意的形体。\r\n至于那些躯体凹陷的低沉个体还是放任自流吧。\r\n用人来类比的话，就像不小心把刘海剪过头了。",
+  "partnerSkill": {
+   "name": "能量石",
+   "desc": "若它在队伍中，玩家和帕鲁对泥泞状态的敌人造成的伤害将提升50/53/56/60/65%。（不可叠加）"
+  }
+ },
+ "RockBeast_Ice": {
+  "name": "寒峰兽",
+  "description": "通过变换姿势晒日光浴，来将冰块融成中意的形状。\r\n至于那些形态失衡的个体还是不要去打扰了。\r\n用人来类比的话，就像不小心剪多了鬓角。",
+  "partnerSkill": {
+   "name": "能量水晶",
+   "desc": "若它在队伍中，玩家和帕鲁受到的龙属性伤害减轻15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "WhiteTiger": {
+  "name": "冰棘兽",
+  "description": "它的那双坚硬的爪子可使它轻而易举地登上险峻的山岭。\r\n可是因为腿短的关系，并不擅长下山，\r\n因此常常把自己困在山上，难以抽身。",
+  "partnerSkill": {
+   "name": "猎龙者",
+   "desc": "若它在队伍中，击倒龙属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "WhiteTiger_Ground": {
+  "name": "金棘兽",
+  "description": "它的那双巨大的爪子可使它轻轻松松搬起大量东西。\r\n可是因为腿短的关系，走起来很慢，\r\n经常在半路上天就黑了。",
+  "partnerSkill": {
+   "name": "爆碎铁腕",
+   "desc": "若它在队伍中，攻击击中弱点部位时，下次击中弱点部位的攻击威力提升30/34/40/48/60%。（不可叠加）"
+  }
+ },
+ "SmallYeti": {
+  "name": "雪墩墩",
+  "description": "「直视<characterName id=|SmallYeti|/>的眼睛」\r\n这句话的意思是要透过现象看本质。\r\n说起来不知为何，从来没有想要探究<characterName id=|SmallYeti|/>到底有没有眼睛的研究者。",
+  "partnerSkill": {
+   "name": "不见之眼",
+   "desc": "若它在队伍中，会使玩家不容易被敌人发现。（不可叠加） （隐蔽性提升：-/小/中/大/特大）"
+  }
+ },
+ "Yeti": {
+  "name": "白绒雪怪",
+  "description": "研究者为了揭开它的内部结构，而将它的毛都剃光。\r\n结果只剩下满地毛发，\r\n仿佛从最开始这团毛里面就空无一物。",
+  "partnerSkill": {
+   "name": "雪山巨人",
+   "desc": "可骑在它的背上移动。 若它在据点里，其他据点帕鲁的搬运工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "Yeti_Grass": {
+  "name": "绿苔绒怪",
+  "description": "研究者为了揭开它的内部结构，而将它身上的草都剃光。 \r\n结果只剩下满地杂草， \r\n仿佛从最开始这团草里面就空无一物。",
+  "partnerSkill": {
+   "name": "南方巨人",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家和帕鲁受到的地属性伤害减轻15/17/20/24/30%，并且不会陷入泥泞状态。（不可叠加）"
+  }
+ },
+ "CandleGhost": {
+  "name": "恐炬灵",
+  "description": "古人曾认为，越接近世界末日，<characterName id=|CandleGhost|/>的火焰就越弱。 \r\n末日主义者曾屡次因火焰减弱了而产生骚乱， \r\n最后发现火势强弱全看它的心情， \r\n至少到目前还是这样的。",
+  "partnerSkill": {
+   "name": "古墓烛影",
+   "desc": "若它在队伍中，玩家和帕鲁受到的无属性伤害减轻15/17/20/24/30%。（不可叠加） 将它分派到家畜牧场，它就有机会从地里挖出骨头。"
+  }
+ },
+ "VenusFlytrap": {
+  "name": "颚莉丝",
+  "description": "什么奇怪的东西都毫不在意地往嘴里塞，\r\n导致头顶的嘴有时会患上口腔溃疡。\r\n每当这种时候，就由脸部的嘴来替代。\r\n但是胡乱吃东西的毛病依然不改，最终两张嘴都得了口腔溃疡。",
+  "partnerSkill": {
+   "name": "巨舌缠绕",
+   "desc": "若它在队伍中，玩家进行翻滚或滑步动作时，<characterName id=|VenusFlytrap|/>会卷起旋风攻击接触到的敌人（草属性 / 威力: 40/50/60/70/80）。（不可叠加）"
+  }
+ },
+ "KingBahamut": {
+  "name": "焰煌",
+  "description": "传说它是火山喷发之际一同诞生的产物。\r\n曾有可疑的团体主张，\r\n这片大陆其实就是巨大<characterName id=|KingBahamut|/>的背。",
+  "partnerSkill": {
+   "name": "熔岩凯撒",
+   "desc": "可骑在它的背上移动。 若它在队伍中，打倒敌人时，一同并肩作战的帕鲁的攻击力与防御力会提升5/6/7/8/10%。 该效果最多可累积5层，持续20秒。（不可叠加）"
+  }
+ },
+ "KingBahamut_Dragon": {
+  "name": "殁殃",
+  "description": "自太古时期，其于地底现身。\r\n焚天的烈火在将一切焚烧殆尽前，永远都不会熄灭。\r\n此谓「永炎」。",
+  "partnerSkill": {
+   "name": "巨龙凯撒",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家和帕鲁以龙属性攻击命中敌方弱点时的伤害将提升25/27/30/34/40%。（不可叠加）"
+  }
+ },
+ "GrassGolem": {
+  "name": "双心岩傀",
+  "description": "一副身躯，两个意识。\r\n有时会因为思路分歧而发生争吵。\r\n在它们和好前，完全不知道躯体会往哪里去！",
+  "partnerSkill": {
+   "name": "自然光炮",
+   "desc": "可骑在它的背上移动。 发动后，<characterName id=|GrassGolem|/>的右手处会发射草属性的强力激光。 （冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "GrassGolem_Dark": {
+  "name": "咒心岩傀",
+  "description": "一副身躯，两个意识。\r\n平时意见向来不合，总是吵个没完，\r\n可一旦进入战斗，它们就会在转瞬之间身心合一！",
+  "partnerSkill": {
+   "name": "枯萎光炮",
+   "desc": "可骑在它的背上移动。 发动后，<characterName id=|GrassGolem_Dark|/>的右手处会发射暗属性的强力激光。 （冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "Anubis": {
+  "name": "阿努比斯",
+  "description": "它的外表曾被视作高贵的象征。 \r\n而在那些蔑视权贵的人眼里，它就成了醒目的标靶。 \r\n于是在不知不觉间，<characterName id=|Anubis|/>成为了死亡的象征。",
+  "partnerSkill": {
+   "name": "沙漠守护神",
+   "desc": "发动后，<characterName id=|Anubis|/>会将力量分给玩家，让玩家的攻击转变为地属性，且攻击力提升30/35/40/45/50%。 战斗时偶尔会以高速移步回避攻击。"
+  }
+ },
+ "Sekhmet": {
+  "name": "塞赫麦特",
+  "description": "曾经脾气暴躁并被当作死亡的象征。\r\n当<characterName id=|Anubis|/>变为死亡的象征后，寻求替代的富人们用酒灌醉它，并将其驯服。\r\n不知从何时起，<characterName id=|Sekhmet|/>成为了高贵的象征。",
+  "partnerSkill": {
+   "name": "沙漠女帝",
+   "desc": "若它在据点里，据点中的<characterName id=|Anubis|/>的工作速度提升20/24/28/32/40%。（不可叠加） <characterName id=|Sekhmet|/>在工作台或作业工厂等处工作时，工作效率将会提升30/36/42/48/60%。"
+  }
+ },
+ "ScorpionMan": {
+  "name": "蛊刺妖",
+  "description": "身怀5000多种毒素。\r\n虽然其中甚至有能够立刻致死的可怕剧毒，\r\n但是由于剂量都太低了，并没有什么卵用。",
+  "partnerSkill": {
+   "name": "无毒毒蝎",
+   "desc": "若它在队伍中，玩家和帕鲁对中毒状态的敌人造成的伤害将提升50/53/56/60/65%。（不可叠加）"
+  }
+ },
+ "ScorpionMan_Electric": {
+  "name": "电针妖",
+  "description": "能将尾针刺入敌人体内，并释放电流。\r\n但是，由于电流实在太弱了，\r\n还是直接抡起钳子更有杀伤力。",
+  "partnerSkill": {
+   "name": "低频脉冲蝎",
+   "desc": "发动后，<characterName id=|ScorpionMan_Electric|/>会将力量分给玩家，让玩家的攻击转变为雷属性，且攻击力提升30/35/40/45/50%。"
+  }
+ },
+ "CubeTurtle": {
+  "name": "重岩龟",
+  "description": "背部堆砌的石头有一定自我意识。\r\n若是取下来放到别处，\r\n就会自己移动，试图回到本体所在的地方。",
+  "partnerSkill": {
+   "name": "负石古代龟",
+   "desc": "可骑在它的背上移动。 若它在据点里，其他据点帕鲁的采矿工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "CubeTurtle_Neutral": {
+  "name": "净岩龟",
+  "description": "背部堆砌的石头即便被拿到某处，\r\n<characterName id=|CubeTurtle_Neutral|/>也能感应石头的位置。\r\n就算相隔天涯海角，它也一定要去找出来。",
+  "partnerSkill": {
+   "name": "逐石古代龟",
+   "desc": "可骑在它的背上移动。 若它在队伍中，武器和防具的耐久度损耗减缓80/84/88/92/100%。（不可叠加）"
+  }
+ },
+ "BadCatgirl": {
+  "name": "妮瞅莎",
+  "description": "异常讨厌被人看到双眼。\r\n如果有人强行盯着，它就会突然哭出来\r\n之后两周左右的时间，对对方不理不睬。",
+  "partnerSkill": {
+   "name": "猫咪霰阵",
+   "desc": "发动后，<characterName id=|BadCatgirl|/>会在一段时间内用霰弹枪攻击附近的敌人。 若它在队伍中，玩家的霰弹枪攻击伤害提升10/15/20/25/35%。（不可叠加）"
+  }
+ },
+ "MimicDog": {
+  "name": "旺财",
+  "description": "曾经岛上存在过一个王国， \r\n王国里有一个传统，每年都会赐予死法最愚蠢的人奖赏。 \r\n值得纪念的最初的死因便是「没有识破<characterName id=|MimicDog|/>，打开箱子而被咬死。」",
+  "partnerSkill": {
+   "name": "撬锁",
+   "desc": "与它并肩作战时，能借助<characterName id=|MimicDog|/>的力量，在不使用钥匙的情况下打开宝箱。 （冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "DarkAlien": {
+  "name": "杰诺贝达",
+  "description": "具有将信息传输中的损耗变换为能量的能力。\r\n会定期的向不明对象发送情报。\r\n「发现目标，请立刻前往破坏，见信速回。」",
+  "partnerSkill": {
+   "name": "未知侵略者",
+   "desc": "若它在队伍中，全自动武器的弹匣中最后一发子弹的伤害提升100/110/120/135/160%。（不可叠加）"
+  }
+ },
+ "WhiteAlienDragon": {
+  "name": "杰诺路达",
+  "description": "具有吞食信息并转换为能量的能力。\r\n会定期的向不明对象发送情报。\r\n「喂喂？在查看刚才的讯息前不小心吃掉了，你说了啥？」",
+  "partnerSkill": {
+   "name": "未知入侵者",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家使用能量武器时的伤害提升10/15/20/25/35%。（不可叠加）"
+  }
+ },
+ "BlueberryFairy": {
+  "name": "梅莉姆",
+  "description": "因为它头脑聪明，行为举止富有格调\r\n在岛上的贵族间，曾被作为照顾起居的近侍。\r\n但是由于在晚上碰到的话，非常容易被脸吓到\r\n很快就失去了人气。",
+  "partnerSkill": {
+   "name": "丰收祈愿",
+   "desc": "若它在据点里，<characterName id=|BlueberryFairy|/>会进行祈祷， 让作物的收获量提升18/22/26/30/35%。"
+  }
+ },
+ "GhostRabbit": {
+  "name": "魅爱莉",
+  "description": "它手里捧着的，是自己的灵魂。\r\n当它找到了心仪的对象，就会将对方的灵魂强行抽出\r\n并与自己的灵魂融合，以求成为一心同体。",
+  "partnerSkill": {
+   "name": "夺魂幽灵兔",
+   "desc": "若它在队伍中，击倒帕鲁时帕鲁之魂的获得量提升+100/110/130/160/200%。（不可叠加）"
+  }
+ },
+ "GhostRabbit_Grass": {
+  "name": "碧艾莉",
+  "description": "它手里捧着的，是自己的灵魂。\r\n当它找到了心仪的对象，就会将自己的灵魂抛向对方\r\n渴望与对方的灵魂融合，成为一心同体。",
+  "partnerSkill": {
+   "name": "缚魂幽灵兔",
+   "desc": "若它在队伍中，草属性帕鲁的防御力提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "BlackPuppy": {
+  "name": "墨丸",
+  "description": "黑色火焰即便摸上去也不过只是微热\r\n但是持续接触的物体则会慢慢从内部开始融化。\r\n如果用来烤乳酪，可谓绝品。",
+  "partnerSkill": {
+   "name": "忠犬墨丸",
+   "desc": "发动后能够以敏锐的嗅觉，来探测附近铬铁矿的位置。 与它并肩作战时，铬铁矿的掉落量也会提升100/110/130/160/200%。"
+  }
+ },
+ "BlackPuppy_Ice": {
+  "name": "冬丸",
+  "description": "苍白的火焰即便摸上去也只感到些微的凉意，\r\n但是持续接触的物体则会逐渐冻结。\r\n放上一瓶牛奶，就能得到一瓶冰冻牛奶！",
+  "partnerSkill": {
+   "name": "忠犬冬丸",
+   "desc": "若它在据点里，其他据点帕鲁的冷却工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "MysteryMask": {
+  "name": "面惧",
+  "description": "像是假面的部分，貌似并不是它的脸。 \r\n仿佛就在眼前，但实际上又似乎并不存在。 \r\n常常不知道从哪里，仿佛有双眼睛在注视这边。 \r\n转头看去，似乎就在背后。",
+  "partnerSkill": {
+   "name": "假面舞会",
+   "desc": "若它在队伍中，队伍帕鲁获得的经验值会提升40/44/52/64/80%。（不可叠加）"
+  }
+ },
+ "IceNarwhal": {
+  "name": "凉晶鲸",
+  "description": "它在睡着时会被其他帕鲁误将其当作浮冰，并在它身上休息。\r\n因为性格温柔，即便醒过来也不会强行赶走它们。\r\n但是由于私人空间被侵犯，心中会积攒压力。",
+  "partnerSkill": {
+   "name": "凉冰冰鲸鱼号",
+   "desc": "可骑在它的背上在水上移动。 若它在队伍中，垂钓的捕获计量槽在小游戏开始时的初始位置升高5/7/9/11/14%，并且在判定条与鱼的图标重合期间，捕获计量槽的上升量增加5/7/9/11/14%。（不可叠加） （水上移动速度提升：-/10%/14%/18%/25%）"
+  }
+ },
+ "IceNarwhal_Fire": {
+  "name": "桃晶鲸",
+  "description": "为了不再被错认成浮冰，硬生生将身体变为红色。\r\n但是对于那些红色盲的帕鲁来说毫无意义，\r\n努力只换来了空虚，到头来私人空间还是继续受到侵犯。",
+  "partnerSkill": {
+   "name": "暖烘烘鲸鱼号",
+   "desc": "可骑在它的背上在水上移动。 若它在队伍中，垂钓的捕获计量槽在小游戏开始时的初始位置升高7/9/11/13/17%，并且在判定条与鱼的图标重合期间，捕获计量槽的上升量增加7/9/11/13/17%。（不可叠加） （水上移动速度提升：-/10%/14%/18%/25%）"
+  }
+ },
+ "GrassRabbitMan": {
+  "name": "踏春兔",
+  "description": "<characterName id=|GrassRabbitMan|/>跑过的地面会变得土质肥沃，草木也会长得很茂盛。\r\n但如果喷上除草剂后，\r\n它们就不会在这里跑动了。",
+  "partnerSkill": {
+   "name": "草原特技之星",
+   "desc": "若它在队伍中，可以额外进行+1次跳跃和+1次空中冲刺。（不可叠加）"
+  }
+ },
+ "GrimGirl": {
+  "name": "幽恋娜",
+  "description": "有着无法抑制住的想要将猎物大卸八块的本能。\r\n具体从哪个部位开始，不同个体有着不同的讲究。\r\n若是被<characterName id=|GrimGirl|/>抓到了，就祈祷它会从脑袋开始吧。",
+  "partnerSkill": {
+   "name": "狂爱之刃",
+   "desc": "若它在队伍中， 使用切肉刀进行解体时，获得的掉落道具增加100/110/130/160/200%。（不可叠加）"
+  }
+ },
+ "GoldenHorse": {
+  "name": "金驰兽",
+  "description": "在岛上还盛行炼金术的时候，\r\n它持续闪耀的金色毛发作为炼金的触媒很受欢迎。\r\n不久之后，人们提出了跨时代的见解。\r\n既然同是金色的，那么炼金就只加工金毛不就好了嘛。",
+  "partnerSkill": {
+   "name": "沙尘加护",
+   "desc": "可骑在它的背上移动。 骑乘期间玩家的攻击会转变为地属性，且攻击力提升5/7/10/14/20%。"
+  }
+ },
+ "SifuDog": {
+  "name": "汪宗师",
+  "description": "为了到达「无我」的境地而不停的冥想。\r\n直面烦恼并顿悟之后，它都会胃口大开吃到撑，\r\n每当此时就会有所感悟——今天吃太多了。",
+  "partnerSkill": {
+   "name": "归去来兮",
+   "desc": "发动后可以移动至最近的据点。 无法在地下城里使用。 （冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "SumoDog": {
+  "name": "力士獒",
+  "description": "曾经岛上有过<characterName id=|SumoDog|/>相扑的娱乐活动，\r\n若是最高级别的<characterName id=|SumoDog|/>的话，\r\n在受到<characterName id=|Boar|/>的突进攻击时，\r\n结果反而是<characterName id=|Boar|/>会被击飞。",
+  "partnerSkill": {
+   "name": "横纲风范",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家和帕鲁受到的雷属性伤害减轻15/17/20/24/30%，并且不会陷入感电状态。（不可叠加）"
+  }
+ },
+ "WhiteDeer": {
+  "name": "净世鹿",
+  "description": "古文书中，它被记载为「救赎之兽」。 \r\n<characterName id=|WhiteDeer|/>释放出的光芒能够将各种东西净化的一干二净。 \r\n字面意义上的，一点痕迹都不留的从世间消失。",
+  "partnerSkill": {
+   "name": "净化的祝福",
+   "desc": "可骑在它的背上移动。 <characterName id=|WhiteDeer|/>的攻击力和移动速度，会随着队伍中其他无属性帕鲁的数量提升，每只增加2/3/4/5/6%。 若它在队伍中，非战斗时每秒令玩家与队伍帕鲁的生命值恢复0.15/0.23/0.3/0.45/0.75%。（不可叠加）"
+  }
+ },
+ "WhiteDeer_Dark": {
+  "name": "织夜鹿",
+  "description": "光芒越是耀眼，阴影就越是深邃。\r\n散布笼罩万物的黑暗，重拾本应存在的混沌。\r\n平衡对这个世界是必要的。",
+  "partnerSkill": {
+   "name": "混沌的祝福",
+   "desc": "可骑在它的背上移动。 若它在队伍中，一同并肩作战的帕鲁的生命值会逐渐减少，但攻击力将提升40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "BlackMetalDragon": {
+  "name": "魔渊龙",
+  "description": "来自深渊，暴乱之兽。\r\n汝不得立于此兽之前。\r\n汝不得聆听此兽之声。",
+  "partnerSkill": {
+   "name": "黑铠之龙",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间对矿石造成的伤害将提升1100/1500/2000/2600/3300%，且金属矿石的掉落量提升150/180/210/240/300%。"
+  }
+ },
+ "WingGolem": {
+  "name": "泰锋",
+  "description": "即便被拆解成215块零件，只要再拼装到一起， \r\n便又能完好如初正常活动的神奇帕鲁。 \r\n需注意如果拼装过程中混进其他个体的零件， \r\n它就会因为失去人格同一性而陷入抑郁。",
+  "partnerSkill": {
+   "name": "钢铁卫士模式",
+   "desc": "发动后会以钢铁般的意志，在一定时间内提高<characterName id=|WingGolem|/>的攻击力50/75/110/150/200%，防御力50/75/110/150/200%。"
+  }
+ },
+ "WingGolem_Fire": {
+  "name": "丹烽",
+  "description": "即便被拆解，只要再拼装到一起，\r\n便又能完好如初正常活动的神奇帕鲁。\r\n如果拼装过程中混进其他个体的零件，其思维就会发生致命错误，\r\n最终导致过热。",
+  "partnerSkill": {
+   "name": "铁血卫士模式",
+   "desc": "发动后会以钢铁般的意志，在一定时间内提高<characterName id=|WingGolem_Fire|/>的攻击力60/85/120/160/210%，防御力60/85/120/160/210%。"
+  }
+ },
+ "WhiteShieldDragon": {
+  "name": "艾基鲁迦",
+  "description": "颈部周围覆盖的金属部件，有着类似磁铁的性质。\r\n如果靠近脚部的部件，就会自己互相吸附在一起。\r\n虽然在颈部堆积了金属垃圾之后，会不情不愿的开始清理\r\n但是由于总也取不下而变得暴躁。",
+  "partnerSkill": {
+   "name": "埃癸斯之盾",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家的护盾开始修复的等候时间缩短30/34/40/48/60%，且护盾受到的伤害减少65/68/71/75/80%。（不可叠加）"
+  }
+ },
+ "BlueThunderHorse": {
+  "name": "驭雷马",
+  "description": "和<characterName id=|Kirin|/>一样，曾经被视作雷神的使者。\r\n由于<characterName id=|Kirin|/>不再受到人们信仰\r\n便使得<characterName id=|BlueThunderHorse|/>被当作真正的雷神的使者\r\n然而随着时代的变迁，它最终得到了拉车的马的地位。",
+  "partnerSkill": {
+   "name": "电离冲刺",
+   "desc": "可骑在它的背上移动。 此外，可在空中进行冲刺以高速移动。 （冲刺速度提升/冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "LongCat": {
+  "name": "喵璐璐",
+  "description": "它在旧画籍上被描绘的体型要比现在娇小得多。\r\n不知为何，近年来该物种的各方面体长数据都观察到急速上升。\r\n照目前增长速度，预计100年后体长会达到现在的10倍。",
+  "partnerSkill": {
+   "name": "伸展喵咪",
+   "desc": "若它在队伍中，玩家承受的重力减弱，跳跃或坠落时会漂浮落地。（不可叠加）"
+  }
+ },
+ "ElecSnail": {
+  "name": "电涡蜗",
+  "description": "传统的健康疗法中有着，向浴缸中放入<characterName id=|ElecSnail|/>，\r\n然后享受电疗浴的做法。\r\n换句话说就是，古老偏方，切勿模仿。",
+  "partnerSkill": {
+   "name": "电电电池",
+   "desc": "若它在队伍中，会为玩家的攻击附加2/3/4/5/6点感电异常状态值。（不可叠加）"
+  }
+ },
+ "ElecSnail_Ground": {
+  "name": "金涡蜗",
+  "description": "将滚烫的<characterName id=|ElecSnail_Ground|/>放进浴缸，\r\n享受一场火热浴，这在遥远的古代曾经十分流行。\r\n由于近年复古风潮兴起，它也再度成为了火热新趋势。",
+  "partnerSkill": {
+   "name": "咚咚甲壳",
+   "desc": "若它在队伍中，玩家和帕鲁受到的水属性伤害减轻15/17/20/24/30%，并且不会陷入浸湿状态。（不可叠加）"
+  }
+ },
+ "DandelionGirl": {
+  "name": "蒲蒲飞芽",
+  "description": "它会将不好的记忆封存在绒毛球里。\r\n风一吹，绒毛乘风而去，\r\n忧郁的心情也随之飘散。",
+  "partnerSkill": {
+   "name": "绒毛妖精",
+   "desc": "若它在队伍中，提升对陷入缠绕状态帕鲁的捕获概率。（不可叠加） （捕获概率提升：-/小/中/大/特大）"
+  }
+ },
+ "BrownRabbit": {
+  "name": "詹兔曼",
+  "description": "聆听大地的声响，避开不稳固的落脚点奔跑。\r\n但若与某些地面不投缘，它就会被迷了眼，\r\n然后摔得兔仰马翻。",
+  "partnerSkill": {
+   "name": "大地是好朋友",
+   "desc": "若它在队伍中，玩家在冲刺期间的防御力提升50/52/55/59/65%。（不可叠加）"
+  }
+ },
+ "HoodGhost": {
+  "name": "兜兜灵",
+  "description": "睡着就变瘪了。\r\n睡着了就不在里面了。\r\n因为不存在睡着了的<characterName id=|HoodGhost|/>，\r\n所以<characterName id=|HoodGhost|/>并没有睡着。",
+  "partnerSkill": {
+   "name": "潜于虚无之物",
+   "desc": "若它在队伍中，玩家对非战斗状态的敌人造成的伤害提升50/60/70/80/100%。（不可叠加）"
+  }
+ },
+ "ElecLizard": {
+  "name": "电懒懒",
+  "description": "想吃就吃，想睡就睡，想干什么就干什么。\r\n<characterName id=|ElecLizard|/>们为了维持这样的生活，一定也在我们看不见的地方努力着。\r\n......如果不强迫自己这么想的话，以前的岛民们的日子就没法过了。",
+  "partnerSkill": {
+   "name": "懒懒电键",
+   "desc": "若它在队伍中，玩家的攻击击中感电状态的敌人时，会令敌人放电，对周围的敌人造成相当于玩家攻击力40/44/48/52/60%的伤害。（不可叠加）"
+  }
+ },
+ "OniGhostGirl": {
+  "name": "吓丝妮",
+  "description": "吓唬人就是它的生存意义，但是却完全不可怕。\r\n但因为它太过可爱，大家总会忍不住装出被吓到的样子。\r\n<characterName id=|OniGhostGirl|/>已经成为给人们带来笑容的使者了。",
+  "partnerSkill": {
+   "name": "播撒欢笑的亡者",
+   "desc": "若它在队伍中，攻击陷入中毒状态的敌人时，会使该敌人的攻击力降低40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "KingSunfish": {
+  "name": "曼波王",
+  "description": "通过旋转螺旋桨般的尾巴获得推进力。\r\n根据以前的研究，若是能忽视肉体的崩溃，\r\n理论上能够实现时速141.6km/h的游泳速度。",
+  "partnerSkill": {
+   "name": "领袖翻车鱼",
+   "desc": "可骑在它的背上在水上移动。 若它在队伍中，会更容易钓上高潜力帕鲁。（不可叠加） （水上移动速度提升：-/10%/14%/18%/25%）"
+  }
+ },
+ "KingSunfish_Thunder": {
+  "name": "曼波皇",
+  "description": "通过旋转螺旋桨般的尾巴从而产生电力。\r\n虽然理论上能产生1.21吉瓦的电力，\r\n但是肉体会在瞬间崩溃，并没有实际应用价值。",
+  "partnerSkill": {
+   "name": "电光翻车鱼",
+   "desc": "可骑在它的背上在水上移动。 骑乘期间玩家的攻击会转变为雷属性，且攻击力提升5/7/10/14/20%。 此外，若它在队伍中，会更容易钓上高潜力帕鲁。（不可叠加） （水上移动速度提升：-/10%/14%/18%/25%）"
+  }
+ },
+ "SleeveRabbit": {
+  "name": "兔绣袖",
+  "description": "爪尖的长毛是炫耀的资本。\r\n它对于污渍很敏感，一直都小心翼翼的护理着毛发。\r\n要是附近扬起了灰尘，就会露出非常嫌弃的表情。",
+  "partnerSkill": {
+   "name": "长袖啦啦队员",
+   "desc": "若它在队伍中，其他队伍帕鲁的伙伴技能冷却时间缩短10/15/20/30/50%。（不可叠加）"
+  }
+ },
+ "GhostDragon": {
+  "name": "灵曦龙",
+  "description": "直到最近才被目击到的全新帕鲁。\r\n性情沉稳又安静，只是想要自由的生活着。\r\n已经，不再有任何束缚了。",
+  "partnerSkill": {
+   "name": "自由翼龙",
+   "desc": "可骑在它的背上在空中飞行。 <characterName id=|GhostDragon|/>的攻击力和移动速度，会随着队伍中其他龙属性或暗属性帕鲁的数量提升，每只增加2/3/4/5/6%。"
+  }
+ },
+ "GhostDragon_Fire": {
+  "name": "狱熙龙",
+  "description": "最近才开始被目击到的新型帕鲁。\r\n性情暴躁，总是对什么东西发泄怒气。\r\n已经，不会再去相信任何事物。",
+  "partnerSkill": {
+   "name": "愤怒翼龙",
+   "desc": "可骑在它的背上在空中飞行。 <characterName id=|GhostDragon_Fire|/>的攻击力和移动速度，会随着队伍中其他龙属性或火属性帕鲁的数量提升，每只增加2/3/4/5/6%。"
+  }
+ },
+ "ThunderFluffyBird": {
+  "name": "雷云鹫",
+  "description": "要在食物匮乏的高空生存\r\n有时甚至会连猎物的脑子都吃。　\r\n一种说法是，<characterName id=|ThunderFluffyBird|/>为了寻求更稳定的食物来源，　\r\n一部分族群从高空迁移到了低空，最终演化成了<characterName id=|ThunderBird|/>。　",
+  "partnerSkill": {
+   "name": "电动按摩式抱窝",
+   "desc": "可骑在它的背上在空中飞行。 若它在据点里，帕鲁蛋的孵化速度加快20/22/26/32/40%。（不可叠加）"
+  }
+ },
+ "RedFlowerBird": {
+  "name": "大红呱",
+  "description": "有人认为它之所以经常摇头晃脑的，是为了拟态成被风吹动的花朵。\r\n但是也有人反驳，\r\n难道不是快速扭来扭去的红花看起来太掉SAN，所以谁都不想接近吗。",
+  "partnerSkill": {
+   "name": "花之舞",
+   "desc": "若它在队伍中，玩家进行翻滚或滑步动作时，无敌时间延长15/20/23/27/30%。（不可叠加）"
+  }
+ },
+ "FoxExorcist": {
+  "name": "昭炎狐",
+  "description": "聚精会神，从火焰中窥探未来。\r\n要是看见了不合心意的未来，就会一直重抽，直到抽出满意的结果。\r\n所以<characterName id=|FoxExorcist|/>的未来一直都是一片光明！",
+  "partnerSkill": {
+   "name": "未来之炎",
+   "desc": "若它在队伍中，玩家的攻击击中点燃状态的敌人时，会使敌人爆炸，额外造成相当于玩家攻击力40/44/48/52/60%的伤害。（不可叠加）"
+  }
+ },
+ "LotusDragon": {
+  "name": "沁莲龙",
+  "description": "<characterName id=|LotusDragon|/>居住的水边，生有大量的外观相似的花朵。\r\n研究者虽多次实验人工繁育花朵，\r\n但只要进行了人为干预，无论怎样花朵都会枯萎。",
+  "partnerSkill": {
+   "name": "清灿迷雾",
+   "desc": "可骑在它的背上移动。 若它在队伍中，会为玩家的攻击附加2/3/4/5/6点浸湿异常状态值。（不可叠加）"
+  }
+ },
+ "ClownRabbit": {
+  "name": "拉比耶尔",
+  "description": "有时会被自己召唤的分身打败，并被取而代之。\r\n就连它自己也不太清楚昨天的<characterName id=|ClownRabbit|/>和今天的<characterName id=|ClownRabbit|/>还是同一只吗。",
+  "partnerSkill": {
+   "name": "拉比拉比魔术秀",
+   "desc": "若它在队伍中，当玩家的生命值低于50%时，<characterName id=|ClownRabbit|/>会在玩家周边掀起爆炸冲击波（火属性 / 威力: 100/110/130/160/200 / 点燃积蓄值: 777）。）。 此外，玩家的生命值低于50%期间，玩家的攻击力提升30/35/40/45/50%。（不可叠加）"
+  }
+ },
+ "ThiefBird": {
+  "name": "盗影鸦",
+  "description": "爪子有些不太老实，会趁人不注意顺爪牵羊。\r\n就算快暴露了也没关系。\r\n只要迅速连「眼睛」一起偷走，那就不会被目击到行窃现场了。",
+  "partnerSkill": {
+   "name": "潜影怪鸟",
+   "desc": "可骑在它的背上在空中飞行。 若它在队伍中，玩家和帕鲁对黑暗状态的敌人造成的伤害将提升50/53/56/60/65%。（不可叠加）"
+  }
+ },
+ "SnakeGirl": {
+  "name": "梅杜娜",
+  "description": "一遇到不明白的事情，就会和脑袋上的蛇一起开会。\r\n但由于所有的蛇本质上都是它自己，\r\n因此它唯一能弄明白的是，自己什么都不明白。",
+  "partnerSkill": {
+   "name": "灵蛇之智",
+   "desc": "若它在队伍中，会为玩家的攻击附加2/3/4/5/6点黑暗异常状态值。（不可叠加）"
+  }
+ },
+ "MushroomLady": {
+  "name": "红菇娘",
+  "description": "在它眼中，人类不过是方便的寄生对象罢了。\r\n<characterName id=|MushroomLady|/>之所以演化成现在的模样，\r\n就是为了让人类放松警惕，从而更高效地传播孢子。",
+  "partnerSkill": {
+   "name": "魅惑孢子",
+   "desc": "若它在据点里，其他据点帕鲁的制药工作适应性等级+1。（不可叠加）"
+  }
+ },
+ "LanternButler": {
+  "name": "妖焰灯",
+  "description": "闪烁着妖异光芒的提灯，映照出世界的真实样貌。\r\n若是感到提灯的光芒刺眼，\r\n那想必是做了亏心事吧。",
+  "partnerSkill": {
+   "name": "提灯附魔",
+   "desc": "若它在队伍中，玩家射箭命中目标时会爆炸，额外造成相当于玩家攻击力15/18/21/25/30%的伤害。（不可叠加）"
+  }
+ },
+ "MoonChild": {
+  "name": "缀夜星",
+  "description": "当其生命走到尽头时，夜空中的某处便会多出一颗星星。\r\n一生中的回忆越多，其光芒越是璀璨。",
+  "partnerSkill": {
+   "name": "隐藏的暗能量",
+   "desc": "若它在队伍中，暗属性帕鲁的防御力提升15/17/20/24/30%。（不可叠加）"
+  }
+ },
+ "MonochromeQueen": {
+  "name": "墨罗娜",
+  "description": "经历过美好的体验之后，若不经历同等程度糟糕的体验就无法释怀。\r\n若要精心养育<characterName id=|MonochromeQueen|/>的话，\r\n必须要做好相应的心理准备。",
+  "partnerSkill": {
+   "name": "孤染公主",
+   "desc": "若它在队伍中，并且所有队伍帕鲁的种类都不同时，玩家的攻击力会提升30/40/50/60/80%。（不可叠加）"
+  }
+ },
+ "KabukiMan": {
+  "name": "燎火舞伶",
+  "description": "和敌人对峙时，\r\n总是会做一些看似破绽百出的夸张动作。\r\n可神奇的是，对手往往会被震慑住，愣愣地盯着它看。",
+  "partnerSkill": {
+   "name": "大显身手",
+   "desc": "若它在队伍中，会为玩家的攻击附加2/3/4/5/6点点燃异常状态值。（不可叠加）"
+  }
+ },
+ "DomeArmorDragon": {
+  "name": "磐甲龙",
+  "description": "很久以前，在通信手段匮乏的年代，\r\n人们曾通过闪烁<characterName id=|DomeArmorDragon|/>翅膀内侧的光芒，\r\n传递简单的信号。",
+  "partnerSkill": {
+   "name": "不破要塞龙",
+   "desc": "可骑在它的背上移动。 若它在队伍中，玩家和帕鲁受到的爆炸攻击伤害减轻60/65/70/75/80%，并且不会陷入眩晕状态。（不可叠加）"
+  }
+ },
+ "ElecPanda": {
+  "name": "暴电熊",
+  "description": "它拥有豪迈的笑容和强壮的体格。\r\n在自己认可的搭档面前会表现得相当温顺。\r\n可是不知为何，一旦拿到机关枪时就会性情大变。",
+  "partnerSkill": {
+   "name": "黄色重型战车",
+   "desc": "可骑在它的背上移动。 骑乘期间它还能用机关枪连续攻击。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "LilyQueen": {
+  "name": "百合女王",
+  "description": "这是一种充满慈爱且温和的帕鲁。\r\n会照顾失去双亲的小帕鲁们。\r\n管教方式是全力释放<activeSkillName id=|SolarBeam|/>。",
+  "partnerSkill": {
+   "name": "丰饶女神",
+   "desc": "发动后便能通过女王的疗愈能力，为玩家和队伍内的帕鲁恢复80/82/84/86/90%的生命值。"
+  }
+ },
+ "LilyQueen_Dark": {
+  "name": "黑月女王 ",
+  "description": "这是一种风度翩翩且行为优雅的帕鲁。\r\n会使用超强巴掌对付无礼之人。\r\n但偶尔也会出现以此为乐的帕鲁。",
+  "partnerSkill": {
+   "name": "幽光女神",
+   "desc": "发动后便能通过女王的疗愈能力，为玩家和队伍内的帕鲁恢复85/87/89/91/95%的生命值。"
+  }
+ },
+ "ThunderDragonMan": {
+  "name": "波鲁杰克斯",
+  "description": "它的电击能从伤口进入，以此灼烧对手的全身。\r\n<characterName id=|ThunderDragonMan|/>同类之间发生的争吵，\r\n能在一瞬间决出胜负。",
+  "partnerSkill": {
+   "name": "凶猛的迅雷龙",
+   "desc": "若它在队伍中，子弹击中敌人时，一同并肩作战的帕鲁的攻击力与防御力会提升1/2/3/4/5%。 该效果最多可累积30层，持续5秒。（不可叠加）"
+  }
+ },
+ "Horus": {
+  "name": "荷鲁斯",
+  "description": "一旦它发现猎物的族群，\r\n就会用灼热的旋风，将那片区域焚烧殆尽。\r\n因此<characterName id=|Horus|/>的栖息地总是飘荡着美味的气息。",
+  "partnerSkill": {
+   "name": "灼热捕食者",
+   "desc": "可骑在它的背上在空中飞行。 若它在队伍中，击倒冰属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "Horus_Water": {
+  "name": "伊西斯",
+  "description": "一旦它发现猎物的族群，\r\n就会用强力的水流，将那片区域冲刷殆尽。\r\n由于基本上都会把猎物冲到不知道什么地方去，\r\n这一行为究竟能否定义为捕猎，非常的有待商榷。",
+  "partnerSkill": {
+   "name": "潮汐捕食者",
+   "desc": "可骑在它的背上在空中飞行。 若它在队伍中，击倒火属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "BlackGriffon": {
+  "name": "异构格里芬",
+  "description": "于癫狂尽头诞生的禁忌之存在。 \r\n它已与其他帕鲁毫无任何基因上的关联， \r\n可能其存在早已脱离了帕鲁的范畴。",
+  "partnerSkill": {
+   "name": "基因改造",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间的暗属性攻击将提升15/17/20/24/30%。 且飞行时移动速度会提升。"
+  }
+ },
+ "MoonQueen": {
+  "name": "辉月伊",
+  "description": "据传，其身后漂浮的形似新月的物体， \r\n会随着世代的交替一点点的接近圆形。 \r\n至于到满月月相时会发生什么，就没有人知道了。",
+  "partnerSkill": {
+   "name": "晦暗辉光",
+   "desc": "可坐在它背后的月亮在空中飞行。 骑乘期间的无属性和暗属性攻击将强化15/17/20/24/30%。"
+  }
+ },
+ "SnowTigerBeastman": {
+  "name": "霜牙王",
+  "description": "一旦看见了圆形的物体，就不自觉的想要来上一拳。 \r\n对于<characterName id=|SnowTigerBeastMan|/>来说，仅次于生存的难题 \r\n就是完成堆雪人。",
+  "partnerSkill": {
+   "name": "暴雪冲击",
+   "desc": "可骑在它的背上移动。 骑乘期间它还能挥下冰属性的大锤进行攻击。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "BlueSkyDragon": {
+  "name": "霄龙",
+  "description": "灵环寄吾心，长相伴君身。\r\n悠悠青天鉴，袅袅霄龙吟。",
+  "partnerSkill": {
+   "name": "苍天统治者",
+   "desc": "可骑在它的背上在空中飞行。 <characterName id=|BlueSkyDragon|/>的攻击力，会随着队伍中其他龙属性帕鲁的数量提升，每只增加4/5/6/7/8%。"
+  }
+ },
+ "Mothman": {
+  "name": "暮尘蛾",
+  "description": "其自古时起便静静伫立在“世界树”旁，一直守护着什么。\r\n现今<characterName id=|Mothmon|/>已然不知道要守护什么，又为什么要守护了。\r\n毕竟，“世界树”会给予指引。\r\n毕竟，被操纵的孢子们，也理应知晓敌人是谁。",
+  "partnerSkill": {
+   "name": "孢子守卫",
+   "desc": "若它在队伍中，玩家的攻击击中缠绕状态的敌人时，会使敌人爆炸，额外造成相当于玩家攻击力40/44/48/52/60%的伤害。（不可叠加） 另外，能让玩家与帕鲁不受世界树的爆炸孢子影响。"
+  }
+ },
+ "FlowerPrince": {
+  "name": "夜蔓爵",
+  "description": "其自古时起便静静伫立在“世界树”旁，一直守护着什么。\r\n现今<characterName id=|FlowerPrince|/>已经看不到要守护什么，又为什么要守护了。\r\n毕竟，“世界树”知晓一切。\r\n毕竟，唯有它操纵的浓雾能揭露那片真相。",
+  "partnerSkill": {
+   "name": "迷雾守卫",
+   "desc": "发动后，为玩家的攻击附加2/3/4/5/6点中毒异常状态值。（不可叠加） 若它在队伍中，玩家和帕鲁不会陷入中毒状态，并且不受世界树区域的毒气影响。"
+  }
+ },
+ "NightLady": {
+  "name": "贝菈诺娃",
+  "description": "不为实体存在的她，曾经只是静静的凝视着这个世界。\r\n不知从何时开始，萌生出了被他人注视的渴望。\r\n不断膨胀的欲望甚至凝聚成对外界的恶意\r\n渐渐她被人们称作狂乱淑女。",
+  "partnerSkill": {
+   "name": "梦魇之瞳",
+   "desc": "发动后会以噩梦射线攻击锁定的目标敌人。 此帕鲁使用的噩梦射线的威力将提升至1.1/1.3/1.6/2/2.5倍。"
+  }
+ },
+ "NightLady_Dark": {
+  "name": "贝菈露洁",
+  "description": "被解放的欲望，终于再也无法抑制。\r\n「『我』渴望得到『自我』的注视。」\r\n凝聚为恶意的，渴望被注视的姐妹\r\n终于被放逐回世界的狭缝，闭上了凝视的眼睛。",
+  "partnerSkill": {
+   "name": "噩梦凝视",
+   "desc": "发动后会以噩梦绽放攻击锁定的目标敌人。 此帕鲁使用的噩梦绽放的威力将提升至1.1/1.3/1.6/2/2.5倍。"
+  }
+ },
+ "DarkMechaDragon": {
+  "name": "杰诺多兰",
+  "description": "- 已抵达目的地，优先搜索个体：流星龙。\r\n- 备注：镇压完成时限 < ://Error_Code:126DC >年前。\r\n- 追记：未发现镇压痕迹，确认目标已被同化，开始清剿。\r\n- 业务联络：不可以忘掉或吃掉重要情报！",
+  "partnerSkill": {
+   "name": "陨星之翼",
+   "desc": "可骑在它的背上在空中飞行。 若它在队伍中，持有武器的帕鲁的伙伴技能伤害将提升20/26/32/38/50%。（不可叠加） （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "LegendDeer": {
+  "name": "默世鹿",
+  "description": "于此幽寂之地，不觉心神凝定。\r\n此处已无人，众人皆蒙救度。\r\n救赎之王，请携我共赴无尽之寂。\r\n——古文书至此戛然而止。",
+  "partnerSkill": {
+   "name": "庇佑圣盾",
+   "desc": "可骑在它的背上移动。 骑乘期间可生成护盾，抵御一切攻击。 此外，骑乘期间可进行3段跳跃。 （冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "SaintCentaur": {
+  "name": "圣光骑士",
+  "description": "曾与<characterName id=|BlackCentaur|/>同为一体。\r\n虽然它是被去除负面情感后诞生的存在，\r\n但它的眼眸深处仍留有些许憎恨。",
+  "partnerSkill": {
+   "name": "天翔圣骑士",
+   "desc": "可骑在它的背上移动。 骑乘期间可以进行3段跳跃，发动闪枪冲锋后，会召唤出1只队伍中的<characterName id=|BlackCentaur|/>，一起进行攻击。 （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "BlackCentaur": {
+  "name": "混沌骑士",
+  "description": "曾与<characterName id=|SaintCentaur|/>同为一体。\r\n虽是分离后的负面情感所构成的存在，\r\n但其眼眸深处仍留有着一丝慈悲。",
+  "partnerSkill": {
+   "name": "深渊黑骑士",
+   "desc": "可骑在它的背上移动。 骑乘期间可以进行2段跳跃，发动双枪一闪后，会召唤出1只队伍中的<characterName id=|SaintCentaur|/>，一起进行攻击。 （骑乘时移动速度提升：-/10%/12%/15%/20%）"
+  }
+ },
+ "IceHorse": {
+  "name": "唤冬兽",
+  "description": "帕洛斯群岛之守护神，拥有呼唤严冬之力。\r\n其曾于灾厄席捲大地之际腾空而起，\r\n唤来无尽寒冬，试图封印灾厄。",
+  "partnerSkill": {
+   "name": "冰天马",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为冰属性，攻击力提升10/14/20/28/40%，且攻击会附加2/3/4/5/6点冻结异常状态值。"
+  }
+ },
+ "IceHorse_Dark": {
+  "name": "唤夜兽",
+  "description": "帕洛斯群岛之守护神，拥有呼唤黑夜之力。\r\n其曾于灾厄席捲大地之际腾空而起，\r\n唤来无尽暗夜，试图封印灾厄。",
+  "partnerSkill": {
+   "name": "黑天马",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间玩家的攻击会转变为暗属性，攻击力提升10/14/20/28/40%，且攻击会附加2/3/4/5/6点黑暗异常状态值。"
+  }
+ },
+ "PoseidonOrca": {
+  "name": "海皇鲸",
+  "description": "自灾厄被封印之后，来自天坠的强者与其邂逅。\r\n自此，其便常在近海现身于强者眼前。\r\n相逢乃是必然。",
+  "partnerSkill": {
+   "name": "大海的霸主",
+   "desc": "与玩家并肩作战时，它会配合玩家的攻击用水属性的长枪进行追击。 可骑在它的背上在水上移动。 骑乘期间可在水面高高跃起。 （水上移动速度提升：-/10%/14%/18%/25%冷却时间缩短：-/小/中/大/特大）"
+  }
+ },
+ "JetDragon": {
+  "name": "空涡龙",
+  "description": "居于遥远高空，守护帕洛斯群岛。\r\n当灾厄再度甦醒，大地崩裂，天空化作火海之际，\r\n它将以破灭万物之光摧毁灾厄。",
+  "partnerSkill": {
+   "name": "地毯式轰炸",
+   "desc": "可骑在它的背上在空中飞行。 骑乘期间它还能用导弹发射器连续攻击。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "KingWhale": {
+  "name": "奥沧鲸",
+  "description": "怀揣着使命一直等待着，种群中最后的幸存者。\r\n即便履行了职责的它呼唤着母亲，\r\n回应的，也已经只剩余音。",
+  "partnerSkill": {
+   "name": "残响守护者",
+   "desc": "可骑在它的背上在空中飞行。 在据点最多只能召唤1只。 若它在据点里，会在据点上空持续盘旋，远程炮轰入侵据点的敌人。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "WorldTreeDragon": {
+  "name": "枯星龙",
+  "description": "于遥远过去降临于帕洛斯群岛，神秘的帕鲁迎来其终焉。\r\n作为灾厄带来过无数毁灭，后被长久封印。\r\n最终被某位帕鲁驯养师所击败。",
+  "partnerSkill": {
+   "name": "-",
+   "desc": "这个帕鲁擅长的事情仍在调查中。"
+  }
+ },
+ "YakushimaMonster001": {
+  "name": "绿史莱姆",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "史莱姆之躯",
+   "desc": "可骑在它的背上移动。 骑乘期间可高高跃起。"
+  }
+ },
+ "YakushimaMonster001_Blue": {
+  "name": "蓝史莱姆",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "史莱姆之躯",
+   "desc": "可骑在它的背上移动。 骑乘期间可高高跃起。"
+  }
+ },
+ "YakushimaMonster001_Red": {
+  "name": "红史莱姆",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "史莱姆之躯",
+   "desc": "可骑在它的背上移动。 骑乘期间可高高跃起。"
+  }
+ },
+ "YakushimaMonster001_Purple": {
+  "name": "紫史莱姆",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "史莱姆之躯",
+   "desc": "可骑在它的背上移动。 骑乘期间可高高跃起。"
+  }
+ },
+ "YakushimaMonster001_Pink": {
+  "name": "夜明史莱姆",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "史莱姆之躯",
+   "desc": "可骑在它的背上移动。 骑乘期间可高高跃起。"
+  }
+ },
+ "YakushimaMonster001_Rainbow": {
+  "name": "彩虹史莱姆",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "史莱姆之躯",
+   "desc": "可骑在它的背上移动。 骑乘期间可高高跃起。"
+  }
+ },
+ "YakushimaMonster002": {
+  "name": "附魔剑",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "附魔",
+   "desc": "若它在队伍中，击倒暗属性帕鲁时获得的掉落道具增加40/50/60/70/80%。（不可叠加）"
+  }
+ },
+ "YakushimaMonster003": {
+  "name": "洞穴蝙蝠",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "支援蝙蝠",
+   "desc": "若它在队伍中，就会出现在玩家身边。 它会自动前去拾取附近的道具。 （道具回收范围提升：-/小/中/大/特大）"
+  }
+ },
+ "YakushimaMonster003_Purple": {
+  "name": "夜明蝙蝠",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "支援蝙蝠",
+   "desc": "若它在队伍中，就会出现在玩家身边。 它会自动前去拾取附近的道具。 （道具回收范围提升：-/小/中/大/特大）"
+  }
+ },
+ "YakushimaBoss001": {
+  "name": "克苏鲁之眼",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "进击的克苏鲁之眼",
+   "desc": "发动后，<characterName id=|YakushimaBoss001|/>会向前方突进并攻击锁定的敌人。 （伤害提升：-/小/中/大/特大）"
+  }
+ },
+ "YakushimaBoss001_Small": {
+  "name": "恶魔眼",
+  "description": "【泰拉瑞亚联动】\r\n来自异世界的怪物。\r\n在这里似乎可以将其驯服。",
+  "partnerSkill": {
+   "name": "恶魔的视野",
+   "desc": "若它在队伍中，暗属性帕鲁的攻击力会提升15/17/20/24/30%。（不可叠加）"
+  }
+ }
+}

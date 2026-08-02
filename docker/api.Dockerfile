@@ -24,7 +24,9 @@ COPY packages/adapters/adapters /app/packages/adapters/adapters
 # seed 数据与脚本
 COPY data/processed/ /app/data/processed/
 COPY data/tc-imba/ /app/data/tc-imba/
+COPY data/sql/003_tcimba_extend.sql /app/data/sql/003_tcimba_extend.sql
 COPY scripts/seed_docker.py /app/scripts/seed_docker.py
+COPY scripts/seed_tcimba_full.py /app/scripts/seed_tcimba_full.py
 COPY scripts/seed_breeding_rules.py /app/scripts/seed_breeding_rules.py
 
 EXPOSE 8000

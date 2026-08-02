@@ -10,7 +10,24 @@ from pl_agent.core.schema import Element, Pal, WorkSuitability
 
 from .models import (
     BreedingRuleModel,
+    ItemModel,
+    ItemRecipeMaterialModel,
+    ItemRecipeModel,
+    ItemRecipeStationModel,
+    ItemSourceModel,
+    PalDropModel,
+    PalEnemyScalingModel,
+    PalFriendshipModel,
     PalModel,
+    PalPartnerSkillModel,
+    PalPassiveModel,
+    PalSkillModel,
+    PalStatsModel,
+    PalSummonModel,
+    PassiveEffectModel,
+    PassiveInvokeModel,
+    PassiveModel,
+    SkillModel,
     WorkSuitabilityModel,
 )
 from .session import create_engine_and_sessionmaker
@@ -241,3 +258,239 @@ class OrmQueryService:
             image_url=model.image_url,
             wiki_url=model.wiki_url,
         )
+
+    # =========================================================================
+    # S6-S10: tc-imba 扩展查询
+    # =========================================================================
+
+    async def query_pals_by_passive(self, cn_name: str) -> list[dict]:
+        """S6: 按被动中文名查帕鲁（配种被动传承）。"""
+        async with self._session_factory() as session:
+            stmt = (
+                select(
+                    PalModel.game_id.label("id"),
+                    PalModel.cn_name,
+                    PalModel.combi_rank,
+                    PalModel.is_wild,
+                    PassiveModel.passive_id,
+                    PassiveModel.cn_name.label("passive_cn"),
+                    PassiveModel.rank.label("passive_rank"),
+                )
+                .join(PalPassiveModel, PalPassiveModel.pal_id == PalModel.id)
+                .join(PassiveModel, PassiveModel.id == PalPassiveModel.passive_id)
+                .where(PassiveModel.cn_name == cn_name)
+                .order_by(PassiveModel.rank.desc())
+            )
+            rows = await session.execute(stmt)
+            return [dict(r) for r in rows.mappings().all()]
+
+    async def query_pal_skills(self, game_id: str) -> list[dict]:
+        """S7: 帕鲁可学技能（含学习等级）。"""
+        async with self._session_factory() as session:
+            pal_id = (
+                select(PalModel.id).where(PalModel.game_id == game_id).scalar_subquery()
+            )
+            stmt = (
+                select(
+                    SkillModel.waza_id,
+                    SkillModel.cn_name,
+                    SkillModel.element,
+                    SkillModel.category,
+                    SkillModel.power,
+                    SkillModel.cool_time,
+                    PalSkillModel.learn_level,
+                )
+                .join(PalSkillModel, PalSkillModel.skill_id == SkillModel.id)
+                .where(PalSkillModel.pal_id == pal_id)
+                .order_by(PalSkillModel.learn_level)
+            )
+            rows = await session.execute(stmt)
+            return [dict(r) for r in rows.mappings().all()]
+
+    async def query_pal_drops(self, game_id: str) -> list[dict]:
+        """S8a: 帕鲁的掉落物（普通 + Boss）。"""
+        async with self._session_factory() as session:
+            pal_id = (
+                select(PalModel.id).where(PalModel.game_id == game_id).scalar_subquery()
+            )
+            stmt = (
+                select(
+                    ItemModel.item_id,
+                    ItemModel.cn_name,
+                    PalDropModel.rate,
+                    PalDropModel.min,
+                    PalDropModel.max,
+                    PalDropModel.min_level,
+                    PalDropModel.is_boss,
+                )
+                .join(PalDropModel, PalDropModel.item_id == ItemModel.id)
+                .where(PalDropModel.pal_id == pal_id)
+                .order_by(PalDropModel.rate.desc())
+            )
+            rows = await session.execute(stmt)
+            return [dict(r) for r in rows.mappings().all()]
+
+    async def query_pals_dropping_item(self, item_name: str) -> list[dict]:
+        """S8b: 掉落某物品的帕鲁（材料反查）。"""
+        async with self._session_factory() as session:
+            item_sub = (
+                select(ItemModel.id)
+                .where(ItemModel.cn_name == item_name)
+                .limit(1)
+                .scalar_subquery()
+            )
+            stmt = (
+                select(
+                    PalModel.game_id.label("pal_id"),
+                    PalModel.cn_name.label("pal_cn"),
+                    PalDropModel.rate,
+                    PalDropModel.min,
+                    PalDropModel.max,
+                    PalDropModel.is_boss,
+                )
+                .join(PalDropModel, PalDropModel.pal_id == PalModel.id)
+                .where(PalDropModel.item_id == item_sub)
+                .order_by(PalDropModel.rate.desc())
+            )
+            rows = await session.execute(stmt)
+            return [dict(r) for r in rows.mappings().all()]
+
+    async def query_recipe_chain(self, item_name: str) -> list[dict]:
+        """S9: 物品配方链（产出 + 设施 + 材料）。"""
+        async with self._session_factory() as session:
+            item_sub = (
+                select(ItemModel.id)
+                .where(ItemModel.cn_name == item_name)
+                .limit(1)
+                .scalar_subquery()
+            )
+            material_item = aliased(ItemModel)
+            stmt = (
+                select(
+                    ItemModel.item_id,
+                    ItemModel.cn_name.label("product"),
+                    ItemRecipeModel.work,
+                    ItemRecipeModel.product_count,
+                    ItemRecipeStationModel.station,
+                    material_item.cn_name.label("material"),
+                    ItemRecipeMaterialModel.count,
+                )
+                .join(ItemRecipeModel, ItemRecipeModel.item_id == ItemModel.id)
+                .where(ItemModel.id == item_sub)
+                .outerjoin(
+                    ItemRecipeStationModel,
+                    ItemRecipeStationModel.recipe_id == ItemRecipeModel.id,
+                )
+                .outerjoin(
+                    ItemRecipeMaterialModel,
+                    ItemRecipeMaterialModel.recipe_id == ItemRecipeModel.id,
+                )
+                .outerjoin(
+                    material_item,
+                    ItemRecipeMaterialModel.material_item_id == material_item.id,
+                )
+            )
+            rows = await session.execute(stmt)
+            return [dict(r) for r in rows.mappings().all()]
+
+    async def query_pal_detail_full(self, game_id: str) -> dict | None:
+        """S10: 帕鲁全量详情聚合。"""
+        async with self._session_factory() as session:
+            pal = (
+                await session.execute(
+                    select(PalModel).where(PalModel.game_id == game_id)
+                )
+            ).scalars().first()
+            if pal is None:
+                return None
+            result: dict = {
+                "id": pal.game_id,
+                "cn_name": pal.cn_name,
+                "en_name": pal.en_name,
+                "number": pal.zukan_index,
+                "combi_rank": pal.combi_rank,
+                "rarity": pal.rarity,
+                "is_wild": pal.is_wild,
+                "breed_child": pal.breed_child,
+                "genus": pal.genus,
+                "size": pal.size,
+                "egg": pal.egg,
+                "nocturnal": pal.nocturnal,
+                "reaction": pal.reaction,
+                "best_work": pal.best_work,
+                "summonable": pal.summonable,
+                "predator": pal.predator,
+                "boss_first_defeat_reward": pal.boss_first_defeat_reward,
+                "image_url": pal.image_url,
+                "wiki_url": pal.wiki_url,
+            }
+            # 1:1 详情
+            st = (await session.execute(
+                select(PalStatsModel).where(PalStatsModel.pal_id == pal.id)
+            )).scalars().first()
+            result["stats"] = _row_to_dict(st, exclude={"pal_id"}) if st else {}
+            fr = (await session.execute(
+                select(PalFriendshipModel).where(PalFriendshipModel.pal_id == pal.id)
+            )).scalars().first()
+            result["friendship"] = _row_to_dict(fr, exclude={"pal_id"}) if fr else {}
+            es = (await session.execute(
+                select(PalEnemyScalingModel).where(PalEnemyScalingModel.pal_id == pal.id)
+            )).scalars().first()
+            result["enemy_scaling"] = _row_to_dict(es, exclude={"pal_id"}) if es else {}
+            psk = (await session.execute(
+                select(PalPartnerSkillModel).where(PalPartnerSkillModel.pal_id == pal.id)
+            )).scalars().first()
+            result["partner_skill"] = _row_to_dict(psk, exclude={"pal_id"}) if psk else {}
+            # 关联集合
+            result["skills"] = await self.query_pal_skills(game_id)
+            result["drops"] = await self.query_pal_drops(game_id)
+            result["passives"] = await self._query_pal_passives(pal.id)
+            result["summon"] = await self._query_pal_summon(pal.id)
+            return result
+
+    async def _query_pal_passives(self, pal_db_id: int) -> list[dict]:
+        async with self._session_factory() as session:
+            stmt = (
+                select(
+                    PassiveModel.passive_id,
+                    PassiveModel.cn_name,
+                    PassiveModel.rank,
+                    PassiveModel.lottery_weight,
+                    PassiveEffectModel.effect_type,
+                    PassiveEffectModel.effect_value,
+                )
+                .join(PalPassiveModel, PalPassiveModel.passive_id == PassiveModel.id)
+                .outerjoin(
+                    PassiveEffectModel, PassiveEffectModel.passive_id == PassiveModel.id
+                )
+                .where(PalPassiveModel.pal_id == pal_db_id)
+                .order_by(PassiveModel.rank.desc())
+            )
+            rows = await session.execute(stmt)
+            return [dict(r) for r in rows.mappings().all()]
+
+    async def _query_pal_summon(self, pal_db_id: int) -> list[dict]:
+        async with self._session_factory() as session:
+            stmt = (
+                select(
+                    ItemModel.item_id,
+                    ItemModel.cn_name,
+                    PalSummonModel.level,
+                    PalSummonModel.count,
+                )
+                .join(PalSummonModel, PalSummonModel.material_item_id == ItemModel.id)
+                .where(PalSummonModel.pal_id == pal_db_id)
+            )
+            rows = await session.execute(stmt)
+            return [dict(r) for r in rows.mappings().all()]
+
+
+def _row_to_dict(obj, exclude: set[str] | None = None) -> dict:
+    """SQLAlchemy 对象 → dict（排除指定列，去掉内部状态键）。"""
+    exclude = exclude or set()
+    out = {}
+    for col in obj.__table__.columns:
+        if col.name in exclude:
+            continue
+        out[col.name] = getattr(obj, col.name)
+    return out

@@ -1,0 +1,1288 @@
+{
+ "AcidRain": {
+  "name": "酸雨",
+  "description": "生成酸性云朵\r\n在敌人头上下酸雨。"
+ },
+ "AirBlade": {
+  "name": "真空刃",
+  "description": "扇形发射锋利的气刃。"
+ },
+ "AirCanon": {
+  "name": "空气弹",
+  "description": "以急速射出空气团块。"
+ },
+ "Apocalypse": {
+  "name": "启示录",
+  "description": "于敌人周围生成数个暗黑龙卷风。"
+ },
+ "AquaJet": {
+  "name": "水流射击",
+  "description": "朝敌人发射高速水弹。"
+ },
+ "BeamSlicer": {
+  "name": "切割龙息",
+  "description": "用龙属性的射线一扫前方。\r\n被扫过地方将产生延迟爆炸。"
+ },
+ "BlastCanon": {
+  "name": "绽裂龙息",
+  "description": "向敌人的位置发射充满龙属性的能量弹。\r\n能量弹在着弹时将向周围扩散，在前方广范围引发爆炸。"
+ },
+ "BlizzardLance": {
+  "name": "冰刺",
+  "description": "在敌人的脚边\r\n生成尖锐的冰刃。"
+ },
+ "BubbleShot": {
+  "name": "泡泡射击",
+  "description": "发射大量泡沫\r\n并缓慢追击敌人。"
+ },
+ "BubbleShower": {
+  "name": "毒雨",
+  "description": "使出浑身力量\r\n向各个方向喷洒毒球。"
+ },
+ "ChargeCanon": {
+  "name": "龙息炮",
+  "description": "向敌人发射积蓄着龙属性力量的能量弹。\r\n能量弹在着弹时将引发大范围爆炸。"
+ },
+ "Commet": {
+  "name": "陨星",
+  "description": "召唤陨石垂直落下，\r\n并在撞击点产生冲击波。"
+ },
+ "CommetRain": {
+  "name": "陨星雨",
+  "description": "召唤无数陨石落下， \r\n并在撞击点产生冲击波。"
+ },
+ "CreepingBubble": {
+  "name": "泡沫聚涌",
+  "description": "<characterName id=|KingWhale|/>的专用技能。\r\n在敌人周围生成大量泡泡，将其团团包围并发动攻击。"
+ },
+ "CrossWind": {
+  "name": "十字风切",
+  "description": "在敌人前方生成风刃，\r\n并对其发动十字斩击。"
+ },
+ "DarkArrow": {
+  "name": "黑暗箭",
+  "description": "使用暗之力连续发射数支高速箭追击敌人。"
+ },
+ "DarkBall": {
+  "name": "暗黑球",
+  "description": "发射以缓慢速度追击敌人的黑暗之球。"
+ },
+ "DarkCanon": {
+  "name": "黑暗弹",
+  "description": "将带有黑暗力量的高速能量弹射向敌人。"
+ },
+ "DarkLaser": {
+  "name": "暗黑雷射",
+  "description": "积蓄黑暗之力\r\n瞄准敌人发射强劲光线。"
+ },
+ "DarkLegion": {
+  "name": "黑暗之拥",
+  "description": "发射多个可以追击敌人的黑暗之球。"
+ },
+ "DarkPulse": {
+  "name": "黑暗霰射",
+  "description": "向前方发射呈扇形扩散的高速暗黑球。"
+ },
+ "DarkWave": {
+  "name": "暗影波动",
+  "description": "快速释放黑暗之力\r\n给周围造成冲击。"
+ },
+ "DiamondFall": {
+  "name": "晶钻之雨",
+  "description": "在敌人头顶生无数个冰块，\r\n随后接连落下攻击目标。"
+ },
+ "DiversionLaser": {
+  "name": "分流水炮",
+  "description": "向前方发射高压水流。\r\n片刻后，水流会向左右分岔。"
+ },
+ "DoubleIcicleThrow": {
+  "name": "极寒双星",
+  "description": "做出两个巨大的冰块，\r\n瞄准敌人先后发射。\r\n撞击后对周围造成冲击。"
+ },
+ "DragonBreath": {
+  "name": "龙息",
+  "description": "向前方呼出蕴含龙之力的气息\r\n，持续对目标造成伤害。"
+ },
+ "DragonCanon": {
+  "name": "龙息弹",
+  "description": "用蕴藏龙之力的能量弹\r\n瞄准敌人并发射。"
+ },
+ "DragonMeteor": {
+  "name": "龙彗星",
+  "description": "召唤大量小陨石\r\n瞄准敌人并发射。"
+ },
+ "DragonWave": {
+  "name": "龙之波动",
+  "description": "快速释放龙之力\r\n给周围造成冲击。"
+ },
+ "ElecWave": {
+  "name": "冲击波",
+  "description": "快速放电\r\n给周围造成冲击。"
+ },
+ "Eruption": {
+  "name": "熔岩爆发",
+  "description": "向上空喷射无数熔岩弹。\r\n一段时间后，射出的熔岩弹将如雨一般散落在周围。"
+ },
+ "FireBall": {
+  "name": "烈焰球",
+  "description": "在头上生成巨大火球，并向敌人发射。\r\n中弹后会爆炸，造成大范围爆炸冲击波。"
+ },
+ "FireBlast": {
+  "name": "烈焰射击",
+  "description": "瞄准后发射可笔直飞向敌人\r\n的火焰弹。"
+ },
+ "FireSeed": {
+  "name": "烈焰溅射",
+  "description": "向敌人发射火球。\r\n稍作飞行后会破裂\r\n并向前方放射小型火球。"
+ },
+ "FlameFunnel": {
+  "name": "流火",
+  "description": "使用火焰的力量做出复数个球体，\r\n然后向敌人发射无数火球。"
+ },
+ "FlameWall": {
+  "name": "爆烈火墙",
+  "description": "在敌人的位置燃起火焰之墙。\r\n火墙将持续一段时间，\r\n对碰到的敌人造成伤害。"
+ },
+ "Flamethrower": {
+  "name": "烈焰放射",
+  "description": "面向敌人释放火焰，\r\n持续对目标造成伤害。"
+ },
+ "FlareArrow": {
+  "name": "烈焰箭",
+  "description": "连续发射3支高速火箭\r\n并追击敌人。"
+ },
+ "FlareTornado": {
+  "name": "烈焰风暴",
+  "description": "在左右两侧生成炙热的龙卷风，\r\n并扇向敌人。"
+ },
+ "FrostBreath": {
+  "name": "凛冬之息",
+  "description": "朝敌人喷出冰冷空气，\r\n持续对目标造成伤害。"
+ },
+ "GhostFlame": {
+  "name": "鬼火",
+  "description": "发射3个怨念\r\n并执着追击敌人。"
+ },
+ "GrassTornado": {
+  "name": "绿野飓风",
+  "description": "在左右两侧生成龙卷风，\r\n并扇向敌人。"
+ },
+ "GravityShot": {
+  "name": "暗能弹",
+  "description": "发射逐渐加速的黑暗能量弹"
+ },
+ "HolyBlast": {
+  "name": "光击阵",
+  "description": "在敌人脚下和四周引发大范围的光柱爆炸。"
+ },
+ "HydroPump": {
+  "name": "高压水炮",
+  "description": "猛烈地释放出水流\r\n并向前方大范围横扫。"
+ },
+ "HydroSlicer": {
+  "name": "水刀切割",
+  "description": "用压缩水流一扫前方。\r\n被扫过的区域会在片刻后喷出水柱。"
+ },
+ "HyperBeam": {
+  "name": "帕鲁光束",
+  "description": "积蓄破坏性的能量，\r\n朝前方大范围射出威力惊人的光束。"
+ },
+ "IceAge": {
+  "name": "冰极冻域",
+  "description": "大范围的在敌人脚下生成冰柱穿刺。"
+ },
+ "IceBlade": {
+  "name": "冰刃",
+  "description": "制造出新月型的冰刃，\r\n将之射向前方。"
+ },
+ "IceMissile": {
+  "name": "冰雪飞弹",
+  "description": "在上空生成尖锐的冰柱\r\n瞄准敌人后发射冰柱。"
+ },
+ "IceWall": {
+  "name": "寒冰之壁",
+  "description": "从地面召唤出冰墙。\r\n冰墙会持续一段时间，\r\n并在承受一定伤害后碎裂。"
+ },
+ "IcicleLine": {
+  "name": "冰锋之路",
+  "description": "召唤朝前方三个方向推进的冰柱"
+ },
+ "IciclePierce": {
+  "name": "冰霜连弹",
+  "description": "在空中生成复数个冰锥，\r\n瞄准敌人一齐射出。"
+ },
+ "IcicleThrow": {
+  "name": "钻石星辰",
+  "description": "生成巨大的冰块\r\n瞄准敌人后高速发射。\r\n中弹时，可同时给周围造成冲击。"
+ },
+ "Inferno": {
+  "name": "地狱火",
+  "description": "使敌人周围地面活性化，\r\n并在一定时间后爆炸。"
+ },
+ "LightningStrike": {
+  "name": "闪电冲击",
+  "description": "让自己化作避雷针引来雷电，\r\n并在原地引发闪电爆炸。"
+ },
+ "LineGeyser": {
+  "name": "瀑流击",
+  "description": "召唤一束直线前进的水柱。"
+ },
+ "LineThunder": {
+  "name": "雷击",
+  "description": "生成可笔直前进的雷击。"
+ },
+ "LockonLaser": {
+  "name": "锁定雷射",
+  "description": "瞄准敌人后\r\n发射超高速的雷电激光。"
+ },
+ "MudShot": {
+  "name": "泥浆投掷",
+  "description": "用黏糊糊的泥巴\r\n瞄准敌人并发射。"
+ },
+ "PoisonFog": {
+  "name": "毒雾",
+  "description": "于前方制造毒雾，\r\n使目标陷入中毒状态。"
+ },
+ "PoisonShot": {
+  "name": "剧毒射击",
+  "description": "用蕴藏剧毒之力的淤泥\r\n瞄准敌人并发射。"
+ },
+ "PowerBall": {
+  "name": "元气弹",
+  "description": "积蓄大量能量，\r\n并将其化作巨大球体射出。"
+ },
+ "PowerShot": {
+  "name": "能量射击",
+  "description": "积蓄能量，\r\n并将其化作子弹射出。"
+ },
+ "RadiantBarrage": {
+  "name": "辉耀弹",
+  "description": "发射一个缓慢追踪敌人的光球。\r\n光球在接近目标时会分裂成无数光弹攻击敌人。"
+ },
+ "RaidCutter": {
+  "name": "连环风刃",
+  "description": "瞄准敌人射出无数风刃。"
+ },
+ "Railbolt": {
+  "name": "并联雷光",
+  "description": "积蓄雷电的力量到极限， \r\n朝敌人同时发射多道强力雷击。"
+ },
+ "RangeThunder": {
+  "name": "雷动八方",
+  "description": "向八个方向召唤直线推进的雷击。"
+ },
+ "ReflectiveShuriken": {
+  "name": "连锁叶刃",
+  "description": "发射风刃，\r\n在击中敌人或树木时反弹并连续造成攻击，\r\n最多可反弹4次。"
+ },
+ "RipTide": {
+  "name": "漩涡新星",
+  "description": "在敌人四周掀起波浪并涌向敌人，\r\n最后在中心点爆炸，喷出高高的水柱。"
+ },
+ "RockBeat": {
+  "name": "震岩",
+  "description": "震动地面，\r\n并令巨大的岩石飞起。"
+ },
+ "RockLance": {
+  "name": "岩石锐矛",
+  "description": "在敌人的脚边\r\n生成尖锐的岩石长矛。"
+ },
+ "RootAttack": {
+  "name": "缠绕地刺",
+  "description": "用地下尖锐的根部追击敌人\r\n并从脚下贯穿敌人。"
+ },
+ "RootLance": {
+  "name": "缠根牢狱",
+  "description": "在敌人的位置和其周围刺出尖锐的根刺。"
+ },
+ "SandTornado": {
+  "name": "沙尘旋风",
+  "description": "在左右两侧生成砂砾龙卷风，\r\n并扇向敌人。"
+ },
+ "SandTwister": {
+  "name": "沙尘暴",
+  "description": "生成复数个砂龙卷。\r\n龙卷风们将一边自旋一边绕中心旋转。"
+ },
+ "SeaGush": {
+  "name": "潮涌迸发",
+  "description": "在敌人所在位置及其周围区域\r\n喷出大量水柱。"
+ },
+ "SeedMachinegun": {
+  "name": "种子机关枪",
+  "description": "释放大量坚硬的种子\r\n攻击前方的敌人。"
+ },
+ "SeedMine": {
+  "name": "种子地雷",
+  "description": "发射危险的种子。\r\n碰到敌人会绽开并爆炸。"
+ },
+ "SelfDestruct": {
+  "name": "自爆",
+  "description": "赌上性命引发爆炸。\r\n使用后会陷入无法战斗的状态。"
+ },
+ "SelfDestruct_Bee": {
+  "name": "蜂！蜂！蜂！",
+  "description": "赌上性命引发爆炸。\r\n是种为了荣誉而牺牲自己的技能。"
+ },
+ "SelfExplosion": {
+  "name": "超自爆",
+  "description": "赌上性命引发大爆炸。 \r\n使用后便会化作夜空中闪耀的明星。"
+ },
+ "ShadowBall": {
+  "name": "恶梦球",
+  "description": "生成巨大的黑暗之球\r\n瞄准敌人并高速发射。"
+ },
+ "ShokeiLaser": {
+  "name": "处刑雷射",
+  "description": "锁定敌人后，连续射出超高速的雷射。"
+ },
+ "SolarBeam": {
+  "name": "太阳光束",
+  "description": "积蓄太阳之力\r\n瞄准敌人发射强劲光线。"
+ },
+ "SpecialCutter": {
+  "name": "三重风刃",
+  "description": "瞄准敌人发射\r\n3发直线飞行的超高速风刃。"
+ },
+ "SpreadPulse": {
+  "name": "电火花",
+  "description": "向前方发射呈扇形扩散的雷电球。"
+ },
+ "StarMine": {
+  "name": "诡雷繁星",
+  "description": "在敌人周围生成一碰就爆炸的星星。 \r\n星星在经过一定时间后，没有触碰也会爆炸。"
+ },
+ "StoneShotgun": {
+  "name": "碎石霰弹",
+  "description": "向前方射出大量的小石头碎屑。"
+ },
+ "ThreeCommet": {
+  "name": "三重陨星",
+  "description": "召唤陨石接连落下， \r\n并在撞击点产生冲击波。"
+ },
+ "ThreeThunder": {
+  "name": "三重雷击",
+  "description": "在敌人头上生成3次落雷。"
+ },
+ "ThrowRock": {
+  "name": "投石",
+  "description": "将岩石从眼前的地上吸附起来\r\n瞄准敌人并发射。"
+ },
+ "ThunderBall": {
+  "name": "闪电球",
+  "description": "发射雷电球\r\n并缓慢追击敌人。"
+ },
+ "ThunderFunnel": {
+  "name": "等离子浮游砲",
+  "description": "生成两个蕴含雷电能量的球\r\n然后瞄准敌人，从中发射无数雷球。"
+ },
+ "ThunderRain": {
+  "name": "广域雷击",
+  "description": "召唤雷电\r\n在一定时间后生成大量落电。"
+ },
+ "ThunderSpear": {
+  "name": "雷矛",
+  "description": "向敌人发射高速直线飞行的雷枪。"
+ },
+ "ThunderStorm": {
+  "name": "雷霆飓风",
+  "description": "召唤巨大的雷属性龙卷风。\r\n龙卷风将追踪敌人缓慢移动。"
+ },
+ "Thunderbolt": {
+  "name": "闪电伏特",
+  "description": "积蓄雷电之力\r\n瞄准敌人释放强劲电击。"
+ },
+ "Tremor": {
+  "name": "岩爆",
+  "description": "撼动地面， \r\n使大块岩石射向四面八方"
+ },
+ "TriSpark": {
+  "name": "三相火花",
+  "description": "同时发射直线飞行的高速雷球，\r\n和追踪敌人的慢速雷球。"
+ },
+ "Unique_Alpaca_Tackle": {
+  "name": "绒毛冲撞",
+  "description": "<characterName id=|Alpaca|/>的专用技能。\r\n散发出可爱的气场并朝向前方冲刺。"
+ },
+ "Unique_AmaterasuWolf_Bite": {
+  "name": "狂炎之牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_AmaterasuWolf_BiteV2": {
+  "name": "狂炎双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_AmaterasuWolf_Dark_Bite": {
+  "name": "暗影之牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_AmaterasuWolf_Dark_BiteV2": {
+  "name": "暗影双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_AmaterasuWolf_Dark_DarkCharge": {
+  "name": "火阴山雷",
+  "description": "<characterName id=|AmaterasuWolf_Dark|/>的专用技能。\r\n带着缠绕全身的紫色火焰，气势汹汹地向前猛冲。"
+ },
+ "Unique_AmaterasuWolf_FireCharge": {
+  "name": "风林火山",
+  "description": "<characterName id=|AmaterasuWolf|/>的专用技能。\r\n带着缠绕全身的青蓝火焰，气势汹汹地向前猛冲。"
+ },
+ "Unique_Anubis_GroundPunch": {
+  "name": "粉碎大地",
+  "description": "<characterName id=|Anubis|/>的专用技能。 \r\n高高跃起后，对地面使出猛力一击。 \r\n产生的衝击波将对大范围的目标造成伤害。"
+ },
+ "Unique_Anubis_LowRoundKick": {
+  "name": "回旋踢",
+  "description": "<characterName id=|Anubis|/>的专用技能。\r\n用强健的腿脚回旋飞踢，大范围横扫周围的敌人。"
+ },
+ "Unique_Anubis_Tackle": {
+  "name": "巨力冲锋",
+  "description": "<characterName id=|Anubis|/>的专用技能。\r\n快速移动追击敌人，\r\n释放能量同时不断挥出强劲利拳。"
+ },
+ "Unique_Baphomet_Dark_DarkKite": {
+  "name": "恶梦爪",
+  "description": "暗魔羊的专用技能。\r\n接近目标后跳起同时以左手暗爪向上挥击，\r\n再用右手暗爪迅速向下挥砍。"
+ },
+ "Unique_Baphomet_SwallowKite": {
+  "name": "狱火爪",
+  "description": "炎魔羊及亚种的专用技能。\r\n接近目标后跳起同时以左手爪子向上挥击，\r\n再用右手爪子迅速向下挥砍。"
+ },
+ "Unique_BirdDragon_FireBreath": {
+  "name": "炽焰掠空",
+  "description": "<characterName id=|BirdDragon|/>的专用技能。\r\n一边从口部喷出火焰一边前进。"
+ },
+ "Unique_BirdDragon_Ice_IceBreath": {
+  "name": "寒霜掠空",
+  "description": "<characterName id=|BirdDragon_Ice|/>的专用技能。\r\n一边从口部呼出冷气一边前进。"
+ },
+ "Unique_BlackCentaur_TwoSpearRushes": {
+  "name": "双枪一闪",
+  "description": "<characterName id=|BlackCentaur|/>的专用技能。 \r\n以旋风包覆双手的长枪后， \r\n朝前方冲刺并左右交替刺击。"
+ },
+ "Unique_BlackGriffon_TackleLaser": {
+  "name": "神圣灾祸",
+  "description": "<characterName id=|BlackGriffon|/>的专用技能。\r\n在向前猛冲的同时制造出光球。\r\n光球会自动捕捉敌人，并射出大量激光。"
+ },
+ "Unique_BlackGriffon_TackleLaser2": {
+  "name": "神圣灾祸Ⅱ",
+  "description": "异构格里芬的专用技能。\r\n一边突进，一边从身体的圆环出射出无数的蓝色光束。\r\n光束会自动追踪敌人。"
+ },
+ "Unique_BlackMetalDragon_FirePunch": {
+  "name": "魔龙焚炎",
+  "description": "<characterName id=|BlackMetalDragon|/>的专用技能。\r\n在向前方挥出两拳后，\r\n向下呼出龙属性的吐息。"
+ },
+ "Unique_BlackPuppy_Bite": {
+  "name": "暗影之牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_BlackPuppy_BiteV2": {
+  "name": "暗影双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_BluePlatypus_Toboggan": {
+  "name": "乘风破浪"
+ },
+ "Unique_BluePlatypus_Toboggan_Fire": {
+  "name": "热浪滚滚"
+ },
+ "Unique_BlueSkyDragon_DrainStorm": {
+  "name": "天变之涡",
+  "description": "<characterName id=|BlueSkyDragon|/>的专用技能。\r\n召唤直冲天际的巨大漩涡。\r\n吞噬周围的敌人，将其一网打尽。"
+ },
+ "Unique_BlueSkyDragon_SweepBreath": {
+  "name": "苍龙炎",
+  "description": "<characterName id=|BlueSkyDragon|/>的专用技能。\r\n喷吐龙属性烈焰横扫四方，\r\n将周围尽数化为焦土。"
+ },
+ "Unique_BlueSkyDragon_Tossin": {
+  "name": "水龙突进",
+  "description": "<characterName id=|BlueSkyDragon|/>的专用技能。\r\n周身缠绕水流，笔直地向前猛冲。"
+ },
+ "Unique_BlueThunderHorse_FlashDash": {
+  "name": "风驰电掣",
+  "description": "<characterName id=|BlueThunderHorse|/>的专用技能。\r\n以闪电般的速度移动，\r\n并将途径的所有存在都卷入。"
+ },
+ "Unique_BlueThunderHorse_Tossin": {
+  "name": "闪雷冲锋",
+  "description": "<characterName id=|BlueThunderHorse|/>的专用技能。\r\n周身缠绕雷电，朝敌人高速猛冲。"
+ },
+ "Unique_Boar_Tackle": {
+  "name": "猪突猛进",
+  "description": "<characterName id=|Boar|/>的专用技能。\r\n瞄准敌人后，猛烈地冲向敌人。"
+ },
+ "Unique_CaptainPenguin_Black_BodySlide_Electric": {
+  "name": "王者闪击",
+  "description": "<characterName id=|CaptainPenguin_Black|/>的专用技能。\r\n全身电流涌动，腹部着地滑行\r\n并用力撞向敌人。"
+ },
+ "Unique_CaptainPenguin_BodySlide": {
+  "name": "王者滑击",
+  "description": "<characterName id=|CaptainPenguin|/>的专用技能。\r\n全身散发寒气，并采用腹部着地之姿滑行，\r\n往敌人的方向用力撞去。"
+ },
+ "Unique_ChickenPal_ChickenPeck": {
+  "name": "皮皮冲鸡",
+  "description": "<characterName id=|ChickenPal|/>的专用技能。\r\n瞄准并飞扑向敌人后，用尖喙突袭敌人。"
+ },
+ "Unique_ClownRabbit_TrickShow": {
+  "name": "好戏上演",
+  "description": "<characterName id=|ClownRabbit|/>的专用技能。\r\n制造2道幻影迷惑敌人，\r\n本体则从丝绸礼帽中放出炎鸟进行攻击。"
+ },
+ "Unique_CubeTurtle_CubePress": {
+  "name": "巨石压顶",
+  "description": "<characterName id=|CubeTurtle|/>的专用技能。\r\n高高跃起至空中，\r\n随即以压倒性的重量将敌人压垮。"
+ },
+ "Unique_CubeTurtle_Neutral_HolyPress": {
+  "name": "圣石压顶",
+  "description": "<characterName id=|CubeTurtle_Neutral|/>的专用技能。\r\n高高跃起至空中，将敌人压垮。\r\n随后扩散光芒，以光柱进行追击。"
+ },
+ "Unique_CuteMole_DiggingAttack": {
+  "name": "掘地潜行",
+  "description": "<characterName id=|CuteMole|/>的专用技能。\r\n潜入地下，从脚下猛然窜出突袭敌人。"
+ },
+ "Unique_DarkAlien_JumpScractch": {
+  "name": "恶之爪",
+  "description": "杰诺贝达的专用技能。\r\n灵活的跃起，用左手撕裂敌人。"
+ },
+ "Unique_DarkCrow_TelePoke": {
+  "name": "幻影突袭",
+  "description": "<characterName id=|DarkCrow|/>的专用技能。\r\n瞬间移动至敌人身旁，\r\n再以鸟喙发动攻击。"
+ },
+ "Unique_DarkMechaDragon_BeamSlash": {
+  "name": "光连斩",
+  "description": "<characterName id=|DarkMechaDragon|/>的专用技能。\r\n在右手生成高功率的光剑，\r\n高速移动同时进行二连斩击。"
+ },
+ "Unique_DarkMechaDragon_ConvergentBeam": {
+  "name": "星幽炮",
+  "description": "<characterName id=|DarkMechaDragon|/>的专用技能。\r\n集中充盈暗黑力量的能量，\r\n一口气以直线状放出。"
+ },
+ "Unique_DarkMechaDragon_FunnelLaser": {
+  "name": "欧米伽雷射",
+  "description": "<characterName id=|DarkMechaDragon|/>的专用技能。\r\n从亚空间呼唤毁灭的光束不断进行横向垂直扫射，\r\n将视野范围内的一切燃烧殆尽。"
+ },
+ "Unique_DarkMechaDragon_SetFunnel": {
+  "name": "唤星",
+  "description": "<characterName id=|DarkMechaDragon|/>的专用技能。\r\n召唤4个有自动攻击能力的卫星型羽毛。\r\n羽毛在进行攻击时会自动追踪敌人。"
+ },
+ "Unique_DarkMechaDragon_WarpComet": {
+  "name": "苍穹落星",
+  "description": "<characterName id=|DarkMechaDragon|/>的专用技能。\r\n以光速飞上高空，射出无数的流星弹。\r\n之后将自身化为彗星向地面突进，\r\n在撞击的地点引发大范围的爆炸。"
+ },
+ "Unique_DarkScorpion_Pierce": {
+  "name": "跳跃重刺",
+  "description": "冥铠蝎及亚种的专用技能。\r\n高高跃起，用尾巴狠狠地将猎物刺穿。\r\n尾部含有毒素。"
+ },
+ "Unique_Deer_Ground_DirtyHorn": {
+  "name": "泥角顶击",
+  "description": "祇岳鹿的专用技能。\r\n面向敌人冲刺，用尖角卷起泥土攻击敌人。\r\n如在骑乘时发动，可操控前进方向。"
+ },
+ "Unique_Deer_PushupHorn": {
+  "name": "尖角顶击",
+  "description": "紫霞鹿及亚种的专用技能。\r\n面向敌人冲刺，扬起尖角攻击敌人。\r\n如在骑乘时发动，可操控前进方向。"
+ },
+ "Unique_DomeArmorDragon_ExplosiveMissile": {
+  "name": "轰天之翼",
+  "description": "<characterName id=|DomeArmorDragon|/>的专用技能。\r\n从羽翼射出无数爆裂导弹，对敌人进行轰炸。"
+ },
+ "Unique_DrillGame_ShellAttack": {
+  "name": "甲壳回旋",
+  "description": "<characterName id=|DrillGame|/>的专用技能。\r\n以全身高速旋转的方式移动，\r\n并以钻头刨削敌人，持续对目标造成伤害。"
+ },
+ "Unique_Eagle_GlidingNail": {
+  "name": "滑空爪",
+  "description": "<characterName id=|Eagle|/>的专用技能。\r\n向前伸出脚爪，\r\n以滑翔的姿态猛力冲向目标。"
+ },
+ "Unique_ElecPanda_ElecScratch": {
+  "name": "霹雳连爪",
+  "description": "<characterName id=|ElecPanda|/>的专用技能。\r\n飞扑向敌人，并用带电流的爪子将其劈开。\r\n飞扑2次后，面向地面伸出爪子，\r\n大范围扩散电流。"
+ },
+ "Unique_ElecPanda_GatlingAttack": {
+  "name": "雷击的重型战车",
+  "description": "暴电熊的专用技能。\r\n不知从哪取出加特林机枪进行扫射。\r\n最后一发将射出强力的充能弹。"
+ },
+ "Unique_ElecPomeranian_Bite": {
+  "name": "狂雷之牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_ElecPomeranian_BiteV2": {
+  "name": "狂雷双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_ElecSnail_ShellCharge": {
+  "name": "涡壳充电",
+  "description": "<characterName id=|ElecSnail|/>及亚种的专用技能。\r\n缩入壳中减伤并积蓄电能。\r\n充满后释放电流，对周围敌人造成伤害。\r\n放电后，短时间内自身雷属性技能攻击力提升。"
+ },
+ "Unique_FairyDragon_FairyTornado": {
+  "name": "神秘旋风",
+  "description": "精灵龙及亚种的专用技能。\r\n发射2股蕴含不可思议能力的龙卷风，\r\n追击敌人。"
+ },
+ "Unique_FeatherOstrich_Tossin": {
+  "name": "地之冲锋",
+  "description": "战冠雀的专用技能。\r\n一口气提高速度，向前方突进。"
+ },
+ "Unique_FengyunDeeper_CloudTempest": {
+  "name": "阴云之岚",
+  "description": "<characterName id=|FengyunDeeper|/>的专用技能。\r\n操控大气，借助风压向前猛冲。"
+ },
+ "Unique_FengyunDeeper_Electric_ThunderTempest": {
+  "name": "雷云之岚",
+  "description": "<characterName id=|FengyunDeeper_Electric|/>的专用技能。\r\n操控大气，身缠雷云向前猛冲。"
+ },
+ "Unique_FireKirin_Dark_DarkTossin": {
+  "name": "暗焰冲撞",
+  "description": "<characterName id=|FireKirin_Dark|/>的专用技能。 \r\n带着缠绕全身的暗黑火焰向前猛冲。 \r\n途经之处均会留下滚滚火焰。"
+ },
+ "Unique_FireKirin_Tackle": {
+  "name": "烈焰冲撞",
+  "description": "<characterName id=|FireKirin|/>的专用技能。\r\n带着缠绕全身的火焰向前猛冲。\r\n途经之处均会留下滚滚火焰。"
+ },
+ "Unique_FlameBuffalo_FlameHorn": {
+  "name": "炽热角击",
+  "description": "<characterName id=|FlameBuffalo|/>的专用技能。\r\n锁定敌人后，\r\n以凶猛气势顶着锐利牛角冲向对方。"
+ },
+ "Unique_FlowerDinosaur_Electric_ThunderWhip": {
+  "name": "雷龙摆尾",
+  "description": "雷冠龙的专用技能。\r\n使用巨大的尾巴拍打前方地面，\r\n对直线范围造成雷击。"
+ },
+ "Unique_FlowerDinosaur_Whip": {
+  "name": "花龙摆尾",
+  "description": "花冠龙及亚种的专用技能。\r\n使用巨大的尾巴拍打前方地面，\r\n对直线范围造成冲击。"
+ },
+ "Unique_FlowerPrince_PoisonGasDance": {
+  "name": "毒雾之舞",
+  "description": "<characterName id=|FlowerPrince|/>的专用技能。\r\n舞动的同时喷射腐蚀雾。\r\n雾气会在原地残留一段时间。"
+ },
+ "Unique_FlowerPrince_PoisonGasTackle": {
+  "name": "毒雾花滑",
+  "description": "<characterName id=|FlowerPrince|/>的专用技能。\r\n喷吐腐蚀雾的同时贴地滑行突进。\r\n雾气会在原地残留一段时间。"
+ },
+ "Unique_Garm_Bite": {
+  "name": "狂野獠牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_Garm_BiteV2": {
+  "name": "狂野双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_GhostAnglerfish_Fire_SweepBait_Fire": {
+  "name": "炽灯横扫",
+  "description": "<characterName id=|GhostAnglerfish_Fire|/>的专用技能。\r\n使用头部附着火焰的提灯横扫前方大范围目标。"
+ },
+ "Unique_GhostAnglerfish_SweepBait": {
+  "name": "提灯横扫",
+  "description": "<characterName id=|GhostAnglerfish|/>的专用技能。\r\n使用头部长长的提灯横扫前方大范围目标。"
+ },
+ "Unique_GhostBeast_Tossin": {
+  "name": "心灵冲刺",
+  "description": "<characterName id=|GhostBeast|/>的专用技能。\r\n缓慢奔跑的同时，不断召唤摇曳的火球飞向敌人。"
+ },
+ "Unique_GhostDragon_PhosphorousBeam": {
+  "name": "火花射线",
+  "description": "<characterName id=|GhostDragon|/>及亚种的专用技能。\r\n持续喷吐高温光线。\r\n最终在光线落点引发剧烈爆炸。"
+ },
+ "Unique_GhostDragon_TailSlash": {
+  "name": "曳尾斩",
+  "description": "<characterName id=|GhostDragon|/>的专用技能。\r\n高速逼近敌人，以尾巴进行斩击。"
+ },
+ "Unique_GoldenHorse_Bite": {
+  "name": "碎岩之牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_GoldenHorse_BiteV2": {
+  "name": "碎岩双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_GoldenHorse_StoneDash": {
+  "name": "碎岩冲锋",
+  "description": "<characterName id=|GoldenHorse|/>的专用技能。\r\n在气势汹汹突进的同时，令碎岩向左右飞溅。"
+ },
+ "Unique_Gorilla_GroundPunch": {
+  "name": "猩猩连打",
+  "description": "<characterName id=|Gorilla|/>及亚种的专用技能。\r\n猛击地面两次后高高跳起，\r\n再赏给对方强力的一拳。"
+ },
+ "Unique_Gorilla_Ground_EarthPunch": {
+  "name": "猩猩撼地击",
+  "description": "<characterName id=|Gorilla_Ground|/>的专用技能。\r\n猛击地面两次后高高跳起，\r\n再赏给对方汇聚大地之力的一拳。"
+ },
+ "Unique_GrassGolem_ArmCannon": {
+  "name": "根须大炮",
+  "description": "<characterName id=|GrassGolem|/>的专用技能。\r\n从手臂发射草属性能量弹。\r\n能量弹落地后会化为根须，紧追敌人，并从其脚下破土贯穿。"
+ },
+ "Unique_GrassGolem_Dark_DarkArmCannon": {
+  "name": "枯须大炮",
+  "description": "<characterName id=|GrassGolem_Dark|/>的专用技能。\r\n从手臂发射暗属性能量弹。\r\n能量弹落地后会化为根须，紧追敌人，并从其脚下破土贯穿。"
+ },
+ "Unique_GrassGolem_RocketPunch": {
+  "name": "火箭飞拳",
+  "description": "<characterName id=|GrassGolem|/>及亚种的专用技能。\r\n将左臂从本体分离，横扫敌人。\r\n随后再射出右臂。"
+ },
+ "Unique_GrassMinotaur_BullRush": {
+  "name": "狂牛奔袭",
+  "description": "<characterName id=|GrassMinotaur|/>的专用技能。\r\n狂暴地激发力量，\r\n连续发动4次草属性突进。"
+ },
+ "Unique_GrassMinotaur_BullRush_Lower": {
+  "name": "蛮牛奔袭",
+  "description": "<characterName id=|GrassMinotaur|/>的专用技能。\r\n狂暴地激发力量，\r\n连续发动2次草属性突进。"
+ },
+ "Unique_GrassMinotaur_Ice_BullRush": {
+  "name": "狂牛冰袭",
+  "description": "<characterName id=|GrassMinotaur_Ice|/>的专用技能。\r\n狂暴地激发力量，\r\n连续发动4次冰属性突进。"
+ },
+ "Unique_GrassMinotaur_Ice_BullRush_Lower": {
+  "name": "蛮牛冰袭",
+  "description": "<characterName id=|GrassMinotaur_Ice|/>的专用技能。\r\n狂暴地激发力量，\r\n连续发动2次冰属性突进。"
+ },
+ "Unique_GrassPanda_Electric_ElectricPunch": {
+  "name": "爆裂拳击",
+  "description": "<characterName id=|GrassPanda_Electric|/>的专用技能。\r\n不停转动右臂，向前方挥出带电拳击。"
+ },
+ "Unique_GrassPanda_MusclePunch": {
+  "name": "筋肉重拳",
+  "description": "<characterName id=|GrassPanda|/>的专用技能。\r\n不停转动右臂，向前方猛力出拳攻击。"
+ },
+ "Unique_GrassRabbitMan_GrassRoundKick": {
+  "name": "回旋猛踢",
+  "description": "<characterName id=|GrassRabbitMan|/>的专用技能。\r\n向前方跳起的同时高速回旋踢击，\r\n将周围一扫而净。"
+ },
+ "Unique_Grassmammoth_Earthquake": {
+  "name": "地震",
+  "description": "森猛犸及亚种的专用技能。\r\n以巨大的身躯撼动大地，\r\n对四周大范围的目标造成伤害。"
+ },
+ "Unique_GrimGirl_BrutalMachete": {
+  "name": "怨念连击",
+  "description": "<characterName id=|GrimGirl|/>的专用技能。\r\n从原先位置瞬间移动的同时打出斩击。\r\n然后瞬移至目标头顶，\r\n用利刃刺穿猎物并产生暗属性能量波。"
+ },
+ "Unique_GuardianDog_Bite": {
+  "name": "狂野之牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_GuardianDog_BiteV2": {
+  "name": "狂野双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_HawkBird_Storm": {
+  "name": "龙卷风",
+  "description": "<characterName id=|HawkBird|/>的专用技能。\r\n在前方制造出龙卷风后，\r\n以滑翔的姿态冲向敌人。"
+ },
+ "Unique_HerculesBeetle_BeetleTackle": {
+  "name": "终极角击",
+  "description": "<characterName id=|HerculesBeetle|/>及亚种的专用技能。\r\n以四支粗壮的角串起敌人。"
+ },
+ "Unique_Horus_FlareBird": {
+  "name": "凤凰翔波",
+  "description": "<characterName id=|Horus|/>的专用技能。 \r\n扇起炙热龙卷风后， \r\n身体被狱火包围，一边滑翔一边突袭敌人。"
+ },
+ "Unique_Horus_PerfectStorm": {
+  "name": "炎凰烈波",
+  "description": "<characterName id=|Horus|/>的专用技能。\r\n卷起数个灼热的龙卷风，\r\n同时身缠烈焰，飞空向敌人突进。\r\n龙卷风最终将融合为巨大火龙卷。"
+ },
+ "Unique_Horus_Water_AquaStorm": {
+  "name": "凤凰浪涛",
+  "description": "<characterName id=|Horus_Water|/>的专用技能。\r\n扇起漩涡龙卷风后，\r\n化身为波涛，一边滑翔一边突袭敌人。"
+ },
+ "Unique_IceCrocodile_SpitAttack": {
+  "name": "妙玉连珠",
+  "description": "<characterName id=|IceCrocodile|/>的专用技能。\r\n连续喷吐3颗体内尚未消化\r\n但已经冷却的手榴弹进行攻击。\r\n有时还会喷出更危险的东西……？"
+ },
+ "Unique_IceDeer_IceHorn": {
+  "name": "霜角猛攻",
+  "description": "<characterName id=|IceDeer|/>的专用技能。\r\n向前冲刺并以雄伟的冰角刺穿敌人。"
+ },
+ "Unique_IceHorse_Dark_DarkBladeAttack": {
+  "name": "幽夜之翼",
+  "description": "唤夜兽的专用技能。\r\n用暗能量包裹翅膀后，全力奔跑以双翼撕裂敌人。\r\n且暗能量最后会化为追踪弹攻击敌人。"
+ },
+ "Unique_IceHorse_IceBladeAttack": {
+  "name": "冰晶之翼",
+  "description": "唤冬兽及亚种的专用技能。\r\n凝结冷空气，让翅膀覆上冰晶，\r\n并在全力奔跑的同时以冰翼撕裂敌人。"
+ },
+ "Unique_IceNarwhal_JumpingHorn": {
+  "name": "冰鲸跃",
+  "description": "<characterName id=|IceNarwhal|/>及亚种的专用技能。\r\n笔直突进后短暂潜伏，\r\n接着高高跃起进行攻击。\r\n跃起时会引发冰属性爆炸。"
+ },
+ "Unique_JetDragon_JumpBeam": {
+  "name": "光束彗星",
+  "description": "<characterName id=|JetDragon|/>的专用技能。\r\n展开发光的翅膀，\r\n并发射大量光束朝敌人飞去。\r\n光束命中目标便会引发爆炸。"
+ },
+ "Unique_KingAlpaca_BodyPress": {
+  "name": "泰山压顶",
+  "description": "君王美露帕及亚种的专用技能。\r\n向上高高跳起后，\r\n用丰满的庞大身躯辗压敌人。"
+ },
+ "Unique_KingAlpaca_Ice_IcePress": {
+  "name": "冰山压顶",
+  "description": "冰帝美露帕的专用技能。\r\n向上高高跳起后，\r\n用自身庞大的身躯及冰晶辗压敌人。"
+ },
+ "Unique_KingBahamut_AirCrash": {
+  "name": "龙陨震击",
+  "description": "殁殃的专用技能。\r\n高高跃上空中后，边在空中高速移动，边积蓄力量。\r\n然后打出全力一击。"
+ },
+ "Unique_KingBahamut_ArmSmash": {
+  "name": "焚天爆炎",
+  "description": "焰煌及亚种的专用技能。\r\n伸展开手臂，使肌肉剧烈膨胀后，\r\n猛地拍击在一起引发巨大爆炸。"
+ },
+ "Unique_KingWhale_AquaBlade": {
+  "name": "波涛万仞",
+  "description": "<characterName id=|KingWhale|/>的专用技能。\r\n释放锋利的水刃，对敌人进行攻击。"
+ },
+ "Unique_KingWhale_AquaTornado": {
+  "name": "风暴召唤",
+  "description": "<characterName id=|KingWhale|/>的专用技能。\r\n腾空而起，召唤多个巨型龙卷风。\r\n龙卷风会缓慢追踪敌人。"
+ },
+ "Unique_KingWhale_Breaching": {
+  "name": "巨鲸跃",
+  "description": "<characterName id=|KingWhale|/>的专用技能。\r\n潜入水中，片刻后破水而出。\r\n借鲸跃之势，在周围掀起扩散的波纹。"
+ },
+ "Unique_KingWhale_HomingBubble": {
+  "name": "泡沫之雨",
+  "description": "<characterName id=|KingWhale|/>的专用技能。\r\n发射大量追踪泡泡。\r\n泡泡着地后会停留在原地。\r\n触碰或数秒后爆裂，对周围造成伤害。"
+ },
+ "Unique_KingWhale_Maelstrom": {
+  "name": "漩涡风暴",
+  "description": "<characterName id=|KingWhale|/>的专用技能。\r\n在敌人周围生成漩涡。\r\n将敌人卷入并不断向中心收缩，\r\n最终爆裂，掀起水柱。"
+ },
+ "Unique_KingWhale_WaveTackle": {
+  "name": "潮涌袭浪",
+  "description": "<characterName id=|KingWhale|/>的专用技能。\r\n利用全身猛然撞击敌人，掀起波浪。"
+ },
+ "Unique_Kirin_Ice_IceTackle": {
+  "name": "疾风冰击",
+  "description": "<characterName id=|Kirin_Ice|/>的专用技能。\r\n在自己的周围凝聚冰柱，\r\n同时猛力冲向敌人。"
+ },
+ "Unique_Kirin_LightningTackle": {
+  "name": "疾风雷击",
+  "description": "<characterName id=|Kirin|/>的专用技能。\r\n在自己的周围降下落雷，\r\n同时猛力冲向敌人。"
+ },
+ "Unique_LanternButler_LanternFlame": {
+  "name": "提灯妖火",
+  "description": "<characterName id=|LanternButler|/>的专用技能。\r\n高举提灯，召唤出多个执念深重的怨灵，\r\n紧追敌人不放。"
+ },
+ "Unique_LeafMomonga_SomerSault": {
+  "name": "叶返",
+  "description": "<characterName id=|LeafMomonga|/>的专用技能。\r\n短暂蓄力后高速撞击敌人，\r\n同时做出后空翻动作。"
+ },
+ "Unique_LegendDeer_RadiantPurge_Otomo": {
+  "name": "神光尽灭",
+  "description": "<characterName id=|LegendDeer|/>的专用技能。\r\n跃向空中，凝聚巨大的能量然后投向地面。\r\n煌煌天光，涤净尘世。"
+ },
+ "Unique_LegendDeer_RadiantWingRush": {
+  "name": "流光翼彩",
+  "description": "<characterName id=|LegendDeer|/>的专用技能。\r\n向后方跳跃并在背后展开光翼，\r\n从空中向敌人发起突击。"
+ },
+ "Unique_LegendDeer_WarpPillarBurst": {
+  "name": "光之雨",
+  "description": "<characterName id=|LegendDeer|/>的专用技能。\r\n一瞬间隐去身姿，然后以自身为中心在大范围召唤大量光柱落下。"
+ },
+ "Unique_LilyQueen_LilyHealing": {
+  "name": "丰饶加护",
+  "description": "百合女王的专用技能。\r\n使用治愈的力量恢复范围内同伴的HP。"
+ },
+ "Unique_LotusDragon_LotusBloom": {
+  "name": "怒放莲华",
+  "description": "<characterName id=|LotusDragon|/>的专用技能。\r\n潜入地下隐匿身形。\r\n随后化作花苞现身地表，绽放时对大范围敌人发动攻击。"
+ },
+ "Unique_Manticore_InfernoStrike": {
+  "name": "火山獠牙",
+  "description": "<characterName id=|Manticore|/>及亚种的专用技能。\r\n毫不留情的气势汹汹扑向敌人，\r\n在扑击的地点引发火属性的爆炸。"
+ },
+ "Unique_MonochromeQueen_BalletJump": {
+  "name": "黑天鹅之舞",
+  "description": "<characterName id=|MonochromeQueen|/>的专用技能。\r\n向斜前方跃起，投掷黑色锋利的羽刃进行攻击。"
+ },
+ "Unique_MoonQueen_IceMoonBlade": {
+  "name": "青月闪",
+  "description": "辉月伊的专用技能。 \r\n挥出蕴含月光力量的高速三连斩击。"
+ },
+ "Unique_MoonQueen_MoonBeam": {
+  "name": "皎月射线",
+  "description": "辉月伊的专用技能。\r\n将能量积蓄于背后的月亮，\r\n然后向前方发出新月形的射线。"
+ },
+ "Unique_MoonQueen_MoonBlade": {
+  "name": "青月刃",
+  "description": "辉月伊的专用技能。 \r\n挥出蕴含月光力量的高速二连斩击。"
+ },
+ "Unique_Mothman_GiantSpore": {
+  "name": "巨大孢子",
+  "description": "<characterName id=|Mothman|/>的专用技能。\r\n发射追踪敌人的巨大孢子。\r\n命中后爆炸，造成大范围爆炸冲击波。"
+ },
+ "Unique_Mothman_SporeScatter": {
+  "name": "孢子爆发",
+  "description": "<characterName id=|Mothman|/>的专用技能。\r\n大范围散布爆炸孢子，\r\n并在一定时间后同时引爆。"
+ },
+ "Unique_MummyPal_MummyAttack": {
+  "name": "突袭木乃伊",
+  "description": "<characterName id=|MummyPal|/>的专用技能。\r\n从手中伸长绷带，对敌人进行连续攻击。"
+ },
+ "Unique_MysteryMask_LifeSteal": {
+  "name": "窃魂",
+  "description": "<characterName id=|MysteryMask|/>的专用技能。\r\n突然出现在敌人附近并用双手将其束缚，\r\n并吸收受到束缚敌人的HP。"
+ },
+ "Unique_NaughtyCat_CatPress": {
+  "name": "喵咪扑击",
+  "description": "<characterName id=|NaughtyCat|/>的专用技能。\r\n带着无所畏惧的笑容跳起，\r\n再用全身的力量辗压敌人。"
+ },
+ "Unique_NightBlueHorse_DeathStep": {
+  "name": "致命舞步",
+  "description": "<characterName id=|NightBlueHorse|/>的专用技能。\r\n用鬼魅般的步伐玩弄敌人，\r\n同时用锐利的角挥出斩击。"
+ },
+ "Unique_NightBlueHorse_Neutral_AirStep": {
+  "name": "皇家舞步",
+  "description": "<characterName id=|NightBlueHorse_Neutral|/>的专用技能。\r\n以华丽步伐戏耍敌人，\r\n同时用锐利的角挥出斩击。"
+ },
+ "Unique_NightBlueHorse_Neutral_Tossin": {
+  "name": "银影疾驰",
+  "description": "<characterName id=|NightBlueHorse_Neutral|/>的专用技能。\r\n周身缠绕炽烈火焰，朝敌人冲锋。"
+ },
+ "Unique_NightBlueHorse_Tossin": {
+  "name": "幽影疾驰",
+  "description": "<characterName id=|NightBlueHorse|/>的专用技能。\r\n周身缠绕跃动的火焰，朝敌人冲锋。"
+ },
+ "Unique_NightLady_FlameNightmare": {
+  "name": "烈焰华尔兹",
+  "description": "<characterName id=|NightLady_Dark|/>的专用技能。\r\n在摇曳起舞的同时製造一圈圈火焰，\r\n使之向周围扩散，\r\n并发射妖异的火球来追击敌人。"
+ },
+ "Unique_NightLady_WarpBeam": {
+  "name": "噩梦绽放",
+  "description": "<characterName id=|NightLady_Dark|/>的专用技能。\r\n趁敌人不注意时隐去身影，并在现身的瞬间射出无数光线，\r\n且光线会犹如绽放的花朵般扩散。"
+ },
+ "Unique_NightLady_WarpBeam_Straight": {
+  "name": "噩梦射线",
+  "description": "<characterName id=|NightLady|/>的专用技能。\r\n趁敌人不注意时隐去身影，并在再次现身的瞬间射出无数光线。"
+ },
+ "Unique_OctopursGirl_InkJet": {
+  "name": "墨沫头槌",
+  "description": "<characterName id=|OctopusGirl|/>及亚种的专用技能。\r\n向前方释放烟雾遮蔽自身，\r\n从隐蔽状态中突然发动头槌，猛击敌人。"
+ },
+ "Unique_PandaGirl_RapidKick": {
+  "name": "连续回旋踢",
+  "description": "<characterName id=|PandaGirl|/>的专用技能。\r\n迅速连续施展回旋踢后，释放气功波进行攻击。"
+ },
+ "Unique_PinkCat_CatPunch": {
+  "name": "喵喵拳",
+  "description": "<characterName id=|PinkCat|/>的专用技能。\r\n挥舞双臂追击敌人，\r\n连续挥出利拳。"
+ },
+ "Unique_Plesiosaur_LongBreath": {
+  "name": "花粉吐息",
+  "description": "<characterName id=|Plesiosaur|/>的专用技能。\r\n从修长的颈部缓缓释放出草属性的气息，\r\n逐渐向四周扩散。"
+ },
+ "Unique_PoseidonOrca_TorrentLaser": {
+  "name": "风暴潮",
+  "description": "<characterName id=|PoseidonOrca|/>的专用技能。\r\n身体略微上浮并在口中凝聚水流。\r\n随后纵横挥扫出三股高压水流。\r\n被扫过的区域会出现裂缝并喷出水柱。"
+ },
+ "Unique_PurpleSpider_SpiderRaid": {
+  "name": "蜘蛛猛袭",
+  "description": "<characterName id=|PurpleSpider|/>的专用技能。\r\n吐出丝线缠绕住猎物。\r\n之后全速冲向猎物所在位置，\r\n打出三段攻击以使其毙命。"
+ },
+ "Unique_QueenBee_SpinLance": {
+  "name": "回旋杖击",
+  "description": "<characterName id=|QueenBee|/>的专用技能。\r\n以法杖聚集力量后，再旋转法杖来释放能量。"
+ },
+ "Unique_RedArmorBird_TriplePeck": {
+  "name": "燧火连击",
+  "description": "<characterName id=|RedArmorBird|/>的专用技能。\r\n飞向前方的同时，朝正前、右、左啄击，\r\n并通过点火引发小规模的爆炸。"
+ },
+ "Unique_RedFlowerBird_JumpKick": {
+  "name": "落花踏",
+  "description": "<characterName id=|RedFlowerBird|/>的专用技能。\r\n先轻柔地浮空，再以利爪重重砸向地面。"
+ },
+ "Unique_RobinHood_BowSnipe": {
+  "name": "精准狙击",
+  "description": "羽箭射手及亚种的专用技能。\r\n拉满弓弦全神贯注瞄准敌人后，\r\n对敌人进行射击。"
+ },
+ "Unique_RockBeast_Ice_IceHorn": {
+  "name": "冰角爆",
+  "description": "<characterName id=|RockBeast_Ice|/>的专用技能。\r\n以角刨开地面并顺势上挑，\r\n朝敌人飞射雪块。"
+ },
+ "Unique_RockBeast_RockHorn": {
+  "name": "岩角爆",
+  "description": "<characterName id=|RockBeast|/>的专用技能。\r\n以角刨开地面并顺势上挑，\r\n朝敌人飞射岩石弹。"
+ },
+ "Unique_Ronin_Iai": {
+  "name": "居合斩",
+  "description": "<characterName id=|Ronin|/>及亚种的专用技能。\r\n摆出迎战姿势后瞬间移动至敌人面前，\r\n并使出超高速的拔刀攻击。"
+ },
+ "Unique_Ronin_Iai_PartnerSkill": {
+  "name": "居合斩",
+  "description": "<characterName id=|Ronin|/>及亚种的专用技能。\r\n摆出迎战姿势后瞬间移动至敌人面前，\r\n并使出超高速的拔刀攻击。"
+ },
+ "Unique_SaintCentaur_OneSpearRushes": {
+  "name": "闪枪冲锋",
+  "description": "<characterName id=|SaintCentaur|/>的专用技能。\r\n让神圣的力量覆满自身，\r\n并以左手持长枪向前冲锋。\r\n右手的盾牌在冲锋时能挡下所有攻击。"
+ },
+ "Unique_SakuraSaurus_SideTackle": {
+  "name": "铁山靠",
+  "description": "连理龙及亚种的专用技能。\r\n侧身站立，\r\n然后向前猛撞敌人，并将其击飞。"
+ },
+ "Unique_SakuraSaurus_Water_SplashTackle": {
+  "name": "凌波铁山靠",
+  "description": "海誓龙的专用技能。\r\n侧身站立，然后向前猛撞敌人，\r\n溅起水花并将其击飞。"
+ },
+ "Unique_SamuraiDog_Bite": {
+  "name": "碎岩之牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_SamuraiDog_BiteV2": {
+  "name": "碎岩双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_SamuraiDog_DashSlash": {
+  "name": "汪汪连斩",
+  "description": "<characterName id=|SamuraiDog|/>的专用技能。\r\n全速奔跑的同时，用口中衔着的木棒斩击敌人。\r\n连续施展2段攻击。"
+ },
+ "Unique_ScorpionMan_Erectric_UpperThunder": {
+  "name": "升雷拳",
+  "description": "<characterName id=|ScorpionMan_Electric|/>的专用技能。\r\n通过超导快速缩短和敌人的距离，\r\n狠狠的用钳子使出上勾拳。"
+ },
+ "Unique_ScorpionMan_Uppercut": {
+  "name": "升虫拳",
+  "description": "蛊刺妖的专用技能。\r\n快速缩短和敌人的距离，\r\n狠狠的用钳子使出上勾拳。"
+ },
+ "Unique_Sekhmet_RollingScratch": {
+  "name": "空翻爪袭",
+  "description": "<characterName id=|Sekhmet|/>的专用技能。\r\n旋转突进，一口气拉近距离并抓挠敌人。"
+ },
+ "Unique_Sekhmet_SomersaultScratch": {
+  "name": "空爪返",
+  "description": "<characterName id=|Sekhmet|/>的专用技能。\r\n抓挠敌人的同时向后翻跃，与敌人拉开距离。"
+ },
+ "Unique_SheepBall_Roll": {
+  "name": "滚滚毛球",
+  "description": "<characterName id=|SheepBall|/>的专用技能。\r\n咕噜咕噜地滚动并追击敌人。\r\n攻击后会因晕眩而无法动弹。"
+ },
+ "Unique_SifuDog_Counter": {
+  "name": "气合返",
+  "description": "汪宗师的专用技能。\r\n摆出合气道的架势，在架势中受到的攻击将无效化，\r\n同时一瞬间迫近敌人，使出全身力量掌击。"
+ },
+ "Unique_SnakeGirl_SnakeShot": {
+  "name": "毒液漫射",
+  "description": "<characterName id=|SnakeGirl|/>的专用技能。\r\n头部的蛇会吐出呈抛物线飞行的毒液球。\r\n毒液球落地便会化为沼泽，令接触沼泽者陷入中毒状态。"
+ },
+ "Unique_SnowTigerBeastman_SnowImpact": {
+  "name": "冰川碎击",
+  "description": "<characterName id=|SnowTigerBeastman|/>的专用技能。\r\n大声咆哮的同时高高跳起，\r\n落地后将双臂埋入地面，产生巨大的龟裂冰川。\r\n之后不断向地面积蓄力量，最终引发巨大的冰属性爆炸。"
+ },
+ "Unique_SnowTigerBeastman_TrampleSlash": {
+  "name": "烈冻爪",
+  "description": "<characterName id=|SnowTigerBeastman|/>的专用技能。\r\n踩踏地面，在前方产生断裂的冰川。\r\n之后一口气接近敌人，用右手将其撕裂。"
+ },
+ "Unique_SoldierBee_NeedleLance": {
+  "name": "针刺长矛",
+  "description": "<characterName id=|SoldierBee|/>的专用技能。\r\n朝向敌人高速突刺。\r\n最后使出致命一击贯穿敌人。"
+ },
+ "Unique_StuffedShark_HiddenWeapon": {
+  "name": "午时已到",
+  "description": "<characterName id=|StuffedShark|/>及亚种的专用技能。\r\n从口中取出两把水枪，\r\n左右轮流射出6发水弹。\r\n最后双枪合并，射出一发强力水弹。"
+ },
+ "Unique_SumoDog_SumoStomp": {
+  "name": "四股踏",
+  "description": "<characterName id=|SumoDog|/>的专用技能。\r\n高高抡起右后腿重踏地面，释放冲击波，\r\n对前方扇形范围造成攻击。"
+ },
+ "Unique_TentacleTurtle_HydroSpin": {
+  "name": "漩涡回旋",
+  "description": "<characterName id=|TentacleTurtle|/>及亚种的专用技能。\r\n利用水流喷射推进力，\r\n一边高速旋转一边向敌人飞旋而去。"
+ },
+ "Unique_ThunderBird_Ice_SnowStrom": {
+  "name": "冰锥俯冲",
+  "description": "<characterName id=|ThunderBird_Ice|/>的专用技能。\r\n先从敌人脚下突起冰柱。\r\n然后在空中突进的同时，于左右两侧接连升起冰柱。"
+ },
+ "Unique_ThunderBird_ThunderStorm": {
+  "name": "闪电俯冲",
+  "description": "<characterName id=|ThunderBird|/>的专用技能。\r\n先在敌人所在位置降下落雷。\r\n然后在空中突进的同时，于左右两侧召唤落雷。"
+ },
+ "Unique_ThunderDog_Bite": {
+  "name": "狂雷之牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_ThunderDog_BiteV2": {
+  "name": "狂雷双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_ThunderDog_Ice_Bite": {
+  "name": "寒冰之牙",
+  "description": "快速地向敌人飞扑，咬住敌人进行攻击。"
+ },
+ "Unique_ThunderDog_Ice_BiteV2": {
+  "name": "寒冰双牙",
+  "description": "快速连续向敌人进行啃咬攻击。"
+ },
+ "Unique_ThunderDog_Ice_KoriShorai": {
+  "name": "召雪",
+  "description": "<characterName id=|ThunderDog_Ice|/>的专用技能。\r\n在前方连续不断生成冰柱，\r\n并在冰柱之间高速突进。"
+ },
+ "Unique_ThunderDog_InazumaShorai": {
+  "name": "召雷",
+  "description": "<characterName id=|ThunderDog|/>的专用技能。\r\n在前方呼唤连续不断的雷击，\r\n在落下的雷电间高速突进。"
+ },
+ "Unique_ThunderDragonMan_NumerousSwordAttack": {
+  "name": "雷神之怒",
+  "description": "波鲁杰克斯的专用技能。\r\n召唤数把雷枪，向敌人投掷而出，并引发爆炸。"
+ },
+ "Unique_ThunderDragonMan_ThunderSwordAttack": {
+  "name": "雷神之枪",
+  "description": "<characterName id=|ThunderDragonMan|/>的专用技能。\r\n向上跳起后召唤雷枪，\r\n将之丢向敌人。"
+ },
+ "Unique_TropicalOstrich_DashKick": {
+  "name": "冲锋踢",
+  "description": "<characterName id=|TropicalOstrich|/>的专用技能。\r\n冲刺助跑后向敌人发动猛烈踢击。"
+ },
+ "Unique_Umihebi_Fire_FireWindingTackle": {
+  "name": "腾龙奔炎",
+  "description": "<characterName id=|Umihebi_Fire|/>的专用技能。\r\n起身咆哮，使用身缠炽炎的巨大身躯蛇形向敌人突进。"
+ },
+ "Unique_Umihebi_WindingTackle": {
+  "name": "断海覆潮",
+  "description": "<characterName id=|Umihebi|/>的专用技能。\r\n起身咆哮，使用身缠浪涛的巨大身躯蛇形向敌人突进。"
+ },
+ "Unique_VolcanicMonster_Ice_IceAttack": {
+  "name": "霜冻爆裂",
+  "description": "<characterName id=|VolcanicMonster_Ice|/>的专用技能。 \r\n举起前脚猛击地面， \r\n使冰雪于敌人所在处喷发。 \r\n喷发时四周更会有雪球倾泻而下。"
+ },
+ "Unique_VolcanicMonster_MagmaAttack": {
+  "name": "火山爆发",
+  "description": "<characterName id=|VolcanicMonster|/>的专用技能。\r\n举起前脚猛击地面，\r\n使岩浆于敌人所在处喷发。\r\n喷发时四周更会有火山弹倾泻而下。"
+ },
+ "Unique_VolcanoDragon_Ice_IceLaser": {
+  "name": "急冻吐息",
+  "description": "<characterName id=|VolcanoDragon_Ice|/>的专用技能。\r\n从口中喷吐冻结光线，使大地结冰。\r\n冻结的地面会形成霜层，\r\n冻结碰到的敌人并对其造成伤害。"
+ },
+ "Unique_VolcanoDragon_Ice_IcicleSpit": {
+  "name": "寒冰喷溅",
+  "description": "<characterName id=|VolcanoDragon_Ice|/>的专用技能。\r\n从口中吐出冰块进行攻击。\r\n落地后会使地面冻结，并形成霜层，\r\n冻结碰到的敌人并对其造成伤害。"
+ },
+ "Unique_VolcanoDragon_MagmaSpit": {
+  "name": "熔岩喷溅",
+  "description": "<characterName id=|VolcanoDragon|/>的专用技能。\r\n从口中吐出岩浆团进行攻击。\r\n在落点形成岩浆池，\r\n对碰到的敌人造成伤害。"
+ },
+ "Unique_VolcanoDragon_VolcanicLaser": {
+  "name": "岩浆吐息",
+  "description": "<characterName id=|VolcanoDragon|/>的专用技能。\r\n从口中喷涌而出炽热光束，焚烧大地。\r\n灼热的地面会形成岩浆池，\r\n对碰到的敌人造成伤害。"
+ },
+ "Unique_WeaselDragon_FlyingTackle": {
+  "name": "火箭冲撞",
+  "description": "疾旋鼬及亚种的专用技能。\r\n短时间蓄力后，向前跃起。\r\n在着地时因为害怕一直都是紧闭着眼睛。"
+ },
+ "Unique_Werewolf_Ice_SnowScratch": {
+  "name": "吹雪爪击",
+  "description": "<characterName id=|WereWolf_Ice|/>的专用技能。\r\n向前一跃，迅速斩下两击。\r\n且每次斩击都充满了冰属性的力量。"
+ },
+ "Unique_Werewolf_Scratch": {
+  "name": "飞跃爪击",
+  "description": "<characterName id=|WereWolf|/>的专用技能。\r\n向前一跃，迅速斩下两击。\r\n且每次斩击都充满了暗属性的力量。"
+ },
+ "Unique_WhiteDeer_Dark_DarkPillar": {
+  "name": "混沌新星",
+  "description": "<characterName id=|WhiteDeer_Dark|/>的专用技能。\r\n在前方引发大范围的暗属性爆炸，\r\n随后边缓慢前行，边在自身周围降下暗之柱。"
+ },
+ "Unique_WhiteDeer_HolyPillar": {
+  "name": "神圣新星",
+  "description": "<characterName id=|WhiteDeer|/>的专用技能。\r\n在前方引发大范围的圣光爆炸后，\r\n边缓慢行走边在自身周围降下神圣之光。"
+ },
+ "Unique_WhiteShieldDragon_ShieldTackle": {
+  "name": "圣盾冲锋",
+  "description": "<characterName id=|WhiteShieldDragon|/>的专用技能。\r\n在前方展开能够减轻各种伤害的能量盾的同时，\r\n将突进道路上的敌人碾碎。"
+ },
+ "Unique_WhiteTiger_Ground_IronScratch": {
+  "name": "碎岩爪",
+  "description": "<characterName id=|WhiteTiger_Ground|/>的专用技能。\r\n在两次挥击后，使出浑身力气大幅挥动巨爪。\r\n每次挥动巨爪时，都会向前方扇形区域飞出碎岩。"
+ },
+ "Unique_WhiteTiger_IceScratch": {
+  "name": "暴雪爪",
+  "description": "<characterName id=|WhiteTiger|/>的专用技能。\r\n在两次挥击后，使出浑身力气大幅挥动巨爪。\r\n每次挥动巨爪时，都会向前方扇形区域飞出冰柱。"
+ },
+ "Unique_WingGolem_Fire_FlameCutter": {
+  "name": "回旋炎锯",
+  "description": "<characterName id=|WingGolem_Fire|/>的专用技能。\r\n大幅回旋身体投掷出背后的炎盘。\r\n炎盘将会以圆弧轨道状飞行。"
+ },
+ "Unique_WingGolem_RoundCutter": {
+  "name": "回旋岩锯",
+  "description": "泰锋的专用技能。\r\n大幅回旋身体投掷出背后的岩盘。\r\n岩盘将会以圆弧轨道状飞行。"
+ },
+ "Unique_WorldTreeDragon_PaldiumCannon": {
+  "name": ""
+ },
+ "Unique_WorldTreeDragon_PaldiumExplosion": {
+  "name": ""
+ },
+ "Unique_WorldTreeDragon_PaldiumRain": {
+  "name": ""
+ },
+ "Unique_WorldTreeDragon_PaldiumShot": {
+  "name": ""
+ },
+ "Unique_YakushimaBoss001_Small_DemonEyeCharge": {
+  "name": "眼球突击",
+  "description": "<characterName id=|YakushimaBoss001_Small|/>的专用技能。\r\n朝敌人发起冲锋。撞到地面或墙壁时会反弹。"
+ },
+ "Unique_YakushimaMonster001_SlimePress_Dark": {
+  "name": "史莱姆重压（暗）",
+  "description": "<characterName id=|YakushimaMonster001_Purple|/>的专用技能。\r\n跳向敌人发动攻击。"
+ },
+ "Unique_YakushimaMonster001_SlimePress_Fire": {
+  "name": "史莱姆重压（火）",
+  "description": "<characterName id=|YakushimaMonster001_Red|/>的专用技能。\r\n跳向敌人发动攻击。"
+ },
+ "Unique_YakushimaMonster001_SlimePress_Leaf": {
+  "name": "史莱姆重压（草）",
+  "description": "<characterName id=|YakushimaMonster001|/>的专用技能。\r\n跳向敌人发动攻击。"
+ },
+ "Unique_YakushimaMonster001_SlimePress_Normal": {
+  "name": "史莱姆重压（无）",
+  "description": "<characterName id=|YakushimaMonster001_Pink|/>的专用技能。\r\n跳向敌人发动攻击。"
+ },
+ "Unique_YakushimaMonster001_SlimePress_Rainbow": {
+  "name": "史莱姆重压（彩虹）",
+  "description": "<characterName id=|YakushimaMonster001_Rainbow|/>的专用技能。\r\n跳向敌人发动攻击。"
+ },
+ "Unique_YakushimaMonster001_SlimePress_Water": {
+  "name": "史莱姆重压（水）",
+  "description": "<characterName id=|YakushimaMonster001_Blue|/>的专用技能。\r\n跳向敌人发动攻击。"
+ },
+ "Unique_YakushimaMonster002_SwordCharge": {
+  "name": "剑舞冲锋",
+  "description": "<characterName id=|YakushimaMonster002|/>的专用技能。\r\n朝敌人发动突刺攻击。"
+ },
+ "Unique_YakushimaMonster003_BatCharge": {
+  "name": "蝙蝠袭击",
+  "description": "<characterName id=|YakushimaMonster003|/>的专用技能。\r\n利用全身扑向敌人发起进攻。撞到地面或墙壁时会反弹。"
+ },
+ "Unique_Yakushima_EyeTossin": {
+  "name": "凝视突击",
+  "description": "<characterName id=|YakushimaBoss001|/>的专用技能。\r\n多次朝敌人发起冲锋。"
+ },
+ "Unique_Yakushima_MouthTossin": {
+  "name": "高速突击",
+  "description": "<characterName id=|YakushimaBoss001|/>的专用技能。\r\n以极高速度多次朝敌人发起冲锋。"
+ },
+ "Unique_Yakushima_SummonServant": {
+  "name": "召唤仆从",
+  "description": "<characterName id=|YakushimaBoss001|/>的专用技能。\r\n召唤4个仆从撞向敌人并造成伤害。仆从会在受到攻击或经过一定时间后消失。"
+ },
+ "Unique_Yeti_Grass_GrassBall": {
+  "name": "滚草球",
+  "description": "<characterName id=|Yeti_Grass|/>的专用技能。\r\n一边向前方突进一边滚动草球，\r\n在草球滚的足够大时投掷出去，使其炸裂。"
+ },
+ "Unique_Yeti_SnowBall": {
+  "name": "滚雪球",
+  "description": "<characterName id=|Yeti|/>的专用技能。\r\n一边向前方突进一边滚动雪球，\r\n在雪球滚的足够大时投掷出去，使其炸裂。"
+ },
+ "WallSplash": {
+  "name": "间隙潮",
+  "description": "连续在敌人的脚下生成水柱结成的墙壁。"
+ },
+ "WaterBall": {
+  "name": "爆裂水球",
+  "description": "在头上生成巨大水球\r\n瞄准敌人并发射。"
+ },
+ "WaterGun": {
+  "name": "水枪",
+  "description": "发射水弹\r\n笔直飞向对方。"
+ },
+ "WindBurst": {
+  "name": "翠耀罡风",
+  "description": "以自身为中心掀起巨大的风暴漩涡，\r\n发动强力攻击。"
+ },
+ "WindCutter": {
+  "name": "风刃",
+  "description": "发射超高速风刃\r\n瞄准后笔直飞向敌人。"
+ },
+ "WindEdge": {
+  "name": "烈风切",
+  "description": "扇形射出锐利的风刃。"
+ }
+}
