@@ -263,6 +263,19 @@ async def get_pal_detail(request: Request, pal_id: str):
     return format_success(detail)
 
 
+@router.get("/pals/{pal_id}/skills")
+async def get_pal_skills(request: Request, pal_id: str):
+    """S7: 帕鲁可学技能列表（含学习等级）。"""
+    from ..formatter import format_error, format_success
+
+    orm_service: OrmQueryService = request.app.state.orm_service
+    detail = await orm_service.query_pal_detail_full(pal_id)
+    if detail is None:
+        return format_error("PAL_NOT_FOUND", f"未找到帕鲁: '{pal_id}'")
+    skills = await orm_service.query_pal_skills(pal_id)
+    return format_success({"pal_id": pal_id, "skills": skills, "total": len(skills)})
+
+
 @router.get("/passives")
 async def query_passive_pals(request: Request, name: str):
     """S6: 按被动中文名查拥有该被动的帕鲁（配种被动传承）。"""

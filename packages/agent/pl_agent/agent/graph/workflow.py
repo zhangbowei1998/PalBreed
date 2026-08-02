@@ -15,7 +15,7 @@ from ..common.telemetry import timer_ms
 from ..config import Settings
 from ..intent import Intent, IntentRecognizer
 from ..interaction.click_protocol import parse_expand_fallback
-from ..interaction.presenter import build_response
+from ..interaction.presenter import build_data_cards, build_response
 from ..llm import LLMClient
 from ..memory.compress import summarize_history
 from ..memory.long_term import (
@@ -364,12 +364,17 @@ class AgentWorkflow:
             state.touch()
             await self._repository.save(session_id, state)
 
-        return build_response(
+        resp = build_response(
             messages=[reply, *extra_messages],
             actions=extra_actions,
             state=state,
             meta=meta,
         )
+        # 结构化数据卡片（被动/掉落/配方/技能/详情）— 前端据此渲染
+        data_cards = build_data_cards(result.tool_calls if result is not None else None)
+        if data_cards:
+            resp["data_cards"] = data_cards
+        return resp
 
     def _format_fact(self, fact: MemoryFact) -> str:
         if fact.category == "owned_pal":

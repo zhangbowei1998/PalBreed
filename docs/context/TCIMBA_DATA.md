@@ -15,7 +15,7 @@
 | `items.json` | 2.0MB | 2433 物品 | 物品数据（含配方/来源/掉落） |
 | `locales/zh-CN/pals.json` | 140KB | 299 | 帕鲁中文名/描述/伙伴技能 |
 | `locales/zh-CN/passives.json` | 16KB | 152 | 被动技能中文名 |
-| `locales/zh-CN/skills.json` | 59KB | 323 | 技能中文名+描述 |
+| `locales/zh-CN/skills.json` | 59KB | 323（可学习 319）| 技能中文名+描述 |
 | `locales/zh-CN/items.json` | 418KB | 2433 | 物品中文名+描述 |
 | `locales/zh-CN/enums.json` | 601B | - | 元素/工种枚举中文名 |
 | `locales/zh-CN/partnerEffects.json` | 已确认存在 | - | 伙伴技能效果名（{effectId: 中文名}）|

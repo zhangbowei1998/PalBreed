@@ -17,7 +17,49 @@ export type ChatMessage = {
   role: AgentRole;
   content: string;
   trace?: AgentTraceInfo | null;
+  data_cards?: DataCard[];
 };
+
+// ── 结构化数据卡片（Agent 工具结果 → 前端渲染） ──
+
+export type PassiveCard = {
+  type: "passive";
+  passive: string;
+  pals: Array<{ id?: string; cn_name?: string; passive_rank?: number }>;
+  total: number;
+};
+
+export type DropCard = {
+  type: "drop";
+  item: string;
+  pals: Array<{ pal_id?: string; pal_cn?: string; rate?: number; is_boss?: boolean }>;
+  total: number;
+};
+
+export type RecipeCard = {
+  type: "recipe";
+  item: string;
+  recipe: Array<{ station?: string; material?: string; count?: number }>;
+  total: number;
+};
+
+export type SkillsCard = {
+  type: "skills";
+  pal: { id?: string; cn_name?: string };
+  skills: Array<{ waza_id?: string; cn_name?: string; learn_level?: number; element?: string; power?: number }>;
+  total: number;
+};
+
+export type PalDetailCard = {
+  type: "pal_detail";
+  pal_id?: string;
+  cn_name?: string;
+  stats?: Record<string, number | string>;
+  skill_count?: number;
+  drop_count?: number;
+};
+
+export type DataCard = PassiveCard | DropCard | RecipeCard | SkillsCard | PalDetailCard;
 
 export type AgentAction = {
   action:
@@ -66,6 +108,7 @@ export type AgentData = {
   messages: Array<{ role: "assistant"; content: string }>;
   actions: AgentAction[];
   state_snapshot: AgentStateSnapshot;
+  data_cards?: DataCard[];
   meta?: Record<string, unknown>;
 };
 

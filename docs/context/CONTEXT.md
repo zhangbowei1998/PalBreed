@@ -37,6 +37,8 @@ pl-agent/
 │   │   ├── DATABASE_DESIGN.md        ← v1.1 基础 5 表
 │   │   ├── DATABASE_DESIGN_TCIMBA_V2.md ← tc-imba 全量 22 表扩展设计
 │   │   ├── TCIMBA_DATA_DEVELOPMENT_PLAN.md ← tc-imba 数据接入开发计划
+│   │   ├── TIER_INTEGRATION_PLAN.md ← API/Agent/前端三层接入计划
+│   │   ├── TIER_IMPLEMENTATION_PLAN.md ← 三层接入详细执行计划
 │   │   ├── MIGRATION_PLAN.md
 │   │   └── PROJECT_STRUCTURE.md
 │   ├── context/          ← AI 接手上下文
@@ -216,8 +218,14 @@ v0.4 (当前):  palworld.tc-imba.com → scripts/convert_tcimba.py → pal_data.
 - 数据库已扩展为 22 表（5 基础 + 帕鲁详情/技能/被动/物品/掉落/召唤），设计见 [DATABASE_DESIGN_TCIMBA_V2.md](../architecture/DATABASE_DESIGN_TCIMBA_V2.md)
 - 导入: `scripts/fetch_tcimba.py`（抓取 13 文件）+ `scripts/validate_tcimba.py`（校验）+ `scripts/seed_tcimba_full.py`（幂等灌入 22 表，Docker entrypoint 使用）
 - 适配器: `adapters/tcimba/`（parser/adapter → TciDataBundle）+ `adapters/postgres/ext_writer.py`
-- 新查询: `queries.py` S6-S10（被动→帕鲁 / 技能 / 掉落反查 / 配方链 / 帕鲁详情）+ 端点 `/api/pals/{id}/detail` `/api/passives` `/api/items/{name}/recipe` `/api/items/{name}/drops`
+- 新查询: `queries.py` S6-S10（被动→帕鲁 / 技能 / 掉落反查 / 配方链 / 帕鲁详情）+ 端点 `/api/pals/{id}/detail` `/api/pals/{id}/skills` `/api/passives` `/api/items/{name}/recipe` `/api/items/{name}/drops`
 - 开发计划: [TCIMBA_DATA_DEVELOPMENT_PLAN.md](../architecture/TCIMBA_DATA_DEVELOPMENT_PLAN.md)
+
+**三层接入（已实现，见 [TIER_IMPLEMENTATION_PLAN.md](../architecture/TIER_IMPLEMENTATION_PLAN.md)）**:
+- Agent 工具: `tools/pal_info.py` 新增 5 个（`query_pal_detail`/`query_pal_skills`/`query_pals_by_passive`/`query_item_drops`/`query_item_recipe`），`build_breeding_tools` 共 9 个
+- Agent client: `clients/breeding_api_client.py` 新增 5 方法（detail_full/skills/by_passive/recipe/drops）
+- 提示词: `assistant.md` 规则 7 改为资源/物品走工具、规则 8 数据源改 tc-imba、新增规则 9（被动/技能/详情类）
+- data_cards: `interaction/presenter.build_data_cards` 从工具结果组装卡片 → `workflow.handle_chat` 注入 `data_cards` → agent-web 透传 → 前端 `components/DataCardList.tsx` 渲染（被动/掉落/配方/技能/详情摘要）
 
 本地数据: `data/processed/pal_data.json`（由 `scripts/convert_tcimba.py` 从 tc-imba 生成）+ `data/tc-imba/`（原始数据）。
 

@@ -20,6 +20,8 @@ pl-agent/
 │   │   ├── DATABASE_DESIGN.md       ← ★ 数据库 ERD + DDL (v1.1 基础 5 表)
 │   │   ├── DATABASE_DESIGN_TCIMBA_V2.md ← ★ tc-imba 全量 22 表扩展设计
 │   │   ├── TCIMBA_DATA_DEVELOPMENT_PLAN.md ← ★ tc-imba 数据接入开发计划 (P0-P7)
+│   │   ├── TIER_INTEGRATION_PLAN.md ← ★ API/Agent/前端三层接入计划
+│   │   ├── TIER_IMPLEMENTATION_PLAN.md ← ★ 三层接入详细执行计划 (A-H)
 │   │   ├── MIGRATION_PLAN.md       ← 迁移开发计划
 │   │   └── PROJECT_STRUCTURE.md
 │   ├── context/
