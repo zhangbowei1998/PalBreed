@@ -30,6 +30,7 @@ import asyncpg  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 DDL_003 = ROOT / "data/sql/003_tcimba_extend.sql"
+DDL_004 = ROOT / "data/sql/004_text2sql.sql"
 
 
 async def _apply_ddl(conn: asyncpg.Connection, path: Path) -> None:
@@ -56,13 +57,17 @@ async def main() -> None:
 
     data_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "data/tc-imba"
 
-    # 1. 幂等应用 DDL（对已有库补 22 表）
+    # 1. 幂等应用 DDL（对已有库补 22 表 + Text-to-SQL 白名单视图）
     conn = await asyncpg.connect(url)
     try:
         if DDL_003.exists():
             await _apply_ddl(conn, DDL_003)
         else:
             print(f"⚠️ 未找到 {DDL_003}，跳过 DDL")
+        if DDL_004.exists():
+            await _apply_ddl(conn, DDL_004)
+        else:
+            print(f"⚠️ 未找到 {DDL_004}，跳过 DDL")
     finally:
         await conn.close()
 

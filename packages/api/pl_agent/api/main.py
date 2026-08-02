@@ -39,8 +39,10 @@ async def lifespan(application: FastAPI):
 app.router.lifespan_context = lifespan
 
 from .routes.query import router  # noqa: E402
+from .routes.sql_query import router as sql_query_router  # noqa: E402
 
 app.include_router(router)
+app.include_router(sql_query_router)
 
 
 @app.get("/health")

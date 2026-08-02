@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from sqlalchemy import and_, func, select, true
+from sqlalchemy import and_, func, select, text, true
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import aliased, selectinload
 
@@ -51,6 +51,17 @@ class OrmQueryService:
 
     async def close(self) -> None:
         await self._engine.dispose()
+
+    async def execute_raw_sql(self, sql: str) -> dict:
+        """执行一条只读 SQL（Text-to-SQL 兜底用），返回 {columns, rows, row_count}。
+
+        调用方（路由安全层）已校验：单条 SELECT、白名单视图、强制 LIMIT。
+        """
+        async with self._session_factory() as session:
+            result = await session.execute(text(sql))
+            columns = list(result.keys())
+            rows = [list(r) for r in result.all()]
+            return {"columns": columns, "rows": rows, "row_count": len(rows)}
 
     async def load_all_pals(self) -> list[Pal]:
         """Load all pals with related element/alias/work rows."""

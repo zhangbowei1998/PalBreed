@@ -151,6 +151,7 @@ def build_breeding_tools(
         QueryPalsByPassiveTool,
         QueryPalSkillsTool,
     )
+    from .sql_query import RunSqlQueryTool
 
     return [
         QueryParentPairsTool(client),
@@ -163,4 +164,6 @@ def build_breeding_tools(
         QueryPalsByPassiveTool(client),
         QueryItemDropsTool(client),
         QueryItemRecipeTool(client),
+        # Text-to-SQL 兜底（长尾问题）
+        RunSqlQueryTool(client),
     ]

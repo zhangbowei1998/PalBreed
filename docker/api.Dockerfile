@@ -25,6 +25,7 @@ COPY packages/adapters/adapters /app/packages/adapters/adapters
 COPY data/processed/ /app/data/processed/
 COPY data/tc-imba/ /app/data/tc-imba/
 COPY data/sql/003_tcimba_extend.sql /app/data/sql/003_tcimba_extend.sql
+COPY data/sql/004_text2sql.sql /app/data/sql/004_text2sql.sql
 COPY scripts/seed_docker.py /app/scripts/seed_docker.py
 COPY scripts/seed_tcimba_full.py /app/scripts/seed_tcimba_full.py
 COPY scripts/seed_breeding_rules.py /app/scripts/seed_breeding_rules.py

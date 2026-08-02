@@ -130,3 +130,16 @@ class BreedingApiClient:
         if not isinstance(pals, list):
             raise InvalidPayloadError("pals should be a list")
         return pals
+
+    async def run_sql_query(self, sql: str) -> dict:
+        """Text-to-SQL 兜底：执行一条只读 SELECT（经 api 安全层）。
+
+        返回 {columns, rows, row_count}；非 SELECT / 非白名单 / 超时会抛
+        UpstreamServiceError（由上层转 ToolError 给 LLM 修正）。
+        """
+        data = await self._request(
+            "POST", "/api/sql/query", json={"sql": sql}
+        )
+        if not isinstance(data, dict) or "columns" not in data:
+            raise InvalidPayloadError("sql query result should contain columns")
+        return data
