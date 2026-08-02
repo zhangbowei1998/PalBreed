@@ -43,16 +43,22 @@ function PalNode({
   palProfiles,
   pairByChild,
   isRoot = false,
+  visited,
 }: {
   token: string;
   palNameToId: Record<string, string>;
   palProfiles: Record<string, PalProfile>;
   pairByChild: Map<string, SelectedPair>;
   isRoot?: boolean;
+  visited?: Set<string>;
 }) {
   const profile = resolveProfile(token, palNameToId, palProfiles);
   const displayName = profile?.cn_name ?? token;
   const pair = pairByChild.get(token);
+  // 路径级防循环：同种配种（same_species，如 空涡龙+空涡龙）会 self-reference，
+  // 若不记录已访问节点会无限递归导致浏览器崩溃。
+  const path = visited ? new Set(visited) : new Set<string>();
+  path.add(token);
 
   return (
     <li>
@@ -69,18 +75,24 @@ function PalNode({
       </div>
       {pair && (
         <ul>
-          <PalNode
-            token={pair.parent_a_id}
-            palNameToId={palNameToId}
-            palProfiles={palProfiles}
-            pairByChild={pairByChild}
-          />
-          <PalNode
-            token={pair.parent_b_id}
-            palNameToId={palNameToId}
-            palProfiles={palProfiles}
-            pairByChild={pairByChild}
-          />
+          {!path.has(pair.parent_a_id) && (
+            <PalNode
+              token={pair.parent_a_id}
+              palNameToId={palNameToId}
+              palProfiles={palProfiles}
+              pairByChild={pairByChild}
+              visited={path}
+            />
+          )}
+          {!path.has(pair.parent_b_id) && (
+            <PalNode
+              token={pair.parent_b_id}
+              palNameToId={palNameToId}
+              palProfiles={palProfiles}
+              pairByChild={pairByChild}
+              visited={path}
+            />
+          )}
         </ul>
       )}
     </li>
@@ -100,10 +112,11 @@ function buildRouteText(
     return profile?.cn_name ?? token;
   };
 
-  const visit = (childToken: string, indent: number) => {
+  const visit = (childToken: string, indent: number, seen: Set<string> = new Set()) => {
     const pair = pairByChild.get(childToken);
     const childName = resolveName(childToken);
-    if (!pair) {
+    // 防循环：同种配种 self-reference（如 空涡龙+空涡龙）会无限递归
+    if (!pair || seen.has(childToken)) {
       lines.push(`${"  ".repeat(indent)}${childName}`);
       return;
     }
@@ -111,8 +124,9 @@ function buildRouteText(
     const b = resolveName(pair.parent_b_id);
     const prefix = indent === 0 ? "" : `${"  ".repeat(indent)}└─ `;
     lines.push(`${prefix}${childName} = ${a} + ${b}`);
-    visit(pair.parent_a_id, indent + 1);
-    visit(pair.parent_b_id, indent + 1);
+    const nextSeen = new Set(seen).add(childToken);
+    visit(pair.parent_a_id, indent + 1, nextSeen);
+    visit(pair.parent_b_id, indent + 1, nextSeen);
   };
 
   visit(rootToken, 0);
@@ -147,37 +161,57 @@ export function BreedingTree({ targetPal, selectedPairs, palNameToId, palProfile
     try {
       await navigator.clipboard.writeText(content);
       message.success("配种路线已复制，可粘贴到微信发送");
+      return;
     } catch {
-      message.error("复制失败，请手动选择文本");
+      // 非安全上下文（http 线上部署）navigator.clipboard 不可用 → 回退 execCommand
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = content;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        message.success("配种路线已复制，可粘贴到微信发送");
+      } catch {
+        message.error("复制失败，请手动选择文本");
+      }
     }
   }
 
-  /** 把 CDN 头像换成同源代理返回的 dataURL，供 html-to-image 无 CORS 渲染。 */
+  /** 把 CDN/跨域头像换成 dataURL，供 html-to-image 无 CORS 渲染。
+   *  - cdn.paldb.cc（旧）：走 /agent/pal-image 代理
+   *  - resource-palworld.tc-imba.com（tc-imba 新）：有 CORS(Allow-Origin:*)，直接 fetch 转 dataURL
+   */
   async function embedImages(node: HTMLElement): Promise<() => void> {
     const imgs = Array.from(node.querySelectorAll<HTMLImageElement>("img"));
-    const tasks = imgs
-      .filter((img) => (img.getAttribute("src") ?? "").includes("cdn.paldb.cc"))
-      .map(async (img) => {
-        const src = img.getAttribute("src") ?? "";
-        const match = src.match(/\/T_([^/]+?)_icon_normal\.webp$/);
-        if (!match) return;
-        try {
-          const res = await fetch(`/agent/pal-image/${match[1]}`);
-          if (!res.ok) return;
-          const blob = await res.blob();
-          const dataUrl = await new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(String(reader.result));
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-          });
-          const original = src;
-          img.setAttribute("src", dataUrl);
-          img.setAttribute("data-original-src", original);
-        } catch {
-          // 保持原样
+    const tasks = imgs.map(async (img) => {
+      const src = img.getAttribute("src") ?? "";
+      if (!src.includes("cdn.paldb.cc") && !src.includes("resource-palworld.tc-imba.com")) {
+        return;
+      }
+      let dataUrl: string | null = null;
+      try {
+        if (src.includes("cdn.paldb.cc")) {
+          const match = src.match(/\/T_([^/]+?)_icon_normal\.webp$/);
+          if (match) {
+            const res = await fetch(`/agent/pal-image/${match[1]}`);
+            if (res.ok) dataUrl = await blobToDataUrl(await res.blob());
+          }
+        } else {
+          const res = await fetch(src);
+          if (res.ok) dataUrl = await blobToDataUrl(await res.blob());
         }
-      });
+      } catch {
+        // 保持原样
+      }
+      if (dataUrl) {
+        const original = src;
+        img.setAttribute("src", dataUrl);
+        img.setAttribute("data-original-src", original);
+      }
+    });
     await Promise.all(tasks);
     return () => {
       imgs.forEach((img) => {
@@ -188,6 +222,15 @@ export function BreedingTree({ targetPal, selectedPairs, palNameToId, palProfile
         }
       });
     };
+  }
+
+  function blobToDataUrl(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
   }
 
   async function copyImage() {

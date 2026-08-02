@@ -21,10 +21,10 @@ dist/
 .env.*
 !.env.example
 
-# 数据（原始 HTML 大，不进镜像；processed 由 Dockerfile 显式 COPY）
+# 数据（原始 HTML 大，不进镜像；processed/sql 由 Dockerfile 显式 COPY）
 data/raw/
 data/archive/
-data/sql/
+# data/sql/ — 003_tcimba_extend.sql 需进镜像（seed_tcimba_full.py 在容器内应用）
 
 # IDE / OS
 .vscode/

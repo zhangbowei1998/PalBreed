@@ -75,8 +75,10 @@ def parse_pal_raw(pals_json: dict, breeding_json: dict, zh: dict, en: dict) -> l
             "zukan_index": br.get("zukanIndex", 0),
             "zukan_index_suffix": br.get("zukanIndexSuffix", ""),
             "icon": br.get("icon", ""),
-            "cn_name": zh.get(pid, {}).get("name", pid),
-            "en_name": en.get(pid, {}).get("name", pid),
+            # 源数据个别名字带首尾空白（如 LilyQueen_Dark "黑月女王 "）会
+            # 导致父帕鲁名 strip 后无法精确匹配 → 424；统一去除空白。
+            "cn_name": str(zh.get(pid, {}).get("name", pid)).strip(),
+            "en_name": str(en.get(pid, {}).get("name", pid)).strip(),
             "combi_rank": br["rank"],
             "rarity": attr.get("rarity", 1),
             "elements": elements,
