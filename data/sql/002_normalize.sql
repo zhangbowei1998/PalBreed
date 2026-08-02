@@ -19,6 +19,7 @@ CREATE TABLE pal (
     combi_rank  INTEGER NOT NULL,
     rarity      INTEGER NOT NULL DEFAULT 1,
     is_wild     BOOLEAN NOT NULL DEFAULT FALSE,
+    breed_child BOOLEAN NOT NULL DEFAULT TRUE,
     image_url   TEXT,
     wiki_url    TEXT,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -135,7 +136,8 @@ CREATE INDEX idx_element_type ON pal_element(element_type);
 CREATE INDEX idx_ws_type_level ON work_suitability(work_type, level DESC);
 
 CREATE INDEX idx_rule_child ON breeding_rule(child_id);
-CREATE UNIQUE INDEX idx_rule_child_type ON breeding_rule(child_id, rule_type);
+-- 同子代可有多个固定配方（同一父母组合唯一）
+CREATE UNIQUE INDEX idx_rule_pair ON breeding_rule(child_id, parent_a_id, parent_b_id);
 
 -- ============================================================================
 -- 4. 触发器

@@ -83,14 +83,21 @@ class DataLoader:
         return [p for p in self._pals.values() if p.is_wild]
 
     def find_nearest_rank(self, target_rank: float) -> Pal:
-        """找到 CombiRank 最接近 target_rank 的帕鲁."""
+        """找到 CombiRank 最接近 target_rank 的帕鲁.
+
+        仅考虑 breed_child=True 的帕鲁（Palworld 中部分稀有/变种帕鲁不能作为
+        配种结果产出，rank 落在它们上时会取最近的可配种帕鲁）。
+        """
         self._ensure_loaded()
         if not self._pals_by_rank:
             raise ValueError("no pals loaded")
+        breedable = [p for p in self._pals_by_rank if p.breed_child]
+        if not breedable:
+            raise ValueError("no breedable pals loaded")
 
-        nearest = self._pals_by_rank[0]
+        nearest = breedable[0]
         min_diff = abs(nearest.combi_rank - target_rank)
-        for p in self._pals_by_rank[1:]:
+        for p in breedable[1:]:
             diff = abs(p.combi_rank - target_rank)
             if diff < min_diff:
                 nearest = p

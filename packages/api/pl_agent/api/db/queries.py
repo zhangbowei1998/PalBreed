@@ -147,10 +147,54 @@ class OrmQueryService:
     async def query_parent_pairs_by_rank(
         self, combi_rank: int, child_game_id: str
     ) -> list[dict]:
+        """按 Palworld 配种规则查询子代的可选父母组合（反向）。
+
+        规则: avg = (A.rank + B.rank) / 2, 子代 = rank 最接近 avg 的
+        breed_child=True 帕鲁（不可配种子代不会作为结果产出, 并列取 rank 较小者）。
+
+        因此子代 C 的独占 rank 区间为:
+            prev_r + C.rank < A.rank + B.rank <= C.rank + next_r
+        其中 prev_r / next_r 为 C 在 breed_child=True 帕鲁排序中的相邻 rank。
+        """
         pa = aliased(PalModel)
         pb = aliased(PalModel)
 
         async with self._session_factory() as session:
+            # 1. 子代是否可配种（breed_child=False 仅能通过独特组合获得）
+            child_ok = await session.execute(
+                select(PalModel.breed_child).where(
+                    PalModel.game_id == child_game_id
+                )
+            )
+            if child_ok.scalar() is False:
+                return []
+
+            # 2. 所有可配种帕鲁的 rank（升序）→ 计算 C 的独占区间
+            rank_rows = await session.execute(
+                select(PalModel.combi_rank)
+                .where(PalModel.breed_child.is_(True))
+                .order_by(PalModel.combi_rank)
+            )
+            breedable = [r[0] for r in rank_rows.all()]
+            if combi_rank not in breedable:
+                return []
+            idx = breedable.index(combi_rank)
+            prev_r = breedable[idx - 1] if idx > 0 else None
+            next_r = breedable[idx + 1] if idx + 1 < len(breedable) else None
+            sum_min = prev_r + combi_rank + 1 if prev_r is not None else None
+            sum_max = combi_rank + next_r if next_r is not None else None
+
+            # 3. 查询父母对: A+B ∈ [sum_min, sum_max]
+            conds = [
+                pa.game_id != child_game_id,
+                pb.game_id != child_game_id,
+                pa.id <= pb.id,
+            ]
+            if sum_min is not None:
+                conds.append(pa.combi_rank + pb.combi_rank >= sum_min)
+            if sum_max is not None:
+                conds.append(pa.combi_rank + pb.combi_rank <= sum_max)
+
             stmt = (
                 select(
                     pa.cn_name.label("pa_cn"),
@@ -164,14 +208,7 @@ class OrmQueryService:
                 )
                 .select_from(pa)
                 .join(pb, true())
-                .where(
-                    and_(
-                        func.round((pa.combi_rank + pb.combi_rank) / 2.0) == combi_rank,
-                        pa.game_id != child_game_id,
-                        pb.game_id != child_game_id,
-                        pa.id <= pb.id,
-                    )
-                )
+                .where(and_(*conds))
                 .order_by(pa.combi_rank)
             )
             rows = await session.execute(stmt)

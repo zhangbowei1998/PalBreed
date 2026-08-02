@@ -47,8 +47,10 @@
 
 ## 数据来源
 
-- 主数据源: [paldb.cc](https://paldb.cc/cn/) — 服务端渲染 HTML，可爬取解析。
-- 配种公式: `子代 = 最接近 round((父A.CombiRank + 父B.CombiRank) / 2) 的帕鲁`
+- 主数据源: [palworld.tc-imba.com](https://palworld.tc-imba.com/) — 玩家自建、从游戏文件提取，JSON 数据（`data-palworld.tc-imba.com/pals.json` + `breeding.json` + locales）。生成脚本 `scripts/convert_tcimba.py`。
+- 配种规则:
+  - `avg = (父A.rank + 父B.rank) / 2`，子代 = rank 最接近 avg 的 **breed_child=true** 帕鲁（`pal.breed_child` 字段标记不可配种子代，如梆梆鲶/空涡龙/变种）
+  - `breed_child=false` 的帕鲁只能通过**独特组合**获得（`breeding_rule` 表：same_species / fixed_pair）
 - 工作适应性: 12 种类型，等级范围 0-10（不设硬上限）。
 
 ## 命名规范

@@ -21,6 +21,7 @@ class PalModel(Base):
     combi_rank: Mapped[int] = mapped_column(Integer, nullable=False)
     rarity: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     is_wild: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    breed_child: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     image_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     wiki_url: Mapped[str | None] = mapped_column(Text, nullable=True)
 

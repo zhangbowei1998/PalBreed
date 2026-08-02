@@ -14,10 +14,11 @@
 
 | 术语 | 含义 |
 |------|------|
-| **CombiRank** | 官方繁殖力值，配种计算唯一核心参数。子代 = 父母 CombiRank 平均值取最近 |
+| **CombiRank** | 官方繁殖力值。子代 = rank 最接近 avg(父母 rank 平均) 的 **可配种(breed_child=true)** 帕鲁 |
+| **breed_child** | 是否可作为配种子代。False 的帕鲁（稀有/变种/传说）只能通过独特组合获得 |
 | **基础帕鲁** | `is_wild=true` 的帕鲁，野外可直接捕获 |
-| **配种公式** | SQL: `round((a.combi_rank + b.combi_rank) / 2) = child.combi_rank` |
-| **查询方式** | PostgreSQL 5 表规范化，CROSS JOIN + breeding_rule 守卫查询（无 JSON fallback） |
+| **配种公式** | avg=(a.rank+b.rank)/2 → 子代=最近的 breed_child=true 帕鲁；独特组合（breeding_rule）优先 |
+| **查询方式** | PostgreSQL 5 表规范化，独特组合 + rank 独占区间查询（无 JSON fallback） |
 
 ---
 
@@ -51,9 +52,9 @@ pl-agent/
 │   │   └── adapters/
 │   │       ├── base.py             ← Adapter 抽象
 │   │       ├── validator.py        ← 数据校验
-│   │       ├── paldb/              ← paldb.cc 适配器
-│   │       │   ├── scraper.py      ← HTML 爬虫
-│   │       │   ├── parser.py       ← HTML 解析
+│   │       ├── tcimba/             ← tc-imba 数据源 (scripts/convert_tcimba.py)
+│   │       │   ├── scraper.py      ← JSON 拉取
+│   │       │   ├── parser.py       ← 字段映射
 │   │       │   ├── adapter.py      ← 数据适配
 │   │       │   └── __tests__/      ← 解析器测试 (5)
 │   │       ├── postgres/           ← PostgreSQL 适配器
@@ -109,13 +110,14 @@ pl-agent/
 ## 数据流
 
 ```
-v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 表)
+v0.4 (当前):  palworld.tc-imba.com → scripts/convert_tcimba.py → pal_data.json
+            → seed (pal + breeding_rule 独特组合) → PostgreSQL (5 表)
                                                          │
                                           ┌──────────────┴──────────────────┐
                                           ▼                                 ▼
                                     API 启动加载                        API 运行时
-                                    ORM load_all_pals                 ORM 查询 (CROSS JOIN)
-                                    (selectinload 拼装 Pal)           + breeding_rule 守卫
+                                    ORM load_all_pals                 ORM 查询 (独特组合
+                                    (selectinload 拼装 Pal)           + rank 独占区间)
                                                                       属性筛选 (参数化 JOIN)
                                                                       统计 (GROUP BY)
 ```
@@ -187,17 +189,23 @@ v0.3 (当前):  paldb.cc → scraper → parser → adapter → PostgreSQL (5 �
 
 ## 数据来源
 
-**主力**: [paldb.cc](https://paldb.cc/cn/) — 活跃维护 (v1.0.2, 2026-07-29)，中文，服务端渲染 HTML，可爬取。
+**主力**: [palworld.tc-imba.com](https://palworld.tc-imba.com/) — 玩家自建，**从游戏文件提取**，含完整帕鲁属性与配种数据（rank / breedChild / 独特组合）。不再使用 paldb.cc / palworld.gg。
 
-**关键字段** (从 paldb.cc HTML 提取):
+**数据接口** (`data-palworld.tc-imba.com`):
 
-| 字段 | HTML 定位 | 用途 |
-|------|----------|------|
-| `CombiRank` | `CombiRank {数值}` | 配种计算 |
-| 工作适应性 | `{工种} Lv{等级}` | 属性反向查询 |
-| `ZukanIndex` | `{中文名} #{编号}` | 唯一编号 |
-| `ElementType1` | `ElementType1 {属性}` | 属性分类 |
-| `Rarity` | `Rarity {数值}` | 稀有度 |
+| 文件 | 内容 |
+|------|------|
+| `pals.json` | 帕鲁属性 (elements/rarity/work/stats) |
+| `breeding.json` | 配种: `pals[].rank + breedChild`、`combos[]` 独特组合 |
+| `locales/zh-CN/pals.json` | 中文名 |
+| `locales/en-US/pals.json` | 英文名 |
+
+**配种规则**:
+- `avg = (A.rank + B.rank) / 2`
+- 子代 = rank 最接近 avg 的 `breed_child=true` 帕鲁（不可配种帕鲁不作为结果产出）
+- `breed_child=false` 帕鲁只能通过独特组合（same_species / fixed_pair）获得
+
+本地数据: `data/processed/pal_data.json`（由 `scripts/convert_tcimba.py` 从 tc-imba 生成）+ `data/tc-imba/`（原始数据）。
 
 **备选**: 游戏文件解包 (FModel 导出 DT_PalCombiRank.uasset 等)
 
@@ -284,20 +292,22 @@ API 运行约束：
 ## 配种算法
 
 ```sql
--- Step 0: 查特殊规则 (unbreedable/same_species/fixed_pair)
+-- Step 0: 查独特组合 (same_species/fixed_pair) — breed_child=false 的帕鲁只能通过它获得
 SELECT br.rule_type, br.parent_a_id, br.parent_b_id
 FROM breeding_rule br JOIN pal p ON br.child_id = p.id
 WHERE p.game_id = $target_game_id;
 
--- Step 1: CombiRank 公式 (无特殊规则时)
+-- Step 1: CombiRank 独占区间 (只考虑 breed_child=true 的子代)
+-- 子代 C 的独占区间: prev_rank + C.rank < A.rank + B.rank <= C.rank + next_rank
+-- (prev/next 为 C 在 breed_child=true 帕鲁排序中的相邻 rank)
 SELECT a.cn_name, b.cn_name, a.combi_rank, b.combi_rank
 FROM pal a, pal b
-WHERE round((a.combi_rank + b.combi_rank) / 2.0) = $target_rank
+WHERE a.combi_rank + b.combi_rank BETWEEN $sum_min AND $sum_max
   AND a.game_id != $target_game_id AND b.game_id != $target_game_id
   AND a.id <= b.id;
 ```
 
-两步流程: 先查 breeding_rule 守卫 (unbreedable 直接返回空)，再走 CROSS JOIN。
+两步流程: 独特组合（same_species/fixed_pair）与 rank 公式结果合并返回；breed_child=false 的子代 rank 公式返回空。
 返回一级父母对，点击继续查。无递归 BFS。
 
 ---

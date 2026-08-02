@@ -16,8 +16,8 @@ logger = logging.getLogger(__name__)
 
 UPSERT_PAL = """
 INSERT INTO pal (game_id, zukan_index, cn_name, en_name,
-                 combi_rank, rarity, is_wild, image_url, wiki_url)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                 combi_rank, rarity, is_wild, breed_child, image_url, wiki_url)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 ON CONFLICT (game_id) DO UPDATE SET
     zukan_index = EXCLUDED.zukan_index,
     cn_name = EXCLUDED.cn_name,
@@ -25,6 +25,7 @@ ON CONFLICT (game_id) DO UPDATE SET
     combi_rank = EXCLUDED.combi_rank,
     rarity = EXCLUDED.rarity,
     is_wild = EXCLUDED.is_wild,
+    breed_child = EXCLUDED.breed_child,
     image_url = EXCLUDED.image_url,
     wiki_url = EXCLUDED.wiki_url
 RETURNING id
@@ -92,6 +93,7 @@ class PostgresWriter:
                     pal.combi_rank,
                     pal.rarity,
                     pal.is_wild,
+                    pal.breed_child,
                     pal.image_url,
                     pal.wiki_url,
                 )

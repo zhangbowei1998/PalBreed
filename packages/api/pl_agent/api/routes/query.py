@@ -149,12 +149,13 @@ async def _breeding_query(request: Request, pal, show_all: bool = False):
     orm_service: OrmQueryService = request.app.state.orm_service
     pal_dict = _pal_to_dict(pal)
     pairs = []
+    unbreedable = False
 
-    # 第 0 步: 查特殊配种规则
+    # 第 0 步: 查特殊配种规则（独特组合: same_species / fixed_pair）
     rules = await orm_service.get_breeding_rules_by_game_id(pal.id)
     for r in rules:
         if r["rule_type"] == "unbreedable":
-            pairs = []
+            unbreedable = True
             break
         if r["rule_type"] == "same_species":
             pairs.append(
@@ -165,7 +166,7 @@ async def _breeding_query(request: Request, pal, show_all: bool = False):
                     method="same_species",
                 )
             )
-            break
+            continue
         if r["rule_type"] == "fixed_pair":
             if r["parent_a_id"] is None or r["parent_b_id"] is None:
                 continue
@@ -180,13 +181,10 @@ async def _breeding_query(request: Request, pal, show_all: bool = False):
                         method="fixed_pair",
                     )
                 )
-            break
 
-    # 第 1 步: CombiRank 公式 (仅当无特殊规则命中时)
-    if not rules or all(
-        r["rule_type"] not in ("unbreedable", "same_species", "fixed_pair")
-        for r in rules
-    ):
+    # 第 1 步: CombiRank 公式（不可配种跳过; query_parent_pairs_by_rank
+    # 内部已按 breed_child 过滤, breed_child=False 的帕鲁会返回空）
+    if not unbreedable:
         rows = await orm_service.query_parent_pairs_by_rank(pal.combi_rank, pal.id)
         for r in rows:
             pairs.append(

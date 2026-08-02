@@ -110,6 +110,7 @@ class Pal:
         rarity:       稀有度 1-10.
         work_suitability: 工作适应性.
         is_wild:      是否野外可直接捕获.
+        breed_child:  是否可作为配种子代 (False 的帕鲁不会作为配种结果产出).
         aliases:      别称/昵称列表.
         image_url:    图片 URL.
         wiki_url:     Wiki 页面 URL.
@@ -125,6 +126,7 @@ class Pal:
     rarity: int
     work_suitability: WorkSuitability
     is_wild: bool
+    breed_child: bool = True
 
     # ---- optional metadata ----
     aliases: list[str] = field(default_factory=list)
@@ -150,6 +152,7 @@ class Pal:
             "rarity": self.rarity,
             "work_suitability": self.work_suitability.to_dict(),
             "is_wild": self.is_wild,
+            "breed_child": self.breed_child,
             "aliases": self.aliases,
             "image_url": self.image_url,
             "wiki_url": self.wiki_url,
@@ -174,6 +177,7 @@ class Pal:
             rarity=d.get("rarity", 1),
             work_suitability=ws,
             is_wild=d.get("is_wild", False),
+            breed_child=d.get("breed_child", True),
             aliases=d.get("aliases", []),
             image_url=d.get("image_url"),
             wiki_url=d.get("wiki_url"),
@@ -312,6 +316,7 @@ class PalRow:
     combi_rank: int
     rarity: int
     is_wild: bool
+    breed_child: bool = True
     image_url: Optional[str] = None
     wiki_url: Optional[str] = None
 

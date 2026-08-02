@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS pals (
     id            TEXT PRIMARY KEY,
     combi_rank    INTEGER NOT NULL,
     is_wild       BOOLEAN NOT NULL DEFAULT FALSE,
+    breed_child   BOOLEAN NOT NULL DEFAULT TRUE,
     handiwork               INTEGER NOT NULL DEFAULT 0,
     kindling                INTEGER NOT NULL DEFAULT 0,
     watering                INTEGER NOT NULL DEFAULT 0,

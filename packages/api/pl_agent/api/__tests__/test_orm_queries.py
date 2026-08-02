@@ -46,15 +46,41 @@ class _FakeExecuteResult:
         return _FakeMappingsResult(self._rows)
 
 
+class _FakeExecuteResult:
+    def __init__(self, rows):
+        self._rows = rows
+
+    def mappings(self):
+        return _FakeMappingsResult(self._rows)
+
+    def scalar(self):
+        if not self._rows:
+            return None
+        return self._rows[0] if not isinstance(self._rows, list) else self._rows[0][0]
+
+    def all(self):
+        return self._rows
+
+
 class _FakeSession:
-    def __init__(self, *, scalars_items=None, execute_rows=None):
+    """execute 支持按调用顺序返回不同结果（execute_queue）。"""
+
+    def __init__(self, *, scalars_items=None, execute_rows=None, execute_queue=None):
         self._scalars_items = scalars_items or []
         self._execute_rows = execute_rows or []
+        self._queue = list(execute_queue) if execute_queue else None
+        self._call = 0
 
     async def scalars(self, _stmt):
         return _FakeScalarsResult(self._scalars_items)
 
     async def execute(self, _stmt):
+        if self._queue is not None:
+            idx = self._call
+            self._call += 1
+            if idx < len(self._queue):
+                item = self._queue[idx]
+                return _FakeExecuteResult(item)
         return _FakeExecuteResult(self._execute_rows)
 
 
@@ -77,9 +103,13 @@ class _FakeSessionFactory:
         return _FakeSessionContext(self._session)
 
 
-def _build_service(*, scalars_items=None, execute_rows=None):
+def _build_service(*, scalars_items=None, execute_rows=None, execute_queue=None):
     engine = SimpleNamespace(dispose=AsyncMock())
-    session = _FakeSession(scalars_items=scalars_items, execute_rows=execute_rows)
+    session = _FakeSession(
+        scalars_items=scalars_items,
+        execute_rows=execute_rows,
+        execute_queue=execute_queue,
+    )
     return OrmQueryService(engine, _FakeSessionFactory(session)), engine
 
 
@@ -227,26 +257,49 @@ async def test_breeding_rule_and_parent_queries_map_rows():
 
 @pytest.mark.asyncio
 async def test_query_parent_pairs_by_rank_maps_rows():
+    """配种反向查询：按独占区间匹配（考虑 breed_child）。"""
+    # 依次执行: 1) 查 child breed_child  2) 查 breedable ranks  3) 查父母对
     service, _engine = _build_service(
-        execute_rows=[
-            {
-                "pa_cn": "棉悠悠",
-                "pa_id": "Lamball",
-                "pa_rank": 1470,
-                "pa_wild": True,
-                "pb_cn": "捣蛋猫",
-                "pb_id": "Cattiva",
-                "pb_rank": 1460,
-                "pb_wild": True,
-            }
+        execute_queue=[
+            [(True,)],  # child_ok: breed_child=True
+            [
+                (1450,),
+                (1470,),
+                (1490,),
+            ],  # breedable ranks
+            [  # 父母对结果
+                {
+                    "pa_cn": "棉悠悠",
+                    "pa_id": "Lamball",
+                    "pa_rank": 1470,
+                    "pa_wild": True,
+                    "pb_cn": "捣蛋猫",
+                    "pb_id": "Cattiva",
+                    "pb_rank": 1460,
+                    "pb_wild": True,
+                }
+            ],
         ]
     )
 
-    pairs = await service.query_parent_pairs_by_rank(1465, "Anubis")
+    pairs = await service.query_parent_pairs_by_rank(1470, "Anubis")
 
     assert len(pairs) == 1
     assert pairs[0]["pa_id"] == "Lamball"
     assert pairs[0]["pb_id"] == "Cattiva"
+
+
+@pytest.mark.asyncio
+async def test_query_parent_pairs_by_rank_skips_non_breed_child():
+    """breed_child=False 的子代不应通过 rank 公式获得（返回空）。"""
+    service, _engine = _build_service(
+        execute_queue=[
+            [(False,)],  # child_ok: breed_child=False
+        ]
+    )
+
+    pairs = await service.query_parent_pairs_by_rank(1620, "LazyCatfish_Gold")
+    assert pairs == []
 
 
 @pytest.mark.asyncio
