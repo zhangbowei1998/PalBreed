@@ -70,6 +70,21 @@ def extract_breeding_target(message: str) -> str | None:
     return None
 
 
+def _compact_stats(stats: dict) -> str:
+    """把 stats 字典压缩成可读的一行，如 'HP 95 / 攻击 80 / 防御 70'。"""
+    if not stats:
+        return ""
+    order = ["hp", "attack", "defense", "magic", "magic_defense", "stamina"]
+    parts = []
+    for key in order:
+        if key in stats and stats[key] is not None:
+            parts.append(f"{key.title()} {stats[key]}")
+    for key, value in stats.items():
+        if value is not None and key not in order:
+            parts.append(f"{key} {value}")
+    return " / ".join(parts[:6])
+
+
 class StateConflictError(Exception):
     pass
 
@@ -199,6 +214,17 @@ class AgentWorkflow:
 
         if intent.intent == Intent.PAL_STATS:
             return await self._handle_pal_stats(data.session_id, state)
+
+        if intent.intent == Intent.PAL_DETAIL and intent.pal_name:
+            return await self._handle_pal_detail(data.session_id, intent.pal_name, state)
+
+        if intent.intent == Intent.ITEM_QUERY:
+            return await self._handle_item_query(data.session_id, intent.item_name, data.message, state)
+
+        if intent.intent == Intent.PASSIVE_QUERY and intent.passive_name:
+            return await self._handle_passive_query(
+                data.session_id, intent.passive_name, state
+            )
 
         return build_response(
             messages=[self._general_reply(data.message, intent.reason)],
@@ -475,6 +501,119 @@ class AgentWorkflow:
             actions=[],
             state=state,
         )
+
+    async def _handle_pal_detail(
+        self, session_id: str, pal_name: str, state: SessionState
+    ) -> dict:
+        """Fallback：帕鲁详情（属性/技能/掉落/伙伴技能）。"""
+        try:
+            pal = await self._client.resolve_pal(pal_name)
+            if not pal or not pal.get("id"):
+                return build_response(
+                    messages=[f"未找到帕鲁：{pal_name}"], actions=[], state=state
+                )
+            pal_id = pal.get("id")
+            pal_cn = pal.get("cn_name") or pal_name
+            detail = await self._client.get_pal_detail_full(pal_id)
+            skills = detail.get("skills") or []
+            drops = detail.get("drops") or []
+            stats = detail.get("stats") or {}
+            summary = [
+                f"【{pal_cn} 详情】",
+                f"- 可学技能：{len(skills)} 个",
+                f"- 击杀掉落：{len(drops)} 种",
+            ]
+            if stats:
+                summary.append(f"- 基础属性：{_compact_stats(stats)}")
+            return build_response(messages=["\n".join(summary)], actions=[], state=state)
+        except Exception as exc:  # noqa: BLE001
+            return build_response(
+                messages=[f"查询 {pal_name} 详情失败：{exc}"], actions=[], state=state
+            )
+
+    async def _handle_item_query(
+        self, session_id: str, item_name: str | None, raw: str, state: SessionState
+    ) -> dict:
+        """Fallback：物品掉落来源 / 制作配方。"""
+        name = (item_name or raw or "").strip()
+        if not name:
+            return build_response(
+                messages=["请告诉我你想查哪个物品/材料。"], actions=[], state=state
+            )
+        try:
+            # 制作类关键词 → 配方；否则优先掉落来源
+            if any(k in raw for k in ("怎么做", "制作", "配方", "合成")):
+                recipe = await self._client.get_item_recipe(name)
+                if recipe:
+                    first = recipe[0]
+                    station = first.get("station") or first.get("facility") or ""
+                    mats = first.get("materials") or []
+                    mat_str = "、".join(
+                        f"{m.get('name', m.get('item_name', ''))}×{m.get('count', m.get('quantity', ''))}"
+                        for m in mats[:6]
+                    )
+                    lines = [f"【{name} 制作配方】"]
+                    if station:
+                        lines.append(f"- 设施：{station}")
+                    if mat_str:
+                        lines.append(f"- 材料：{mat_str}")
+                    return build_response(
+                        messages=["\n".join(lines)], actions=[], state=state
+                    )
+                return build_response(
+                    messages=[f"未找到 {name} 的制作配方。"], actions=[], state=state
+                )
+            # 掉落来源
+            pals = await self._client.get_item_drops(name)
+            if pals:
+                top = pals[:5]
+                names = "、".join(
+                    p.get("cn_name", p.get("pal_name", str(p.get("pal_id", ""))))
+                    for p in top
+                )
+                suffix = " 等" if len(pals) > 5 else ""
+                return build_response(
+                    messages=[f"【{name} 掉落来源】{names}{suffix}"],
+                    actions=[],
+                    state=state,
+                )
+            return build_response(
+                messages=[f"未找到掉落 {name} 的帕鲁。"], actions=[], state=state
+            )
+        except Exception as exc:  # noqa: BLE001
+            return build_response(
+                messages=[f"查询 {name} 失败：{exc}"], actions=[], state=state
+            )
+
+    async def _handle_passive_query(
+        self, session_id: str, passive_name: str, state: SessionState
+    ) -> dict:
+        """Fallback：按被动技能查拥有它的帕鲁。"""
+        try:
+            pals = await self._client.query_pals_by_passive(passive_name)
+            if not pals:
+                return build_response(
+                    messages=[f"未找到拥有「{passive_name}」被动的帕鲁。"],
+                    actions=[],
+                    state=state,
+                )
+            top = pals[:8]
+            names = "、".join(
+                p.get("cn_name", p.get("pal_name", str(p.get("pal_id", ""))))
+                for p in top
+            )
+            suffix = " 等" if len(pals) > 8 else ""
+            return build_response(
+                messages=[f"【{passive_name}】拥有该被动的帕鲁：{names}{suffix}"],
+                actions=[],
+                state=state,
+            )
+        except Exception as exc:  # noqa: BLE001
+            return build_response(
+                messages=[f"查询被动 {passive_name} 失败：{exc}"],
+                actions=[],
+                state=state,
+            )
 
     def _general_reply(self, message: str, reason: str) -> str:
         return (
