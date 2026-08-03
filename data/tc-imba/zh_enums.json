@@ -1,0 +1,28 @@
+{
+ "elements": {
+  "Normal": "无属性",
+  "Fire": "火属性",
+  "Water": "水属性",
+  "Leaf": "草属性",
+  "Electricity": "雷属性",
+  "Ice": "冰属性",
+  "Earth": "地属性",
+  "Dark": "暗属性",
+  "Dragon": "龙属性"
+ },
+ "work": {
+  "EmitFlame": "生火",
+  "Watering": "浇水",
+  "Seeding": "播种",
+  "GenerateElectricity": "发电",
+  "Handcraft": "手工作业",
+  "Collection": "采集",
+  "Deforest": "伐木",
+  "Mining": "采矿",
+  "OilExtraction": "原油提取",
+  "ProductMedicine": "制药",
+  "Cool": "冷却",
+  "Transport": "搬运",
+  "MonsterFarm": "牧场"
+ }
+}

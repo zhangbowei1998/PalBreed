@@ -17,7 +17,9 @@ pl-agent/
 │   │   ├── API_REQUIREMENTS.md
 │   │   ├── CORE_ENGINE_REQUIREMENTS.md (已归档)
 │   │   ├── DATA_LAYER_REQUIREMENTS.md
-│   │   ├── DATABASE_DESIGN.md       ← ★ 数据库 ERD + DDL
+│   │   ├── DATABASE_DESIGN.md       ← ★ 数据库 ERD + DDL (v1.1 基础 5 表)
+│   │   ├── DATABASE_DESIGN_TCIMBA_V2.md ← ★ tc-imba 全量 22 表扩展设计
+│   │   ├── TCIMBA_DATA_DEVELOPMENT_PLAN.md ← ★ tc-imba 数据接入开发计划 (P0-P7)
 │   │   ├── MIGRATION_PLAN.md       ← 迁移开发计划
 │   │   └── PROJECT_STRUCTURE.md
 │   ├── context/
@@ -37,15 +39,12 @@ pl-agent/
 │   │   └── adapters/
 │   │       ├── base.py               ← Adapter 抽象接口
 │   │       ├── validator.py          ← 数据校验器
-│   │       ├── paldb/                ← paldb.cc 适配器
-│   │       │   ├── scraper.py        ← HTML 爬虫
-│   │       │   ├── parser.py         ← HTML 解析
-│   │       │   ├── adapter.py        ← 数据适配 + JSON 输出
-│   │       │   ├── demo/run_scraper.py
-│   │       │   └── __tests__/        ← 5 解析器测试
+│   │       ├── paldb/                ← paldb.cc 适配器（历史）
+│   │       ├── tcimba/               ← tc-imba 适配器 (parser/adapter → TciDataBundle)
 │   │       ├── postgres/             ← PostgreSQL 适配器
 │   │       │   ├── config.py         ← DATABASE_URL 配置
 │   │       │   ├── adapter.py        ← Pal → 5 表事务写入
+│   │       │   ├── ext_writer.py     ← TciDataBundle → 22 表事务写入
 │   │       │   └── loader.py         ← 4 表 JOIN 加载 + 参数化查询
 │   │       └── gamefile/             ← 游戏文件适配 (预留)
 │   │

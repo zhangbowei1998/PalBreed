@@ -34,7 +34,9 @@ pl-agent/
 │   │   ├── ARCHITECTURE.md
 │   │   ├── CORE_ENGINE_REQUIREMENTS.md (已归档)
 │   │   ├── DATA_LAYER_REQUIREMENTS.md
-│   │   ├── DATABASE_DESIGN.md
+│   │   ├── DATABASE_DESIGN.md        ← v1.1 基础 5 表
+│   │   ├── DATABASE_DESIGN_TCIMBA_V2.md ← tc-imba 全量 22 表扩展设计
+│   │   ├── TCIMBA_DATA_DEVELOPMENT_PLAN.md ← tc-imba 数据接入开发计划
 │   │   ├── MIGRATION_PLAN.md
 │   │   └── PROJECT_STRUCTURE.md
 │   ├── context/          ← AI 接手上下文
@@ -191,19 +193,31 @@ v0.4 (当前):  palworld.tc-imba.com → scripts/convert_tcimba.py → pal_data.
 
 **主力**: [palworld.tc-imba.com](https://palworld.tc-imba.com/) — 玩家自建，**从游戏文件提取**，含完整帕鲁属性与配种数据（rank / breedChild / 独特组合）。不再使用 paldb.cc / palworld.gg。
 
-**数据接口** (`data-palworld.tc-imba.com`):
+**数据接口** (`data-palworld.tc-imba.com`) — **完整文件清单与结构见 [TCIMBA_DATA.md](./TCIMBA_DATA.md)**:
 
 | 文件 | 内容 |
 |------|------|
-| `pals.json` | 帕鲁属性 (elements/rarity/work/stats) |
+| `pals.json` | 帕鲁属性 (elements/rarity/work/stats/技能/掉落) |
 | `breeding.json` | 配种: `pals[].rank + breedChild`、`combos[]` 独特组合 |
+| `passives.json` | 被动技能 (含遗传 lotteryWeight) |
+| `items.json` | 物品 (配方/来源/掉落) |
 | `locales/zh-CN/pals.json` | 中文名 |
-| `locales/en-US/pals.json` | 英文名 |
+| `locales/zh-CN/passives.json` | 被动技能中文名 |
+| `locales/zh-CN/skills.json` | 技能中文名+描述 |
+| `locales/zh-CN/items.json` | 物品中文名+描述 |
+| `locales/en-US/*.json` | 英文版同名文件 |
 
 **配种规则**:
 - `avg = (A.rank + B.rank) / 2`
 - 子代 = rank 最接近 avg 的 `breed_child=true` 帕鲁（不可配种帕鲁不作为结果产出）
 - `breed_child=false` 帕鲁只能通过独特组合（same_species / fixed_pair）获得
+
+**22 表扩展（已实现）**:
+- 数据库已扩展为 22 表（5 基础 + 帕鲁详情/技能/被动/物品/掉落/召唤），设计见 [DATABASE_DESIGN_TCIMBA_V2.md](../architecture/DATABASE_DESIGN_TCIMBA_V2.md)
+- 导入: `scripts/fetch_tcimba.py`（抓取 13 文件）+ `scripts/validate_tcimba.py`（校验）+ `scripts/seed_tcimba_full.py`（幂等灌入 22 表，Docker entrypoint 使用）
+- 适配器: `adapters/tcimba/`（parser/adapter → TciDataBundle）+ `adapters/postgres/ext_writer.py`
+- 新查询: `queries.py` S6-S10（被动→帕鲁 / 技能 / 掉落反查 / 配方链 / 帕鲁详情）+ 端点 `/api/pals/{id}/detail` `/api/passives` `/api/items/{name}/recipe` `/api/items/{name}/drops`
+- 开发计划: [TCIMBA_DATA_DEVELOPMENT_PLAN.md](../architecture/TCIMBA_DATA_DEVELOPMENT_PLAN.md)
 
 本地数据: `data/processed/pal_data.json`（由 `scripts/convert_tcimba.py` 从 tc-imba 生成）+ `data/tc-imba/`（原始数据）。
 

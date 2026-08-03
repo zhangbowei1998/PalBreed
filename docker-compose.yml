@@ -35,9 +35,9 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres@postgres:5432/pl_agent
       PYTHONPATH: /app/packages/core:/app/packages/adapters:/app/packages/api:/app/packages
-    # 启动前先灌入帕鲁数据 + 独特组合（幂等）
+    # 启动前先灌入 22 表全量数据 + 独特组合（幂等）
     entrypoint: >
-      /bin/sh -c " python /app/scripts/seed_docker.py && python /app/scripts/seed_breeding_rules.py /app/data/tc-imba/breeding.json && exec uvicorn pl_agent.api.main:app --host 0.0.0.0 --port 8000 "
+      /bin/sh -c " python /app/scripts/seed_tcimba_full.py && python /app/scripts/seed_breeding_rules.py /app/data/tc-imba/breeding.json && exec uvicorn pl_agent.api.main:app --host 0.0.0.0 --port 8000 "
     ports:
       - "8000:8000"
     depends_on:

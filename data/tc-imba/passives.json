@@ -1,0 +1,1898 @@
+{
+ "passives": [
+  {
+   "id": "CraftSpeed_up3",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "CraftSpeed",
+     "value": 75,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "CraftSpeed_up2",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "CraftSpeed",
+     "value": 50,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "CraftSpeed_up1",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "CraftSpeed",
+     "value": 20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "CraftSpeed_down1",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "CraftSpeed",
+     "value": -10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "CraftSpeed_down2",
+   "rank": -3,
+   "effects": [
+    {
+     "type": "CraftSpeed",
+     "value": -30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Deffence_up3",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "Defense",
+     "value": 30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "LeanBackInvalid_ForPassiveSkill",
+     "value": 0,
+     "target": "ToSelf"
+    },
+    {
+     "type": "KnockbackInvalid_ForPassiveSkill",
+     "value": 0,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "Deffence_up2",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "Defense",
+     "value": 20,
+     "target": "ToSelf"
+    },
+    {
+     "type": "LeanBackInvalid_ForPassiveSkill",
+     "value": 0,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Deffence_up1",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "Defense",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Deffence_down1",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "Defense",
+     "value": -10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Deffence_down2",
+   "rank": -3,
+   "effects": [
+    {
+     "type": "Defense",
+     "value": -20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Noukin",
+   "rank": 2,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "CraftSpeed",
+     "value": -50,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Rare",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 15,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": 15,
+     "target": "None"
+    },
+    {
+     "type": "CraftSpeed",
+     "value": 20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Legend",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 20,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": 20,
+     "target": "ToSelf"
+    },
+    {
+     "type": "MoveSpeed",
+     "value": 20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Witch",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "ElementBoost_Dark",
+     "value": 30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ElementBoost_Ice",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "EternalFlame",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "ElementBoost_Fire",
+     "value": 30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ElementBoost_Electricity",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Invader",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "ElementBoost_Dark",
+     "value": 30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ElementBoost_Dragon",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_ALLAttack_up3",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": 5,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "PAL_ALLAttack_up2",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_ALLAttack_up1",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_ALLAttack_down1",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": -10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_ALLAttack_down2",
+   "rank": -3,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": -20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_rude",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 15,
+     "target": "ToSelf"
+    },
+    {
+     "type": "CraftSpeed",
+     "value": -10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_conceited",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "CraftSpeed",
+     "value": 10,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": -10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_sadist",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 15,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": -15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_masochist",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "Defense",
+     "value": 15,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ShotAttack",
+     "value": -15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_CorporateSlave",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "CraftSpeed",
+     "value": 30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ShotAttack",
+     "value": -30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_oraora",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 10,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": -10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "TrainerATK_UP_1",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 10,
+     "target": "ToTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "TrainerDEF_UP_1",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "Defense",
+     "value": 10,
+     "target": "ToTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "TrainerWorkSpeed_UP_1",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "CraftSpeed",
+     "value": 25,
+     "target": "ToTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "TrainerMining_up1",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "Mining",
+     "value": 25,
+     "target": "ToTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "TrainerLogging_up1",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "Logging",
+     "value": 25,
+     "target": "ToTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementResist_Normal_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementResist_Normal",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementResist_Fire_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementResist_Fire",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementResist_Aqua_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementResist_Water",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementResist_Thunder_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementResist_Electricity",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementResist_Leaf_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementResist_Leaf",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementResist_Ice_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementResist_Ice",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementResist_Earth_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementResist_Earth",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementResist_Dark_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementResist_Dark",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementResist_Dragon_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementResist_Dragon",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Normal_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementBoost_Normal",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Fire_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementBoost_Fire",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Aqua_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementBoost_Water",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Thunder_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementBoost_Electricity",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Leaf_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementBoost_Leaf",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Ice_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementBoost_Ice",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Earth_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementBoost_Earth",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Dark_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementBoost_Dark",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Dragon_1_PAL",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ElementBoost_Dragon",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_FullStomach_Up_1",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "FullStomatch_Decrease",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_FullStomach_Up_2",
+   "rank": -2,
+   "effects": [
+    {
+     "type": "FullStomatch_Decrease",
+     "value": 15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_FullStomach_Down_1",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "FullStomatch_Decrease",
+     "value": -10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_FullStomach_Down_2",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "FullStomatch_Decrease",
+     "value": -15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_FullStomach_Down_3",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "FullStomatch_Decrease",
+     "value": -20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "PAL_Sanity_Up_1",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "Sanity_Decrease",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_Sanity_Up_2",
+   "rank": -2,
+   "effects": [
+    {
+     "type": "Sanity_Decrease",
+     "value": 15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_Sanity_Down_1",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "Sanity_Decrease",
+     "value": -10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_Sanity_Down_2",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "Sanity_Decrease",
+     "value": -15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "PAL_Sanity_Down_3",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "Sanity_Decrease",
+     "value": -20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "ElementBoost_Normal_2_PAL",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Normal",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Fire_2_PAL",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Fire",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Aqua_2_PAL",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Water",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Thunder_2_PAL",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Electricity",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Leaf_2_PAL",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Leaf",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Ice_2_PAL",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Ice",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Earth_2_PAL",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Earth",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Dark_2_PAL",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Dark",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "ElementBoost_Dragon_2_PAL",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Dragon",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "MoveSpeed_up_1",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "MoveSpeed",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "MoveSpeed_up_2",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "MoveSpeed",
+     "value": 20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "MoveSpeed_up_3",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "MoveSpeed",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "NonKilling",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "NonKilling",
+     "value": 0,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Nocturnal",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "Nocturnal",
+     "value": 0,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Test_PalEgg_HatchingSpeed_Up",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "BreedSpeed",
+     "value": 100,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "baseCamp"
+   ]
+  },
+  {
+   "id": "CoolTimeReduction_Up_1",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ActiveSkillCoolTime_Decrease",
+     "value": 30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ShotAttack",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "CoolTimeReduction_Up_2",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ActiveSkillCoolTime_Decrease",
+     "value": 15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "CoolTimeReduction_Down_1",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "ActiveSkillCoolTime_Decrease",
+     "value": -15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Stamina_Up_1",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "PalSP_Increase",
+     "value": 50,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "active"
+   ]
+  },
+  {
+   "id": "Stamina_Up_2",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "PalSP_Increase",
+     "value": 25,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "active"
+   ]
+  },
+  {
+   "id": "Stamina_Up_3",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "PalSP_Increase",
+     "value": 75,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "active"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "Stamina_Down_1",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "PalSP_Increase",
+     "value": -25,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "active"
+   ]
+  },
+  {
+   "id": "SalePrice_Up_1",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ShopSellPrice_Money_Increase",
+     "value": 5,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ShopBuyPrice_Money_Increase",
+     "value": -5,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "SalePrice_Up_2",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ShopSellPrice_Money_Increase",
+     "value": 3,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ShopBuyPrice_Money_Increase",
+     "value": -3,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "SalePrice_Down_1",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "ShopSellPrice_Money_Increase",
+     "value": -10,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ShopBuyPrice_Money_Increase",
+     "value": 10,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Alien",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 10,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ElementResist_Fire",
+     "value": 15,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ElementBoost_Electricity",
+     "value": 15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Vampire",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "Nocturnal",
+     "value": 0,
+     "target": "ToSelf"
+    },
+    {
+     "type": "LifeSteal",
+     "value": 5,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "Nushi",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "ElementBoost_Water",
+     "value": 20,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ElementBoost_Ice",
+     "value": 20,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": 20,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "SwimSpeed_up_1",
+   "rank": 1,
+   "effects": [
+    {
+     "type": "SwimSpeed",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "SwimSpeed_up_2",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "SwimSpeed",
+     "value": 40,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "SwimSpeed_up_3",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "SwimSpeed",
+     "value": 50,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "Salvation",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "ElementBoost_Normal",
+     "value": 30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ElementBoost_Leaf",
+     "value": 30,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "WorldTree_ATK",
+   "rank": 5,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 50,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": -30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "WorldTreeDecayImmunity",
+     "value": 0,
+     "target": "ToSelfAndTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "WorldTree_DEF",
+   "rank": 5,
+   "effects": [
+    {
+     "type": "Defense",
+     "value": 50,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ShotAttack",
+     "value": -30,
+     "target": "ToSelf"
+    },
+    {
+     "type": "WorldTreeDecayImmunity",
+     "value": 0,
+     "target": "ToSelfAndTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "WorldTree_CraftSpeed",
+   "rank": 5,
+   "effects": [
+    {
+     "type": "CraftSpeed",
+     "value": 90,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Sanity_Decrease",
+     "value": 15,
+     "target": "ToSelf"
+    },
+    {
+     "type": "WorldTreeDecayImmunity",
+     "value": 0,
+     "target": "ToSelfAndTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "WorldTree_FullStomach",
+   "rank": 5,
+   "effects": [
+    {
+     "type": "FullStomatch_Decrease",
+     "value": -50,
+     "target": "ToSelf"
+    },
+    {
+     "type": "MaxHP",
+     "value": -20,
+     "target": "ToSelf"
+    },
+    {
+     "type": "WorldTreeDecayImmunity",
+     "value": 0,
+     "target": "ToSelfAndTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "WorldTree_Sanity",
+   "rank": 5,
+   "effects": [
+    {
+     "type": "Sanity_Decrease",
+     "value": -50,
+     "target": "ToSelf"
+    },
+    {
+     "type": "CraftSpeed",
+     "value": -20,
+     "target": "ToSelf"
+    },
+    {
+     "type": "WorldTreeDecayImmunity",
+     "value": 0,
+     "target": "ToSelfAndTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "WorldTree_MoveSpeed",
+   "rank": 5,
+   "effects": [
+    {
+     "type": "MoveSpeed",
+     "value": 50,
+     "target": "ToSelf"
+    },
+    {
+     "type": "FullStomatch_Decrease",
+     "value": 15,
+     "target": "ToSelf"
+    },
+    {
+     "type": "WorldTreeDecayImmunity",
+     "value": 0,
+     "target": "ToSelfAndTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "WorldTree_ATK_DEF",
+   "rank": 5,
+   "effects": [
+    {
+     "type": "ShotAttack",
+     "value": 40,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": 20,
+     "target": "ToSelf"
+    },
+    {
+     "type": "MaxHP",
+     "value": -50,
+     "target": "ToSelf"
+    },
+    {
+     "type": "WorldTreeDecayImmunity",
+     "value": 0,
+     "target": "ToSelfAndTrainer"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "MiniNushi",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ElementBoost_Water",
+     "value": 5,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ElementBoost_Ice",
+     "value": 5,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": 5,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "Deffence_up2_2",
+   "rank": 2,
+   "effects": [
+    {
+     "type": "Defense",
+     "value": 20,
+     "target": "ToSelf"
+    },
+    {
+     "type": "KnockbackInvalid_ForPassiveSkill",
+     "value": 0,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "MutationPal_Babysitter",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "PalEggHatchingSpeed",
+     "value": 30,
+     "target": "ToBuildObject"
+    },
+    {
+     "type": "BreedSpeed_InBaseCamp",
+     "value": 30,
+     "target": "ToBuildObject"
+    }
+   ],
+   "invoke": [
+    "baseCamp"
+   ],
+   "mutation": true
+  },
+  {
+   "id": "MutationPal_Mutant",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "AutoHPRegeneRate",
+     "value": 50,
+     "target": "ToSelfAndTrainer"
+    },
+    {
+     "type": "ResistAdditionalEffect_Burn",
+     "value": 100,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ResistAdditionalEffect_Poison",
+     "value": 100,
+     "target": "ToSelf"
+    },
+    {
+     "type": "Defense",
+     "value": 25,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "onTeam"
+   ],
+   "mutation": true
+  },
+  {
+   "id": "NightOwl",
+   "rank": -1,
+   "effects": [
+    {
+     "type": "NightOwl",
+     "value": 0,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "SelfDeathAddItemDrop_up_2",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "SelfDeathAddItemDrop",
+     "value": 50,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "SelfDeathAddItemDrop_up_3",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "SelfDeathAddItemDrop",
+     "value": 100,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "WorkSuitabilityAddRank_MonsterFarm_1",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "WorkSuitabilityAddRank_MonsterFarm",
+     "value": 1,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ]
+  },
+  {
+   "id": "WorkSuitabilityAddRank_MonsterFarm_2",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "WorkSuitabilityAddRank_MonsterFarm",
+     "value": 2,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "MutationPal_Immortal",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "LifeSteal",
+     "value": 5,
+     "target": "ToSelf"
+    },
+    {
+     "type": "AutoHPRegeneRate",
+     "value": 100,
+     "target": "ToSelf"
+    },
+    {
+     "type": "ShotAttack",
+     "value": 15,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "mutation": true
+  },
+  {
+   "id": "MutationPal_ExplosionResist",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "ExplosionResist",
+     "value": 100,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "always"
+   ],
+   "mutation": true
+  },
+  {
+   "id": "RideJumpCount_Increase1",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "RideJumpCount_Increase",
+     "value": 1,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "riding"
+   ],
+   "lotteryWeight": 5
+  },
+  {
+   "id": "RideJumpCount_Increase2",
+   "rank": 4,
+   "effects": [
+    {
+     "type": "RideJumpCount_Increase",
+     "value": 2,
+     "target": "ToSelf"
+    }
+   ],
+   "invoke": [
+    "riding"
+   ],
+   "mutation": true
+  },
+  {
+   "id": "PlayerSP_DecreaseRate_Passive",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "PlayerSP_DecreaseRate",
+     "value": -5,
+     "target": "ToTrainer"
+    }
+   ],
+   "invoke": [
+    "onTeam"
+   ]
+  },
+  {
+   "id": "AutoHPRegeneRate_Passive",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "AutoHPRegeneRate",
+     "value": 5,
+     "target": "ToTrainer"
+    }
+   ],
+   "invoke": [
+    "onTeam"
+   ]
+  },
+  {
+   "id": "ReloadSpeedUp_Passive",
+   "rank": 3,
+   "effects": [
+    {
+     "type": "ReloadSpeedUp",
+     "value": 4,
+     "target": "ToTrainer"
+    }
+   ],
+   "invoke": [
+    "onTeam"
+   ]
+  }
+ ]
+}

@@ -128,6 +128,18 @@ class Pal:
     is_wild: bool
     breed_child: bool = True
 
+    # ---- tc-imba 扩展字段 (v2.0, 全部可选带默认) ----
+    zukan_index_suffix: str = ""
+    genus: Optional[str] = None
+    size: Optional[str] = None
+    egg: Optional[str] = None
+    nocturnal: Optional[bool] = None
+    reaction: Optional[str] = None
+    best_work: Optional[str] = None
+    summonable: bool = False
+    predator: bool = False
+    boss_first_defeat_reward: Optional[str] = None
+
     # ---- optional metadata ----
     aliases: list[str] = field(default_factory=list)
     image_url: Optional[str] = None
@@ -153,6 +165,16 @@ class Pal:
             "work_suitability": self.work_suitability.to_dict(),
             "is_wild": self.is_wild,
             "breed_child": self.breed_child,
+            "zukan_index_suffix": self.zukan_index_suffix,
+            "genus": self.genus,
+            "size": self.size,
+            "egg": self.egg,
+            "nocturnal": self.nocturnal,
+            "reaction": self.reaction,
+            "best_work": self.best_work,
+            "summonable": self.summonable,
+            "predator": self.predator,
+            "boss_first_defeat_reward": self.boss_first_defeat_reward,
             "aliases": self.aliases,
             "image_url": self.image_url,
             "wiki_url": self.wiki_url,
@@ -178,6 +200,16 @@ class Pal:
             work_suitability=ws,
             is_wild=d.get("is_wild", False),
             breed_child=d.get("breed_child", True),
+            zukan_index_suffix=d.get("zukan_index_suffix", ""),
+            genus=d.get("genus"),
+            size=d.get("size"),
+            egg=d.get("egg"),
+            nocturnal=d.get("nocturnal"),
+            reaction=d.get("reaction"),
+            best_work=d.get("best_work"),
+            summonable=d.get("summonable", False),
+            predator=d.get("predator", False),
+            boss_first_defeat_reward=d.get("boss_first_defeat_reward"),
             aliases=d.get("aliases", []),
             image_url=d.get("image_url"),
             wiki_url=d.get("wiki_url"),
@@ -317,6 +349,16 @@ class PalRow:
     rarity: int
     is_wild: bool
     breed_child: bool = True
+    zukan_index_suffix: str = ""
+    genus: Optional[str] = None
+    size: Optional[str] = None
+    egg: Optional[str] = None
+    nocturnal: Optional[bool] = None
+    reaction: Optional[str] = None
+    best_work: Optional[str] = None
+    summonable: bool = False
+    predator: bool = False
+    boss_first_defeat_reward: Optional[str] = None
     image_url: Optional[str] = None
     wiki_url: Optional[str] = None
 
@@ -331,3 +373,217 @@ class BreedingRuleRow:
     parent_b_id: Optional[int] = None
     rule_type: str = ""
     description: Optional[str] = None
+
+
+# =============================================================================
+# tc-imba 扩展表 DB Row 类型 (v2.0 22 表) — 纯数据容器, 由适配器构造
+# =============================================================================
+
+
+@dataclass
+class PalStatsRow:
+    """pal_stats 表一行 (pals.json stats)."""
+
+    pal_id: int
+    hp: Optional[int] = None
+    melee_attack: Optional[int] = None
+    shot_attack: Optional[int] = None
+    defense: Optional[int] = None
+    support: Optional[int] = None
+    craft_speed: Optional[int] = None
+    stamina: Optional[int] = None
+    food_amount: Optional[int] = None
+    max_full_stomach: Optional[int] = None
+    capture_rate: Optional[float] = None
+    exp_ratio: Optional[float] = None
+    price: Optional[int] = None
+    male_probability: Optional[int] = None
+    slow_walk_speed: Optional[int] = None
+    walk_speed: Optional[int] = None
+    run_speed: Optional[int] = None
+    ride_sprint_speed: Optional[int] = None
+    transport_speed: Optional[int] = None
+    swim_speed: Optional[int] = None
+
+
+@dataclass
+class PalFriendshipRow:
+    """pal_friendship 表一行 (pals.json friendship)."""
+
+    pal_id: int
+    hp: Optional[float] = None
+    shot_attack: Optional[float] = None
+    defense: Optional[float] = None
+
+
+@dataclass
+class PalEnemyScalingRow:
+    """pal_enemy_scaling 表一行 (pals.json enemyScaling)."""
+
+    pal_id: int
+    receive_damage: Optional[float] = None
+
+
+@dataclass
+class PalPartnerSkillRow:
+    """pal_partner_skill 表一行 (pals.json partnerSkill)."""
+
+    pal_id: int
+    action_name: Optional[str] = None
+    effect_time: Optional[int] = None
+    cool_time: Optional[int] = None
+    exec_cost: Optional[int] = None
+    idle_cost: Optional[int] = None
+    toggle: bool = False
+    can_throw_pal: bool = False
+
+
+@dataclass
+class PalSummonRow:
+    """pal_summon 表一行 (pals.json summonLevel + summonMaterials)."""
+
+    pal_id: int
+    material_item_id: int
+    level: Optional[int] = None
+    count: int = 1
+
+
+@dataclass
+class SkillRow:
+    """skill 表一行 (pals.json activeSkills 聚合)."""
+
+    waza_id: str
+    element: Optional[str] = None
+    category: Optional[str] = None
+    power: Optional[int] = None
+    cool_time: Optional[int] = None
+    min_range: Optional[int] = None
+    max_range: Optional[int] = None
+    strength: Optional[str] = None
+    effect_type: Optional[str] = None
+    effect_value: Optional[int] = None
+    cn_name: str = ""
+    description: str = ""
+    id: Optional[int] = None
+
+
+@dataclass
+class PalSkillRow:
+    """pal_skill 表一行 (pal 学习技能, 含等级)."""
+
+    pal_id: int
+    skill_id: int
+    learn_level: int
+
+
+@dataclass
+class PassiveRow:
+    """passive 表一行 (passives.json)."""
+
+    passive_id: str
+    rank: Optional[int] = None
+    lottery_weight: Optional[int] = None
+    cn_name: str = ""
+    id: Optional[int] = None
+
+
+@dataclass
+class PassiveEffectRow:
+    """passive_effect 表一行 (passives.json effects[])."""
+
+    passive_id: int
+    effect_type: Optional[str] = None
+    effect_value: Optional[float] = None
+    effect_target: Optional[str] = None
+    id: Optional[int] = None
+
+
+@dataclass
+class PassiveInvokeRow:
+    """passive_invoke 表一行 (passives.json invoke[], 数组拆行)."""
+
+    passive_id: int
+    invoke: str
+    id: Optional[int] = None
+
+
+@dataclass
+class PalPassiveRow:
+    """pal_passive 表一行 (pal 固有被动)."""
+
+    pal_id: int
+    passive_id: int
+
+
+@dataclass
+class ItemRow:
+    """item 表一行 (items.json)."""
+
+    item_id: str
+    type_a: Optional[str] = None
+    type_b: Optional[str] = None
+    sort_id: Optional[int] = None
+    rarity: Optional[int] = None
+    rank: Optional[int] = None
+    weight: Optional[float] = None
+    price: Optional[int] = None
+    max_stack: Optional[int] = None
+    handcraft: bool = False
+    cn_name: str = ""
+    description: str = ""
+    id: Optional[int] = None
+
+
+@dataclass
+class ItemRecipeRow:
+    """item_recipe 表一行 (items.json recipe)."""
+
+    item_id: int
+    work: Optional[int] = None
+    product_count: Optional[int] = None
+    id: Optional[int] = None
+
+
+@dataclass
+class ItemRecipeStationRow:
+    """item_recipe_station 表一行 (recipe.craftedAt[], 数组拆行)."""
+
+    recipe_id: int
+    station: str
+    id: Optional[int] = None
+
+
+@dataclass
+class ItemRecipeMaterialRow:
+    """item_recipe_material 表一行 (recipe.materials[])."""
+
+    recipe_id: int
+    material_item_id: int
+    count: int = 1
+    id: Optional[int] = None
+
+
+@dataclass
+class ItemSourceRow:
+    """item_source 表一行 (items.json sources[])."""
+
+    item_id: int
+    kind: Optional[str] = None
+    area: Optional[str] = None
+    grade: Optional[int] = None
+    chance: Optional[int] = None
+    id: Optional[int] = None
+
+
+@dataclass
+class PalDropRow:
+    """pal_drop 表一行 (pals.json drops[] + bossDrops[])."""
+
+    pal_id: int
+    item_id: int
+    rate: Optional[int] = None
+    min: Optional[int] = None
+    max: Optional[int] = None
+    min_level: Optional[int] = None
+    is_boss: bool = False
+    id: Optional[int] = None

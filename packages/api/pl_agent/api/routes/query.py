@@ -246,3 +246,52 @@ async def _suitability_query(
         max_lv = top_results[0]["level"] if top_results else 0
         return format_out_of_range(raw_input, work_type, max_lv, top_results)
     return format_suitability_candidates(raw_input, work_type, results)
+
+
+# ── tc-imba 扩展端点 (S6-S10) ─────────────────────────────────
+
+
+@router.get("/pals/{pal_id}/detail")
+async def get_pal_detail(request: Request, pal_id: str):
+    """S10: 帕鲁全量详情（属性/技能/被动/掉落/伙伴技能/召唤）。"""
+    from ..formatter import format_error, format_success
+
+    orm_service: OrmQueryService = request.app.state.orm_service
+    detail = await orm_service.query_pal_detail_full(pal_id)
+    if detail is None:
+        return format_error("PAL_NOT_FOUND", f"未找到帕鲁: '{pal_id}'")
+    return format_success(detail)
+
+
+@router.get("/passives")
+async def query_passive_pals(request: Request, name: str):
+    """S6: 按被动中文名查拥有该被动的帕鲁（配种被动传承）。"""
+    from ..formatter import format_success
+
+    orm_service: OrmQueryService = request.app.state.orm_service
+    rows = await orm_service.query_pals_by_passive(name)
+    return format_success({"passive": name, "pals": rows, "total": len(rows)})
+
+
+@router.get("/items/{item_name}/recipe")
+async def get_item_recipe(request: Request, item_name: str):
+    """S9: 物品配方链（产出 + 设施 + 材料）。"""
+    from ..formatter import format_error, format_success
+
+    orm_service: OrmQueryService = request.app.state.orm_service
+    rows = await orm_service.query_recipe_chain(item_name)
+    if not rows:
+        return format_error("ITEM_NOT_FOUND", f"未找到物品配方: '{item_name}'")
+    return format_success({"item": item_name, "recipe": rows})
+
+
+@router.get("/items/{item_name}/drops")
+async def get_item_drops(request: Request, item_name: str):
+    """S8b: 掉落该物品的帕鲁（材料反查）。"""
+    from ..formatter import format_error, format_success
+
+    orm_service: OrmQueryService = request.app.state.orm_service
+    rows = await orm_service.query_pals_dropping_item(item_name)
+    if not rows:
+        return format_error("ITEM_NOT_FOUND", f"未找到掉落来源: '{item_name}'")
+    return format_success({"item": item_name, "pals": rows, "total": len(rows)})
