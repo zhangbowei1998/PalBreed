@@ -23,12 +23,17 @@ _WORK_TYPE_CN = {
 
 
 def _resolve_pal_image_url(pal: Pal) -> str | None:
-    """Prefer real pal portrait URL; fallback to deterministic PalIcon path."""
+    """Prefer the real pal portrait URL stored in DB (tc-imba resource CDN);
+    fallback to deterministic PalIcon path only when no usable portrait exists.
+
+    Legacy rows may store work-type icons (T_icon_palwork_00.webp) that are not
+    portraits — those also get replaced by a canonical portrait URL.
+    """
     raw = pal.image_url
-    if raw and "/Pal/Texture/PalIcon/" in raw:
+    if raw and ("/Pal/Texture/PalIcon/" in raw or "tc-imba.com/icons/" in raw):
         return raw
-    # Some legacy rows stored work-type icons like T_icon_palwork_00.webp.
-    # Build canonical portrait URL from pal id so UI always gets a pal avatar.
+    # No portrait stored (or legacy work-type icon): build canonical portrait URL
+    # from pal id so the UI always gets a pal avatar.
     return f"https://cdn.paldb.cc/image/Pal/Texture/PalIcon/Normal/T_{pal.id}_icon_normal.webp"
 
 

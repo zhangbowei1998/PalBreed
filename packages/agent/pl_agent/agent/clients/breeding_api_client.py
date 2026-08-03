@@ -92,3 +92,54 @@ class BreedingApiClient:
 
     async def query_stats(self) -> dict:
         return await self._request("GET", "/api/suitability/stats")
+
+    # ── tc-imba 扩展端点 (S6-S10) ──────────────────────────────
+
+    async def get_pal_detail_full(self, pal_id: str) -> dict:
+        """S10: 帕鲁全量详情（stats/技能/被动/掉落/伙伴技能/召唤）。"""
+        return await self._request("GET", f"/api/pals/{pal_id}/detail")
+
+    async def get_pal_skills(self, pal_id: str) -> list[dict]:
+        """S7: 帕鲁可学技能列表（含学习等级）。"""
+        data = await self._request("GET", f"/api/pals/{pal_id}/skills")
+        skills = data.get("skills") if isinstance(data, dict) else None
+        if not isinstance(skills, list):
+            raise InvalidPayloadError("skills should be a list")
+        return skills
+
+    async def query_pals_by_passive(self, name: str) -> list[dict]:
+        """S6: 按被动中文名查拥有该被动的帕鲁。"""
+        data = await self._request("GET", "/api/passives", params={"name": name})
+        pals = data.get("pals") if isinstance(data, dict) else None
+        if not isinstance(pals, list):
+            raise InvalidPayloadError("pals should be a list")
+        return pals
+
+    async def get_item_recipe(self, item_name: str) -> list[dict]:
+        """S9: 物品配方链（设施 + 材料）。"""
+        data = await self._request("GET", f"/api/items/{item_name}/recipe")
+        recipe = data.get("recipe") if isinstance(data, dict) else None
+        if not isinstance(recipe, list):
+            raise InvalidPayloadError("recipe should be a list")
+        return recipe
+
+    async def get_item_drops(self, item_name: str) -> list[dict]:
+        """S8: 掉落某物品的帕鲁（材料反查）。"""
+        data = await self._request("GET", f"/api/items/{item_name}/drops")
+        pals = data.get("pals") if isinstance(data, dict) else None
+        if not isinstance(pals, list):
+            raise InvalidPayloadError("pals should be a list")
+        return pals
+
+    async def run_sql_query(self, sql: str) -> dict:
+        """Text-to-SQL 兜底：执行一条只读 SELECT（经 api 安全层）。
+
+        返回 {columns, rows, row_count}；非 SELECT / 非白名单 / 超时会抛
+        UpstreamServiceError（由上层转 ToolError 给 LLM 修正）。
+        """
+        data = await self._request(
+            "POST", "/api/sql/query", json={"sql": sql}
+        )
+        if not isinstance(data, dict) or "columns" not in data:
+            raise InvalidPayloadError("sql query result should contain columns")
+        return data

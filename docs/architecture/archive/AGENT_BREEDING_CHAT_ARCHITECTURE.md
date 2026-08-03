@@ -1,6 +1,6 @@
 # 聊天式配种 Agent 开发架构设计
 
-> 版本: v1.1 | 日期: 2026-08-01 | 状态: 开发设计基线（双项目版）
+> 版本: v1.1 | 日期: 2026-08-01 | 状态: ARCHIVED — 双项目版设计基线（LangGraph 未实际采用，已并入 monorepo 的 agent/ 实现文档）
 > 来源需求: AGENT_BREEDING_CHAT_REQUIREMENTS.md v1.1
 
 ---

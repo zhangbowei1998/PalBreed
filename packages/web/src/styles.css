@@ -732,3 +732,83 @@ button:disabled {
     border-radius: 12px;
   }
 }
+
+/* ── 结构化数据卡片（被动/掉落/配方/技能/详情） ── */
+.data-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.data-card {
+  background: #f6f8fa;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.data-card-title {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.data-card-count {
+  font-size: 11px;
+  color: #666;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  padding: 0 6px;
+}
+.data-card-body {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.data-card-body li {
+  font-size: 12px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
+  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.data-card-tag {
+  font-size: 10px;
+  color: #8a5cf5;
+  background: rgba(138, 92, 245, 0.1);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.data-card-lv {
+  font-size: 10px;
+  color: #666;
+}
+.data-card-more {
+  color: #999;
+  background: transparent !important;
+  border: none !important;
+}
+.data-card-detail {
+  gap: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  .data-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  .data-card-body li {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  .data-card-count {
+    color: #bbb;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}

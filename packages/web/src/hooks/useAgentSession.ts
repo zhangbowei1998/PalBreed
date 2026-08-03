@@ -58,12 +58,23 @@ function mergeActions(prev: AgentAction[], next: AgentAction[]): AgentAction[] {
 
 function normalizeMessages(data: AgentData, baseId: string): ChatMessage[] {
   const trace = extractTrace(data);
-  return data.messages.map((m, idx) => ({
+  const msgs: ChatMessage[] = data.messages.map((m, idx) => ({
     id: `${baseId}-${idx}`,
     role: m.role,
     content: m.content,
     trace: m.role === "assistant" ? trace : null,
   }));
+  // 结构化数据卡片（被动/掉落/配方/技能/详情）附加到最后一条助手消息
+  const cards = data.data_cards;
+  if (cards && cards.length > 0) {
+    for (let i = msgs.length - 1; i >= 0; i--) {
+      if (msgs[i].role === "assistant") {
+        msgs[i].data_cards = cards;
+        break;
+      }
+    }
+  }
+  return msgs;
 }
 
 export function useAgentSession(userKey: string) {

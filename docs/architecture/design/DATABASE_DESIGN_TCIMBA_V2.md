@@ -2,7 +2,7 @@
 
 > 版本: v2.0 | 日期: 2026-08-02 | 状态: **已实现（P0-P6 完成，22 表已落地 + S6-S10 查询/端点已上线）**
 > 数据源: [palworld.tc-imba.com](https://palworld.tc-imba.com/) → `data-palworld.tc-imba.com`
-> 数据清单: 见 [TCIMBA_DATA.md](../context/TCIMBA_DATA.md)
+> 数据清单: 见 [TCIMBA_DATA.md](../../context/TCIMBA_DATA.md)
 > 前置: v1.1 5 表规范化设计（本版在 v1.1 基础上扩展，不破坏既有 5 表）
 
 ---

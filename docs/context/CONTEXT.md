@@ -1,6 +1,8 @@
 # AI 接手上下文 — 幻兽帕鲁配种 Agent
 
+> 版本: v0.1.0 | 更新: 2026-08-02
 > 新 AI 会话开始时，先读这个文件即可快速理解项目全貌。
+> 📖 文档分类导航见 [`docs/README.md`](../README.md)（总索引）。
 
 ---
 
@@ -29,19 +31,27 @@ pl-agent/
 ├── .github/              ← AI 行为指引
 │   └── copilot-instructions.md
 ├── docs/
-│   ├── architecture/     ← 架构与需求文档
-│   │   ├── API_REQUIREMENTS.md
-│   │   ├── ARCHITECTURE.md
-│   │   ├── CORE_ENGINE_REQUIREMENTS.md (已归档)
-│   │   ├── DATA_LAYER_REQUIREMENTS.md
-│   │   ├── DATABASE_DESIGN.md        ← v1.1 基础 5 表
-│   │   ├── DATABASE_DESIGN_TCIMBA_V2.md ← tc-imba 全量 22 表扩展设计
-│   │   ├── TCIMBA_DATA_DEVELOPMENT_PLAN.md ← tc-imba 数据接入开发计划
-│   │   ├── MIGRATION_PLAN.md
-│   │   └── PROJECT_STRUCTURE.md
+│   ├── README.md         ← 📖 文档总索引（分类导航，先看这里）
+│   ├── architecture/     ← 架构文档（按 设计/实现/计划/需求/部署/归档 分子目录）
+│   │   ├── design/       ←   现状设计（active）
+│   │   │   ├── PROJECT_STRUCTURE.md
+│   │   │   ├── DATABASE_DESIGN.md        ← v1.1 基础 5 表（历史基础版）
+│   │   │   ├── DATABASE_DESIGN_TCIMBA_V2.md ← v2.0 全量 22 表（现状核心）
+│   │   │   └── API_REQUIREMENTS.md
+│   │   ├── agent/        ←   Agent 实现专项（01~10，最贴近代码）
+│   │   ├── plans/        ←   开发计划（implemented）
+│   │   │   ├── TCIMBA_DATA_DEVELOPMENT_PLAN.md
+│   │   │   ├── TIER_IMPLEMENTATION_PLAN.md
+│   │   │   ├── TEXT2SQL_PLAN.md + TEXT2SQL_EXECUTION_PLAN.md
+│   │   │   └── MIGRATION_PLAN.md
+│   │   ├── requirements/ ←   需求基线
+│   │   ├── deploy/       ←   阿里云部署 + CI/CD
+│   │   └── archive/      ←   已归档（archived，供历史溯源）
 │   ├── context/          ← AI 接手上下文
-│   │   └── CONTEXT.md
-│   └── decisions/        ← 设计决策记录
+│   │   ├── CONTEXT.md    ← ⭐ 唯一现状快照（SSOT）
+│   │   ├── TCIMBA_DATA.md
+│   │   └── Text-to-SQL.md
+│   └── decisions/        ← 设计决策记录（ADR）
 │
 ├── packages/
 │   ├── core/             ← 📐 数据模型 (Python)
@@ -97,7 +107,9 @@ pl-agent/
 │   ├── processed/
 │   ├── sql/              ←   PostgreSQL DDL/迁移
 │   │   ├── 001_create_pals.sql   ← 旧宽表 (已被 002 替代)
-│   │   └── 002_normalize.sql    ← 5 表规范化 ⭐
+│   │   ├── 002_normalize.sql    ← 5 表规范化 ⭐
+│   │   ├── 003_tcimba_extend.sql ← 17 扩展表 (22 表总)
+│   │   └── 004_text2sql.sql     ← Text-to-SQL 宽表视图 (v_pal_full 等)
 │   └── archive/
 ├── tests/                ← 🧪 集成/冒烟测试
 │   └── smoke/
@@ -213,11 +225,17 @@ v0.4 (当前):  palworld.tc-imba.com → scripts/convert_tcimba.py → pal_data.
 - `breed_child=false` 帕鲁只能通过独特组合（same_species / fixed_pair）获得
 
 **22 表扩展（已实现）**:
-- 数据库已扩展为 22 表（5 基础 + 帕鲁详情/技能/被动/物品/掉落/召唤），设计见 [DATABASE_DESIGN_TCIMBA_V2.md](../architecture/DATABASE_DESIGN_TCIMBA_V2.md)
+- 数据库已扩展为 22 表（5 基础 + 帕鲁详情/技能/被动/物品/掉落/召唤），设计见 [DATABASE_DESIGN_TCIMBA_V2.md](../architecture/design/DATABASE_DESIGN_TCIMBA_V2.md)
 - 导入: `scripts/fetch_tcimba.py`（抓取 13 文件）+ `scripts/validate_tcimba.py`（校验）+ `scripts/seed_tcimba_full.py`（幂等灌入 22 表，Docker entrypoint 使用）
 - 适配器: `adapters/tcimba/`（parser/adapter → TciDataBundle）+ `adapters/postgres/ext_writer.py`
-- 新查询: `queries.py` S6-S10（被动→帕鲁 / 技能 / 掉落反查 / 配方链 / 帕鲁详情）+ 端点 `/api/pals/{id}/detail` `/api/passives` `/api/items/{name}/recipe` `/api/items/{name}/drops`
-- 开发计划: [TCIMBA_DATA_DEVELOPMENT_PLAN.md](../architecture/TCIMBA_DATA_DEVELOPMENT_PLAN.md)
+- 新查询: `queries.py` S6-S10（被动→帕鲁 / 技能 / 掉落反查 / 配方链 / 帕鲁详情）+ 端点 `/api/pals/{id}/detail` `/api/pals/{id}/skills` `/api/passives` `/api/items/{name}/recipe` `/api/items/{name}/drops`
+- 开发计划: [TCIMBA_DATA_DEVELOPMENT_PLAN.md](../architecture/plans/TCIMBA_DATA_DEVELOPMENT_PLAN.md)
+
+**三层接入（已实现，见 [TIER_IMPLEMENTATION_PLAN.md](../architecture/plans/TIER_IMPLEMENTATION_PLAN.md)）**:
+- Agent 工具: `tools/pal_info.py` 新增 5 个（`query_pal_detail`/`query_pal_skills`/`query_pals_by_passive`/`query_item_drops`/`query_item_recipe`）+ `tools/sql_query.py` 1 个（`run_sql_query`），`build_breeding_tools` 共 10 个
+- Agent client: `clients/breeding_api_client.py` 新增 5 方法（detail_full/skills/by_passive/recipe/drops）+ `run_sql_query`
+- 提示词: `assistant.md` 规则 7 改为资源/物品走工具、规则 8 数据源改 tc-imba、新增规则 9（被动/技能/详情类）+ 工具优先级 + 数据库宽表 + 未收录拒绝规则
+- data_cards: `interaction/presenter.build_data_cards` 从工具结果组装卡片 → `workflow.handle_chat` 注入 `data_cards` → agent-web 透传 → 前端 `components/DataCardList.tsx` 渲染（被动/掉落/配方/技能/详情摘要）
 
 本地数据: `data/processed/pal_data.json`（由 `scripts/convert_tcimba.py` 从 tc-imba 生成）+ `data/tc-imba/`（原始数据）。
 
@@ -225,30 +243,38 @@ v0.4 (当前):  palworld.tc-imba.com → scripts/convert_tcimba.py → pal_data.
 
 ---
 
-## 当前开发状态
+## 当前开发状态（v0.1.0）
 
 | 阶段 | 状态 | 产出 |
 |------|:---:|------|
-| 架构设计 | ✅ | `docs/architecture/*` |
-| Schema 定义 | ✅ | `schema.py` — Pal, WorkSuitability, PalRow, BreedingRuleRow |
-| 数据层 | ✅ | scraper → parser → adapter → PostgreSQL (5 表) |
-| API 服务 | ✅ | FastAPI — SQLAlchemy Async ORM, 参数化查询, 8 端点 |
-| Agent 服务 | ✅ | `packages/agent/`（独立 agent 模块）+ `packages/agent-web/`（FastAPI 服务层）— chat/action/session 接口、LLM function calling、记忆系统、用户体系、测试体系 |
-| 数据库规范化 | ✅ | 5 表 (pal/pal_element/work_suitability/pal_aliase/breeding_rule) |
-| 测试 | ✅ | ORM 单测 7/7 + API 冒烟 8/8 通过 |
-| Makefile | ✅ | 统一入口已包含 `serve-agent-service` / `test-agent` / `test-agent-web` |
-| NLU 模块 | ⏭️ | 跳过, 结构化输入 |
-| 前端 UI | ✅ | `packages/web/` — React + Vite 聊天交互页，已接入 agent-web |
+| 架构设计 | ✅ | `docs/architecture/design/*`（现状）+ `archive/`（历史） |
+| Schema 定义 | ✅ | `schema.py` — Pal, PalRow, WorkSuitability, BreedingRuleRow + 17 扩展模型 |
+| 数据层 | ✅ | tc-imba 抓取/校验 → 22 表 (5 基础 + 17 扩展) |
+| API 服务 | ✅ | FastAPI — SQLAlchemy Async ORM, 8 核心端点 + 5 tc-imba 扩展端点 + Text-to-SQL |
+| Agent 服务 | ✅ | `packages/agent/` + `packages/agent-web/` — chat/action/session、LLM function calling、10 工具、记忆系统、用户体系 |
+| Text-to-SQL | ✅ | `run_sql_query` 工具 + `/api/sql/query` 安全执行器（4 道防火墙） |
+| 数据库规范化 | ✅ | 22 表 (pal/元素/工种/别名/配种规则 + stats/技能/被动/物品/掉落/召唤) |
+| 测试 | ✅ | api 30 + agent 32 + agent-web 19 单测；冒烟 8/8 |
+| Makefile | ✅ | `serve-agent-service` / `test-agent` / `test-agent-web` / `test-all` |
+| NLU 模块 | ⏭️ | 跳过, 结构化输入 + LLM 意图识别 |
+| 前端 UI | ✅ | `packages/web/` — React + Vite 聊天交互页，含配种树/数据卡片/导出 |
+| 功能差距 | 📋 | 地图 / 科技树 / 属性模拟器 / 多代配种（见 `decisions/003-feature-gaps.md`） |
 
 ## API 端点一览
 
 | 端点 | 方法 | 说明 |
 |------|:---:|------|
-| `/health` | GET | 健康检查, 返回 pals_loaded |
+| `/health` | GET | 健康检查 |
 | `/api/query` | POST | **智能查询** — 自动判断输入类型 |
 | `/api/pal/{id}` | GET | 帕鲁详情 |
 | `/api/breeding/tree/{id}` | GET | 父母对列表 (一级) |
 | `/api/suitability/stats` | GET | 全工种统计 |
+| `/api/pals/{id}/detail` | GET | 帕鲁全量详情（tc-imba 扩展） |
+| `/api/pals/{id}/skills` | GET | 帕鲁可学技能（tc-imba 扩展） |
+| `/api/passives?name=` | GET | 按被动查帕鲁（tc-imba 扩展） |
+| `/api/items/{name}/recipe` | GET | 物品配方（tc-imba 扩展） |
+| `/api/items/{name}/drops` | GET | 物品掉落反查（tc-imba 扩展） |
+| `/api/sql/query` | POST | Text-to-SQL 安全执行器 |
 
 API 运行约束：
 - PostgreSQL 为必需依赖；数据库不可用时 API 启动失败，不会回退到 JSON。
@@ -280,16 +306,17 @@ API 运行约束：
 - `{"input": "手工:4"}` → 工作适应性筛选
 - `{"input": "手工:6"}` → 超范围自动回退展示最优
 
-## 下一步
+## 下一步（v0.1.0 → v0.2.0）
 
 | 优先级 | 任务 | 位置 |
 |:---:|------|------|
-| 1 | 前端登录注册页面 | `packages/web/`（后端已就绪） |
-| 2 | Agent 服务会话存储从内存升级到 Redis | `packages/agent/pl_agent/agent/state/` |
-| 3 | NLU 模块增强与多工种意图扩展 | `packages/nlu/` |
-| 4 | 特殊配种规则扩充 | `packages/api/pl_agent/api/routes/query.py` + `packages/api/pl_agent/api/db/queries.py` |
+| 1 | **多代配种规划**（④，纯逻辑 BFS，收益最大） | `packages/api/` + `packages/agent/` |
+| 2 | 前端登录注册页面 | `packages/web/`（后端已就绪） |
+| 3 | **科技树**（②，新增表 + tc-imba 数据） | `packages/adapters/` + `data/sql/` |
+| 4 | Agent 服务会话存储从内存升级到 Redis | `packages/agent/pl_agent/agent/state/` |
+| 5 | **地图 / 属性模拟器**（①③） | 需额外数据源，见 `decisions/003-feature-gaps.md` |
 
-详细设计见 `docs/architecture/` 下各需求文档。
+详细差距与建议见 `docs/decisions/003-feature-gaps.md`；详细设计见 `docs/architecture/` 下各文档。
 
 ---
 
@@ -340,18 +367,21 @@ WHERE a.combi_rank + b.combi_rank BETWEEN $sum_min AND $sum_max
 
 | 想看什么 | 去哪个文件 |
 |---------|-----------|
-| 为什么这样设计 | `docs/architecture/ARCHITECTURE.md` |
-| 目录怎么组织的 | `docs/architecture/PROJECT_STRUCTURE.md` |
+| 📖 文档导航（总索引） | `docs/README.md` |
+| 为什么这样设计 | `docs/architecture/archive/ARCHITECTURE.md`（历史）+ `docs/decisions/`（ADR） |
+| 目录怎么组织的 | `docs/architecture/design/PROJECT_STRUCTURE.md` |
 | 🔑 数据模型规范 (Schema) | `packages/core/pl_agent/core/schema.py` |
-| 🔑 数据层详细需求 | `docs/architecture/DATA_LAYER_REQUIREMENTS.md` |
-| 🗄️ 数据库设计 (ERD/DDL) | `docs/architecture/DATABASE_DESIGN.md` |
-| 🔌 外部数据如何接入 | `packages/adapters/base.py` + `docs/architecture/DATA_LAYER_REQUIREMENTS.md` |
-| 🌐 API 服务需求 | `docs/architecture/API_REQUIREMENTS.md` |
+| 🗄️ 数据库设计 (22 表 ERD/DDL) | `docs/architecture/design/DATABASE_DESIGN_TCIMBA_V2.md` |
+| 🗄️ 数据库基础 5 表 | `docs/architecture/design/DATABASE_DESIGN.md` |
+| 🔌 外部数据如何接入 | `packages/adapters/` + `docs/context/TCIMBA_DATA.md` |
+| 🌐 API 服务需求 | `docs/architecture/design/API_REQUIREMENTS.md` |
 | ⚙️ 配种逻辑实现 | `packages/api/pl_agent/api/routes/query.py` + `packages/api/pl_agent/api/db/queries.py` |
 | 🧪 ORM 单元测试 | `packages/api/pl_agent/api/__tests__/test_orm_queries.py` |
 | ❗ 业务异常定义 | `packages/core/pl_agent/core/errors.py` |
-| API 有哪些接口 | `docs/architecture/API_REQUIREMENTS.md` §3 |
+| API 有哪些接口 | `docs/architecture/design/API_REQUIREMENTS.md` §3 |
+| 🤖 Agent 实现说明 | `docs/architecture/agent/README.md`（01~10 包级） |
 | AI 行为指引 | `.github/copilot-instructions.md` |
-| 数据库 DDL | `data/sql/002_normalize.sql` |
-| 迁移计划 | `docs/architecture/MIGRATION_PLAN.md` |
-| 初始需求 | `init.md` |
+| 数据库 DDL | `data/sql/002_normalize.sql` + `003_tcimba_extend.sql` + `004_text2sql.sql` |
+| 迁移计划 | `docs/architecture/plans/MIGRATION_PLAN.md` |
+| 待开发功能差距 | `docs/decisions/003-feature-gaps.md` |
+| 初始需求 | `init.md`（历史草稿） |

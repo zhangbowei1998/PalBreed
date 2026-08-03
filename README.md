@@ -5,6 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.1-009688?logo=fastapi)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue)](./docs/README.md)
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
 ---
@@ -60,7 +61,7 @@ docker compose up -d --build
 ```
 
 Docker 部署会：
-- 自动建表（5 表规范化）+ 从 `data/processed/pal_data.json` 灌入 288 只帕鲁
+- 自动建表（22 表：5 基础 + 17 扩展）+ 灌入 tc-imba 全量数据（299 帕鲁 + 技能/被动/物品/掉落等）
 - agent-web 自动连 PG 做长期记忆持久化 + 用户体系
 - nginx 统一入口：`/agent/*` `/auth/*` → agent-web，`/api/*` → api（同源无跨域）
 
@@ -117,33 +118,43 @@ make test-web
 ```
 pl-agent/
 ├── .github/              ← 🤖 AI 行为指引
-├── docs/                 ← 📖 项目文档（⭐ AI 接手先读这里）
-│   ├── architecture/     ←    架构设计
-│   ├── context/          ←    快速上下文
-│   └── decisions/        ←    设计决策
+├── docs/                 ← 📖 项目文档（⭐ AI 接手先读 docs/README.md）
+│   ├── README.md         ←    文档总索引（分类导航）
+│   ├── context/          ←    AI 接手上下文（CONTEXT.md 为唯一现状快照）
+│   ├── architecture/     ←    架构（design/agent/plans/requirements/deploy/archive）
+│   ├── decisions/        ←    设计决策 (ADR)
+│   └── bug/              ←    历史问题记录
 ├── packages/             ← 📦 Monorepo 业务包
-│   ├── core/             ← 🧠 配种算法引擎 + Schema
-│   ├── adapters/         ← 🔌 外部数据适配层
-│   ├── api/              ← 🌐 FastAPI 服务（配种查询）
+│   ├── core/             ← 🧠 配种算法引擎 + Schema（唯一数据规范）
+│   ├── adapters/         ← 🔌 外部数据适配层（tcimba → postgres）
+│   ├── api/              ← 🌐 FastAPI 服务（配种查询 + Text-to-SQL）
 │   ├── agent/            ← 🤖 独立 agent 模块（LLM/tools/记忆/用户，无 web 依赖）
 │   ├── agent-web/        ← 🌐 agent 的 FastAPI 服务层（服务前端）
 │   ├── nlu/              ← 💬 意图解析
 │   ├── web/              ← 🖥️ 前端 UI
 │   └── shared/           ← 🔗 跨包类型
-├── data/                 ← 📊 帕鲁数据 (来自 paldb.cc)
+├── data/                 ← 📊 帕鲁数据 (来自 palworld.tc-imba.com)
+│   ├── tc-imba/          ←    tc-imba JSON 原始数据
+│   ├── processed/        ←    处理后数据
+│   └── sql/              ←    PostgreSQL DDL（001-004）
+├── scripts/              ← 🛠️ 数据抓取/转换/种子/验证脚本
 ├── tests/                ← 🧪 集成/冒烟测试
-├── init.md               ← 原始需求
+├── Makefile              ← 常用命令
+├── pyproject.toml        ← uv workspace monorepo
 └── README.md
 ```
 
 ## 文档
 
+> 完整文档导航见 [`docs/README.md`](./docs/README.md)。核心入口：
+
 | 文档 | 内容 |
 |------|------|
-| [`docs/context/CONTEXT.md`](./docs/context/CONTEXT.md) | 🔰 AI 接手快速上下文 |
-| [`docs/architecture/ARCHITECTURE.md`](./docs/architecture/ARCHITECTURE.md) | 🏗️ 完整架构设计 |
-| [`docs/architecture/PROJECT_STRUCTURE.md`](./docs/architecture/PROJECT_STRUCTURE.md) | 📁 目录与依赖关系 |
-| [`docs/architecture/MIGRATION_PLAN.md`](./docs/architecture/MIGRATION_PLAN.md) | 🛠️ ORM 迁移计划与执行记录 |
+| [`docs/context/CONTEXT.md`](./docs/context/CONTEXT.md) | 🔰 AI 接手快速上下文（唯一现状快照） |
+| [`docs/architecture/design/DATABASE_DESIGN_TCIMBA_V2.md`](./docs/architecture/design/DATABASE_DESIGN_TCIMBA_V2.md) | 🗄️ 22 表数据库设计（现状核心） |
+| [`docs/architecture/design/API_REQUIREMENTS.md`](./docs/architecture/design/API_REQUIREMENTS.md) | 🌐 API 需求与端点 |
+| [`docs/architecture/agent/README.md`](./docs/architecture/agent/README.md) | 🤖 Agent 实现专项说明 |
+| [`docs/architecture/deploy/ALIYUN_DEPLOY.md`](./docs/architecture/deploy/ALIYUN_DEPLOY.md) | 🚀 阿里云部署 + CI/CD |
 
 ## 技术栈
 
@@ -159,16 +170,23 @@ pl-agent/
 
 ## 数据来源
 
-基础数据来自 [paldb.cc](https://paldb.cc/cn/)，通过离线爬虫脚本抓取后写入 PostgreSQL；API 运行时仅从数据库读取，不再使用 JSON 降级。
+基础数据来自 [palworld.tc-imba.com](https://palworld.tc-imba.com/)（玩家自建、从游戏文件提取的 JSON 数据，
+`data-palworld.tc-imba.com/pals.json` + `breeding.json` + locales），通过离线脚本抓取解析后写入 PostgreSQL；
+API 运行时仅从数据库读取，不再使用 JSON 降级。
+
+数据规模：299 帕鲁、319 技能、152 被动、2433 物品、22 张表。详见
+[`docs/context/TCIMBA_DATA.md`](./docs/context/TCIMBA_DATA.md)。
 
 关键数据字段：
-- **CombiRank** — 官方繁殖力值，配种计算核心
+- **CombiRank** — 官方繁殖力值，配种计算核心（子代 = rank 最接近 avg 的可配种帕鲁）
+- **breed_child** — 是否可作为配种子代（False 只能通过独特组合获得）
 - **工作适应性** — 12 种工作类型及等级
-- **属性、稀有度** — 辅助筛选
+- **属性、稀有度、体型、掉落、技能、被动** — 辅助筛选与详情
 
 ## 开发状态
 
-🚧 持续迭代中，详见 [`docs/context/CONTEXT.md`](./docs/context/CONTEXT.md)
+🚧 **v0.1.0** 持续迭代中，详见 [`docs/context/CONTEXT.md`](./docs/context/CONTEXT.md)
+与 [`docs/decisions/003-feature-gaps.md`](./docs/decisions/003-feature-gaps.md)（待开发功能差距）。
 
 ## 许可
 

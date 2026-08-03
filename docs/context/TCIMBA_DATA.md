@@ -15,7 +15,7 @@
 | `items.json` | 2.0MB | 2433 物品 | 物品数据（含配方/来源/掉落） |
 | `locales/zh-CN/pals.json` | 140KB | 299 | 帕鲁中文名/描述/伙伴技能 |
 | `locales/zh-CN/passives.json` | 16KB | 152 | 被动技能中文名 |
-| `locales/zh-CN/skills.json` | 59KB | 323 | 技能中文名+描述 |
+| `locales/zh-CN/skills.json` | 59KB | 323（可学习 319）| 技能中文名+描述 |
 | `locales/zh-CN/items.json` | 418KB | 2433 | 物品中文名+描述 |
 | `locales/zh-CN/enums.json` | 601B | - | 元素/工种枚举中文名 |
 | `locales/zh-CN/partnerEffects.json` | 已确认存在 | - | 伙伴技能效果名（{effectId: 中文名}）|
@@ -148,39 +148,25 @@
 | `locales/zh-CN/pals.json` | `pal_aliase` 中文名 | `scripts/convert_tcimba.py` |
 | `locales/zh-CN/enums.json` | 元素/工种中文映射（映射逻辑内置于 convert 脚本） | `scripts/convert_tcimba.py` |
 
-## 4. 可丰富系统的候选数据（未接入）
+## 4. 候选数据 — 已全部接入（22 表，P0-P6 完成）
 
-### 4.1 高价值（与配种/查询强相关）
-1. **被动技能** `passives.json` + `locales/zh-CN/passives.json`
-   - 帕鲁固有被动（`pals[].passives`）+ 遗传抽奖权重 → 可实现「配种被动传承」推荐
-   - 新表建议: `passive` + `pal_passive`（多对多）+ `passive_i18n`
-2. **技能** `pals[].activeSkills` + `locales/zh-CN/skills.json`
-   - 帕鲁技能学习表（含等级）→ 配种结果可学到什么技能
-   - 新表建议: `skill` + `pal_skill`（level）
-3. **帕鲁掉落** `pals[].drops` / `bossDrops`
-   - 击杀掉落 → 反查「某材料由哪些帕鲁掉落」（与 items.sources 互补）
-   - 新表建议: `pal_drop`（item/rate/min/max/minLevel）
+> ✅ 本节所列的候选数据（被动/技能/掉落/物品/属性/伙伴技能）**现已全部接入**数据库，
+> 对应 22 表设计与 S6-S10 查询见
+> [`architecture/design/DATABASE_DESIGN_TCIMBA_V2.md`](../architecture/design/DATABASE_DESIGN_TCIMBA_V2.md)
+> 与 [`architecture/plans/TCIMBA_DATA_DEVELOPMENT_PLAN.md`](../architecture/plans/TCIMBA_DATA_DEVELOPMENT_PLAN.md)。
 
-### 4.2 中价值（详情页/知识问答）
-4. **物品** `items.json` + `locales/zh-CN/items.json`
-   - 2433 物品：配方/来源/掉落/用途 → 「怎么获得某物品」「某物品能做什么」
-   - 新表建议: `item` + `item_source` + `item_recipe`
-5. **帕鲁基础属性** `pals[].stats`
-   - HP/攻防/速度/捕获率/价格/雄性概率 → 帕鲁详情卡片
-   - 新表建议: `pal_stats`
-6. **伙伴技能** `pals[].partnerSkill` + `partnerEffects/partnerTargets`
-   - 帕鲁专属伙伴技能 → 详情展示
-   - 新表建议: `pal_partner_skill`
+| 数据 | 落地表 |
+|------|--------|
+| 被动技能 `passives.json` + `zh-CN/passives.json` | `passive` + `passive_effect` + `passive_invoke` + `pal_passive` |
+| 技能 `pals[].activeSkills` + `zh-CN/skills.json` | `skill` + `pal_skill`（level） |
+| 帕鲁掉落 `pals[].drops` / `bossDrops` | `pal_drop`（item/rate/min/max/minLevel） |
+| 物品 `items.json` + `zh-CN/items.json` | `item` + `item_source` + `item_recipe` + `item_recipe_station` + `item_recipe_material` |
+| 帕鲁基础属性 `pals[].stats` | `pal_stats` |
+| 伙伴技能 `pals[].partnerSkill` | `pal_partner_skill` |
+| 其他扩展 | `pal_friendship` / `pal_enemy_scaling` / `pal_summon` / `pal` 扩展列 |
 
-### 4.3 接入流程（遵循 copilot-instructions.md）
-```
-新数据源 → packages/adapters/ 适配器 → schema.py（先加数据模型）→ loader → api/routes/query.py
-```
-1. 先在 `packages/core/pl_agent/core/schema.py` 定义新模型（唯一 Schema）
-2. 在 `packages/adapters/` 新增或扩展适配器解析对应 json
-3. 更新 `data/sql/`（新表 DDL）+ `docs/architecture/DATABASE_DESIGN.md`
-4. 在 `api/routes/query.py` 提供查询入口
-5. 测试: `make test-all`
+> ⚠️ **尚未接入**（见 [`decisions/003-feature-gaps.md`](../decisions/003-feature-gaps.md)）：
+> 地图/坐标、科技树、属性模拟器(IV)、多代配种规划 —— 这些**数据源不在此 13 文件内**，需额外数据源。
 
 ## 5. 抓取方式（参考）
 

@@ -75,6 +75,47 @@ async def test_rule_stats():
 
 
 @pytest.mark.asyncio
+async def test_rule_item_query_drop():
+    recognizer = IntentRecognizer(llm=None)
+    result = await recognizer.recognize("骨头哪里获得")
+    assert result.intent == Intent.ITEM_QUERY
+
+
+@pytest.mark.asyncio
+async def test_rule_item_query_recipe():
+    recognizer = IntentRecognizer(llm=None)
+    result = await recognizer.recognize("金属锭怎么做")
+    assert result.intent == Intent.ITEM_QUERY
+
+
+@pytest.mark.asyncio
+async def test_rule_passive_query():
+    recognizer = IntentRecognizer(llm=None)
+    result = await recognizer.recognize("哪只有工匠精神")
+    assert result.intent == Intent.PASSIVE_QUERY
+    assert result.passive_name == "工匠精神"
+
+
+@pytest.mark.asyncio
+async def test_rule_pal_detail():
+    recognizer = IntentRecognizer(llm=None, breeding_api=FakeApi(known={"阿努比斯"}))
+    result = await recognizer.recognize("阿努比斯有什么技能")
+    assert result.intent == Intent.PAL_DETAIL
+    assert result.pal_name == "阿努比斯"
+
+
+@pytest.mark.asyncio
+async def test_llm_pal_detail_fields():
+    llm = FakeLLM(
+        '{"intent":"pal_detail","work_type":null,"pal_name":"阿努比斯","item_name":null,"passive_name":null,"reason":"x"}'
+    )
+    recognizer = IntentRecognizer(llm=llm)
+    result = await recognizer.recognize("阿努比斯详情")
+    assert result.intent == Intent.PAL_DETAIL
+    assert result.pal_name == "阿努比斯"
+
+
+@pytest.mark.asyncio
 async def test_rule_general_chat():
     recognizer = IntentRecognizer(llm=None)
     result = await recognizer.recognize("你好呀")

@@ -144,9 +144,26 @@ def build_breeding_tools(
     client: BreedingApiClient, top_n_default: int = 3
 ) -> list[Tool]:
     """Build the full deterministic breeding tool set."""
+    from .pal_info import (
+        QueryItemDropsTool,
+        QueryItemRecipeTool,
+        QueryPalDetailTool,
+        QueryPalsByPassiveTool,
+        QueryPalSkillsTool,
+    )
+    from .sql_query import RunSqlQueryTool
+
     return [
         QueryParentPairsTool(client),
         ResolvePalTool(client),
         QueryTopSuitabilityTool(client, top_n_default=top_n_default),
         QueryStatsTool(client),
+        # tc-imba 新数据能力 (S6-S10)
+        QueryPalDetailTool(client),
+        QueryPalSkillsTool(client),
+        QueryPalsByPassiveTool(client),
+        QueryItemDropsTool(client),
+        QueryItemRecipeTool(client),
+        # Text-to-SQL 兜底（长尾问题）
+        RunSqlQueryTool(client),
     ]

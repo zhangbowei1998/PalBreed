@@ -3,6 +3,7 @@ import { Bubble, type BubbleItemType } from "@ant-design/x";
 import { RobotOutlined, UserOutlined } from "@ant-design/icons";
 import type { AgentAction, ChatMessage, PalProfile } from "../types";
 import { ThinkingProcess } from "./ThinkingProcess";
+import DataCardList from "./DataCardList";
 
 type Props = {
   messages: ChatMessage[];
@@ -220,6 +221,7 @@ export function MessageList({ messages, palNameToId, palProfiles, loading, pairA
               pairActionMap,
               onSelectPair,
             )}
+            {msg.data_cards && <DataCardList cards={msg.data_cards} />}
           </div>
         ),
       };

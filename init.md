@@ -1,6 +1,6 @@
 # 幻兽帕鲁配种 Agent — 初始需求
 
-> 📖 完整文档在 `docs/` 目录下，AI 接手请先阅读 `docs/CONTEXT.md`
+> 📖 历史原始需求草稿。完整文档在 `docs/` 目录下，AI 接手请先阅读 `docs/context/CONTEXT.md`（导航见 `docs/README.md`）
 
 ---
 
@@ -17,7 +17,6 @@
 | 文档 | 内容 |
 |------|------|
 | [`docs/context/CONTEXT.md`](./docs/context/CONTEXT.md) | 🔰 AI 接手快速上下文 |
-| [`docs/architecture/ARCHITECTURE.md`](./docs/architecture/ARCHITECTURE.md) | 🏗️ 系统架构设计 |
-| [`docs/architecture/PROJECT_STRUCTURE.md`](./docs/architecture/PROJECT_STRUCTURE.md) | 📁 目录结构与依赖关系 |
-| [`docs/architecture/DATA_LAYER_REQUIREMENTS.md`](./docs/architecture/DATA_LAYER_REQUIREMENTS.md) | 📊 数据层详细需求 |
+| [`docs/README.md`](./docs/README.md) | 📖 文档总索引（分类导航） |
+| [`docs/architecture/design/PROJECT_STRUCTURE.md`](./docs/architecture/design/PROJECT_STRUCTURE.md) | 📁 目录结构与依赖关系 |
 | [`.github/copilot-instructions.md`](./.github/copilot-instructions.md) | 🤖 AI 行为规范 |

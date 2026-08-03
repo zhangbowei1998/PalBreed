@@ -1,6 +1,6 @@
 # ADR 002: JSON → PostgreSQL 数据存储迁移
 
-> 日期: 2026-07-31 | 状态: 已提议 | 决策者: AI + 用户
+> 日期: 2026-07-31 | 状态: OK 已落地（方案 B 演进为 SQLAlchemy Async ORM 配种查询，见 MIGRATION_PLAN.md） | 决策者: AI + 用户
 
 ---
 
@@ -98,6 +98,8 @@ paldb.cc → scraper → parser → PalDBAdapter
 
 ## 相关文档
 
-- `docs/architecture/DATA_LAYER_REQUIREMENTS.md` §12 — 详细 Schema 及实现步骤
+- `docs/architecture/archive/DATA_LAYER_REQUIREMENTS.md` §12 — 详细 Schema 及实现步骤（已归档，paldb 时代）
+- `docs/architecture/design/DATABASE_DESIGN_TCIMBA_V2.md` — 22 表最终设计（现状）
+- `docs/architecture/plans/MIGRATION_PLAN.md` — ORM 迁移执行记录
 - `docs/context/CONTEXT.md` — 项目结构与数据流
-- `packages/adapters/adapters/paldb/adapter.py` — 现有 JSON adapter 参考
+- `packages/adapters/` — 现有 JSON adapter 参考
