@@ -238,6 +238,16 @@ CREATE INDEX IF NOT EXISTS idx_recipe_mat_item  ON item_recipe_material(material
 CREATE INDEX IF NOT EXISTS idx_item_source_item ON item_source(item_id);
 CREATE INDEX IF NOT EXISTS idx_pal_summon_pal   ON pal_summon(pal_id);
 
+-- ============================================================================
+-- 7. breeding_rule 唯一约束收敛（旧库迁移）
+--    旧版本用 idx_rule_child_type (child_id, rule_type)，新代码依赖
+--    idx_rule_pair (child_id, parent_a_id, parent_b_id) 做 ON CONFLICT。
+--    这里幂等删除旧索引、创建新索引，保证新旧库收敛到同一 schema。
+-- ============================================================================
+DROP INDEX IF EXISTS idx_rule_child_type;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_rule_pair
+    ON breeding_rule (child_id, parent_a_id, parent_b_id);
+
 COMMIT;
 
 -- ============================================================================
