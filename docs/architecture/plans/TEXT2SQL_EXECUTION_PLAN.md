@@ -1,7 +1,7 @@
 # Text-to-SQL 实施执行计划
 
-> 版本: v1.0 | 日期: 2026-08-02 | 状态: 待确认
-> 依据: [TEXT2SQL_PLAN.md](./TEXT2SQL_PLAN.md)（方案）、[Text-to-SQL.md](./Text-to-SQL.md)（原始需求）
+> 版本: v1.0 | 日期: 2026-08-02 | 状态: OK 已完成（P0-P2 全部落地，见 TEXT2SQL_PLAN.md 实施记录）
+> 依据: [TEXT2SQL_PLAN.md](./TEXT2SQL_PLAN.md)（方案）、[Text-to-SQL.md](../../context/Text-to-SQL.md)（原始需求）
 > 分支: feature/tcimba-22tables
 
 ---

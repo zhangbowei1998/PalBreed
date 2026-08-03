@@ -1,7 +1,7 @@
 # Text-to-SQL 兜底能力 — 修改方案
 
-> 版本: v1.0 | 日期: 2026-08-02 | 状态: 方案设计
-> 依据: [Text-to-SQL.md](./Text-to-SQL.md) 的设计思路 + 当前项目架构
+> 版本: v1.0 | 日期: 2026-08-02 | 状态: OK 已实施完成（P0-P3 落地，SqlGuard 16 单测 + run_sql_query 工具上线）
+> 依据: [Text-to-SQL.md](../../context/Text-to-SQL.md) 的设计思路 + 当前项目架构
 
 ---
 
@@ -418,6 +418,6 @@ tools.append(RunSqlQueryTool(client))
 
 ## 11. 文档关联
 
-- 方案依据：[Text-to-SQL.md](./Text-to-SQL.md)
-- 表结构：[DATABASE_DESIGN_TCIMBA_V2.md](./DATABASE_DESIGN_TCIMBA_V2.md)
-- 架构：[PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)、[ARCHITECTURE.md](./ARCHITECTURE.md)
+- 方案依据：[Text-to-SQL.md](../../context/Text-to-SQL.md)
+- 表结构：[DATABASE_DESIGN_TCIMBA_V2.md](../design/DATABASE_DESIGN_TCIMBA_V2.md)
+- 架构：[PROJECT_STRUCTURE.md](../design/PROJECT_STRUCTURE.md)、[ARCHITECTURE.md](../archive/ARCHITECTURE.md)

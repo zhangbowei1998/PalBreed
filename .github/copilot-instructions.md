@@ -3,12 +3,12 @@
 ## 项目背景
 
 这是一个**幻兽帕鲁配种 Agent** 项目，帮助玩家找到最优配种路径。
-每次新会话开始时，请先阅读 `docs/context/CONTEXT.md`。
+每次新会话开始时，请先阅读 `docs/context/CONTEXT.md`（现状快照），文档导航见 `docs/README.md`。
 
 ## 架构规则
 
 - **唯一 Schema**: 所有数据模型必须使用 `packages/core/pl_agent/core/schema.py` 中的规范定义。禁止在项目中定义重复的数据类型。
-- **数据库**: 5 表规范化设计 (`docs/architecture/DATABASE_DESIGN.md`)，SERIAL PK + game_id UK
+- **数据库**: 22 表设计（5 基础 + 17 扩展），规范见 `docs/architecture/design/DATABASE_DESIGN_TCIMBA_V2.md`（22 表）/ `DATABASE_DESIGN.md`（基础 5 表），SERIAL PK + game_id UK
 - **适配器层**: 外部数据必须通过 `packages/adapters/` 中的适配器流入
 - **禁止循环引用**: `core` → 无依赖，`adapters` → 仅依赖 `core`，`api` → 依赖 `core`
 - **Agent 模块**: `packages/agent`（纯逻辑，无 FastAPI）→ `packages/agent-web`（FastAPI 服务层）→ 依赖 `agent`。`agent` 不依赖 FastAPI/uvicorn。
@@ -21,7 +21,7 @@
 - **集成测试**: 放在 `tests/integration/` 下，跨包联调测试。
 - **冒烟测试**: 放在 `tests/smoke/` 下，核心流程端到端验证。
 - **Demo 脚本**: 放在各包的 `demo/` 目录下，用于快速手动验证。
-- **文档**: 按类型放在 `docs/architecture/`、`docs/context/`、`docs/decisions/` 下。
+- **文档**: 按类型放在 `docs/` 下：`context/`（现状）、`architecture/design/`（设计）、`architecture/agent/`（实现）、`architecture/plans/`（计划）、`architecture/requirements/`（需求）、`architecture/deploy/`（部署）、`architecture/archive/`（归档）、`decisions/`（ADR）、`bug/`（问题记录）。
 - **测试命令**: `make test-agent`（agent 单元）/ `make test-agent-web`（agent-web 服务）/ `make test-all`（全量）。
 
 ## Agent 模块约定
@@ -66,11 +66,11 @@
 
 ## 修改代码前
 
-1. 先读 `docs/context/CONTEXT.md` 了解项目全貌
-2. 查看 `docs/architecture/DATABASE_DESIGN.md` 了解 5 表规范化设计
-3. 确认改动符合 `docs/architecture/PROJECT_STRUCTURE.md` 中的目录规范
+1. 先读 `docs/context/CONTEXT.md` 了解项目全貌（文档导航见 `docs/README.md`）
+2. 查看 `docs/architecture/design/DATABASE_DESIGN_TCIMBA_V2.md` 了解 22 表规范化设计
+3. 确认改动符合 `docs/architecture/design/PROJECT_STRUCTURE.md` 中的目录规范
 4. 新增数据字段 → 先改 `schema.py`，再改 adapter/loader，最后改 routes/query.py
-5. 修改数据库 → 更新 `data/sql/002_normalize.sql` + `DATABASE_DESIGN.md`
+5. 修改数据库 → 更新 `data/sql/002_normalize.sql` + `003_tcimba_extend.sql` + `DATABASE_DESIGN_TCIMBA_V2.md`
 
 ## 数据流
 
@@ -106,5 +106,5 @@ api/routes/query.py (配种 + /pals/{id}/detail + /passives + /items/...)
 ```
 
 1. Read `docs/context/CONTEXT.md`
-2. Check `docs/architecture/` for relevant design docs
-3. Ensure changes align with the monorepo structure in `docs/architecture/PROJECT_STRUCTURE.md`
+2. Check `docs/architecture/` (design/agent/plans) for relevant design docs
+3. Ensure changes align with the monorepo structure in `docs/architecture/design/PROJECT_STRUCTURE.md`

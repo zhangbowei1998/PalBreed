@@ -1,7 +1,7 @@
 # tc-imba 全量数据接入开发计划
 
 > 版本: v1.0 | 日期: 2026-08-02 | 状态: ✅ **全部完成（P0-P6 已实施，22 表 + S6-S10 落地）**
-> 依据: [DATABASE_DESIGN_TCIMBA_V2.md](./DATABASE_DESIGN_TCIMBA_V2.md)（22 表）+ [TCIMBA_DATA.md](../context/TCIMBA_DATA.md)（数据清单）
+> 依据: [DATABASE_DESIGN_TCIMBA_V2.md](../design/DATABASE_DESIGN_TCIMBA_V2.md)（22 表）+ [TCIMBA_DATA.md](../../context/TCIMBA_DATA.md)（数据清单）
 > 目标: 将 tc-imba 全量数据（帕鲁属性/技能/被动/物品/掉落/召唤）接入系统，从当前 5 表扩展为 22 表
 
 ---
@@ -122,10 +122,10 @@ Schema(core) → DDL(sql) → 适配器(adapters) → 种子(scripts) → ORM/�
 1. 新增 `data/sql/003_tcimba_extend.sql`（幂等，可在已有 5 表库上重复执行）：
    - `ALTER TABLE pal ADD COLUMN IF NOT EXISTS` 10 列
    - `CREATE TABLE IF NOT EXISTS` 17 张新表（含索引、`pal_drop UNIQUE(pal_id,item_id,is_boss)`、`item_recipe_material` 等外键）
-2. 同步更新 `docs/architecture/DATABASE_DESIGN_TCIMBA_V2.md` 的 DDL 附录为最终态（若与实现有出入）
+2. 同步更新 `docs/architecture/design/DATABASE_DESIGN_TCIMBA_V2.md` 的 DDL 附录为最终态（若与实现有出入）
 
 **涉及文件**
-- `data/sql/003_tcimba_extend.sql`（新）、`docs/architecture/DATABASE_DESIGN_TCIMBA_V2.md`
+- `data/sql/003_tcimba_extend.sql`（新）、`docs/architecture/design/DATABASE_DESIGN_TCIMBA_V2.md`
 
 **验收**
 - 空库执行 `001 → 002 → 003` 成功；已有 5 表库执行 `003` 成功（幂等，重复执行不报错）
@@ -220,8 +220,8 @@ Schema(core) → DDL(sql) → 适配器(adapters) → 种子(scripts) → ORM/�
 1. 全量测试：`make test-all`（单元 + 集成 + 冒烟）
 2. 文档同步：
    - `docs/context/CONTEXT.md`：数据流、22 表、新查询场景
-   - `docs/architecture/PROJECT_STRUCTURE.md`：登记 `adapters/tcimba/`、`003_tcimba_extend.sql`
-   - `docs/architecture/DATABASE_DESIGN_TCIMBA_V2.md`：标记实现状态
+   - `docs/architecture/design/PROJECT_STRUCTURE.md`：登记 `adapters/tcimba/`、`003_tcimba_extend.sql`
+   - `docs/architecture/design/DATABASE_DESIGN_TCIMBA_V2.md`：标记实现状态
    - `.github/copilot-instructions.md`：补充 tc-imba 全量数据接入规范
 
 **涉及文件**

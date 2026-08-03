@@ -54,16 +54,20 @@ flowchart LR
 
 > 说明：`graph` 是编排中心，其他包为能力模块。`app` 仅负责协议接入与请求分发。
 
-## 当前实现范围（MVP）
+## 当前实现范围（MVP + 扩展）
 
-1. `POST /agent/chat`：支持“手工最高”入口、Top-3 候选、文本降级指令。
-2. `POST /agent/action`：支持 `confirm_target`、`expand_parent`、`summarize_route`。
+1. `POST /agent/chat`：LLM function calling 聊天（支持“手工最高”、Top-3 候选、文本降级指令）+ 10 个工具（配种/详情/技能/被动/掉落/配方/Text-to-SQL）。
+2. `POST /agent/action`：支持 `confirm_target`、`expand_parent`、`select_parent_pair`、`continue_from_parent`。
 3. `GET /agent/session/{session_id}`：支持会话快照读取。
 4. 状态守卫：深度上限、节点上限、重复展开阈值。
 5. 汇总输出：`text_tree` + `graph_json`（explored_only）。
+6. 记忆系统：短期（会话）+ 长期（PG/file，按用户）+ LLM 上下文压缩。
+7. 用户体系：`/auth/register|login|me`，token 认证，长期记忆按用户隔离。
+8. 可观测：`/admin/traces` + `/admin/monitor`（PostgresTraceStore / InMemoryTraceStore 降级）。
+9. 数据卡片：`data_cards`（被动/掉落/配方/技能/详情）随 chat 返回，前端渲染。
 
 ## 后续扩展建议
 
 1. 将 `state` 从内存实现切换到 Redis。
 2. 增加 `auto_complete` 路线补全模式（受阈值保护）。
-3. 引入真实可观测后端（metrics/tracing）。
+3. 多代配种规划（见 `docs/decisions/003-feature-gaps.md`）。

@@ -1,7 +1,7 @@
 # 三层接入详细执行计划 — API / Agent / 前端 新数据能力
 
-> 版本: v1.0 | 日期: 2026-08-02 | 状态: 待执行
-> 依据: [TIER_INTEGRATION_PLAN.md](./TIER_INTEGRATION_PLAN.md)（修复后）+ [DATABASE_DESIGN_TCIMBA_V2.md](./DATABASE_DESIGN_TCIMBA_V2.md)
+> 版本: v1.0 | 日期: 2026-08-02 | 状态: OK 已执行（Phase A-H 完成，工具 10 个，data_cards 上线）
+> 依据: [TIER_INTEGRATION_PLAN.md](./TIER_INTEGRATION_PLAN.md)（修复后）+ [DATABASE_DESIGN_TCIMBA_V2.md](../design/DATABASE_DESIGN_TCIMBA_V2.md)
 > 前置: 22 表 + S6-S10 查询已落地（feature/tcimba-22tables）
 
 ---

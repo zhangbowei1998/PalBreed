@@ -71,6 +71,20 @@ v0.2 (未来):   用户 ──▶ NLU ──▶ API ──▶ 引擎
 | `GET` | `/api/suitability/stats` | 全工种统计 |
 | `GET` | `/health` | 健康检查 |
 
+**tc-imba 扩展端点（S6-S10，v2.1+）**：
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| `GET` | `/api/pals/{pal_id}/detail` | 帕鲁全量详情（stats/技能/被动/掉落/伙伴技能/召唤） |
+| `GET` | `/api/pals/{pal_id}/skills` | 帕鲁可学技能（含学习等级） |
+| `GET` | `/api/passives?name={name}` | 按被动中文名查拥有该被动的帕鲁 |
+| `GET` | `/api/items/{item_name}/recipe` | 物品制作配方（设施 + 材料） |
+| `GET` | `/api/items/{item_name}/drops` | 掉落该物品的帕鲁 |
+| `POST` | `/api/sql/query` | Text-to-SQL 安全执行器（白名单视图 SELECT，见 SQL 端点） |
+
+> Text-to-SQL 端点详见 [`plans/TEXT2SQL_PLAN.md`](../plans/TEXT2SQL_PLAN.md) 与
+> [`plans/TEXT2SQL_EXECUTION_PLAN.md`](../plans/TEXT2SQL_EXECUTION_PLAN.md)。
+
 ### 3.2 POST `/api/query` — 智能查询
 
 **这是唯一的用户查询入口。** API 自动判断输入类型。

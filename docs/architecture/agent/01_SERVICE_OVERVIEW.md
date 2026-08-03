@@ -50,11 +50,18 @@ agent 模块是聊天式配种体验的业务编排层，负责：
 ## 4. 关键业务策略
 
 - 最高等级并列：返回 Top-3 并要求用户确认。
-- 点击协议：优先 UI 原生点击；动作名统一 `expand_parent`。
+- 点击协议：优先 UI 原生点击；动作名统一 `expand_parent` / `select_parent_pair` / `continue_from_parent`。
 - 路线生成：MVP 仅汇总已探索分支（`explored_only`）。
 - 安全阈值：`max_depth=10`, `max_nodes=200`, `route_timeout=8s`。
+- 数据准确：配种/详情/技能/被动/掉落/配方/Text-to-SQL 全部走工具，禁止 LLM 自行推算（见 `prompts/assistant.md`）。
 
-## 5. 可扩展点
+## 5. 外部依赖（上游 api :8000）
+
+- 核心：`/api/query`、`/api/breeding/tree/{id}`、`/api/pal/{id}`、`/api/suitability/stats`
+- tc-imba 扩展：`/api/pals/{id}/detail`、`/api/pals/{id}/skills`、`/api/passives`、`/api/items/{name}/recipe`、`/api/items/{name}/drops`
+- Text-to-SQL：`/api/sql/query`
+
+## 6. 可扩展点
 
 - 状态存储实现：内存 -> Redis -> 持久化数据库
 - 模型能力：规则解析 -> LLM 辅助解析

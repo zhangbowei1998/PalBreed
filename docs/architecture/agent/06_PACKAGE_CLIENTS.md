@@ -22,11 +22,18 @@
 - `schemas.py`: 入参/出参 DTO
 - `errors.py`: 异常定义与映射
 
-## 3. 能力接口建议
+## 3. 能力接口
 
-- `query_top_suitability(work_type, level)`
+- `query_top_suitability(work_type, level, top_n)`
 - `get_parent_pairs(pal_id)`
 - `get_pal_detail(pal_id)`
+- `get_pal_detail_full(pal_id)`（tc-imba S10 详情）
+- `get_pal_skills(pal_id)`（S7 技能）
+- `query_pals_by_passive(name)`（S6 被动反查）
+- `get_item_recipe(item_name)`（S9 配方）
+- `get_item_drops(item_name)`（S8 掉落）
+- `run_sql_query(sql)`（Text-to-SQL 兜底）
+- `resolve_pal_name(name)`（中文/英文/ID 解析）
 
 ## 4. 失败处理策略
 

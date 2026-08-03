@@ -1,8 +1,8 @@
 # 三层接入计划 — API / Agent / 前端 接入 tc-imba 新数据能力
 
-> 版本: v1.0 | 日期: 2026-08-02 | 状态: 规划中
+> 版本: v1.0 | 日期: 2026-08-02 | 状态: ARCHIVED 已被 TIER_IMPLEMENTATION_PLAN.md 取代（执行版已全部完成）
 > 背景: 数据库 22 表 + S6-S10 查询已落地（feature/tcimba-22tables），本计划将新数据能力接入 API / Agent / 前端三层
-> 前置: [DATABASE_DESIGN_TCIMBA_V2.md](./DATABASE_DESIGN_TCIMBA_V2.md)、[TCIMBA_DATA_DEVELOPMENT_PLAN.md](./TCIMBA_DATA_DEVELOPMENT_PLAN.md)
+> 前置: [DATABASE_DESIGN_TCIMBA_V2.md](../design/DATABASE_DESIGN_TCIMBA_V2.md)、[TCIMBA_DATA_DEVELOPMENT_PLAN.md](./TCIMBA_DATA_DEVELOPMENT_PLAN.md)
 
 ---
 
