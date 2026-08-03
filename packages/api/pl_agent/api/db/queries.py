@@ -342,14 +342,15 @@ class OrmQueryService:
             return [dict(r) for r in rows.mappings().all()]
 
     async def query_pals_dropping_item(self, item_name: str) -> list[dict]:
-        """S8b: 掉落某物品的帕鲁（材料反查）。"""
+        """S8b: 掉落某物品的帕鲁（材料反查）。
+
+        物品名匹配策略：先精确匹配 cn_name；无结果时回退到模糊匹配
+        （cn_name 包含输入），仍无结果返回空列表。
+        """
         async with self._session_factory() as session:
-            item_sub = (
-                select(ItemModel.id)
-                .where(ItemModel.cn_name == item_name)
-                .limit(1)
-                .scalar_subquery()
-            )
+            item_id = await self._resolve_item_id(session, item_name)
+            if item_id is None:
+                return []
             stmt = (
                 select(
                     PalModel.game_id.label("pal_id"),
@@ -360,21 +361,21 @@ class OrmQueryService:
                     PalDropModel.is_boss,
                 )
                 .join(PalDropModel, PalDropModel.pal_id == PalModel.id)
-                .where(PalDropModel.item_id == item_sub)
+                .where(PalDropModel.item_id == item_id)
                 .order_by(PalDropModel.rate.desc())
             )
             rows = await session.execute(stmt)
             return [dict(r) for r in rows.mappings().all()]
 
     async def query_recipe_chain(self, item_name: str) -> list[dict]:
-        """S9: 物品配方链（产出 + 设施 + 材料）。"""
+        """S9: 物品配方链（产出 + 设施 + 材料）。
+
+        物品名匹配策略：先精确匹配 cn_name；无结果时回退到模糊匹配。
+        """
         async with self._session_factory() as session:
-            item_sub = (
-                select(ItemModel.id)
-                .where(ItemModel.cn_name == item_name)
-                .limit(1)
-                .scalar_subquery()
-            )
+            item_id = await self._resolve_item_id(session, item_name)
+            if item_id is None:
+                return []
             material_item = aliased(ItemModel)
             stmt = (
                 select(
@@ -387,7 +388,7 @@ class OrmQueryService:
                     ItemRecipeMaterialModel.count,
                 )
                 .join(ItemRecipeModel, ItemRecipeModel.item_id == ItemModel.id)
-                .where(ItemModel.id == item_sub)
+                .where(ItemModel.id == item_id)
                 .outerjoin(
                     ItemRecipeStationModel,
                     ItemRecipeStationModel.recipe_id == ItemRecipeModel.id,
@@ -403,6 +404,33 @@ class OrmQueryService:
             )
             rows = await session.execute(stmt)
             return [dict(r) for r in rows.mappings().all()]
+
+    async def _resolve_item_id(self, session, item_name: str) -> int | None:
+        """解析物品名 → item.id（精确优先，模糊回退）。
+
+        精确匹配 cn_name；无结果时用 cn_name LIKE '%kw%' 模糊匹配（取第一条）。
+        """
+        from sqlalchemy import or_
+
+        kw = item_name.strip()
+        if not kw:
+            return None
+        exact = (
+            await session.execute(
+                select(ItemModel.id).where(ItemModel.cn_name == kw).limit(1)
+            )
+        ).scalars().first()
+        if exact is not None:
+            return exact
+        fuzzy = (
+            await session.execute(
+                select(ItemModel.id)
+                .where(ItemModel.cn_name.like(f"%{kw}%"))
+                .order_by(ItemModel.sort_id)
+                .limit(1)
+            )
+        ).scalars().first()
+        return fuzzy
 
     async def query_pal_detail_full(self, game_id: str) -> dict | None:
         """S10: 帕鲁全量详情聚合。"""

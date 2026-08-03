@@ -119,7 +119,9 @@ async def test_query_pal_drops():
 
 @pytest.mark.asyncio
 async def test_query_pals_dropping_item():
+    # 队列第 1 个 = _resolve_item_id 精确匹配返回 item.id（scalars().first()=5）
     svc = _service([
+        (None, 5),  # rows=None, scalar_item=5
         [{"pal_id": "Garm", "pal_cn": "加姆", "rate": 3, "min": 1, "max": 1,
           "is_boss": False}],
     ])
@@ -128,8 +130,24 @@ async def test_query_pals_dropping_item():
 
 
 @pytest.mark.asyncio
-async def test_query_recipe_chain():
+async def test_query_pals_dropping_item_fuzzy():
+    """精确匹配无结果 → 模糊匹配回退（如 '帕鲁油' → '优质帕鲁油'）。"""
+    # 第 1 个 execute = 精确匹配返回 None；第 2 个 = 模糊匹配返回 item.id；第 3 个 = 主查询
     svc = _service([
+        (None, None),
+        (None, 7),
+        [{"pal_id": "LazyCatfish", "pal_cn": "趴趴鲶", "rate": 1, "min": 1,
+          "max": 1, "is_boss": False}],
+    ])
+    res = await svc.query_pals_dropping_item("帕鲁油")
+    assert res[0]["pal_cn"] == "趴趴鲶"
+
+
+@pytest.mark.asyncio
+async def test_query_recipe_chain():
+    # 队列第 1 个 = _resolve_item_id 精确匹配返回 item.id（scalars().first()=3）
+    svc = _service([
+        (None, 3),  # rows=None, scalar_item=3
         [{"item_id": "CopperIngot", "product": "金属锭", "work": 1000,
           "product_count": 1, "station": "BlastFurnace",
           "material": "金属矿石", "count": 2}],
