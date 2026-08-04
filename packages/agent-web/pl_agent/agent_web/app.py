@@ -10,6 +10,11 @@ from fastapi.responses import Response, StreamingResponse
 from pydantic import BaseModel, Field
 
 from pl_agent.agent.auth import make_user_store
+from pl_agent.agent.auth.invites import (
+    FileInviteStore,
+    PostgresInviteStore,
+    make_invite_store,
+)
 from pl_agent.agent.auth.postgres import PostgresUserStore
 from pl_agent.agent.clients.breeding_api_client import BreedingApiClient
 from pl_agent.agent.clients.errors import ClientError
@@ -79,6 +84,13 @@ async def lifespan(app: FastAPI):
     if isinstance(user_store, PostgresUserStore):
         await user_store.connect()
 
+    # 邀请码存储
+    invite_store = make_invite_store(settings.invite_store, settings.database_url)
+    if isinstance(invite_store, PostgresInviteStore):
+        await invite_store.connect()
+    else:
+        invite_store = FileInviteStore()
+
     # 监测：agent 对话 trace 存储（postgres 生产 / file 测试或无 DB 环境）
     if settings.trace_store == "postgres":
         try:
@@ -96,6 +108,7 @@ async def lifespan(app: FastAPI):
     app.state.llm = llm
     app.state.long_term_memory = long_term_memory
     app.state.user_store = user_store
+    app.state.invite_store = invite_store
     app.state.trace_store = trace_store
     app.state.workflow = AgentWorkflow(
         settings=settings,
@@ -112,6 +125,8 @@ async def lifespan(app: FastAPI):
             await long_term_memory.close()
         if isinstance(user_store, PostgresUserStore):
             await user_store.close()
+        if isinstance(invite_store, PostgresInviteStore):
+            await invite_store.close()
         await trace_store.close()
 
 

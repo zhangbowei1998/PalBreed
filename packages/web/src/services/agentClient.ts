@@ -172,10 +172,14 @@ export type AuthResult = {
   user: { id: string; username: string; created_at: string };
 };
 
-export async function register(username: string, password: string): Promise<AuthResult> {
+export async function register(
+  username: string,
+  password: string,
+  inviteCode: string
+): Promise<AuthResult> {
   const data = await request<AuthResult>("/auth/register", {
     method: "POST",
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, invite_code: inviteCode }),
   });
   setToken(data.token);
   return data;

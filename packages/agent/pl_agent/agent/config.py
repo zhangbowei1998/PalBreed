@@ -40,6 +40,10 @@ class Settings:
     user_store: str = "file"  # "file" | "postgres"
     auth_secret: str = "dev-secret-change-me"
     auth_token_ttl_s: int = 7 * 24 * 3600
+    admin_username: str = ""  # 指定管理员用户名（非空时该用户登录即视为管理员）
+    # Invite code system
+    invite_store: str = "file"  # "file" | "postgres"
+    invite_ttl_s: int = 7 * 24 * 3600  # 邀请码有效期（默认 7 天）
 
 
 _WORK_TYPE_CN = {
@@ -131,4 +135,7 @@ def load_settings() -> Settings:
         user_store=os.getenv("USER_STORE", "file"),
         auth_secret=os.getenv("AUTH_SECRET", "dev-secret-change-me"),
         auth_token_ttl_s=int(os.getenv("AUTH_TOKEN_TTL_S", str(7 * 24 * 3600))),
+        admin_username=os.getenv("ADMIN_USERNAME", ""),
+        invite_store=os.getenv("INVITE_STORE", "file"),
+        invite_ttl_s=int(os.getenv("INVITE_TTL_S", str(7 * 24 * 3600))),
     )

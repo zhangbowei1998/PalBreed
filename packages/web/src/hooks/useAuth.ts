@@ -33,11 +33,14 @@ export function useAuth() {
     return res.user;
   }, []);
 
-  const register = useCallback(async (username: string, password: string) => {
-    const res = await apiRegister(username, password);
-    setUser(res.user);
-    return res.user;
-  }, []);
+  const register = useCallback(
+    async (username: string, password: string, inviteCode: string) => {
+      const res = await apiRegister(username, password, inviteCode);
+      setUser(res.user);
+      return res.user;
+    },
+    []
+  );
 
   const logout = useCallback(() => {
     apiLogout();

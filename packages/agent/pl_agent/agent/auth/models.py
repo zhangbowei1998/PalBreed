@@ -33,12 +33,18 @@ class User:
     id: str
     username: str
     password_hash: str = ""
+    is_admin: bool = False
     created_at: str = field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
 
     def to_public_dict(self) -> dict:
-        return {"id": self.id, "username": self.username, "created_at": self.created_at}
+        return {
+            "id": self.id,
+            "username": self.username,
+            "is_admin": self.is_admin,
+            "created_at": self.created_at,
+        }
 
 
 def validate_username(username: str) -> None:
@@ -53,11 +59,15 @@ def new_user_id() -> str:
 
 
 class UserStore(Protocol):
-    async def create_user(self, username: str, password_hash: str) -> User: ...
+    async def create_user(
+        self, username: str, password_hash: str, is_admin: bool = False
+    ) -> User: ...
 
     async def get_user_by_username(self, username: str) -> User | None: ...
 
     async def get_user_by_id(self, user_id: str) -> User | None: ...
+
+    async def count_users(self) -> int: ...
 
 
 class FileUserStore:
@@ -88,14 +98,22 @@ class FileUserStore:
             encoding="utf-8",
         )
 
-    async def create_user(self, username: str, password_hash: str) -> User:
+    async def create_user(
+        self, username: str, password_hash: str, is_admin: bool = False
+    ) -> User:
         if username in self._by_username:
             raise UsernameTakenError(f"用户名 {username} 已被占用")
-        user = User(id=new_user_id(), username=username, password_hash=password_hash)
+        user = User(
+            id=new_user_id(),
+            username=username,
+            password_hash=password_hash,
+            is_admin=is_admin,
+        )
         self._data[user.id] = {
             "id": user.id,
             "username": user.username,
             "password_hash": user.password_hash,
+            "is_admin": user.is_admin,
             "created_at": user.created_at,
         }
         self._by_username[user.username] = user.id
@@ -116,5 +134,9 @@ class FileUserStore:
             id=raw["id"],
             username=raw["username"],
             password_hash=raw.get("password_hash", ""),
+            is_admin=bool(raw.get("is_admin", False)),
             created_at=raw.get("created_at", ""),
         )
+
+    async def count_users(self) -> int:
+        return len(self._data)

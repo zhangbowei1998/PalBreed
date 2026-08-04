@@ -74,6 +74,10 @@ services:
       USER_STORE: postgres
       AUTH_SECRET: ${AUTH_SECRET:-change-me-in-production}
       AUTH_TOKEN_TTL_S: "604800"
+      # 邀请码体系（ADMIN_USERNAME 指定线上首个管理员用户名）
+      INVITE_STORE: postgres
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-}
+      INVITE_TTL_S: ${INVITE_TTL_S:-604800}
     ports:
       - "9000:9000"
     depends_on:

@@ -62,7 +62,7 @@ class FakeUpstreamClient:
 
 
 @pytest.fixture()
-def test_client():
+def test_client(tmp_path):
     with TestClient(app) as client:
         workflow = client.app.state.workflow
         workflow._client = FakeUpstreamClient()
@@ -72,11 +72,22 @@ def test_client():
         # （例如把「手工等级最高的帕鲁」误判为配种意图），导致集成测试不稳定。
         workflow._recognizer._llm = None
 
+        # 注入隔离的邀请码存储并预置一个邀请码（注册现已要求邀请码）
+        from pl_agent.agent.auth.invites import FileInviteStore
+
+        invite_store = FileInviteStore(data_dir=tmp_path / "invites")
+        client.app.state.invite_store = invite_store
+        import asyncio
+
+        async def _seed():
+            await invite_store.create("test-admin", "2099-12-31T00:00:00+00:00", code="ITCODE123")
+        asyncio.run(_seed())
+
         # 注册测试用户并注入 Authorization 头：接口现已强制登录。
         # 用户名固定，重复运行时注册返回 409，改走登录拿新 token。
         reg = client.post(
             "/auth/register",
-            json={"username": "it_user", "password": "itpass123456"},
+            json={"username": "it_user", "password": "itpass123456", "invite_code": "ITCODE123"},
         )
         if reg.status_code == 409:
             reg = client.post(

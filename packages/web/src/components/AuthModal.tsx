@@ -6,10 +6,14 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onLogin: (username: string, password: string) => Promise<AuthUser>;
-  onRegister: (username: string, password: string) => Promise<AuthUser>;
+  onRegister: (
+    username: string,
+    password: string,
+    inviteCode: string
+  ) => Promise<AuthUser>;
 };
 
-type AuthForm = { username: string; password: string };
+type AuthForm = { username: string; password: string; inviteCode: string };
 
 const USERNAME_RULES = [
   { required: true, message: "请输入用户名" },
@@ -19,6 +23,10 @@ const USERNAME_RULES = [
 const PASSWORD_RULES = [
   { required: true, message: "请输入密码" },
   { min: 6, max: 64, message: "密码长度 6-64 位" },
+];
+const INVITE_RULES = [
+  { required: true, message: "请输入邀请码" },
+  { min: 4, max: 32, message: "邀请码长度 4-32 位" },
 ];
 
 export function AuthModal({ open, onClose, onLogin, onRegister }: Props) {
@@ -34,7 +42,7 @@ export function AuthModal({ open, onClose, onLogin, onRegister }: Props) {
         await onLogin(values.username, values.password);
         message.success("登录成功");
       } else {
-        await onRegister(values.username, values.password);
+        await onRegister(values.username, values.password, values.inviteCode);
         message.success("注册成功，已自动登录");
       }
       onClose();
@@ -73,6 +81,11 @@ export function AuthModal({ open, onClose, onLogin, onRegister }: Props) {
         <Form.Item name="password" label="密码" rules={PASSWORD_RULES}>
           <Input.Password placeholder="输入密码" autoComplete="current-password" />
         </Form.Item>
+        {tab === "register" && (
+          <Form.Item name="inviteCode" label="邀请码" rules={INVITE_RULES}>
+            <Input placeholder="输入邀请码（需向管理员获取）" autoComplete="off" />
+          </Form.Item>
+        )}
       </Form>
     </Modal>
   );

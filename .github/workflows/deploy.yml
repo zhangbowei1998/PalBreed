@@ -15,6 +15,7 @@ env:
   # 通过环境变量把 secret 传给 ssh-action 的 envs，避免在脚本里内嵌密钥
   LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
   AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+  ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
 
 jobs:
   # ⭐ 测试门禁：测试通过才允许部署（fail fast，防止坏代码上线）
@@ -139,7 +140,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
-          envs: LLM_API_KEY,AUTH_SECRET
+          envs: LLM_API_KEY,AUTH_SECRET,ADMIN_USERNAME
           script: |
             set -e
             cd /opt/pl-agent
@@ -148,6 +149,9 @@ jobs:
             printf 'LLM_BASE_URL=https://api.deepseek.com\n' >> .env
             printf 'LLM_MODEL=deepseek-chat\n' >> .env
             printf 'AUTH_SECRET=%s\n' "$AUTH_SECRET" >> .env
+            printf 'ADMIN_USERNAME=%s\n' "$ADMIN_USERNAME" >> .env
+            printf 'INVITE_STORE=postgres\n' >> .env
+            printf 'INVITE_TTL_S=604800\n' >> .env
 
       # 4. 只构建并重启【变更的服务】，其他服务保持运行不动
       - name: Build & restart changed services only
